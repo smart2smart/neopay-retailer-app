@@ -1,78 +1,71 @@
-/**
- * Learn more about createBottomTabNavigator:
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-
-import Colors from '../constants/Colors';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Octicons from 'react-native-vector-icons/Octicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import colors from "../assets/colors/colors";
+import ComingSoon from "../screens/ComingSoon";
+import {HomeScreen} from "../screens/home/HomeScreen";
+import {ProfileScreen} from "../screens/profile/ProfileScreen";
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTabsStack = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
-      <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
-      />
-    </BottomTab.Navigator>
-  );
-}
+    return (
+        <BottomTabsStack.Navigator
+            screenOptions={({route}) => ({
+                tabBarIcon: ({focused, color, size}) => {
+                    let icon = null;
+                    switch (route.name) {
+                        case 'Home':
+                            icon = <Entypo name="home" size={18} color={focused?colors.primary_color:colors.grey}/>
+                            break;
+                        case 'Reports':
+                            icon = <Octicons name="file" size={18} color={focused?colors.primary_color:colors.grey} />
+                            break;
+                        case 'Search':
+                            icon = <AntDesign name="search1" size={18} color={focused?colors.primary_color:colors.grey} />
+                            break;
+                        case 'Profile':
+                            icon = <MaterialIcons name="account-circle" size={22} color={focused?colors.primary_color:colors.grey} />
+                            break;
+                    }
 
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
-
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
-
-function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  );
+                    return icon
+                },
+            })}
+            tabBarOptions={{
+                activeTintColor: colors.primary_color,
+                inactiveTintColor: '#909090',
+                style: {
+                    paddingBottom: 6,
+                    height: 56,
+                    backgroundColor: '#F8F8F8'
+                },
+                labelStyle: {
+                    fontSize: 12,
+                    fontFamily: '' +
+                        'GothamMedium'
+                }
+            }}>
+            <BottomTabsStack.Screen
+                name="Home"
+                component={HomeScreen}/>
+            <BottomTabsStack.Screen
+                name="Reports"
+                component={ComingSoon}/>
+            <BottomTabsStack.Screen
+                name="Search"
+                component={ComingSoon}/>
+            <BottomTabsStack.Screen
+                name="Profile"
+                component={ProfileScreen}/>
+        </BottomTabsStack.Navigator>
+    );
 }
