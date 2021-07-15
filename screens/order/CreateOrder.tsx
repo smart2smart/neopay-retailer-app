@@ -3,11 +3,11 @@ import {
     Text,
     View,
     StyleSheet,
-    Image,
     Dimensions,
     TouchableOpacity,
     TextInput,
     FlatList,
+    Image,
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
@@ -88,8 +88,28 @@ export default function CreateOrder(props) {
 
     const productDescription = (item) => {
         return(
-            <View>
-                <Text>{item.distributor}</Text>
+            <View style={{marginTop:20}}>
+                <View style={[commonStyles.row, {marginBottom:10}]}>
+                    <View>
+                        <Image style={styles.cardImage} source={require("../../assets/images/adaptive-icon.png")}/>
+                    </View>
+                    <View style={{marginLeft:16}}>
+                        <Text style={texts.greyNormal10}>{item.company_code} {'>'}</Text>
+                        <Text style={texts.blackTextBold14}>{item.variant}</Text>
+                    </View>
+                </View>
+                <View style={commonStyles.rowSpaceBetween}>
+                    <Text style={texts.greyTextBold12}>{item.sku}</Text>
+                    <View>
+                        <Text>ABC</Text>
+                    </View>
+                </View>
+                <View style={[commonStyles.row, {borderBottomWidth:1, borderBottomColor:colors.light_grey, paddingBottom:20}]}>
+                    <View style={{marginRight:20}}>
+                        <Text style={texts.greyNormal10}>MRP: {item.mrp}</Text>
+                    </View>
+                    <Text style={texts.greyNormal10}>Rate: {item.rate}</Text>
+                </View>
             </View>
         );
     }
@@ -127,3 +147,10 @@ export default function CreateOrder(props) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    cardImage: {
+      height: 42,
+      width: 42,
+    },
+})

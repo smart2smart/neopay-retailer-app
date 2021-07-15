@@ -22,6 +22,10 @@ export function HomeScreen(props: any) {
         navigation.navigate("CreateOrder")
     };
 
+    const storeDetails = () => {
+        navigation.navigate("RetailerDetails")
+    };
+
     return (
         <View style={{flex: 1}}>
             <PrimaryHeader navigation={props.navigation}/>
@@ -29,6 +33,7 @@ export function HomeScreen(props: any) {
                 Home Screen
             </Text>
             <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/>
+            <BorderButtonBigRed text={'Temprary Store details'} ctaFunction={() => storeDetails()}/>
         </View>
     )
 }
