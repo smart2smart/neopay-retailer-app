@@ -21,6 +21,11 @@ export const authApi = {
         method: 'POST',
         header: header
     },
+    otp: {
+        url: `${base_url}/retailers/otp/`,
+        method: 'POST',
+        header: header
+    },
 }
 
 export const commonApi = {
