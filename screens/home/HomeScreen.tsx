@@ -11,8 +11,16 @@ import {setIsLoggedIn} from "../../actions/actions";
 import {connect, useSelector} from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
+import { BorderButtonBigRed } from '../../buttons/Buttons';
+import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 
 export function HomeScreen(props: any) {
+
+    const navigation = useNavigation();
+
+    const createOrder = () => {
+        navigation.navigate("CreateOrder")
+    };
 
     return (
         <View style={{flex: 1}}>
@@ -20,6 +28,7 @@ export function HomeScreen(props: any) {
             <Text>
                 Home Screen
             </Text>
+            <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/>
         </View>
     )
 }

@@ -26,13 +26,13 @@ export default function BottomTabNavigator() {
                         case 'Home':
                             icon = <Entypo name="home" size={18} color={focused?colors.primary_color:colors.grey}/>
                             break;
-                        case 'Reports':
+                        case 'Cart':
                             icon = <Octicons name="file" size={18} color={focused?colors.primary_color:colors.grey} />
                             break;
-                        case 'Search':
-                            icon = <AntDesign name="search1" size={18} color={focused?colors.primary_color:colors.grey} />
+                        case 'Offers':
+                            icon = <Octicons name="file" size={18} color={focused?colors.primary_color:colors.grey} />
                             break;
-                        case 'Profile':
+                        case 'Account':
                             icon = <MaterialIcons name="account-circle" size={22} color={focused?colors.primary_color:colors.grey} />
                             break;
                     }
@@ -58,13 +58,13 @@ export default function BottomTabNavigator() {
                 name="Home"
                 component={HomeScreen}/>
             <BottomTabsStack.Screen
-                name="Reports"
+                name="Cart"
                 component={ComingSoon}/>
             <BottomTabsStack.Screen
-                name="Search"
+                name="Offers"
                 component={ComingSoon}/>
             <BottomTabsStack.Screen
-                name="Profile"
+                name="Account"
                 component={ProfileScreen}/>
         </BottomTabsStack.Navigator>
     );
