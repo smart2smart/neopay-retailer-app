@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.expo-shared/assets.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authenticatedGetRequest.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authenticatedPostRequest.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/checkToken.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/getRequest.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/postRequest.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/colors/colors.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/GothamBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/GothamBook.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/fonts/GothamMedium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/adaptive-icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/down_arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/favicon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/neopay_logo_2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/babel.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buttons/Buttons.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/EditScreenInfo.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/StyledText.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Themed.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/__tests__/StyledText-test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constants/Colors.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constants/Layout.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hooks/useCachedResources.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hooks/useColorScheme.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/navigation/AuthStack.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/navigation/LinkingConfiguration.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/navigation/Routes.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/loginReducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/rootReducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/tokenReducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/NotFoundScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/TabOneScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/TabTwoScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/store/mapStateToProps.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/store/store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/commonStyles.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/texts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/Indicator.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/PersistenceStore.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1vIm6bdFjYKHO3kbLKmpg3Q5Txg" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/fonts" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/fonts" />
+      <recent name="$PROJECT_DIR$/assets/images" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/screens" />
+      <recent name="$PROJECT_DIR$/navigation" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="" />
+      <created>1626257802528</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1626257802528</updated>
+      <workItem from="1626257803935" duration="4567000" />
+      <workItem from="1626334518752" duration="1258000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626335797398">
+      <screen x="0" y="27" width="1366" height="683" />
+    </state>
+    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1626335797398" />
+  </component>
+</project>
