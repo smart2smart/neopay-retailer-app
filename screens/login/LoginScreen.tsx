@@ -96,6 +96,7 @@ class LoginScreen extends Component {
             }
             PostRequest(data)
                 .then((res) => {
+                    console.log('gggggggggggggggggggggggggggggggggggggggggggg', res);
                     if(res && res.status ==200){
                         // @ts-ignore
                         this.props.navigation.navigate('Otp', {mobile:this.state.mobileNumber});
