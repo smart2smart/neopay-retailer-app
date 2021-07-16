@@ -16,7 +16,7 @@ import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
 import { BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Feather';
 
 export function ProfileScreen(props: any) {
 
@@ -63,7 +63,7 @@ export function ProfileScreen(props: any) {
                 <View style={{borderRadius:10, borderColor:colors.light_grey, borderWidth:1, padding:10, marginBottom:20}}>
                     <View style={commonStyles.rowSpaceBetween}>
                         <Text style={texts.blackTextBold14}>My Orders</Text>
-                        <Icon name={"right"} size={20} style={{color: colors.orange}}/>
+                        <Icon name={"chevron-right"} size={20} style={{color: colors.orange}}/>
                     </View>
                 </View>
         </View>

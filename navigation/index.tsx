@@ -14,6 +14,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import RetailerDetails from '../screens/details/RetailerDetails';
 import CreateOrder from '../screens/order/CreateOrder';
+import AddressDetails from '../screens/details/AddressDetails';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -36,6 +37,7 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="RetailerDetails" component={RetailerDetails} />
       <Stack.Screen name="CreateOrder" component={CreateOrder} />
+      <Stack.Screen name="AddressDetails" component={AddressDetails} />
     </Stack.Navigator>
   );
 }

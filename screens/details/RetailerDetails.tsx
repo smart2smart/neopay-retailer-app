@@ -6,6 +6,7 @@ import {
     Image,
     Dimensions,
     TouchableOpacity,
+    ScrollView,
     TextInput,
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
@@ -18,6 +19,7 @@ import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
 import { BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
+import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function RetailerDetails(props) {
@@ -57,20 +59,14 @@ export default function RetailerDetails(props) {
     //     }
     // }
 
+    const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
-    const [data, setData] = useState([]);
-    const [originalData, setOriginalData] = useState([]);
+    const [name, setName] = useState('');
+    const [contactPerson, setContactPerson] = useState('');
+    const [gmailId, setGmailId] = useState('');
 
-    const search = (text: string) => {
-        if(text===''){
-            setData(originalData);
-        }else {
-            let filteredData = originalData.filter((item)=>{
-                return item.name.toLowerCase().includes(text.toLowerCase());
-            });
-            setData(filteredData);
-        }
-        setSearchText(text);
+    const addressDetails = () => {
+        navigation.navigate("AddressDetails")
     }
 
     return(
@@ -90,13 +86,42 @@ export default function RetailerDetails(props) {
                     </View>
                 </View>
             </View> */}
-            <TextInput
-                value={searchText}
-                maxLength={10}
-                placeholder={"Search distributor and tap to select..."}
-                onChangeText={(text) => search(text)}
-                style={[commonStyles.textInput, texts.darkGreyNormal14]}>
-            </TextInput>
+            <ScrollView style={{flex: 1}}>
+                    <View style={styles.container}>
+                        <View style={styles.textInputDiv}>
+                            <TextInput
+                                value={name}
+                                placeholder={"New General Store"}
+                                onChangeText={(text) => setName(text)}
+                                style={styles.textInput}>
+                            </TextInput>
+                        </View>
+                        <View style={styles.textInputDiv}>
+                            <TextInput
+                                value={contactPerson}
+                                placeholder={"Contact person"}
+                                onChangeText={(text) => setContactPerson(text)}
+                                style={styles.textInput}>
+                            </TextInput>
+                        </View>
+                        <View style={styles.textInputDiv}>
+                            <Text>
+                                Contact and Email
+                            </Text>
+                        </View>
+                        <View style={styles.textInputDiv}>
+                            <TextInput
+                                value={gmailId}
+                                placeholder={"Gmail Id"}
+                                onChangeText={(text) => setGmailId(text)}
+                                style={styles.textInput}>
+                            </TextInput>
+                        </View>
+                    </View>
+                    <View style={commonStyles.rowFlexEnd}>
+                        <SolidButtonBlue text={'NEXT'} ctaFunction={() => addressDetails()}/>
+                    </View>
+            </ScrollView>
         </View>
     )
 }
@@ -104,16 +129,10 @@ export default function RetailerDetails(props) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingHorizontal: 24,
-        backgroundColor: colors.white
+        marginTop: 20,
+        padding: 16
     },
-    image: {
-        height: 200,
-        width: 200,
-        borderRadius: 30,
-        marginTop: 20
-    },
+    
     signature: {
         height: 200,
         width: Dimensions.get("window").width - 48,
@@ -127,5 +146,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         bottom: 10,
         right: 10
-    }
+    },
+    textInputDiv: {
+        paddingBottom: 30
+    },
+    textInput: {
+        borderColor: '#e6e6e6',
+        fontFamily: "GothamMedium",
+        borderWidth: 1,
+        width: '100%',
+        height: 50,
+        borderRadius: 5,
+        padding: 10
+    },
 })

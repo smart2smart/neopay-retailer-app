@@ -18,7 +18,7 @@ import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
-import { BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
+import { BorderButtonSmallBlue, SolidButtonBlue, BorderButtonSmallRed } from '../../buttons/Buttons';
 import Icon from "react-native-vector-icons/Feather";
 
 export default function CreateOrder(props) {
@@ -40,6 +40,7 @@ export default function CreateOrder(props) {
                 description: "qsdfghtrdx",
                 mrp: "500.00",
                 rate: "399.99",
+                value: 2,
                 code: "lkvcsakn87",
                 promotion_type: "",
                 promotion_value: 0,
@@ -62,6 +63,7 @@ export default function CreateOrder(props) {
                 description: "",
                 mrp: "1100.00",
                 rate: "1000.00",
+                value: 3,
                 code: "",
                 promotion_type: "",
                 promotion_value: 0,
@@ -79,14 +81,34 @@ export default function CreateOrder(props) {
     const [showSearch, setShowSearch] = useState(false);
     const [productData, setProductData] = useState(mockData);
 
-    // console.log('Data', productData);
-
     const showSearchBar = () => {
         setShowSearch(true);
         if (showSearch === true) setShowSearch(false);
     };
 
-    const productDescription = (item) => {
+    const selectProduct = (index: number, item, type: string) => {
+        let data = item;
+        const productDataMap = {...productData};
+        let quantity = productDataMap.results[index].value;
+    
+        if (type === "add") {
+          quantity = quantity == "" ? 1 : parseInt(quantity) + 1;
+        } else {
+          if (quantity > 0) {
+            quantity = parseInt(quantity) - 1;
+          }
+        }
+        productDataMap.results[index].value = quantity;
+        setProductData(productDataMap);
+    }
+
+    const setProductQuantity = (item, text) => {
+        let data = item;
+        data.value = text;
+        setProductData(data);
+    }
+
+    const productDescription = (item, index) => {
         return(
             <View style={{marginTop:20}}>
                 <View style={[commonStyles.row, {marginBottom:10}]}>
@@ -100,9 +122,32 @@ export default function CreateOrder(props) {
                 </View>
                 <View style={commonStyles.rowSpaceBetween}>
                     <Text style={texts.greyTextBold12}>{item.sku}</Text>
-                    <View>
-                        <Text>ABC</Text>
-                    </View>
+                    {item.value === 0 ?
+                    <BorderButtonSmallRed ctaFunction={() => {
+                        selectProduct(index, item, "add")
+                    }} text={"Add"}/> : <View style={styles.quantityButton}>
+                        <TouchableOpacity onPress={() => {
+                            selectProduct(index, item, "subtract")
+                        }} style={styles.addSubtractButton}>
+                            <Text style={texts.whiteTextBold16}>
+                                -
+                            </Text>
+                        </TouchableOpacity>
+                        <TextInput
+                            value={item.value.toString()}
+                            maxLength={10}
+                            keyboardType={"numeric"}
+                            onChangeText={(text) => setProductQuantity(item, text)}
+                            style={styles.cartInput}>
+                        </TextInput>
+                        <TouchableOpacity onPress={() => {
+                            selectProduct(index,item, "add")
+                        }} style={styles.addSubtractButton}>
+                            <Text style={texts.whiteTextBold16}>
+                                +
+                            </Text>
+                        </TouchableOpacity>
+                    </View>}
                 </View>
                 <View style={[commonStyles.row, {borderBottomWidth:1, borderBottomColor:colors.light_grey, paddingBottom:20}]}>
                     <View style={{marginRight:20}}>
@@ -110,6 +155,7 @@ export default function CreateOrder(props) {
                     </View>
                     <Text style={texts.greyNormal10}>Rate: {item.rate}</Text>
                 </View>
+
             </View>
         );
     }
@@ -131,19 +177,12 @@ export default function CreateOrder(props) {
                 />
                 </View>
             )}
-
-            {/* <FlatList
-                data={productData.results}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.id + ""}
-                renderItem={(item, index) => productDescription(item,index)}
-            /> */}
             <FlatList
-                data={productData.results}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.name + ""}
-                renderItem={({item, index}) =>productDescription(item, index)}
-            />
+            data={productData.results}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item.name + ""}
+            renderItem={({item, index}) =>productDescription(item, index)}
+          />
         </View>
     )
 }
@@ -152,5 +191,29 @@ const styles = StyleSheet.create({
     cardImage: {
       height: 42,
       width: 42,
+    },
+    quantityButton: {
+        flexDirection: 'row',
+        height: 24
+    },
+    cartInput: {
+        width: 35,
+        height: 24,
+        marginHorizontal: 5,
+        borderWidth: 1,
+        borderColor: colors.grey,
+        borderRadius: 3,
+        textAlign: 'center',
+        fontFamily: 'GothamMedium',
+        color: colors.darkGrey,
+        fontSize: 12
+    },
+    addSubtractButton: {
+        width: 24,
+        height: 24,
+        backgroundColor: colors.primary_color,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 3
     },
 })
