@@ -15,6 +15,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import RetailerDetails from '../screens/details/RetailerDetails';
 import CreateOrder from '../screens/order/CreateOrder';
 import AddressDetails from '../screens/details/AddressDetails';
+import BusinessInfo from '../screens/details/BusinessInfo';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -38,6 +39,7 @@ function RootNavigator() {
       <Stack.Screen name="RetailerDetails" component={RetailerDetails} />
       <Stack.Screen name="CreateOrder" component={CreateOrder} />
       <Stack.Screen name="AddressDetails" component={AddressDetails} />
+      <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
     </Stack.Navigator>
   );
 }

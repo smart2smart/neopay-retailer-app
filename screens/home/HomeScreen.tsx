@@ -44,8 +44,8 @@ export function HomeScreen(props: any) {
     const navigation = useNavigation();
     const [distributorData, setDistributorData] = useState(mockData);
 
-    const createOrder = () => {
-        navigation.navigate("CreateOrder")
+    const createOrder = (distributorID) => {
+        navigation.navigate("CreateOrder", {distributorID})
     };
 
     const storeDetails = () => {
@@ -57,7 +57,7 @@ export function HomeScreen(props: any) {
             <View style={{marginBottom:20}}>
                 <View style={commonStyles.row}> 
                     <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
-                    <BorderButtonBigRed text={item.name}/>
+                    <BorderButtonBigRed text={item.name} ctaFunction={() => createOrder(item.pk)}/>
                 </View>
                 
             </View>
@@ -70,7 +70,7 @@ export function HomeScreen(props: any) {
             <Text>
                 Home Screen
             </Text>
-            <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/>
+            {/* <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/> */}
             <BorderButtonBigRed text={'Temprary Store details'} ctaFunction={() => storeDetails()}/>
 
             <FlatList

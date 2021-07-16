@@ -63,6 +63,7 @@ export default function RetailerDetails(props) {
     const [searchText, setSearchText] = useState('');
     const [name, setName] = useState('');
     const [contactPerson, setContactPerson] = useState('');
+    const [phoneNo, setPhoneNo] = useState('');
     const [gmailId, setGmailId] = useState('');
 
     const addressDetails = () => {
@@ -109,7 +110,28 @@ export default function RetailerDetails(props) {
                                 Contact and Email
                             </Text>
                         </View>
-                        <View style={styles.textInputDiv}>
+                        <View style={styles.textInput}> 
+                            <View style={commonStyles.row}>
+                                <View style={[styles.countryCodeDiv, commonStyles.rowCenter]}>
+                                    <Text style={texts.greyNormal14}>
+                                        +91
+                                    </Text>
+                                    <Image style={styles.downArrow} source={require('../../assets/images/down_arrow.png')} />
+                                </View>
+                                <View>
+                                    <TextInput
+                                        value={phoneNo}
+                                        maxLength={10}
+                                        keyboardType={"numeric"}
+                                        placeholder={"799 115 4771"}
+                                        onChangeText={(text) => setPhoneNo(text)}
+                                        style={{paddingLeft:20}}
+                                    >
+                                    </TextInput>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{paddingVertical:20}}>
                             <TextInput
                                 value={gmailId}
                                 placeholder={"Gmail Id"}
@@ -158,5 +180,15 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 5,
         padding: 10
+    },countryCodeDiv:{
+        // marginVertical:12,
+        width:'26%',
+        borderRightWidth:1,
+        borderRightColor:colors.light_grey,
+    },
+    downArrow:{
+        width:24,
+        height:24,
+        marginLeft:8
     },
 })

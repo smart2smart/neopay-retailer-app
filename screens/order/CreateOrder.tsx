@@ -21,7 +21,11 @@ import commonStyles from '../../styles/commonStyles';
 import { BorderButtonSmallBlue, SolidButtonBlue, BorderButtonSmallRed } from '../../buttons/Buttons';
 import Icon from "react-native-vector-icons/Feather";
 
-export default function CreateOrder(props) {
+export default function CreateOrder({route}) {
+
+    if(route && route.params) {
+        const {distributorID} =route.params
+    }
 
     const mockData=
     {
@@ -183,6 +187,9 @@ export default function CreateOrder(props) {
             keyExtractor={(item) => item.name + ""}
             renderItem={({item, index}) =>productDescription(item, index)}
           />
+          <View style={commonStyles.rowFlexEnd}>
+            <SolidButtonBlue text={'SAVE'}/>
+            </View>
         </View>
     )
 }
