@@ -139,11 +139,11 @@ export default function CreateOrder(props) {
                 renderItem={(item, index) => productDescription(item,index)}
             /> */}
             <FlatList
-            data={productData.results}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => item.name + ""}
-            renderItem={({item, index}) =>productDescription(item, index)}
-          />
+                data={productData.results}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.name + ""}
+                renderItem={({item, index}) =>productDescription(item, index)}
+            />
         </View>
     )
 }
