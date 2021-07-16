@@ -13,7 +13,7 @@ export default function SecondaryHeader(props: any) {
             <TouchableOpacity onPress={() => {
                 navigation.goBack()
             }}>
-                <AntDesign name="arrowleft" size={24} color={colors.primary_color}/>
+                <AntDesign name="arrowleft" size={24} color={colors.blue}/>
             </TouchableOpacity>
             <Text style={[texts.darkGreyTextBold16, {marginLeft:10}]}>
                 {props.title}

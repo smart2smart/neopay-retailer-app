@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Octicons from 'react-native-vector-icons/Octicons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useColorScheme from '../hooks/useColorScheme';
@@ -27,7 +28,7 @@ export default function BottomTabNavigator() {
                             icon = <Entypo name="home" size={18} color={focused?colors.primary_color:colors.grey}/>
                             break;
                         case 'Cart':
-                            icon = <Octicons name="file" size={18} color={focused?colors.primary_color:colors.grey} />
+                            icon = <EvilIcons name="cart" size={25} color={focused?colors.primary_color:colors.grey} />
                             break;
                         case 'Offers':
                             icon = <Octicons name="file" size={18} color={focused?colors.primary_color:colors.grey} />
