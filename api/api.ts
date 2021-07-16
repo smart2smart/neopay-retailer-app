@@ -29,6 +29,15 @@ export const authApi = {
 }
 
 export const commonApi = {
-
+    getDistributorDetails: {
+        url: `${base_url}/retailers/distributors`,
+        method: 'GET',
+        header: header
+    },
+    // retailerProfile: {
+    //     url: `${base_url}/retailers/id`,
+    //     method: 'GET',
+    //     header: header
+    // },
 }
 

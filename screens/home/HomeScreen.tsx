@@ -16,6 +16,8 @@ import colors from "../../assets/colors/colors";
 import { BorderButtonBigRed } from '../../buttons/Buttons';
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import commonStyles from '../../styles/commonStyles';
+import {commonApi} from "../../api/api";
+import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 
 export function HomeScreen(props: any) {
 
@@ -34,15 +36,32 @@ export function HomeScreen(props: any) {
                 profile_picture: null
             },
             {
-                "pk": 1480,
-                "name": "Gloify_Distributor",
-                "profile_picture": null
+                pk: 1480,
+                name: "Gloify_Distributor",
+                profile_picture: null
             },
         ],
     };
 
     const navigation = useNavigation();
-    const [distributorData, setDistributorData] = useState(mockData);
+    const [distributorData, setDistributorData] = useState([]);
+
+    useEffect(() => {
+        getDistributorDetails();
+    }, []);
+
+    const getDistributorDetails = () => {
+        const data = {
+            method: commonApi.getDistributorDetails.method,
+            url: commonApi.getDistributorDetails.url,
+            header: commonApi.getDistributorDetails.header,
+        }
+        console.log('22222222222222222222222222222222',data)
+        AuthenticatedGetRequest(data).then((res) => {
+            setDistributorData(res.data);
+            console.log('33333333333333333333333333333333',res);
+        })
+    }
 
     const createOrder = (distributorID) => {
         navigation.navigate("CreateOrder", {distributorID})
@@ -67,14 +86,11 @@ export function HomeScreen(props: any) {
     return (
         <View style={{flex: 1}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <Text>
-                Home Screen
-            </Text>
             {/* <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/> */}
             <BorderButtonBigRed text={'Temprary Store details'} ctaFunction={() => storeDetails()}/>
 
             <FlatList
-                data={distributorData.distributors}
+                data={distributorData}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.name + ""}
                 renderItem={({item, index}) =>distributorDescription(item, index)}
