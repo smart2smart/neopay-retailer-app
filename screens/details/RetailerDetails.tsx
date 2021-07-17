@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -8,56 +8,22 @@ import {
     TouchableOpacity,
     ScrollView,
     TextInput,
+    Alert
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setIsLoggedIn} from "../../actions/actions";
+import { setIsLoggedIn } from "../../actions/actions";
 // @ts-ignore
-import {connect, useSelector} from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
 import { BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
-import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function RetailerDetails(props) {
-
-    // const addRetailerAddress = () => {
-    //     if (!shopName) {
-    //         alertMsg("Please enter shop name.");
-    //         return
-    //     }
-    //     if (!contactPersonName) {
-    //         alertMsg("Please enter contact person.");
-    //         return
-    //     }
-    //     if (!line1) {
-    //         alertMsg("Please enter address lin1");
-    //         return
-    //     }
-    //     if (!selectedPinCode) {
-    //         alertMsg("Please select pincode");
-    //         return
-    //     }
-    //     let data = {
-    //         name: shopName,
-    //         contact_person_name: contactPersonName,
-    //         email: email,
-    //         line1: line1,
-    //         line2: line2,
-    //         locality: locality.name,
-    //         beat_id: selectedBeat.id,
-    //         pincode: selectedPinCode.pincode,
-    //         gst_number: GSTIN,
-    //         retailer_code: retailerCode
-    //     }
-
-    //     if(route.params.comingFrom==="edit"){
-    //         data["address_id"]=addressId;
-    //     }
-    // }
 
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
@@ -65,30 +31,105 @@ export default function RetailerDetails(props) {
     const [contactPerson, setContactPerson] = useState('');
     const [phoneNo, setPhoneNo] = useState('');
     const [gmailId, setGmailId] = useState('');
+    const [newGeneralStore, setNewGeneralStore] = useState('');
+    const [contactPersonName, setContactPersonName] = useState('');
+    const [contactNumber, setContactNumber] = useState('');
 
     const addressDetails = () => {
+        if (!newGeneralStore) {
+            alertMsg("Please enter general store.");
+            return
+        }
+        if (!contactPersonName) {
+            alertMsg("Please enter contact person.");
+            return
+        }
         navigation.navigate("AddressDetails")
     }
 
-    return(
-        <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}> 
-            <SecondaryHeader title={"Store Details"}/>
-            {/* <View>
-                <View style={[commonStyles.rowCenter]}>
-                    <View style={{position: "relative"}}>
-                        <Image style={styles.signature}
-                        source={signature ? {uri: signature} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
-                        <TouchableOpacity onPress={() => {
-                            setModalVisible(true);
-                            setImageType("signature");
-                        }} style={styles.camera}>
-                            <Entypo name="camera" size={24} color={colors.primary_color}/>
-                        </TouchableOpacity>
-                    </View>
+    const alertMsg = (text: string) => {
+        Alert.alert(text);
+    }
+
+    const data = [
+        {type:"text", editable: true, placeholder: "New General Store*", onChange: setNewGeneralStore },
+        {
+            type:"text",
+            editable: true,
+            // property: contactPersonName,
+            placeholder: "Contact Person*",
+            onChange: setContactPersonName
+        },
+        {
+            type:"number",
+            editable: true,
+            // property: contactPersonName,
+            placeholder: "Contact Number",
+            onChange: setContactNumber
+        },
+        {
+            type:"text",
+            editable: true,
+            // property: contactPersonName,
+            placeholder: "Gmail Id",
+            onChange: setGmailId
+        }
+    ];
+
+    useEffect(() => {
+        setNewGeneralStore('');
+        setContactPersonName('')
+    }, [])
+
+    return (
+        <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: colors.white }}>
+            <SecondaryHeader title={"Store Details"} />
+            <ScrollView style={{ flex: 1 }}>
+                <View style={styles.container}>
+                    {data.map((item, index) => {
+                        if (item.type === "text") {
+                            return (
+                                <View style={styles.textInputDiv}>
+                                    <TextInput key={index} editable={item.editable}
+                                        placeholder={item.placeholder}
+                                        onChange={item.onChange} style={styles.textInput} />
+                                </View>
+                            )  
+                        }   else {
+                                return(
+                                    <View style={styles.textInputDiv}>
+                                        <View style={styles.textInputDiv}>
+                                            <Text>
+                                                Contact and Email
+                                            </Text>
+                                        </View>
+                                        <View style={styles.textInput}>
+                                            <View style={commonStyles.row}>
+                                                <View style={[styles.countryCodeDiv, commonStyles.rowCenter]}>
+                                                    <Text style={texts.greyNormal14}>
+                                                        +91
+                                                    </Text>
+                                                    <Image style={styles.downArrow} source={require('../../assets/images/down_arrow.png')} />
+                                                </View>
+                                                <View>
+                                                    <TextInput
+                                                        key={index} editable={item.editable}
+                                                        maxLength={10}
+                                                        keyboardType={"numeric"}
+                                                        placeholder={"799 115 4771"}
+                                                        onChangeText={item.onChange}
+                                                        style={{paddingLeft:20}}
+                                                    />
+                                                </View>
+                                            </View>
+                                        </View>
+                                    </View>
+                                )
+                            }
+                    })}
                 </View>
-            </View> */}
-            <ScrollView style={{flex: 1}}>
-                    <View style={styles.container}>
+
+                {/* <View style={styles.container}>
                         <View style={styles.textInputDiv}>
                             <TextInput
                                 value={name}
@@ -139,10 +180,10 @@ export default function RetailerDetails(props) {
                                 style={styles.textInput}>
                             </TextInput>
                         </View>
-                    </View>
-                    <View style={commonStyles.rowFlexEnd}>
-                        <SolidButtonBlue text={'NEXT'} ctaFunction={() => addressDetails()}/>
-                    </View>
+                    </View> */}
+                <View style={commonStyles.rowFlexEnd}>
+                    <SolidButtonBlue text={'NEXT'} ctaFunction={() => addressDetails()} />
+                </View>
             </ScrollView>
         </View>
     )
@@ -154,7 +195,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         padding: 16
     },
-    
+
     signature: {
         height: 200,
         width: Dimensions.get("window").width - 48,
@@ -180,15 +221,15 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 5,
         padding: 10
-    },countryCodeDiv:{
+    }, countryCodeDiv: {
         // marginVertical:12,
-        width:'26%',
-        borderRightWidth:1,
-        borderRightColor:colors.light_grey,
+        width: '26%',
+        borderRightWidth: 1,
+        borderRightColor: colors.light_grey,
     },
-    downArrow:{
-        width:24,
-        height:24,
-        marginLeft:8
+    downArrow: {
+        width: 24,
+        height: 24,
+        marginLeft: 8
     },
 })

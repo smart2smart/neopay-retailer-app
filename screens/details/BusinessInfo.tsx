@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     ScrollView,
     TextInput,
+    Alert,
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
@@ -31,13 +32,62 @@ export default function BusinessInfo(props) {
     const [drungLicense, setDrungLicense] = useState('');
 
     const addressDetails = () => {
-        navigation.navigate("AddressDetails")
+        if (!gstno) {
+            alertMsg("Please enter GST Number");
+            return
+        }
+        // navigation.navigate("AddressDetails")
     }
+
+    const alertMsg = (text: string) => {
+        Alert.alert(text);
+    }
+
+    const data = [
+        { editable: true, placeholder: "PAN: V125852BUI", onChange: setPan },
+        {
+            editable: true,
+            // property: gstno,
+            placeholder: "GST No.: BUI15538621",
+            onChange: setGstno
+        },
+        {
+            editable: true,
+            // property: fassiNo,
+            placeholder: "FASSI No.: 12325231",
+            onChange: setFaasino
+        },
+        {
+            editable: true,
+            // property: drugLicense,
+            placeholder: "Drug License: Lorem Ipsum",
+            onChange: setDrungLicense
+        }
+    ];
+
+    useEffect(() => {
+        setPan('');
+        setGstno('');
+        setFaasino('');
+        setDrungLicense('');
+    }, [])
     
     return(
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}> 
             <SecondaryHeader title={"Business Info"}/>
-            <View style={styles.container}>
+            <ScrollView>
+                <View style={styles.container}>
+                    {data.map((item, index) => {
+                        return (
+                            <View style={styles.textInputDiv}>
+                                <TextInput key={index} editable={item.editable}
+                                    placeholder={item.placeholder}
+                                    onChange={item.onChange} style={styles.textInput} />
+                            </View>
+                        )
+                    })}
+                </View>
+            {/* <View style={styles.container}>
                 <View style={styles.textInputDiv}>
                     <TextInput
                         value={pan}
@@ -49,6 +99,7 @@ export default function BusinessInfo(props) {
                 <View style={styles.textInputDiv}>
                     <TextInput
                         value={gstno}
+                        required
                         placeholder={"GST No. : BUI15538621"}
                         onChangeText={(text) => setGstno(text)}
                         style={styles.textInput}>
@@ -70,7 +121,7 @@ export default function BusinessInfo(props) {
                         style={styles.textInput}>
                     </TextInput>
                 </View>
-            </View>
+            </View> */}
             <View style={commonStyles.row}>
                 <View>
                     <BorderButtonSmallBlue text={'BACK'} ctaFunction={() => addressDetails()}/>
@@ -79,6 +130,7 @@ export default function BusinessInfo(props) {
                     <SolidButtonBlue text={' SUBMIT '}/>
                 </View>
             </View>
+            </ScrollView>
         </View>
     );
 }
