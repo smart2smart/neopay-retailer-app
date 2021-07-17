@@ -89,6 +89,10 @@ export default function AddressDetails(props) {
         navigation.navigate("RetailerDetails")
     }
 
+    const goToMapView = () => {
+            navigation.navigate('MapView');
+    }
+
     useEffect(() => {
         setAddress1('');
         setAddress2('');
@@ -149,8 +153,18 @@ export default function AddressDetails(props) {
                     </TextInput>
                 </View> */}
             </View>
-            <View>
+            {/* <View>
                 <Text style={texts.redTextBold15}>Geo Location</Text>
+            </View> */}
+            <View style={commonStyles.row}>
+                <Text style={texts.redTextBold14}> Geo Location: </Text>
+            </View>
+            <View style={[commonStyles.row, {marginTop: 20}]}>
+                <TouchableOpacity onPress={goToMapView}>
+                    <Text style={[texts.blueBoldl14, styles.underline]}>
+                        Choose on Map
+                    </Text>
+                </TouchableOpacity>
             </View>
             <View style={commonStyles.rowFlexEnd}>
                 <BorderButtonBigBlue text={'BACK'} ctaFunction={() => storeDetails()}/>
@@ -172,5 +186,10 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 5,
         padding: 10
+    },
+    underline: {
+        borderBottomWidth: 1.5,
+        borderBottomColor: colors.blue,
+        paddingBottom: 2
     },
 })

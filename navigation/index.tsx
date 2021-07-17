@@ -16,6 +16,8 @@ import RetailerDetails from '../screens/details/RetailerDetails';
 import CreateOrder from '../screens/order/CreateOrder';
 import AddressDetails from '../screens/details/AddressDetails';
 import BusinessInfo from '../screens/details/BusinessInfo';
+import MapViewScreen from "../commons/MapView";
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -40,6 +42,7 @@ function RootNavigator() {
       <Stack.Screen name="CreateOrder" component={CreateOrder} />
       <Stack.Screen name="AddressDetails" component={AddressDetails} />
       <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
+      <Stack.Screen name="MapView" component={MapViewScreen} />
     </Stack.Navigator>
   );
 }
