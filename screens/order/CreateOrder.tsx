@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     addSubtractButton: {
         width: 24,
         height: 24,
-        backgroundColor: colors.primary_color,
+        backgroundColor: colors.darkGrey,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 3
