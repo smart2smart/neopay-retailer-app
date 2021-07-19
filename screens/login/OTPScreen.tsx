@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
         marginVertical: 12,
         width: '26%',
         borderRightWidth: 1,
-        borderRightColor: colors.light_grey,
+        borderRightColor: colors.lightGrey,
         flexDirection: "row",
         alignItems: 'center',
         justifyContent: 'center'

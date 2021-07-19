@@ -17,6 +17,7 @@ import CreateOrder from '../screens/order/CreateOrder';
 import AddressDetails from '../screens/details/AddressDetails';
 import BusinessInfo from '../screens/details/BusinessInfo';
 import MapViewScreen from "../commons/MapView";
+import Drawer from "./Drawer";
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -36,6 +37,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="RetailerDetails" component={RetailerDetails} />

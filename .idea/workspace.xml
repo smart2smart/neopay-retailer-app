@@ -2,13 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/headers/SecondaryHeader.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/ComingSoon.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/navigation/Drawer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/colors/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/colors/colors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/details/RetailerDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/RetailerDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/order/CreateOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/CreateOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/commonStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/commonStyles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/texts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/texts.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,16 +42,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/screens" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/commons" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/screens" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/hooks" />
-      <recent name="$PROJECT_DIR$/assets/fonts" />
+      <recent name="$PROJECT_DIR$/commons" />
+      <recent name="$PROJECT_DIR$/screens/profile" />
+      <recent name="$PROJECT_DIR$/navigation" />
       <recent name="$PROJECT_DIR$/assets/images" />
+      <recent name="$PROJECT_DIR$/screens" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -53,7 +66,8 @@
       <option name="presentableId" value="Default" />
       <updated>1626257802528</updated>
       <workItem from="1626257803935" duration="4567000" />
-      <workItem from="1626334518752" duration="2770000" />
+      <workItem from="1626334518752" duration="3698000" />
+      <workItem from="1626669080975" duration="4464000" />
     </task>
     <servers />
   </component>
@@ -61,13 +75,17 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626343444704">
+    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626672947965">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1626343444704" />
-    <state x="388" y="117" width="589" height="502" key="find.popup" timestamp="1626335817832">
+    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1626672947965" />
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl" timestamp="1626673563061">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="589" height="502" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1626335817832" />
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1626673563061" />
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1626673944396">
+      <screen x="0" y="27" width="1366" height="683" />
+    </state>
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1626673944396" />
   </component>
 </project>

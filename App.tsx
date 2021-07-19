@@ -16,7 +16,7 @@ export default function App() {
     return (
 
         <Provider store={store}>
-          <StatusBar barStyle="light-content" backgroundColor={colors.blue}/>
+          <StatusBar barStyle="light-content" backgroundColor={colors.primaryThemeColor}/>
           <SafeAreaView style={{flex: 1, marginTop: 30}}>
             <Routes/>
           </SafeAreaView>

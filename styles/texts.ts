@@ -3,7 +3,7 @@ import colors from "../assets/colors/colors";
 
 const texts = StyleSheet.create({
     blueHeading1: {
-        color: colors.primary_theme_color,
+        color: colors.primaryThemeColor,
         fontSize: 18,
         fontFamily: "GothamMedium",
         fontWeight: 'bold',

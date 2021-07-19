@@ -56,10 +56,8 @@ export function HomeScreen(props: any) {
             url: commonApi.getDistributorDetails.url,
             header: commonApi.getDistributorDetails.header,
         }
-        console.log('22222222222222222222222222222222',data)
         AuthenticatedGetRequest(data).then((res) => {
             setDistributorData(res.data);
-            console.log('33333333333333333333333333333333',res);
         })
     }
 
@@ -78,7 +76,6 @@ export function HomeScreen(props: any) {
                     <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
                     <BorderButtonBigRed text={item.name} ctaFunction={() => createOrder(item.pk)}/>
                 </View>
-                
             </View>
         )
     }
@@ -88,7 +85,6 @@ export function HomeScreen(props: any) {
             <PrimaryHeader navigation={props.navigation}/>
             {/* <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/> */}
             <BorderButtonBigRed text={'Temprary Store details'} ctaFunction={() => storeDetails()}/>
-
             <FlatList
                 data={distributorData}
                 showsVerticalScrollIndicator={false}
@@ -119,7 +115,7 @@ const styles = StyleSheet.create({
     },
     borderBottom: {
         borderBottomWidth: 1,
-        borderBottomColor: colors.light_grey,
+        borderBottomColor: colors.lightGrey,
         paddingBottom: 16
     },
     cardImage: {

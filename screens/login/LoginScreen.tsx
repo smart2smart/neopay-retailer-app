@@ -165,13 +165,13 @@ class LoginScreen extends Component {
                     <SolidButtonBlue text={this.state.loginMethod==="mobile"?"REQUEST OTP":"Continue"} ctaFunction={this.state.loginMethod==="mobile"?this.requestOTP:this.loginWithEmail} />
                     </View>
                     <View style={[commonStyles.rowCenter, {marginVertical:30}]}>
-                        <View style={{borderBottomColor:colors.light_grey, borderBottomWidth:1, flex:1}}>
+                        <View style={{borderBottomColor:colors.lightGrey, borderBottomWidth:1, flex:1}}>
 
                         </View>
                         <Text style={[texts.greyNormal14, {marginHorizontal:20}]}>
                             Or
                         </Text>
-                        <View style={{borderBottomColor:colors.light_grey, borderBottomWidth:1, flex:1}}>
+                        <View style={{borderBottomColor:colors.lightGrey, borderBottomWidth:1, flex:1}}>
 
                         </View>
                     </View>
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
         height:48,
         marginTop:48,
         borderRadius:5,
-        borderColor:colors.light_grey,
+        borderColor:colors.lightGrey,
         borderWidth:1,
         flexDirection:'row'
     },
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         marginVertical:12,
         width:'26%',
         borderRightWidth:1,
-        borderRightColor:colors.light_grey,
+        borderRightColor:colors.lightGrey,
     },
     mobileInputDiv:{
         width:'74%',

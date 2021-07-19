@@ -26,7 +26,7 @@ export default function PrimaryHeader(props:any) {
 const styles = StyleSheet.create({
     header: {
         paddingHorizontal: 16,
-        backgroundColor:colors.blue,
+        backgroundColor:colors.primaryThemeColor,
         height:56
     },
     headerLeft: {

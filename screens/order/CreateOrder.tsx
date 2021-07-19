@@ -153,7 +153,7 @@ export default function CreateOrder({route}) {
                         </TouchableOpacity>
                     </View>}
                 </View>
-                <View style={[commonStyles.row, {borderBottomWidth:1, borderBottomColor:colors.light_grey, paddingBottom:20}]}>
+                <View style={[commonStyles.row, {borderBottomWidth:1, borderBottomColor:colors.lightGrey, paddingBottom:20}]}>
                     <View style={{marginRight:20}}>
                         <Text style={texts.greyNormal10}>MRP: {item.mrp}</Text>
                     </View>

@@ -11,7 +11,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import colors from "../assets/colors/colors";
 import ComingSoon from "../screens/ComingSoon";
 import {HomeScreen} from "../screens/home/HomeScreen";
-import {ProfileScreen} from "../screens/profile/ProfileScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
 
 const BottomTabsStack = createBottomTabNavigator();
 
@@ -25,16 +25,16 @@ export default function BottomTabNavigator() {
                     let icon = null;
                     switch (route.name) {
                         case 'Home':
-                            icon = <Entypo name="home" size={18} color={focused?colors.primary_color:colors.grey}/>
+                            icon = <Entypo name="home" size={18} color={focused?colors.primaryThemeColor:colors.lightGrey}/>
                             break;
                         case 'Cart':
-                            icon = <EvilIcons name="cart" size={25} color={focused?colors.primary_color:colors.grey} />
+                            icon = <EvilIcons name="cart" size={25} color={focused?colors.primaryThemeColor:colors.lightGrey} />
                             break;
                         case 'Offers':
-                            icon = <Octicons name="file" size={18} color={focused?colors.primary_color:colors.grey} />
+                            icon = <Octicons name="file" size={18} color={focused?colors.primaryThemeColor:colors.lightGrey} />
                             break;
                         case 'Account':
-                            icon = <MaterialIcons name="account-circle" size={22} color={focused?colors.primary_color:colors.grey} />
+                            icon = <MaterialIcons name="account-circle" size={22} color={focused?colors.primaryThemeColor:colors.lightGrey} />
                             break;
                     }
 
@@ -42,7 +42,7 @@ export default function BottomTabNavigator() {
                 },
             })}
             tabBarOptions={{
-                activeTintColor: colors.primary_color,
+                activeTintColor: colors.primaryThemeColor,
                 inactiveTintColor: '#909090',
                 style: {
                     paddingBottom: 6,

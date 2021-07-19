@@ -217,7 +217,7 @@ const commonStyles = StyleSheet.create({
     modalBeatPlanDiv: {
         paddingVertical: 16,
         borderBottomWidth: 1,
-        borderBottomColor: colors.light_grey,
+        borderBottomColor: colors.lightGrey,
         paddingLeft: 5
     },
     modalBeatPlanContainer: {
@@ -235,7 +235,7 @@ const commonStyles = StyleSheet.create({
         paddingVertical: 3,
         borderRadius: 4,
         marginHorizontal: 8,
-        backgroundColor: colors.primary_theme_color
+        backgroundColor: colors.primaryThemeColor
     },
     solidStatusRed:{
         height: 22,
