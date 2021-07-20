@@ -22,6 +22,8 @@ import commonStyles from '../../styles/commonStyles';
 import { BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
+import {commonApi} from "../../api/api";
+import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 
 export default function BusinessInfo(props) {
 
@@ -40,11 +42,34 @@ export default function BusinessInfo(props) {
     }
 
     const homePage = () => {
+        console.log("Inside data")
         if (!gstno) {
             alertMsg("Please enter GST Number");
             return
         }
-        navigation.navigate("HomeScreen")
+        const data = {
+            gst_number: gstno,
+            drug_registeration_no: drungLicense,
+            fssai_no: faasino,
+            pan_no: pan
+        }
+        console.log("DATAAAAAAAAAAA", data)
+        let dataToSend = {}
+
+            dataToSend = {
+                method: commonApi.getBusinessInfo.method,
+                url: commonApi.getBusinessInfo.url,
+                header: commonApi.getBusinessInfo.header,
+                data: data
+            }
+        // @ts-ignore
+        AuthenticatedPostRequest(dataToSend).then((res) => {
+            console.log("**", res);
+            if (res.status == 200) {
+                Alert.alert("Details updated successfully.");
+                navigation.navigate("HomeScreen")
+            }
+        })
     }
 
     const alertMsg = (text: string) => {
@@ -90,7 +115,9 @@ export default function BusinessInfo(props) {
                             <View style={styles.textInputDiv}>
                                 <TextInput key={index} editable={item.editable}
                                     placeholder={item.placeholder}
-                                    onChange={item.onChange} style={styles.textInput} />
+                                    onChangeText={(text) => {
+                                        item.onChange(text);
+                                    }} style={styles.textInput} />
                             </View>
                         )
                     })}

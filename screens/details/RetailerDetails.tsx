@@ -22,6 +22,8 @@ import commonStyles from '../../styles/commonStyles';
 import { BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
 import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
+import {commonApi} from "../../api/api";
+import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 
 export default function RetailerDetails(props) {
 
@@ -44,7 +46,33 @@ export default function RetailerDetails(props) {
             alertMsg("Please enter contact person.");
             return
         }
-        navigation.navigate("AddressDetails")
+
+        const data = {
+            name: newGeneralStore,
+            contact_person_name: contactPersonName,
+            contact_no: contactNumber,
+            email: gmailId,
+            // salesman_ids: JSON.stringify(salesman_ids)
+        }
+        let dataToSend = {}
+        
+            dataToSend = {
+                method: commonApi.storeDetails.method,
+                url: commonApi.storeDetails.url,
+                header: commonApi.storeDetails.header,
+                data: data
+            }
+        
+
+            AuthenticatedPostRequest(dataToSend).then((res) => {
+                console.log("**", res);
+                if (res.status == 200) {
+                    Alert.alert("Details updated successfully.");
+                    navigation.navigate("AddressDetails")
+                }
+        })
+
+        // navigation.navigate("AddressDetails")
     }
 
     const alertMsg = (text: string) => {
@@ -92,7 +120,7 @@ export default function RetailerDetails(props) {
                                 <View style={styles.textInputDiv}>
                                     <TextInput key={index} editable={item.editable}
                                         placeholder={item.placeholder}
-                                        onChange={item.onChange} style={styles.textInput} />
+                                        onChangeText={item.onChange} style={styles.textInput} />
                                 </View>
                             )  
                         }   else {

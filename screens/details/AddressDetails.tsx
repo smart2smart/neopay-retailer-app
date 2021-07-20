@@ -25,6 +25,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import SelectModal from "../../commons/SelectModal";
 import TextInputModal from "../../commons/TextInputModal";
 import SelectLocalityModal from "../../commons/SelectLocality";
+import {commonApi} from "../../api/api";
+import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 
 export default function AddressDetails(props) {
 
@@ -48,7 +50,28 @@ export default function AddressDetails(props) {
             alertMsg("Please enter your address");
             return
         }
-        navigation.navigate("BusinessInfo")
+
+        const data = {
+            retailer_address : address1,
+        }
+        console.log("DATAAAAAAAAAAA", data)
+        let dataToSend = {}
+
+            dataToSend = {
+                method: commonApi.retailerAddrerss.method,
+                url: commonApi.retailerAddrerss.url,
+                header: commonApi.retailerAddrerss.header,
+                data: data
+            }
+        // @ts-ignore
+        AuthenticatedPostRequest(dataToSend).then((res) => {
+            console.log("**", res);
+            if (res.status == 200) {
+                Alert.alert("Details updated successfully.");
+                navigation.navigate("BusinessInfo")
+            }
+        })
+        // navigation.navigate("BusinessInfo")
     }
 
     const alertMsg = (text: string) => {
@@ -116,7 +139,7 @@ export default function AddressDetails(props) {
                                     <View style={styles.textInputDiv}>
                                     <TextInput key={index} editable={item.editable}
                                                         placeholder={item.placeholder}
-                                                        onChange={item.onChange} style={styles.textInput} />
+                                                        onChangeText={item.onChange} style={styles.textInput} />
                                                         </View>
                                 )
                             } else {
