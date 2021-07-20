@@ -43,6 +43,14 @@ export default function AddressDetails(props) {
         console.log("123")
     }
 
+    const businessInfo = () => {
+        if (!address1) {
+            alertMsg("Please enter your address");
+            return
+        }
+        navigation.navigate("BusinessInfo")
+    }
+
     const alertMsg = (text: string) => {
         Alert.alert(text);
     }
@@ -81,9 +89,9 @@ export default function AddressDetails(props) {
         {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2},
     ];
 
-    const businessInfo = () => {
-        navigation.navigate("BusinessInfo")
-    }
+    // const businessInfo = () => {
+    //     navigation.navigate("BusinessInfo")
+    // }
 
     const storeDetails = () => {
         navigation.navigate("RetailerDetails")
