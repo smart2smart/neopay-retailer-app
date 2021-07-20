@@ -18,6 +18,7 @@ import AddressDetails from '../screens/details/AddressDetails';
 import BusinessInfo from '../screens/details/BusinessInfo';
 import MapViewScreen from "../commons/MapView";
 import Drawer from "./Drawer";
+import HomeScreen from "../screens/home/HomeScreen";
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -45,6 +46,7 @@ function RootNavigator() {
       <Stack.Screen name="AddressDetails" component={AddressDetails} />
       <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
       <Stack.Screen name="MapView" component={MapViewScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
     </Stack.Navigator>
   );
 }

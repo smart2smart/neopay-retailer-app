@@ -39,6 +39,14 @@ export default function BusinessInfo(props) {
         // navigation.navigate("AddressDetails")
     }
 
+    const homePage = () => {
+        if (!gstno) {
+            alertMsg("Please enter GST Number");
+            return
+        }
+        navigation.navigate("HomeScreen")
+    }
+
     const alertMsg = (text: string) => {
         Alert.alert(text);
     }
@@ -127,7 +135,7 @@ export default function BusinessInfo(props) {
                     <BorderButtonSmallBlue text={'BACK'} ctaFunction={() => addressDetails()}/>
                 </View>
                 <View style={{marginLeft:20}}>
-                    <SolidButtonBlue text={' SUBMIT '}/>
+                    <SolidButtonBlue text={' SUBMIT '} ctaFunction={() => homePage()}/>
                 </View>
             </View>
             </ScrollView>
