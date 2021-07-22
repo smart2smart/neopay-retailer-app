@@ -29,7 +29,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 export default function RetailerDetails(props) {
 
     const navigation = useNavigation();
-    const [searchText, setSearchText] = useState('');
     const [gmailId, setGmailId] = useState('');
     const [newGeneralStore, setNewGeneralStore] = useState('');
     const [contactPersonName, setContactPersonName] = useState('');
@@ -63,7 +62,6 @@ export default function RetailerDetails(props) {
         
              // @ts-ignore
             AuthenticatedPostRequest(dataToSend).then((res) => {
-                console.log("**", res);
                 if (res.status == 200) {
                     Alert.alert("Details updated successfully.");
                     navigation.navigate("AddressDetails")

@@ -25,8 +25,7 @@ export default function UploadImage() {
 
 
     useEffect(() => {
-        // setRetailerId(route.params.retailerId);
-        setImage(route.params.image);
+        // setImage(route.params.image);
         (async () => {
             if (Platform.OS !== 'web') {
                 const {status: status1} = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -90,19 +89,21 @@ export default function UploadImage() {
         const data = {
             method: commonApi.updateRetailerImage.method,
             // url: commonApi.updateRetailerImage.url + retailerId + '/',
-            url: commonApi.updateRetailerImage.url + '/',
+            url: commonApi.updateRetailerImage.url,
             header: commonApi.updateRetailerImage.header,
             data: formData
         }
+        console.log("*******", data)
         UploadFileRequest(data)
             .then((res) => {
                 setIsLoading(false);
                 if (res && res.status == 200) {
                     if (route.params.comingFrom === 'retailer-details') {
                         navigation.navigate('RetailerDetails', {image: image})
-                    } else {
-                        navigation.replace("RetailersList")
-                    }
+                    } 
+                    // else {
+                    //     navigation.replace("RetailersList")
+                    // }
                 } else {
                     Alert.alert(res.data.error);
                 }

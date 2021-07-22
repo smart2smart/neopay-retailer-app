@@ -149,8 +149,6 @@ export default function AddressDetails(props) {
     }
 
     useEffect(() => {
-        setAddress1('');
-        setAddress2('');
         const data = {
             method: commonApi.getPinCodeList.method,
             url: commonApi.getPinCodeList.url,
