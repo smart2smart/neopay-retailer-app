@@ -52,7 +52,6 @@ export default function RetailerDetails(props) {
             contact_person_name: contactPersonName,
             contact_no: contactNumber,
             email: gmailId,
-            // salesman_ids: JSON.stringify(salesman_ids)
         }
         let dataToSend = {}
         
@@ -63,7 +62,7 @@ export default function RetailerDetails(props) {
                 data: data
             }
         
-
+            // @ts-ignore
             AuthenticatedPostRequest(dataToSend).then((res) => {
                 console.log("**", res);
                 if (res.status == 200) {
