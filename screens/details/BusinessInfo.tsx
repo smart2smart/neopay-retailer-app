@@ -19,7 +19,7 @@ import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
-import { BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
+import { BorderButtonSmallBlue, SolidButtonBlue, BorderButtonBigBlue } from '../../buttons/Buttons';
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 import {commonApi} from "../../api/api";
@@ -108,7 +108,7 @@ export default function BusinessInfo(props) {
     return(
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}> 
             <SecondaryHeader title={"Business Info"}/>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     {data.map((item, index) => {
                         return (
@@ -157,13 +157,17 @@ export default function BusinessInfo(props) {
                     </TextInput>
                 </View>
             </View> */}
-            <View style={commonStyles.row}>
+            {/* <View style={commonStyles.row}>
                 <View>
                     <BorderButtonSmallBlue text={'BACK'} ctaFunction={() => addressDetails()}/>
                 </View>
                 <View style={{marginLeft:20}}>
-                    <SolidButtonBlue text={' SUBMIT '} ctaFunction={() => homePage()}/>
+                    <SolidButtonBlue text={'SUBMIT'} ctaFunction={() => homePage()}/>
                 </View>
+            </View> */}
+            <View style={commonStyles.rowFlexEnd}>
+                <BorderButtonBigBlue text={'BACK'} ctaFunction={() => addressDetails()} />
+                <SolidButtonBlue text={'SUBMIT'} ctaFunction={() => homePage()} />
             </View>
             </ScrollView>
         </View>

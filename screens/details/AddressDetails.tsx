@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -12,21 +12,22 @@ import {
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setIsLoggedIn} from "../../actions/actions";
+import { setIsLoggedIn } from "../../actions/actions";
 // @ts-ignore
-import {connect, useSelector} from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
 import { BorderButtonBigBlue, BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
-import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
+import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 import SelectModal from "../../commons/SelectModal";
 import TextInputModal from "../../commons/TextInputModal";
 import SelectLocalityModal from "../../commons/SelectLocality";
-import {commonApi} from "../../api/api";
-import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
+import { commonApi } from "../../api/api";
+import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
+import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
 
 export default function AddressDetails(props) {
 
@@ -35,14 +36,34 @@ export default function AddressDetails(props) {
     const [locality, setLocality] = useState('');
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
+    const [state, setState] = useState('');
+    const [city, setCity] = useState('');
     const [pincodeModalVisible, setPincodeModalVisible] = useState(false);
-    const [pinCodeData, setPinCodeData] = useState([]);
     const [localityModalVisible, setLocalityModalVisible] = useState(false);
-    const [selectedPinCode, setSelectedPinCode] = useState('');
     const [localityData, setLocalityData] = useState([]);
+    const [pinCodeData, setPinCodeData] = useState([]);
+    const [selectedPinCode, setSelectedPinCode] = useState('');
 
     const selectPinCode = (item) => {
-        console.log("123")
+        setCity(item.city);
+        setState(item.state);
+        setSelectedPinCode(item);
+        setLocality('');
+        getLocalities(item.city.id)
+    }
+
+    const getLocalities = (cityId) => {
+        const data = {
+            method: commonApi.getLocalities.method,
+            url: commonApi.getLocalities.url + "?city=" + cityId,
+            header: commonApi.getLocalities.header,
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setLocalityData(res.data);
+            }
+        })
     }
 
     const businessInfo = () => {
@@ -51,18 +72,21 @@ export default function AddressDetails(props) {
             return
         }
 
-        const data = {
-            retailer_address : address1,
+        let data = {
+            line1: address1,
+            line2: address2,
+            locality: locality.name,
+            pincode: selectedPinCode.pincode,
         }
-        console.log("DATAAAAAAAAAAA", data)
+
         let dataToSend = {}
 
-            dataToSend = {
-                method: commonApi.retailerAddrerss.method,
-                url: commonApi.retailerAddrerss.url,
-                header: commonApi.retailerAddrerss.header,
-                data: data
-            }
+        dataToSend = {
+            method: commonApi.retailerAddrerss.method,
+            url: commonApi.retailerAddrerss.url,
+            header: commonApi.retailerAddrerss.header,
+            data: data
+        }
         // @ts-ignore
         AuthenticatedPostRequest(dataToSend).then((res) => {
             console.log("**", res);
@@ -71,7 +95,7 @@ export default function AddressDetails(props) {
                 navigation.navigate("BusinessInfo")
             }
         })
-        // navigation.navigate("BusinessInfo")
+        navigation.navigate("BusinessInfo")
     }
 
     const alertMsg = (text: string) => {
@@ -108,8 +132,8 @@ export default function AddressDetails(props) {
             data: localityData,
             selectItem: setLocality
         },
-        {type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1},
-        {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2},
+        { type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1 },
+        { type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2 },
     ];
 
     // const businessInfo = () => {
@@ -121,76 +145,53 @@ export default function AddressDetails(props) {
     }
 
     const goToMapView = () => {
-            navigation.navigate('MapView');
+        navigation.navigate('MapView');
     }
 
     useEffect(() => {
         setAddress1('');
         setAddress2('');
+        const data = {
+            method: commonApi.getPinCodeList.method,
+            url: commonApi.getPinCodeList.url,
+            header: commonApi.getPinCodeList.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setPinCodeData(res.data);
+            }
+        })
+
     }, [])
 
-    return(
-        <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}> 
-            <SecondaryHeader title={"Store Address"}/>
-            <View style={{marginTop:20}}>
-            {data.map((item, index) => {
-                            if (item.type === "text") {
-                                return (
-                                    <View style={styles.textInputDiv}>
-                                    <TextInput key={index} editable={item.editable}
-                                                        placeholder={item.placeholder}
-                                                        onChangeText={item.onChange} style={styles.textInput} />
-                                                        </View>
-                                )
-                            } else {
-                                return (
-                                    <TextInputModal key={index} property={item.property} toggleModal={item.toggleModal}
-                                                    modal={item.modal} title={item.title}
-                                                    modalVisible={item.modalVisible} data={item.data}
-                                                    selectItem={item.selectItem}
-                                    />)
-                            }
-             })}
-                {/* <View style={styles.textInputDiv}>
-                    <TextInput
-                        value={postalZip}
-                        placeholder={"POSTAL ZIP"}
-                        onChangeText={(text) => setPostalZip(text)}
-                        style={styles.textInput}>
-                    </TextInput>
-                </View>
-                <View style={styles.textInputDiv}>
-                    <TextInput
-                        value={locality}
-                        placeholder={"Locality"}
-                        onChangeText={(text) => setLocality(text)}
-                        style={styles.textInput}>
-                    </TextInput>
-                </View>
-                <View style={styles.textInputDiv}>
-                    <TextInput
-                        value={address1}
-                        placeholder={"Address Line 1"}
-                        onChangeText={(text) => setAddress1(text)}
-                        style={styles.textInput}>
-                    </TextInput>
-                </View>
-                <View style={styles.textInputDiv}>
-                    <TextInput
-                        value={address2}
-                        placeholder={"Address Line 2"}
-                        onChangeText={(text) => setAddress2(text)}
-                        style={styles.textInput}>
-                    </TextInput>
-                </View> */}
+    return (
+        <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: colors.white }}>
+            <SecondaryHeader title={"Store Address"} />
+            <View style={{ marginTop: 20 }}>
+                {data.map((item, index) => {
+                    if (item.type === "text") {
+                        return (
+                            <View style={styles.textInputDiv}>
+                                <TextInput key={index} editable={item.editable}
+                                    placeholder={item.placeholder}
+                                    onChangeText={item.onChange} style={styles.textInput} />
+                            </View>
+                        )
+                    } else {
+                        return (
+                            <TextInputModal key={index} property={item.property} toggleModal={item.toggleModal}
+                                modal={item.modal} title={item.title}
+                                modalVisible={item.modalVisible} data={item.data}
+                                selectItem={item.selectItem}
+                            />)
+                    }
+                })}
             </View>
-            {/* <View>
-                <Text style={texts.redTextBold15}>Geo Location</Text>
-            </View> */}
             <View style={commonStyles.row}>
                 <Text style={texts.redTextBold14}> Geo Location: </Text>
             </View>
-            <View style={[commonStyles.row, {marginTop: 20}]}>
+            <View style={[commonStyles.row, { marginVertical: 20 }]}>
                 <TouchableOpacity onPress={goToMapView}>
                     <Text style={[texts.blueBoldl14, styles.underline]}>
                         Choose on Map
@@ -198,8 +199,8 @@ export default function AddressDetails(props) {
                 </TouchableOpacity>
             </View>
             <View style={commonStyles.rowFlexEnd}>
-                <BorderButtonBigBlue text={'BACK'} ctaFunction={() => storeDetails()}/>
-                <SolidButtonBlue text={'NEXT'} ctaFunction={() => businessInfo()}/>
+                <BorderButtonBigBlue text={'BACK'} ctaFunction={() => storeDetails()} />
+                <SolidButtonBlue text={'NEXT'} ctaFunction={() => businessInfo()} />
             </View>
         </View>
     );

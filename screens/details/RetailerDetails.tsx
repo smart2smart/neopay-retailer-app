@@ -24,18 +24,17 @@ import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/nativ
 import Icon from 'react-native-vector-icons/AntDesign';
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export default function RetailerDetails(props) {
 
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
-    const [name, setName] = useState('');
-    const [contactPerson, setContactPerson] = useState('');
-    const [phoneNo, setPhoneNo] = useState('');
     const [gmailId, setGmailId] = useState('');
     const [newGeneralStore, setNewGeneralStore] = useState('');
     const [contactPersonName, setContactPersonName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
+    const [image, setImage] = useState('');
 
     const addressDetails = () => {
         if (!newGeneralStore) {
@@ -62,7 +61,7 @@ export default function RetailerDetails(props) {
                 data: data
             }
         
-            // @ts-ignore
+             // @ts-ignore
             AuthenticatedPostRequest(dataToSend).then((res) => {
                 console.log("**", res);
                 if (res.status == 200) {
@@ -71,7 +70,7 @@ export default function RetailerDetails(props) {
                 }
         })
 
-        // navigation.navigate("AddressDetails")
+        navigation.navigate("AddressDetails")
     }
 
     const alertMsg = (text: string) => {
@@ -108,11 +107,22 @@ export default function RetailerDetails(props) {
         setContactPersonName('')
     }, [])
 
+    const goToUploadImage = () => {
+        // navigation.navigate('UploadImage', {retailerId: retailerId, image: image, comingFrom: 'edit-profile'});
+        navigation.navigate('UploadImage', {image: image, comingFrom: 'retailer-details'});
+    };
+
     return (
         <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: colors.white }}>
             <SecondaryHeader title={"Store Details"} />
-            <ScrollView style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
+                    <View style={[commonStyles.imageContainer, {marginBottom:20}]}>
+                        <Image source={{uri: image}} style={{width: '100%', height: '100%'}}/>
+                        <TouchableOpacity onPress={goToUploadImage} style={styles.editButtonDiv}>
+                            <MaterialIcons name="edit" size={24} color={colors.red}/>
+                        </TouchableOpacity>
+                    </View>
                     {data.map((item, index) => {
                         if (item.type === "text") {
                             return (
@@ -154,60 +164,7 @@ export default function RetailerDetails(props) {
                                 )
                             }
                     })}
-                </View>
-
-                {/* <View style={styles.container}>
-                        <View style={styles.textInputDiv}>
-                            <TextInput
-                                value={name}
-                                placeholder={"New General Store"}
-                                onChangeText={(text) => setName(text)}
-                                style={styles.textInput}>
-                            </TextInput>
-                        </View>
-                        <View style={styles.textInputDiv}>
-                            <TextInput
-                                value={contactPerson}
-                                placeholder={"Contact person"}
-                                onChangeText={(text) => setContactPerson(text)}
-                                style={styles.textInput}>
-                            </TextInput>
-                        </View>
-                        <View style={styles.textInputDiv}>
-                            <Text>
-                                Contact and Email
-                            </Text>
-                        </View>
-                        <View style={styles.textInput}> 
-                            <View style={commonStyles.row}>
-                                <View style={[styles.countryCodeDiv, commonStyles.rowCenter]}>
-                                    <Text style={texts.greyNormal14}>
-                                        +91
-                                    </Text>
-                                    <Image style={styles.downArrow} source={require('../../assets/images/down_arrow.png')} />
-                                </View>
-                                <View>
-                                    <TextInput
-                                        value={phoneNo}
-                                        maxLength={10}
-                                        keyboardType={"numeric"}
-                                        placeholder={"799 115 4771"}
-                                        onChangeText={(text) => setPhoneNo(text)}
-                                        style={{paddingLeft:20}}
-                                    >
-                                    </TextInput>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{paddingVertical:20}}>
-                            <TextInput
-                                value={gmailId}
-                                placeholder={"Gmail Id"}
-                                onChangeText={(text) => setGmailId(text)}
-                                style={styles.textInput}>
-                            </TextInput>
-                        </View>
-                    </View> */}
+                </View>   
                 <View style={commonStyles.rowFlexEnd}>
                     <SolidButtonBlue text={'NEXT'} ctaFunction={() => addressDetails()} />
                 </View>
@@ -258,5 +215,15 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         marginLeft: 8
+    },
+    editButtonDiv: {
+        backgroundColor: colors.orangeFaded,
+        borderWidth: 1,
+        borderColor: colors.red,
+        padding: 7,
+        borderRadius: 2,
+        position: 'absolute',
+        right: 20,
+        top: 20
     },
 })

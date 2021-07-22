@@ -54,7 +54,17 @@ export const commonApi = {
         method: 'PATCH',
         header: header
     },
-    getRetailerImage: {
+    getPinCodeList: {
+        url: `${base_url}/localities/pincode/`,
+        method: 'GET',
+        header: header
+    },
+    getLocalities:{
+        header: header,
+        url: `${base_url}/localities/locality/`,
+        method: 'GET',
+    },
+    updateRetailerImage: {
         url: `${base_url}/salesmen/retailer-image/<int:pk>/`,
         method: 'PATCH',
         header: header
