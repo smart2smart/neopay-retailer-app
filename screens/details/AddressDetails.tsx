@@ -95,7 +95,7 @@ export default function AddressDetails(props) {
                 navigation.navigate("BusinessInfo")
             }
         })
-        navigation.navigate("BusinessInfo")
+        // navigation.navigate("BusinessInfo")
     }
 
     const alertMsg = (text: string) => {

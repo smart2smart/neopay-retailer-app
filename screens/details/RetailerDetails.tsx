@@ -69,8 +69,7 @@ export default function RetailerDetails(props) {
                     navigation.navigate("AddressDetails")
                 }
         })
-
-        navigation.navigate("AddressDetails")
+        // navigation.navigate("AddressDetails")
     }
 
     const alertMsg = (text: string) => {
