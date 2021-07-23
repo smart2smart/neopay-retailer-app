@@ -44,10 +44,10 @@ export function HomeScreen(props: any) {
     };
 
     const navigation = useNavigation();
-    const [distributorData, setDistributorData] = useState([]);
+    const [distributorData, setDistributorData] = useState(mockData);
 
     useEffect(() => {
-        getDistributorDetails();
+        // getDistributorDetails();
     }, []);
 
     const getDistributorDetails = () => {
@@ -56,13 +56,16 @@ export function HomeScreen(props: any) {
             url: commonApi.getDistributorDetails.url,
             header: commonApi.getDistributorDetails.header,
         }
+        // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
+            console.log('#############', res);
             setDistributorData(res.data);
         })
     }
 
     const createOrder = (distributorID) => {
         navigation.navigate("CreateOrder", {distributorID})
+        // console.log("distrivutorID", distributorID);
     };
 
     const storeDetails = () => {
@@ -86,7 +89,7 @@ export function HomeScreen(props: any) {
             {/* <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/> */}
             <BorderButtonBigRed text={'Temprary Store details'} ctaFunction={() => storeDetails()}/>
             <FlatList
-                data={distributorData}
+                data={distributorData.distributors}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.name + ""}
                 renderItem={({item, index}) =>distributorDescription(item, index)}

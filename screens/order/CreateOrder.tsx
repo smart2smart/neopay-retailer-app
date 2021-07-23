@@ -19,12 +19,15 @@ import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
 import { BorderButtonSmallBlue, SolidButtonBlue, BorderButtonSmallRed } from '../../buttons/Buttons';
+import {commonApi} from "../../api/api";
+import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 
 export default function CreateOrder({route}) {
 
     if(route && route.params) {
-        const {distributorID} =route.params
+        const {distributorID} =route.params;
     }
 
     const mockData=
@@ -82,6 +85,7 @@ export default function CreateOrder({route}) {
         ]
     }
     
+    const navigation = useNavigation();
     const [showSearch, setShowSearch] = useState(false);
     const [productData, setProductData] = useState(mockData);
 
@@ -89,6 +93,27 @@ export default function CreateOrder({route}) {
         setShowSearch(true);
         if (showSearch === true) setShowSearch(false);
     };
+
+    const homePage = () => {
+        navigation.navigate("HomeScreen");
+    }
+
+    useEffect(() => {
+        // getproductData();
+    }, []);
+
+    const getproductData = (distributorID) => {
+        const data = {
+            method: commonApi.getDistributorproducts.method,
+            url: commonApi.getDistributorproducts.url+distributorID+'/',
+            header: commonApi.getDistributorproducts.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            setProductData(res.data);
+            console.log('@@@@@@@@@@@@@@@@@', res);
+        })
+    }
 
     const selectProduct = (index: number, item, type: string) => {
         let data = item;
@@ -114,7 +139,7 @@ export default function CreateOrder({route}) {
 
     const productDescription = (item, index) => {
         return(
-            <View style={{marginTop:20}}>
+            <View style={{marginTop:25}}>
                 <View style={[commonStyles.row, {marginBottom:10}]}>
                     <View>
                         <Image style={styles.cardImage} source={require("../../assets/images/adaptive-icon.png")}/>
@@ -170,10 +195,10 @@ export default function CreateOrder({route}) {
             <View style={commonStyles.rowSpaceBetween}>
                 <SecondaryHeader title={"Create Order"}/>
                 <TouchableOpacity style={{ marginTop: 24 }} onPress={() => {showSearchBar()}}>
-                    <Icon name="search" size={24} color={colors.orange} />
+                    <Icon name="search" size={24} color={colors.blue} />
                 </TouchableOpacity>
             </View>
-            {showSearch && (<View style={[commonStyles.searchContainer, { marginTop: 30 }]}>
+            {showSearch && (<View style={[commonStyles.searchContainer, { marginTop: 24 }]}>
                 <TextInput
                     maxLength={10}
                     placeholder={"Search for Products"}
@@ -187,8 +212,8 @@ export default function CreateOrder({route}) {
             keyExtractor={(item) => item.name + ""}
             renderItem={({item, index}) =>productDescription(item, index)}
           />
-          <View style={commonStyles.rowFlexEnd}>
-            <SolidButtonBlue text={'SAVE'}/>
+            <View style={commonStyles.rowFlexEnd}>
+                <SolidButtonBlue text={'SAVE'} ctaFunction={homePage}/>
             </View>
         </View>
     )
@@ -218,7 +243,7 @@ const styles = StyleSheet.create({
     addSubtractButton: {
         width: 24,
         height: 24,
-        backgroundColor: colors.darkGrey,
+        backgroundColor: colors.blue,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 3
