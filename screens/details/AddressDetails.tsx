@@ -76,7 +76,7 @@ export default function AddressDetails(props) {
             line_1: address1,
             line_2: address2,
             locality: locality.name,
-            pincode: selectedPinCode.pincode,
+            pincode: parseInt(selectedPinCode.pincode),
         }
 
         let dataToSend = {}

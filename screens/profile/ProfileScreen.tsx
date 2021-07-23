@@ -65,7 +65,6 @@ export default function ProfileScreen() {
     //             setRetailerDetails(res.data)
     //         }
     //     })
-
     // }, [route.params]);
 
     const renderHeaderTab = ({ item }) => {
