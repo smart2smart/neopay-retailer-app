@@ -73,7 +73,11 @@ export const commonApi = {
         url: `${base_url}/salesmen/retailer-image/<int:pk>/`,
         method: 'PATCH',
         header: header
-    }
-    
+    },
+    updateProducts: {
+        url: `${base_url}/products/`,
+        method: 'GET',
+        header: header
+    },    
 }
 

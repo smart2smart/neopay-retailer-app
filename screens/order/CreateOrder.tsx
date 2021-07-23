@@ -26,9 +26,9 @@ import Icon from "react-native-vector-icons/Feather";
 
 export default function CreateOrder({route}) {
 
-    if(route && route.params) {
-        const {distributorID} =route.params;
-    }
+    // if(route && route.params) {
+    //     const {distributorID} =route.params;
+    // }
 
     const mockData=
     {
@@ -88,6 +88,7 @@ export default function CreateOrder({route}) {
     const navigation = useNavigation();
     const [showSearch, setShowSearch] = useState(false);
     const [productData, setProductData] = useState(mockData);
+    const [distributorID, setDistributorID] = useState(route.params);
 
     const showSearchBar = () => {
         setShowSearch(true);
@@ -99,13 +100,14 @@ export default function CreateOrder({route}) {
     }
 
     useEffect(() => {
-        // getproductData();
+        // getproductData(distributorID);
     }, []);
 
     const getproductData = (distributorID) => {
+        const distributorId = distributorID.distributorID;
         const data = {
             method: commonApi.getDistributorproducts.method,
-            url: commonApi.getDistributorproducts.url+distributorID+'/',
+            url: commonApi.getDistributorproducts.url+distributorId+'/',
             header: commonApi.getDistributorproducts.header
         }
         // @ts-ignore
@@ -184,7 +186,6 @@ export default function CreateOrder({route}) {
                     </View>
                     <Text style={texts.greyNormal10}>Rate: {item.rate}</Text>
                 </View>
-
             </View>
         );
     }

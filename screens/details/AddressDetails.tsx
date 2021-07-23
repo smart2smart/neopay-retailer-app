@@ -42,7 +42,7 @@ export default function AddressDetails(props) {
     const [localityModalVisible, setLocalityModalVisible] = useState(false);
     const [localityData, setLocalityData] = useState([]);
     const [pinCodeData, setPinCodeData] = useState([]);
-    const [selectedPinCode, setSelectedPinCode] = useState('');
+    const [selectedPinCode, setSelectedPinCode] = useState();
 
     const selectPinCode = (item) => {
         setCity(item.city);
@@ -73,8 +73,8 @@ export default function AddressDetails(props) {
         }
 
         let data = {
-            line1: address1,
-            line2: address2,
+            line_1: address1,
+            line_2: address2,
             locality: locality.name,
             pincode: selectedPinCode.pincode,
         }
@@ -87,6 +87,7 @@ export default function AddressDetails(props) {
             header: commonApi.retailerAddrerss.header,
             data: data
         }
+        console.log('^^^^^^^', dataToSend);
         // @ts-ignore
         AuthenticatedPostRequest(dataToSend).then((res) => {
             console.log("**", res);
@@ -160,7 +161,6 @@ export default function AddressDetails(props) {
                 setPinCodeData(res.data);
             }
         })
-
     }, [])
 
     return (
