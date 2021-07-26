@@ -130,10 +130,10 @@ export default function ProfileScreen() {
                                 </Text>
                             </View>}
                     </View>
-                    <View style={{height: 400}}>
+                    <View style={{height: 200}}>
                         <View style={{
                             position: "absolute",
-                            height: 400,
+                            height: 200,
                             paddingHorizontal: 24,
                             justifyContent: 'flex-end',
                             paddingBottom: 20
@@ -166,6 +166,20 @@ export default function ProfileScreen() {
                                         <BlueButtonSmall ctaFunction={goToBuildOrder} text={"Build Order"} />
                                     </View>
                                 </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{
+                            // position: "absolute",
+                            // height: 200,
+                        paddingHorizontal: 24,
+                        justifyContent: 'flex-end',
+                        paddingBottom: 20
+                    }}>
+                        <View style={style.textContainer}>
+                            <View style={commonStyles.rowSpaceBetween}>
+                                <Text style={texts.blackTextBold18}>NeoCash Balance</Text>
+                                <Text style={texts.redTextBold15}>₹ 1500</Text>
                             </View>
                         </View>
                     </View>
