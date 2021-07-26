@@ -2,23 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/commons/SelectBeatModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commons/TextInputUnderline.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reducers/retailerDetailsReducer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/actionTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/images/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/splash.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/Drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/Drawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/rootReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/rootReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/colors/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/colors/colors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/order/CreateOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/CreateOrder.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/mapStateToProps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/mapStateToProps.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +59,7 @@
       <workItem from="1626984945996" duration="632000" />
       <workItem from="1627023153641" duration="441000" />
       <workItem from="1627126361177" duration="3342000" />
-      <workItem from="1627163249834" duration="1987000" />
+      <workItem from="1627163249834" duration="3085000" />
     </task>
     <servers />
   </component>
