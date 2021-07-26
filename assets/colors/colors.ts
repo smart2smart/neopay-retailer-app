@@ -8,6 +8,7 @@ const colors = {
     orangeFaded:'#FEF8E6',
     red:'#D43C2D',
     light_grey:'#e6e6e6',
+    light_red: '#A9294F',
 }
 
 export default colors;

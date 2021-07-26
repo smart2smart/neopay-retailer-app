@@ -50,31 +50,28 @@ export default function ProfileScreen() {
         })
     }
 
-<<<<<<< HEAD
-    // useEffect(() => {
-    //     const data = {
-    //         method: commonApi.getRetailerDetails.method,
-    //         url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
-    //         header: commonApi.getRetailerDetails.header
-    //     }
-    //     // @ts-ignore
-    //     AuthenticatedGetRequest(data).then((res) => {
-    //         if (res.data) {
-    //             setRetailerData(res.data)
-    //         }
-    //     })
-    // }, [route.params]);
-
     useEffect(() => {
+        const data = {
+            method: commonApi.getRetailerDetails.method,
+            url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
+            header: commonApi.getRetailerDetails.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setRetailerData(res.data)
+            }
+        })
+    }, [route.params]);
 
-    }, []);
+    // useEffect(() => {
+
+    // }, []);
 
     const callRetailer = (mobile)=>{
         Linking.openURL(`tel:${mobile}`)
     }
 
-=======
->>>>>>> 976d64712c4ba960c8c42e0235780b6886bae8ee
     const goToEditProfile = () => {
         navigation.navigate('EditProfile', {data: retailerData, comingFrom: "edit"})
     }
@@ -107,32 +104,6 @@ export default function ProfileScreen() {
                             </Text>
                         </View>}
                 </View>
-<<<<<<< HEAD
-                <View style={{height: 200}}>
-                    <View style={{
-                        position: "absolute",
-                        height: 200,
-                        paddingHorizontal: 24,
-                        justifyContent: 'flex-end',
-                        paddingBottom: 20
-                    }}>
-                        <View style={style.textContainer}>
-                            <Text style={texts.blackTextBold18}>
-                                {retailerDetails.name}
-                            </Text>
-                            <Text style={[texts.greyNormal14, {marginTop: 10}]}>
-                                Contact Person : {retailerDetails.contact_person_name}
-                            </Text>
-                            <View style={commonStyles.rowSpaceBetween}>
-                                <Text style={[texts.greyNormal14, {marginTop: 10}]}>
-                                    Phone No. :
-                                    {}
-                                </Text>
-                                <TouchableOpacity onPress={() => {callRetailer(retailerDetails.contact_number)}}>
-                                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
-                                </TouchableOpacity>
-                            </View>
-=======
                 <View style={{
                     position: "relative",
                     height: 210,
@@ -153,8 +124,9 @@ export default function ProfileScreen() {
                                     Phone No : {retailerData.contact_no}
                                 </Text>
                             </View>
-                            <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
->>>>>>> 976d64712c4ba960c8c42e0235780b6886bae8ee
+                            <TouchableOpacity onPress={() => {callRetailer(retailerData.contact_no)}}>
+                                <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
+                            </TouchableOpacity>
                         </View>
                         {retailerData.retailer_address ?
                             <Text style={[texts.greyNormal14, , {marginTop: 10, lineHeight: 20}]}>
@@ -173,6 +145,28 @@ export default function ProfileScreen() {
                         </View>
                     </View>
                 </View>
+                <View style={{paddingHorizontal: 24, justifyContent: 'flex-end', paddingBottom: 20}}>
+                    <View style={[style.textContainer, commonStyles.rowSpaceBetween]}>
+                        <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
+                        <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
+                    </View>
+                </View>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>Loyalty Points</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>My Orders</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>Invoice</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween, {marginBottom:20}]}>
+                    <Text style={texts.blackTextBold14}>Payments</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
             </ScrollView>
         </View>
     )
@@ -193,6 +187,17 @@ const style = StyleSheet.create({
         width: Dimensions.get("window").width - 48,
         marginHorizontal: 24,
         top: -50
+    },
+    textContainerWrapper: {
+        padding: 16, 
+        borderRadius: 5, 
+        borderColor: colors.grey, 
+        backgroundColor: '#ffffff', 
+        elevation: 2, 
+        position:'relative', 
+        marginHorizontal: 24,
+        width: Dimensions.get("window").width - 48, 
+        marginTop:20,
     },
     textInputDiv: {
         paddingBottom: 30
