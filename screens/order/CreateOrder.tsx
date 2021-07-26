@@ -133,6 +133,10 @@ export default function CreateOrder({route}) {
         setProductData(productDataMap);
     }
 
+    const openCart = () => {
+        
+    }
+
     const setProductQuantity = (item, text) => {
         let data = item;
         data.value = text;
@@ -208,14 +212,37 @@ export default function CreateOrder({route}) {
                 </View>
             )}
             <FlatList
-            data={productData.results}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => item.name + ""}
-            renderItem={({item, index}) =>productDescription(item, index)}
-          />
-            <View style={commonStyles.rowFlexEnd}>
+                data={productData.results}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.name + ""}
+                renderItem={({item, index}) =>productDescription(item, index)}
+            />
+            {/* <View style={commonStyles.rowFlexEnd}>
                 <SolidButtonBlue text={'SAVE'} ctaFunction={homePage}/>
-            </View>
+            </View> */}
+            <TouchableOpacity onPress={() => {openCart()}}  style={styles.footer}>
+                <View style={[commonStyles.rowSpaceBetween, {paddingHorizontal:24}]}>
+                    <View style={commonStyles.row}>
+                        <View style={{borderRightWidth:1, borderRightColor:colors.white, paddingHorizontal: 10}}>
+                            <Text style={texts.whiteNormal14}>5 SKU</Text>
+                        </View>
+                        <View style={{paddingHorizontal:10}}>
+                            <Text style={texts.whiteNormal14}>40 Items</Text>
+                        </View>
+                    </View>
+                    <View style={[commonStyles.row, {marginLeft:40}]}>
+                        <View>
+                            <Text style={texts.whiteNormal14}>Order Value: </Text>
+                        </View>
+                        <View>
+                            <Text style={texts.whiteNormal14}>2580</Text>                            
+                        </View>
+                        <View style={{marginLeft:10}}>
+                            <Icon name="chevron-right" size={14} color={colors.white}/>                            
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -248,5 +275,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 3
+    },
+    footer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor:colors.blue,
+        flexDirection:'row',
+        height:50,
+        alignItems:'center',
     },
 })

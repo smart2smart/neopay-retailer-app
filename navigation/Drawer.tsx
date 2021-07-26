@@ -168,7 +168,7 @@ function CustomDrawerContent(props) {
                 </View>
                 <View>
                     <RenderItem title={"Profile"} onPress={() => {
-                        navigate("DistributorProfile");
+                        navigate("ProfileScreen");
                     }}/>
                 </View>
                 <View>
