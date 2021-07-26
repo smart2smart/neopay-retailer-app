@@ -23,6 +23,7 @@ import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
 import OrdersCard from "../../commons/OrdersCard";
 import RetailerDetails from '../details/RetailerDetails';
+import * as Linking from "expo-linking";
 
 
 export default function ProfileScreen() {
@@ -49,20 +50,27 @@ export default function ProfileScreen() {
         })
     }
 
-    useEffect(() => {
-        const data = {
-            method: commonApi.getRetailerDetails.method,
-            url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
-            header: commonApi.getRetailerDetails.header
-        }
-        // @ts-ignore
-        AuthenticatedGetRequest(data).then((res) => {
-            if (res.data) {
-                setRetailerData(res.data)
-            }
-        })
-    }, [route.params]);
+    // useEffect(() => {
+    //     const data = {
+    //         method: commonApi.getRetailerDetails.method,
+    //         url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
+    //         header: commonApi.getRetailerDetails.header
+    //     }
+    //     // @ts-ignore
+    //     AuthenticatedGetRequest(data).then((res) => {
+    //         if (res.data) {
+    //             setRetailerData(res.data)
+    //         }
+    //     })
+    // }, [route.params]);
 
+    useEffect(() => {
+
+    }, []);
+
+    const callRetailer = (mobile)=>{
+        Linking.openURL(`tel:${mobile}`)
+    }
 
     const goToEditProfile = () => {
         navigation.navigate('EditProfile', {data: retailerData, comingFrom: "edit"})
@@ -111,7 +119,15 @@ export default function ProfileScreen() {
                             <Text style={[texts.greyNormal14, {marginTop: 10}]}>
                                 Contact Person : {retailerDetails.contact_person_name}
                             </Text>
-                            <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
+                            <View style={commonStyles.rowSpaceBetween}>
+                                <Text style={[texts.greyNormal14, {marginTop: 10}]}>
+                                    Phone No. :
+                                    {}
+                                </Text>
+                                <TouchableOpacity onPress={() => {callRetailer(retailerDetails.contact_number)}}>
+                                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                         {retailerData.retailer_address ?
                             <Text style={[texts.greyNormal14, , {marginTop: 10, lineHeight: 20}]}>
