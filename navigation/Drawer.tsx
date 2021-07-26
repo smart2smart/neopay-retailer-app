@@ -75,17 +75,17 @@ function CustomDrawerContent(props) {
         retailerDetails();
     }, []);
 
-    // const retailerDetails = () => {
-    //     const data = {
-    //         method: commonApi.getRetailerDetails.method,
-    //         url: commonApi.getRetailerDetails.url,
-    //         header: commonApi.getRetailerDetails.header,
-    //     }
-    //     AuthenticatedGetRequest(data).then((res) => {
-    //         console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
-    //         console.log(res)
-    //     })
-    // }
+    const retailerDetails = () => {
+        const data = {
+            method: commonApi.getRetailerDetails.method,
+            url: commonApi.getRetailerDetails.url,
+            header: commonApi.getRetailerDetails.header,
+        }
+        AuthenticatedGetRequest(data).then((res) => {
+            console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
+            console.log(res)
+        })
+    }
 
     const getRetailerDistributorMap = (distributorId) => {
         const data = {
@@ -96,7 +96,6 @@ function CustomDrawerContent(props) {
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
             if (res.data) {
-                setDistributorsData(res.data);
                 if (!distributorId && res.data.length > 0) {
                     store.dispatch({
                         type: 'DISTRIBUTOR', payload: {
