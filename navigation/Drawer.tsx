@@ -7,6 +7,9 @@ import store from "../store/store";
 import PersistenceStore from "../utils/PersistenceStore";
 import BottomTabNavigator from "./BottomTabNavigator";
 import colors from "../assets/colors/colors";
+import {commonApi} from "../api/api";
+import {useEffect, useState} from "react";
+import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
 
 
 const DrawerNavigator = createDrawerNavigator();
@@ -66,6 +69,44 @@ function CustomDrawerContent(props) {
     const navigate = (screen:String)=>{
         props.navigation.navigate(screen);
         props.navigation.closeDrawer();
+    }
+
+    useEffect(() => {
+        retailerDetails();
+    }, []);
+
+    // const retailerDetails = () => {
+    //     const data = {
+    //         method: commonApi.getRetailerDetails.method,
+    //         url: commonApi.getRetailerDetails.url,
+    //         header: commonApi.getRetailerDetails.header,
+    //     }
+    //     AuthenticatedGetRequest(data).then((res) => {
+    //         console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
+    //         console.log(res)
+    //     })
+    // }
+
+    const getRetailerDistributorMap = (distributorId) => {
+        const data = {
+            method: commonApi.distributorSalesmanMap.method,
+            url: commonApi.distributorSalesmanMap.url,
+            header: commonApi.distributorSalesmanMap.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setDistributorsData(res.data);
+                if (!distributorId && res.data.length > 0) {
+                    store.dispatch({
+                        type: 'DISTRIBUTOR', payload: {
+                            distributorId: res.data[0].user_id,
+                            name: res.data[0].name
+                        }
+                    })
+                }
+            }
+        })
     }
 
     return (

@@ -2,25 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/navigation/Drawer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/SelectBeatModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/TextInputUnderline.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/retailerDetailsReducer.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actionTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/colors/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/colors/colors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/Drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/Drawer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/details/RetailerDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/RetailerDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/rootReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/rootReducer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/order/CreateOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/CreateOrder.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/commonStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/commonStyles.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/texts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/texts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/mapStateToProps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/mapStateToProps.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +66,10 @@
       <workItem from="1626257803935" duration="4567000" />
       <workItem from="1626334518752" duration="3698000" />
       <workItem from="1626669080975" duration="4464000" />
+      <workItem from="1626984945996" duration="632000" />
+      <workItem from="1627023153641" duration="441000" />
+      <workItem from="1627126361177" duration="3342000" />
+      <workItem from="1627163249834" duration="1987000" />
     </task>
     <servers />
   </component>
@@ -79,13 +81,13 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1626672947965" />
-    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl" timestamp="1626673563061">
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl" timestamp="1627164024505">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1626673563061" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1626673944396">
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1627164024505" />
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1627162076237">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1626673944396" />
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1627162076237" />
   </component>
 </project>

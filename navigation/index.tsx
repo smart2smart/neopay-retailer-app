@@ -20,6 +20,7 @@ import MapViewScreen from "../commons/MapView";
 import Drawer from "./Drawer";
 import HomeScreen from "../screens/home/HomeScreen";
 import UploadImage from "../screens/details/UploadImage";
+import EditProfile from "../screens/profile/EditProfile";
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -48,6 +49,7 @@ function RootNavigator() {
       <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
       <Stack.Screen name="MapView" component={MapViewScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
     </Stack.Navigator>
   );

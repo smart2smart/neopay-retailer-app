@@ -6,8 +6,8 @@ const formHeader = {
 
 }
 
-//const base_url = 'http://10.38.19.145:8000';
- const base_url = 'http://qa-api.neopay.club';
+const base_url = 'http://192.168.43.253:8000';
+// const base_url = 'http://qa-api.neopay.club';
 //const base_url = 'https://api.neopay.club';
 
 export const authApi = {
@@ -29,13 +29,13 @@ export const authApi = {
 }
 
 export const commonApi = {
-    getDistributorDetails: {
-        url: `${base_url}/retailers/distributors`,
+    getRetailerDetails:{
+        url:`${base_url}/retailers/details/`,
         method: 'GET',
         header: header
     },
-    getRetailerDetails: {
-        url: `${base_url}/retailers/`,
+    getDistributorDetails: {
+        url: `${base_url}/retailers/distributors`,
         method: 'GET',
         header: header
     },
@@ -68,6 +68,9 @@ export const commonApi = {
         url: `${base_url}/salesmen/retailer-image/<int:pk>/`,
         method: 'PATCH',
         header: header
+    },
+    getOrders:{
+
     }
     
 }

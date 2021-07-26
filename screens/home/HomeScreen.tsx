@@ -13,7 +13,7 @@ import {setIsLoggedIn} from "../../actions/actions";
 import {connect, useSelector} from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
-import { BorderButtonBigRed } from '../../buttons/Buttons';
+import {BorderButtonBigRed} from '../../buttons/Buttons';
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import commonStyles from '../../styles/commonStyles';
 import {commonApi} from "../../api/api";
@@ -47,19 +47,10 @@ export function HomeScreen(props: any) {
     const [distributorData, setDistributorData] = useState([]);
 
     useEffect(() => {
-        getDistributorDetails();
+
     }, []);
 
-    const getDistributorDetails = () => {
-        const data = {
-            method: commonApi.getDistributorDetails.method,
-            url: commonApi.getDistributorDetails.url,
-            header: commonApi.getDistributorDetails.header,
-        }
-        AuthenticatedGetRequest(data).then((res) => {
-            setDistributorData(res.data);
-        })
-    }
+
 
     const createOrder = (distributorID) => {
         navigation.navigate("CreateOrder", {distributorID})
@@ -70,9 +61,9 @@ export function HomeScreen(props: any) {
     };
 
     const distributorDescription = (item) => {
-        return(
-            <View style={{marginBottom:20}}>
-                <View style={commonStyles.row}> 
+        return (
+            <View style={{marginBottom: 20}}>
+                <View style={commonStyles.row}>
                     <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
                     <BorderButtonBigRed text={item.name} ctaFunction={() => createOrder(item.pk)}/>
                 </View>
@@ -89,7 +80,7 @@ export function HomeScreen(props: any) {
                 data={distributorData}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.name + ""}
-                renderItem={({item, index}) =>distributorDescription(item, index)}
+                renderItem={({item, index}) => distributorDescription(item, index)}
             />
         </View>
     )

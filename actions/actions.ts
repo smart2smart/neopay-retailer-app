@@ -1,4 +1,4 @@
-import { IS_LOGGED_IN, TOKENS} from "./actionTypes";
+import { IS_LOGGED_IN, TOKENS, RETAILER_DETAILS} from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
     return ({
@@ -14,3 +14,12 @@ export const setTokens = (value: any) => {
         payload: value
     });
 }
+
+export const setRetailerDetails = (value: any) => {
+    return ({
+        type: RETAILER_DETAILS,
+        payload: value
+    });
+}
+
+

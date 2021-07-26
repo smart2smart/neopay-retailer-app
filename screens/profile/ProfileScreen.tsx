@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
     Text,
     View,
@@ -16,11 +16,11 @@ import SecondaryHeader from "../../headers/SecondaryHeader";
 import colors from "../../assets/colors/colors";
 import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
-import { useNavigation } from "@react-navigation/native";
-import { useRoute } from '@react-navigation/native';
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
-import { BlueButtonSmall, BorderButtonSmallRed } from "../../buttons/Buttons";
+import {useNavigation} from "@react-navigation/native";
+import {useRoute} from '@react-navigation/native';
+import {commonApi} from "../../api/api";
+import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
+import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
 import OrdersCard from "../../commons/OrdersCard";
 
 
@@ -28,58 +28,28 @@ export default function ProfileScreen() {
 
     const navigation = useNavigation();
     const route = useRoute();
-    const headerTabOptions = [
-        { name: "Orders", selected: false },
-        { name: "Payments", selected: false },
-        { name: "Invoice", selected: false },
-        { name: "Profile", selected: true },
-    ]
 
-    const [headerOptionsData, setHeaderOptionsData] = useState(headerTabOptions);
+    const [retailerData, setRetailerData] = useState({});
 
-    const [retailerDetails, setRetailerDetails] = useState('');
-    const [retailerId, setRetailerId] = useState('');
-    const [ordersData, setOrdersData] = useState([]);
-    const [selectedTab, setSelectedTab] = useState('Profile');
+    useEffect(()=>{
+        retailerDetails();
+    }, [])
 
-    const selectHeaderTab = (key: string) => {
-        let prevState = [...headerOptionsData];
-        prevState.forEach((item) => {
-            item.selected = item.name === key;
+    const retailerDetails = () => {
+        const data = {
+            method: commonApi.getRetailerDetails.method,
+            url: commonApi.getRetailerDetails.url,
+            header: commonApi.getRetailerDetails.header,
+        }
+        AuthenticatedGetRequest(data).then((res) => {
+            setRetailerData(res.data);
+            console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
+            console.log(res)
         })
-        setHeaderOptionsData(prevState);
-        setSelectedTab(key);
-    }
-
-    // useEffect(() => {
-    //     setRetailerId(route.params.retailerId);
-    //     getOrderData();
-    //     const data = {
-    //         method: commonApi.getRetailerDetails.method,
-    //         url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
-    //         header: commonApi.getRetailerDetails.header
-    //     }
-    //     // @ts-ignore
-    //     AuthenticatedGetRequest(data).then((res) => {
-    //         if (res.data) {
-    //             setRetailerDetails(res.data)
-    //         }
-    //     })
-
-    // }, [route.params]);
-
-    const renderHeaderTab = ({ item }) => {
-        return (<TouchableOpacity onPress={() => {
-            selectHeaderTab(item.name)
-        }} style={item.selected ? style.headerItemSelected : style.headerItem}>
-            <Text style={item.selected ? texts.whiteTextBold14 : texts.darkGreyTextBold14}>
-                {item.name}
-            </Text>
-        </TouchableOpacity>)
     }
 
     const goToEditProfile = () => {
-        navigation.navigate('add-retailer-profile', { data: retailerDetails, comingFrom: "edit" })
+        navigation.navigate('EditProfile', {data: retailerData, comingFrom: "edit"})
     }
 
     const goToBuildOrder = () => {
@@ -89,107 +59,67 @@ export default function ProfileScreen() {
             contact_person_name: retailerDetails.contact_person_name,
             name: retailerDetails.name,
         }
-        navigation.navigate('build-order', { data: data })
-    }
-
-    const renderFooter = () => {
-        return (
-            <View style={{ borderBottomWidth: 1, borderBottomColor: colors.grey, marginBottom: 20 }}>
-
-            </View>
-        )
-    }
-
-    const goToOrderDetails = () => {
-
+        navigation.navigate('build-order', {data: data})
     }
 
     return (
         <View style={style.container}>
-            <View style={{ paddingHorizontal: 24 }}>
-                <SecondaryHeader title={retailerDetails.name} />
-                <View style={style.headerTabsContainer}>
-                    <FlatList
-                        showsHorizontalScrollIndicator={false}
-                        horizontal={true}
-                        data={headerOptionsData}
-                        keyExtractor={(item, index) => index + '' + item.name}
-                        renderItem={renderHeaderTab} />
-                </View>
+            <View style={{paddingHorizontal: 24}}>
+                <SecondaryHeader title={"Profile"}/>
             </View>
-            {selectedTab === "Profile" ?
-                <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
-                    <View>
-                        {retailerDetails.attachment ?
-                            <View style={commonStyles.imageContainer}>
-                                <Image source={{ uri: retailerDetails.attachment }}
-                                    style={{ width: '100%', height: '100%' }} />
-                            </View> :
-                            <View style={commonStyles.imageContainer}>
-                                <Text style={[texts.darkGrey18Bold, { marginBottom: 50 }]}>
-                                    Image not available
+            <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+                <View>
+                    {retailerData.attachment ?
+                        <View style={commonStyles.imageContainer}>
+                            <Image source={{uri: retailerData.attachment}}
+                                   style={{width: '100%', height: '100%'}}/>
+                        </View> :
+                        <View style={commonStyles.imageContainer}>
+                            <Text style={[texts.darkGrey18Bold, {marginBottom: 50}]}>
+                                Image not available
+                            </Text>
+                        </View>}
+                </View>
+                <View style={{height: 400}}>
+                    <View style={{
+                        position: "absolute",
+                        height: 400,
+                        paddingHorizontal: 24,
+                        justifyContent: 'flex-end',
+                        paddingBottom: 20
+                    }}>
+                        <View style={style.textContainer}>
+                            <Text style={texts.blackTextBold18}>
+                                {retailerData.name}
+                            </Text>
+                            <Text style={[texts.greyNormal14, {marginTop: 10}]}>
+                                Contact Person : {retailerData.contact_person_name}
+                            </Text>
+                            <View style={commonStyles.rowSpaceBetween}>
+                                <Text style={[texts.greyNormal14, {marginTop: 10}]}>
+                                    Phone No : +91 {retailerData.contact_no}
                                 </Text>
-                            </View>}
-                    </View>
-                    <View style={{height: 400}}>
-                        <View style={{
-                            position: "absolute",
-                            height: 400,
-                            paddingHorizontal: 24,
-                            justifyContent: 'flex-end',
-                            paddingBottom: 20
-                        }}>
-                            <View style={style.textContainer}>
-                                <Text style={texts.blackTextBold18}>
-                                    {retailerDetails.name}
-                                </Text>
-                                <Text style={[texts.greyNormal14, { marginTop: 10 }]}>
-                                    Contact Person : {retailerDetails.contact_person_name}
-                                </Text>
-                                <View style={commonStyles.rowSpaceBetween}>
-                                    <Text style={[texts.greyNormal14, { marginTop: 10 }]}>
-                                        Phone No : +91 {retailerDetails.contact_no}
-                                    </Text>
-                                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')} />
-                                </View>
-                                {retailerDetails.retailer_address ?
-                                    <Text style={[texts.greyNormal14, , { marginTop: 10, lineHeight: 20 }]}>
-                                        Address
-                                        : {retailerDetails.retailer_address.line_1}, {retailerDetails.retailer_address.line_2},
-                                        {' ' + retailerDetails.retailer_address.city.name}, {' ' + retailerDetails.retailer_address.state.name},
-                                        {' ' + retailerDetails.retailer_address.pincode.pincode}
-                                    </Text> : null}
-                                <View style={style.underline}>
-                                </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                    <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"} />
-                                    <View style={{ marginLeft: 16 }}>
-                                        <BlueButtonSmall ctaFunction={goToBuildOrder} text={"Build Order"} />
-                                    </View>
+                                <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
+                            </View>
+                            {retailerData.retailer_address ?
+                                <Text style={[texts.greyNormal14, , {marginTop: 10, lineHeight: 20}]}>
+                                    Address
+                                    : {retailerData.retailer_address.line_1}, {retailerData.retailer_address.line_2},
+                                    {' ' + retailerData.retailer_address.city.name}, {' ' + retailerData.retailer_address.state.name},
+                                    {' ' + retailerData.retailer_address.pincode.pincode}
+                                </Text> : null}
+                            <View style={style.underline}>
+                            </View>
+                            <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                                <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"}/>
+                                <View style={{marginLeft: 16}}>
+                                    <BlueButtonSmall ctaFunction={goToBuildOrder} text={"Build Order"}/>
                                 </View>
                             </View>
                         </View>
                     </View>
-                </ScrollView> : null}
-            {selectedTab === "Orders" ?
-                <View style={{ paddingTop: 16, flex: 1, paddingHorizontal: 24 }}>
-                    <FlatList
-                        data={ordersData}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({ item, index }) => <OrdersCard index={index} goToOrderDetails={goToOrderDetails}
-                            data={item} />}
-                        keyExtractor={(item, index) => index + ''}
-                        ListFooterComponent={renderFooter}
-                    />
-                </View> : null}
-            {selectedTab === "Invoice" ?
-                <InvoiceList retailerId={retailerId} /> : null}
-            {selectedTab === "Payments" ?
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={texts.blackTextBold18}>
-                        COMING SOON
-                    </Text>
-                </View> : null}
+                </View>
+            </ScrollView>
         </View>
     )
 }
