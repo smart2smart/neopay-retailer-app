@@ -74,10 +74,15 @@ export function HomeScreen(props: any) {
 
     const distributorDescription = (item) => {
         return(
-            <View style={{marginBottom:20}}>
-                <View style={commonStyles.row}> 
-                    <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
-                    <BorderButtonBigRed text={item.name} ctaFunction={() => createOrder(item.pk)}/>
+            <View style={{marginVertical:20}}>
+                <View style={[commonStyles.row, {paddingHorizontal:20}]}> 
+                    <View style={{width:'25%'}}>
+                        {/* <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/> */}
+                        <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
+                    </View>
+                    <View style={{width:'70%'}}>
+                        <BorderButtonBigRed text={item.name} ctaFunction={() => createOrder(item.pk)}/>
+                    </View>
                 </View>
             </View>
         )
@@ -122,8 +127,9 @@ const styles = StyleSheet.create({
         paddingBottom: 16
     },
     cardImage: {
-        height: 30,
-        width: 50
+        height: 40,
+        width: 80,
+        backgroundColor: colors.light_grey
     }
 });
 

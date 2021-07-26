@@ -22,6 +22,7 @@ import { commonApi } from "../../api/api";
 import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
 import { BlueButtonSmall, BorderButtonSmallRed } from "../../buttons/Buttons";
 import OrdersCard from "../../commons/OrdersCard";
+import RetailerDetails from '../details/RetailerDetails';
 
 
 export default function ProfileScreen() {
@@ -170,8 +171,8 @@ export default function ProfileScreen() {
                         </View>
                     </View>
                     <View style={{
-                            // position: "absolute",
-                            // height: 200,
+                        // position: "absolute",
+                        // height: 200,
                         paddingHorizontal: 24,
                         justifyContent: 'flex-end',
                         paddingBottom: 20

@@ -90,7 +90,7 @@ export default function AddressDetails(props) {
         console.log('^^^^^^^', dataToSend);
         // @ts-ignore
         AuthenticatedPostRequest(dataToSend).then((res) => {
-            console.log("**", res);
+            console.log("**", JSON.stringify(res));
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.");
                 navigation.navigate("BusinessInfo")
