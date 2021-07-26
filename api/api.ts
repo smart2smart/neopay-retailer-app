@@ -74,17 +74,10 @@ export const commonApi = {
         method: 'PATCH',
         header: header
     },
-<<<<<<< HEAD
-    getOrders:{
-
-    }
-    
-=======
     updateProducts: {
         url: `${base_url}/products/`,
         method: 'GET',
         header: header
-    },    
->>>>>>> d9434690a5df534b9218296ea435dff7008cf8d8
+    },
 }
 
