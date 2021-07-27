@@ -257,6 +257,7 @@ export default function CreateOrder({route}) {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.name + ""}
                 renderItem={({item, index}) =>productDescription(item, index)}
+                ListFooterComponent={()=><View style={{paddingBottom:50}}></View>}
             />
             {/* <View style={commonStyles.rowFlexEnd}>
                 <SolidButtonBlue text={'SAVE'} ctaFunction={homePage}/>
