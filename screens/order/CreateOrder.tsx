@@ -64,8 +64,8 @@ export default function CreateOrder({route}) {
                 company_name: "Johnsons&Johnsons",
                 company_code: "J&J",
                 product_group: "Facewash",
-                variant: "Clean & Clear Facewash",
-                sku: "Clean & Clear Facewash 50gm",
+                variant: "Clean & Clear Handwash",
+                sku: "Clean & Clear Handwash 50gm",
                 name: "peach",
                 description: "",
                 mrp: "1100.00",
@@ -134,7 +134,12 @@ export default function CreateOrder({route}) {
     }
 
     const openCart = () => {
-        navigation.navigate("ReviewCart")
+        navigation.navigate("ReviewCart", {data: {
+            sku: skuCount(),
+            item: itemsCount(),
+            price: totalPrice(),
+            orderedData: productData.results,
+        }})
     }
 
     const setProductQuantity = (item, text) => {

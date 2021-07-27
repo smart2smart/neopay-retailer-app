@@ -121,11 +121,11 @@ function CustomDrawerContent(props) {
                         navigate("InvoiceList");
                     }}/>
                 </View>
-                <View>
+                {/* <View>
                     <RenderItem title={"Orders"} onPress={() => {
                         navigate("OrderList");
                     }}/>
-                </View>
+                </View> */}
                 {/* <View>
                     <RenderItem title={"Beats"} onPress={() => {
                         navigate("BeatList");
@@ -141,16 +141,16 @@ function CustomDrawerContent(props) {
                         
                     }}/>
                 </View>
-                <View>
+                {/* <View>
                     <RenderItem title={"Inventory"} onPress={() => {
 
                     }}/>
-                </View>
-                <View>
+                </View> */}
+                {/* <View>
                     <RenderItem title={"Retailers"} onPress={() => {
                         navigate("RetailersList");
                     }}/>
-                </View>
+                </View> */}
                 {/* <View>
                     <RenderItem title={"Salesmen"} onPress={() => {
                         navigate("SalesmenList");
