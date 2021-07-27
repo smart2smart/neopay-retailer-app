@@ -65,7 +65,6 @@ export default function ProfileScreen() {
     }, [route.params]);
 
     // useEffect(() => {
-
     // }, []);
 
     const callRetailer = (mobile)=>{
@@ -106,7 +105,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{
                     position: "relative",
-                    height: 210,
+                    height: 140,
                     paddingHorizontal: 24,
                     justifyContent: 'flex-end',
                     paddingBottom: 20
@@ -145,11 +144,15 @@ export default function ProfileScreen() {
                         </View>
                     </View>
                 </View>
-                <View style={{paddingHorizontal: 24, justifyContent: 'flex-end', paddingBottom: 20}}>
+                {/* <View style={{paddingHorizontal: 24, justifyContent: 'flex-end', paddingBottom: 20}}>
                     <View style={[style.textContainer, commonStyles.rowSpaceBetween]}>
                         <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
                         <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
                     </View>
+                </View> */}
+                <View style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
+                        <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
                 </View>
                 <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
                     <Text style={texts.blackTextBold14}>Loyalty Points</Text>

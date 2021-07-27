@@ -47,7 +47,7 @@ export default function CreateOrder({route}) {
                 description: "qsdfghtrdx",
                 mrp: "500.00",
                 rate: "399.99",
-                value: 2,
+                value: 0,
                 code: "lkvcsakn87",
                 promotion_type: "",
                 promotion_value: 0,
@@ -70,7 +70,7 @@ export default function CreateOrder({route}) {
                 description: "",
                 mrp: "1100.00",
                 rate: "1000.00",
-                value: 3,
+                value: 0,
                 code: "",
                 promotion_type: "",
                 promotion_value: 0,
@@ -134,7 +134,7 @@ export default function CreateOrder({route}) {
     }
 
     const openCart = () => {
-        
+        navigation.navigate("ReviewCart")
     }
 
     const setProductQuantity = (item, text) => {
@@ -142,6 +142,42 @@ export default function CreateOrder({route}) {
         data.value = text;
         setProductData(data);
     }
+
+    const showCart = () => {
+        if(productData && productData.results) {
+            const recordsHavingMoreThanOneQuantity = productData.results.filter(el => el.value > 0);
+            return recordsHavingMoreThanOneQuantity.length > 0
+        }
+
+        return false;
+    }
+
+   const skuCount = () => {
+    if(productData && productData.results) { 
+        const recordsHavingMoreThanOneQuantity = productData.results.filter(el => el.value > 0);
+        return `${recordsHavingMoreThanOneQuantity.length} SKU`
+    }
+   }
+
+   const itemsCount = () => {
+    if(productData && productData.results) { 
+        let sum = 0;
+        productData.results.map((el) => {
+            sum = sum+ el.value;
+        })
+        return `${sum} Items`;
+    } 
+   }
+
+   const totalPrice = () => {
+    if(productData && productData.results) { 
+        let sum = 0;
+        productData.results.map((el) => {
+            sum = sum + (parseFloat(el.rate) * el.value);
+        })
+        return sum;
+    }
+   }
 
     const productDescription = (item, index) => {
         return(
@@ -159,7 +195,7 @@ export default function CreateOrder({route}) {
                     <Text style={texts.greyTextBold12}>{item.sku}</Text>
                     {item.value === 0 ?
                     <BorderButtonSmallRed ctaFunction={() => {
-                        selectProduct(index, item, "add")
+                        selectProduct(index, item, "add");
                     }} text={"Add"}/> : <View style={styles.quantityButton}>
                         <TouchableOpacity onPress={() => {
                             selectProduct(index, item, "subtract")
@@ -220,14 +256,14 @@ export default function CreateOrder({route}) {
             {/* <View style={commonStyles.rowFlexEnd}>
                 <SolidButtonBlue text={'SAVE'} ctaFunction={homePage}/>
             </View> */}
-            <TouchableOpacity onPress={() => {openCart()}}  style={styles.footer}>
+            { showCart() && <TouchableOpacity onPress={() => {openCart()}}  style={styles.footer}>
                 <View style={[commonStyles.rowSpaceBetween, {paddingHorizontal:24}]}>
                     <View style={commonStyles.row}>
-                        <View style={{borderRightWidth:1, borderRightColor:colors.white, paddingHorizontal: 10}}>
-                            <Text style={texts.whiteNormal14}>5 SKU</Text>
+                       <View style={{borderRightWidth:1, borderRightColor:colors.white, paddingHorizontal: 10}}>
+                            <Text style={texts.whiteNormal14}>{skuCount()}</Text>
                         </View>
                         <View style={{paddingHorizontal:10}}>
-                            <Text style={texts.whiteNormal14}>40 Items</Text>
+                            <Text style={texts.whiteNormal14}>{itemsCount()}</Text>
                         </View>
                     </View>
                     <View style={[commonStyles.row, {marginLeft:40}]}>
@@ -235,14 +271,14 @@ export default function CreateOrder({route}) {
                             <Text style={texts.whiteNormal14}>Order Value: </Text>
                         </View>
                         <View>
-                            <Text style={texts.whiteNormal14}>2580</Text>                            
+                            <Text style={texts.whiteNormal14}>{totalPrice()}</Text>                            
                         </View>
                         <View style={{marginLeft:10}}>
                             <Icon name="chevron-right" size={14} color={colors.white}/>                            
                         </View>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity>}
         </View>
     )
 }
