@@ -121,36 +121,41 @@ function CustomDrawerContent(props) {
                         navigate("InvoiceList");
                     }}/>
                 </View>
-                <View>
+                {/* <View>
                     <RenderItem title={"Orders"} onPress={() => {
                         navigate("OrderList");
                     }}/>
-                </View>
-                <View>
+                </View> */}
+                {/* <View>
                     <RenderItem title={"Beats"} onPress={() => {
                         navigate("BeatList");
+                    }}/>
+                </View> */}
+                <View>
+                    <RenderItem title={"Cart"} onPress={() => {
+                        navigate("Cart")
                     }}/>
                 </View>
                 <View>
                     <RenderItem title={"Payments"} onPress={() => {
-
+                        
                     }}/>
                 </View>
-                <View>
+                {/* <View>
                     <RenderItem title={"Inventory"} onPress={() => {
 
                     }}/>
-                </View>
-                <View>
+                </View> */}
+                {/* <View>
                     <RenderItem title={"Retailers"} onPress={() => {
                         navigate("RetailersList");
                     }}/>
-                </View>
-                <View>
+                </View> */}
+                {/* <View>
                     <RenderItem title={"Salesmen"} onPress={() => {
                         navigate("SalesmenList");
                     }}/>
-                </View>
+                </View> */}
                 <View>
                     <RenderItem title={"Sales"} onPress={() => {
 
@@ -168,7 +173,7 @@ function CustomDrawerContent(props) {
                 </View>
                 <View>
                     <RenderItem title={"Profile"} onPress={() => {
-                        navigate("DistributorProfile");
+                        navigate("ProfileScreen");
                     }}/>
                 </View>
                 <View>

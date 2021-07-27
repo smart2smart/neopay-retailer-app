@@ -23,6 +23,7 @@ import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
 import OrdersCard from "../../commons/OrdersCard";
 import RetailerDetails from '../details/RetailerDetails';
+import * as Linking from "expo-linking";
 
 
 export default function ProfileScreen() {
@@ -47,6 +48,27 @@ export default function ProfileScreen() {
             console.log(res)
             setRetailerData(res.data);
         })
+    }
+
+    useEffect(() => {
+        const data = {
+            method: commonApi.getRetailerDetails.method,
+            url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
+            header: commonApi.getRetailerDetails.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setRetailerData(res.data)
+            }
+        })
+    }, [route.params]);
+
+    // useEffect(() => {
+    // }, []);
+
+    const callRetailer = (mobile)=>{
+        Linking.openURL(`tel:${mobile}`)
     }
 
     const goToEditProfile = () => {
@@ -83,7 +105,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{
                     position: "relative",
-                    height: 210,
+                    height: 140,
                     paddingHorizontal: 24,
                     justifyContent: 'flex-end',
                     paddingBottom: 20
@@ -101,7 +123,9 @@ export default function ProfileScreen() {
                                     Phone No : {retailerData.contact_no}
                                 </Text>
                             </View>
-                            <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
+                            <TouchableOpacity onPress={() => {callRetailer(retailerData.contact_no)}}>
+                                <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
+                            </TouchableOpacity>
                         </View>
                         {retailerData.address_data ?
                             <Text style={[texts.greyNormal14, , {marginTop: 10, lineHeight: 20}]}>
@@ -120,6 +144,32 @@ export default function ProfileScreen() {
                         </View>
                     </View>
                 </View>
+                {/* <View style={{paddingHorizontal: 24, justifyContent: 'flex-end', paddingBottom: 20}}>
+                    <View style={[style.textContainer, commonStyles.rowSpaceBetween]}>
+                        <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
+                        <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
+                    </View>
+                </View> */}
+                <View style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
+                        <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
+                </View>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>Loyalty Points</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>My Orders</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={texts.blackTextBold14}>Invoice</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween, {marginBottom:20}]}>
+                    <Text style={texts.blackTextBold14}>Payments</Text>
+                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
+                </TouchableOpacity>
             </ScrollView>
         </View>
     )
@@ -140,6 +190,17 @@ const style = StyleSheet.create({
         width: Dimensions.get("window").width - 48,
         marginHorizontal: 24,
         top: -50
+    },
+    textContainerWrapper: {
+        padding: 16, 
+        borderRadius: 5, 
+        borderColor: colors.grey, 
+        backgroundColor: '#ffffff', 
+        elevation: 2, 
+        position:'relative', 
+        marginHorizontal: 24,
+        width: Dimensions.get("window").width - 48, 
+        marginTop:20,
     },
     textInputDiv: {
         paddingBottom: 30

@@ -21,6 +21,8 @@ import Drawer from "./Drawer";
 import HomeScreen from "../screens/home/HomeScreen";
 import UploadImage from "../screens/details/UploadImage";
 import EditProfile from "../screens/profile/EditProfile";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+import ReviewCart from "../screens/order/ReviewCart";
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -51,6 +53,8 @@ function RootNavigator() {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="ReviewCart" component={ReviewCart} />
     </Stack.Navigator>
   );
 }

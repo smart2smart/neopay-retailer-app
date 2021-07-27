@@ -47,7 +47,7 @@ export default function CreateOrder({route}) {
                 description: "qsdfghtrdx",
                 mrp: "500.00",
                 rate: "399.99",
-                value: 2,
+                value: 0,
                 code: "lkvcsakn87",
                 promotion_type: "",
                 promotion_value: 0,
@@ -64,13 +64,13 @@ export default function CreateOrder({route}) {
                 company_name: "Johnsons&Johnsons",
                 company_code: "J&J",
                 product_group: "Facewash",
-                variant: "Clean & Clear Facewash",
-                sku: "Clean & Clear Facewash 50gm",
+                variant: "Clean & Clear Handwash",
+                sku: "Clean & Clear Handwash 50gm",
                 name: "peach",
                 description: "",
                 mrp: "1100.00",
                 rate: "1000.00",
-                value: 3,
+                value: 0,
                 code: "",
                 promotion_type: "",
                 promotion_value: 0,
@@ -133,11 +133,56 @@ export default function CreateOrder({route}) {
         setProductData(productDataMap);
     }
 
+    const openCart = () => {
+        navigation.navigate("ReviewCart", {data: {
+            sku: skuCount(),
+            item: itemsCount(),
+            price: totalPrice(),
+            orderedData: productData.results,
+        }})
+    }
+
     const setProductQuantity = (item, text) => {
         let data = item;
         data.value = text;
         setProductData(data);
     }
+
+    const showCart = () => {
+        if(productData && productData.results) {
+            const recordsHavingMoreThanOneQuantity = productData.results.filter(el => el.value > 0);
+            return recordsHavingMoreThanOneQuantity.length > 0
+        }
+
+        return false;
+    }
+
+   const skuCount = () => {
+    if(productData && productData.results) { 
+        const recordsHavingMoreThanOneQuantity = productData.results.filter(el => el.value > 0);
+        return `${recordsHavingMoreThanOneQuantity.length} SKU`
+    }
+   }
+
+   const itemsCount = () => {
+    if(productData && productData.results) { 
+        let sum = 0;
+        productData.results.map((el) => {
+            sum = sum+ el.value;
+        })
+        return `${sum} Items`;
+    } 
+   }
+
+   const totalPrice = () => {
+    if(productData && productData.results) { 
+        let sum = 0;
+        productData.results.map((el) => {
+            sum = sum + (parseFloat(el.rate) * el.value);
+        })
+        return sum;
+    }
+   }
 
     const productDescription = (item, index) => {
         return(
@@ -155,7 +200,7 @@ export default function CreateOrder({route}) {
                     <Text style={texts.greyTextBold12}>{item.sku}</Text>
                     {item.value === 0 ?
                     <BorderButtonSmallRed ctaFunction={() => {
-                        selectProduct(index, item, "add")
+                        selectProduct(index, item, "add");
                     }} text={"Add"}/> : <View style={styles.quantityButton}>
                         <TouchableOpacity onPress={() => {
                             selectProduct(index, item, "subtract")
@@ -208,14 +253,37 @@ export default function CreateOrder({route}) {
                 </View>
             )}
             <FlatList
-            data={productData.results}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => item.name + ""}
-            renderItem={({item, index}) =>productDescription(item, index)}
-          />
-            <View style={commonStyles.rowFlexEnd}>
+                data={productData.results}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.name + ""}
+                renderItem={({item, index}) =>productDescription(item, index)}
+            />
+            {/* <View style={commonStyles.rowFlexEnd}>
                 <SolidButtonBlue text={'SAVE'} ctaFunction={homePage}/>
-            </View>
+            </View> */}
+            { showCart() && <TouchableOpacity onPress={() => {openCart()}}  style={styles.footer}>
+                <View style={[commonStyles.rowSpaceBetween, {paddingHorizontal:24}]}>
+                    <View style={commonStyles.row}>
+                       <View style={{borderRightWidth:1, borderRightColor:colors.white, paddingHorizontal: 10}}>
+                            <Text style={texts.whiteNormal14}>{skuCount()}</Text>
+                        </View>
+                        <View style={{paddingHorizontal:10}}>
+                            <Text style={texts.whiteNormal14}>{itemsCount()}</Text>
+                        </View>
+                    </View>
+                    <View style={[commonStyles.row, {marginLeft:40}]}>
+                        <View>
+                            <Text style={texts.whiteNormal14}>Order Value: </Text>
+                        </View>
+                        <View>
+                            <Text style={texts.whiteNormal14}>{totalPrice()}</Text>                            
+                        </View>
+                        <View style={{marginLeft:10}}>
+                            <Icon name="chevron-right" size={14} color={colors.white}/>                            
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>}
         </View>
     )
 }
@@ -248,5 +316,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 3
+    },
+    footer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor:colors.blue,
+        flexDirection:'row',
+        height:50,
+        alignItems:'center',
     },
 })
