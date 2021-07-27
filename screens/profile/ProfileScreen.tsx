@@ -43,9 +43,9 @@ export default function ProfileScreen() {
             header: commonApi.getRetailerDetails.header,
         }
         AuthenticatedGetRequest(data).then((res) => {
-            setRetailerData(res.data);
-            console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
+            console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
             console.log(res)
+            setRetailerData(res.data);
         })
     }
 
@@ -103,12 +103,12 @@ export default function ProfileScreen() {
                             </View>
                             <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
                         </View>
-                        {retailerData.retailer_address ?
+                        {retailerData.address_data ?
                             <Text style={[texts.greyNormal14, , {marginTop: 10, lineHeight: 20}]}>
                                 Address
-                                : {retailerData.retailer_address.line_1}, {retailerData.retailer_address.line_2},
-                                {' ' + retailerData.retailer_address.city.name}, {' ' + retailerData.retailer_address.state.name},
-                                {' ' + retailerData.retailer_address.pincode.pincode}
+                                : {retailerData.address_data.line_1}, {retailerData.address_data.line_2},
+                                {' ' + retailerData.address_data.city.name}, {' ' + retailerData.address_data.state.name},
+                                {' ' + retailerData.address_data.pincode.pincode}
                             </Text> : null}
                         <View style={style.underline}>
                         </View>

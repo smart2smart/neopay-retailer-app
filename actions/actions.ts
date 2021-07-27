@@ -1,4 +1,4 @@
-import { IS_LOGGED_IN, TOKENS, RETAILER_DETAILS} from "./actionTypes";
+import {IS_LOGGED_IN, TOKENS, RETAILER_DETAILS, CART} from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
     return ({
@@ -20,6 +20,13 @@ export const setRetailerDetails = (value: any) => {
         type: RETAILER_DETAILS,
         payload: value
     });
+}
+
+export const setCart = (value:any)=>{
+    return({
+        type:CART,
+        payload:value
+    })
 }
 
 

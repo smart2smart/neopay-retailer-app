@@ -79,5 +79,10 @@ export const commonApi = {
         method: 'GET',
         header: header
     },
+    updateRetailerAddress:{
+        header: header,
+        url: `${base_url}/retailers/profile-new/`,
+        method: 'PATCH',
+    },
 }
 
