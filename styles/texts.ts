@@ -32,6 +32,11 @@ const texts = StyleSheet.create({
         color: colors.grey,
         lineHeight:20
     },
+    darkGreyNormal12: {
+        fontSize: 12,
+        fontFamily: "GothamBook",
+        color: colors.darkGrey
+    },
     darkGreyNormal14: {
         fontSize: 14,
         fontFamily: "GothamBook",
@@ -204,7 +209,22 @@ const texts = StyleSheet.create({
         color: colors.white,
         fontFamily: "GothamMedium",
         fontSize: 10
-    }
+    },
+    greenNormal13: {
+        color: colors.green,
+        fontFamily: "GothamMedium",
+        fontSize: 13
+    },
+    greenTextBold16: {
+        color: colors.green,
+        fontFamily: "GothamMedium",
+        fontSize: 16
+    },
+    lightRedNormal16: {
+        color: colors.light_red,
+        fontFamily: "GothamMedium",
+        fontSize: 16
+    },
 })
 
 export default texts;

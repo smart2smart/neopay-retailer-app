@@ -113,7 +113,7 @@ function CustomDrawerContent(props) {
             <View style={{justifyContent: 'space-between', flex: 1, flexDirection: 'column'}}>
                 <View>
                     <RenderItem title={"Home"} onPress={() => {
-                        navigate("Home")
+                        navigate("HomeScreen")
                     }}/>
                 </View>
                 <View>

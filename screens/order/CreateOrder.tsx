@@ -57,13 +57,14 @@ export default function CreateOrder({route}) {
                 hsn_code: "",
                 gst_rate: "5.00",
                 admin: 11,
-                distributor: 25943
+                distributor: 25943,
+                isSelected: true,
             },
             {
                 id: 3354,
                 company_name: "Johnsons&Johnsons",
                 company_code: "J&J",
-                product_group: "Facewash",
+                product_group: "Handwash",
                 variant: "Clean & Clear Handwash",
                 sku: "Clean & Clear Handwash 50gm",
                 name: "peach",
@@ -80,7 +81,8 @@ export default function CreateOrder({route}) {
                 hsn_code: "",
                 gst_rate: "18.00",
                 admin: 25968,
-                distributor: 25943
+                distributor: 25943,
+                isSelected: false
             }
         ]
     }
@@ -89,6 +91,8 @@ export default function CreateOrder({route}) {
     const [showSearch, setShowSearch] = useState(false);
     const [productData, setProductData] = useState(mockData);
     const [distributorID, setDistributorID] = useState(route.params);
+
+    // console.log('$$$$$$$$$$$$$$', productData);
 
     const showSearchBar = () => {
         setShowSearch(true);
@@ -106,9 +110,9 @@ export default function CreateOrder({route}) {
     const getproductData = (distributorID) => {
         const distributorId = distributorID.distributorID;
         const data = {
-            method: commonApi.getDistributorproducts.method,
-            url: commonApi.getDistributorproducts.url+distributorId+'/',
-            header: commonApi.getDistributorproducts.header
+            method: commonApi.getDistributorProducts.method,
+            url: commonApi.getDistributorProducts.url+distributorId+'/',
+            header: commonApi.getDistributorProducts.header
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
@@ -184,18 +188,22 @@ export default function CreateOrder({route}) {
     }
    }
 
+   const productDetails = (item) => {
+    navigation.navigate("ProductDescription", {data: item});
+   }
+
     const productDescription = (item, index) => {
         return(
             <View style={{marginTop:25}}>
-                <View style={[commonStyles.row, {marginBottom:10}]}>
+                <TouchableOpacity onPress={() => {productDetails(item)}} style={[commonStyles.row, {marginBottom:10}]}>
                     <View>
                         <Image style={styles.cardImage} source={require("../../assets/images/adaptive-icon.png")}/>
                     </View>
                     <View style={{marginLeft:16}}>
-                        <Text style={texts.greyNormal10}>{item.company_code} {'>'}</Text>
+                        <Text style={texts.greyNormal10}>{item.company_code}</Text>
                         <Text style={texts.blackTextBold14}>{item.variant}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <View style={commonStyles.rowSpaceBetween}>
                     <Text style={texts.greyTextBold12}>{item.sku}</Text>
                     {item.value === 0 ?
