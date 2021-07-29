@@ -50,22 +50,22 @@ export default function ProfileScreen() {
         })
     }
 
-    useEffect(() => {
-        const data = {
-            method: commonApi.getRetailerDetails.method,
-            url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
-            header: commonApi.getRetailerDetails.header
-        }
-        // @ts-ignore
-        AuthenticatedGetRequest(data).then((res) => {
-            if (res.data) {
-                setRetailerData(res.data)
-            }
-        })
-    }, [route.params]);
-
     // useEffect(() => {
-    // }, []);
+    //     const data = {
+    //         method: commonApi.getRetailerDetails.method,
+    //         url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
+    //         header: commonApi.getRetailerDetails.header
+    //     }
+    //     // @ts-ignore
+    //     AuthenticatedGetRequest(data).then((res) => {
+    //         if (res.data) {
+    //             setRetailerData(res.data)
+    //         }
+    //     })
+    // }, [route.params]);
+
+    useEffect(() => {
+    }, []);
 
     const callRetailer = (mobile)=>{
         Linking.openURL(`tel:${mobile}`)
@@ -73,6 +73,11 @@ export default function ProfileScreen() {
 
     const goToEditProfile = () => {
         navigation.navigate('EditProfile', {data: retailerData, comingFrom: "edit"})
+    }
+
+    const neoCash = () => {
+        navigation.navigate('NeoCash', {data: retailerData.neo_cash});
+        // console.log('NEOCASH', retailerData.neo_cash);
     }
 
     const goToBuildOrder = () => {
@@ -105,7 +110,7 @@ export default function ProfileScreen() {
                 </View>
                 <View style={{
                     position: "relative",
-                    height: 140,
+                    height: 180,
                     paddingHorizontal: 24,
                     justifyContent: 'flex-end',
                     paddingBottom: 20
@@ -150,10 +155,12 @@ export default function ProfileScreen() {
                         <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
                     </View>
                 </View> */}
-                <View style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
-                    <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
-                        <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
-                </View>
+                <TouchableOpacity onPress={() => {neoCash()}}>
+                    <View style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                        <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
+                            <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
                     <Text style={texts.blackTextBold14}>Loyalty Points</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>

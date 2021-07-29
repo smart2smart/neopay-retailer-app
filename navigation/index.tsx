@@ -24,6 +24,7 @@ import EditProfile from "../screens/profile/EditProfile";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import ReviewCart from "../screens/order/ReviewCart";
 import ProductDescription from "../screens/productDetails/ProductDescription";
+import NeoCash from "../screens/neoCash/NeoCash";
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -57,6 +58,7 @@ function RootNavigator() {
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="ReviewCart" component={ReviewCart} />
       <Stack.Screen name="ProductDescription" component={ProductDescription} />
+      <Stack.Screen name="NeoCash" component={NeoCash} />
     </Stack.Navigator>
   );
 }
