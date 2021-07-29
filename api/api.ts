@@ -39,7 +39,7 @@ export const commonApi = {
         method: 'GET',
         header: header
     },
-    getDistributorproducts: {
+    getDistributorProducts: {
         url: `${base_url}/retailers/distributor-products/`,
         method: 'GET',
         header: header

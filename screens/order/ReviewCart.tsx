@@ -20,12 +20,12 @@ export default function ReviewCart(props) {
     // console.log('DATA', props.route.params.data);
     const navigation = useNavigation();
     const [reviewOrder, setReviewOrder] = useState(props.route.params.data);
-    console.log('DATA', reviewOrder);
+    // console.log('DATA', reviewOrder);
 
     const selectProduct = (index: number, item, type: string) => {
         let data = item;
         const productDataMap = {...reviewOrder};
-        let quantity = productDataMap.results[index].value;
+        let quantity = productDataMap.orderedData[index].value;
     
         if (type === "add") {
           quantity = quantity == "" ? 1 : parseInt(quantity) + 1;
@@ -34,8 +34,9 @@ export default function ReviewCart(props) {
             quantity = parseInt(quantity) - 1;
           }
         }
-        productDataMap.results[index].value = quantity;
+        productDataMap.orderedData[index].value = quantity;
         setReviewOrder(productDataMap);
+        // console.log('%%%%%%',productDataMap);
     }
 
     const setProductQuantity = (item, text) => {
@@ -56,7 +57,7 @@ export default function ReviewCart(props) {
                         <Image style={styles.cardImage} source={require("../../assets/images/adaptive-icon.png")}/>
                     </View>
                     <View style={{marginLeft:16}}>
-                        <Text style={texts.greyNormal10}>{item.company_code} {'>'}</Text>
+                        <Text style={texts.greyNormal10}>{item.company_code} </Text>
                         <Text style={texts.blackTextBold14}>{item.variant}</Text>
                     </View>
                 </View>

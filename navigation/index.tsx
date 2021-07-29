@@ -24,6 +24,8 @@ import ReviewCart from "../screens/order/ReviewCart";
 import {useSelector} from "react-redux";
 import AddressDetails from "../screens/details/AddressDetails";
 import MapViewScreen from "../screens/details/MapViewScreen";
+import ProductDescription from "../screens/productDetails/ProductDescription";
+import NeoCash from "../screens/neoCash/NeoCash";
 
 
 export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -51,23 +53,24 @@ export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeNam
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-function RootNavigator(props) {
-    return (
-        <Stack.Navigator initialRouteName={props.initialScreen} screenOptions={{headerShown: false}}>
-            <Stack.Screen key={"Home"} options={{headerShown: false}} name={"Home"} component={Drawer}/>
-            <Stack.Screen name="Root" component={BottomTabNavigator}/>
-            <Stack.Screen name="StoreDetails" component={StoreDetails}/>
-            <Stack.Screen name="AddressDetails" component={AddressDetails}/>
-            <Stack.Screen name="BusinessInfo" component={BusinessInfo}/>
-            <Stack.Screen name="RetailerDetails" component={StoreDetails}/>
-            <Stack.Screen name="CreateOrder" component={CreateOrder}/>
-            <Stack.Screen name="HomeScreen" component={HomeScreen}/>
-            <Stack.Screen name="EditProfile" component={EditProfile}/>
-            <Stack.Screen name="UploadImage" component={UploadImage}/>
-            <Stack.Screen name="ProfileScreen" component={ProfileScreen}/>
-            <Stack.Screen name="ReviewCart" component={ReviewCart}/>
-            <Stack.Screen name="MapViewScreen" component={MapViewScreen}/>
-            <Stack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
-        </Stack.Navigator>
-    );
+function RootNavigator() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
+      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="RetailerDetails" component={StoreDetails} />
+      <Stack.Screen name="CreateOrder" component={CreateOrder} />
+      <Stack.Screen name="AddressDetails" component={AddressDetails} />
+      <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
+      <Stack.Screen name="MapView" component={MapViewScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="UploadImage" component={UploadImage} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="ReviewCart" component={ReviewCart} />
+      <Stack.Screen name="ProductDescription" component={ProductDescription} />
+      <Stack.Screen name="NeoCash" component={NeoCash} />
+    </Stack.Navigator>
+  );
 }
