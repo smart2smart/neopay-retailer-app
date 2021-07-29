@@ -32,7 +32,7 @@ export default function ProductDescription(props) {
     const navigation = useNavigation();
     const [productDetails, setProductDetails] = useState(props.route.params.data);
     const [modalVisible, setModalVisible] = useState(false);
-    console.log('DATAAAAAAAAAA', productDetails);
+    // console.log('DATAAAAAAAAAA', productDetails);
 
     const varientModal = () => {
         setModalVisible(true);
@@ -42,6 +42,28 @@ export default function ProductDescription(props) {
         console.log("###########", variant);
         const {product_group} = variant;
         return product_group ? `${product_group}` : "";
+    }
+
+    const selectProduct = (index: number, item, type: string) => {
+        let data = item;
+        const productDataMap = {...productDetails};
+        let quantity = productDataMap.value;
+    
+        if (type === "add") {
+          quantity = quantity == "" ? 1 : parseInt(quantity) + 1;
+        } else {
+          if (quantity > 0) {
+            quantity = parseInt(quantity) - 1;
+          }
+        }
+        productDataMap.value = quantity;
+        setProductDetails(productDataMap);
+    }
+
+    const setProductQuantity = (item, text) => {
+        let data = item;
+        data.value = text;
+        setProductDetails(data);
     }
 
     return(
@@ -127,12 +149,40 @@ export default function ProductDescription(props) {
                     </View>
                     <View style={{width:'45%'}}>
                         <Text style={texts.blackTextBold14}>Select Quantity</Text>
-                        <TouchableOpacity style={[commonStyles.rowSpaceBetween, {borderWidth:1, borderColor:colors.grey, borderRadius:5, padding:10, marginTop:10}]}>
+                        {/* <TouchableOpacity style={[commonStyles.rowSpaceBetween, {borderWidth:1, borderColor:colors.grey, borderRadius:5, padding:10, marginTop:10}]}>
                             <View style={{marginLeft:12}}>
                                 <Text style={texts.greyNormal14}>10 items</Text>
                             </View>
                             <Image style={styles.modalImage} source={require("../../assets/images/Group_1080.png")}/>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
+                        <View style={[commonStyles.rowSpaceBetween, {marginTop:15}]}>
+                            {productDetails.value === 0 ?
+                            <BorderButtonSmallRed ctaFunction={() => {
+                                selectProduct(index, item, "add");
+                            }} text={"Add"}/> : <View style={styles.quantityButton}>
+                                <TouchableOpacity onPress={() => {
+                                    selectProduct(index, item, "subtract")
+                                }} style={styles.addSubtractButton}>
+                                    <Text style={texts.whiteTextBold16}>
+                                        -
+                                    </Text>
+                                </TouchableOpacity>
+                                <TextInput
+                                    value={productDetails.value.toString()}
+                                    maxLength={10}
+                                    keyboardType={"numeric"}
+                                    onChangeText={(text) => setProductQuantity(item, text)}
+                                    style={styles.cartInput}>
+                                </TextInput>
+                                <TouchableOpacity onPress={() => {
+                                    selectProduct(index,item, "add")
+                                }} style={styles.addSubtractButton}>
+                                    <Text style={texts.whiteTextBold16}>
+                                        +
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>}
+                        </View>
                     </View>
                 </View>
                 <View style={{marginVertical:25}}>
@@ -170,5 +220,29 @@ const styles = StyleSheet.create({
     modalImage: {
         height: 24,
         width: 24,
-    }
+    },
+    quantityButton: {
+        flexDirection: 'row',
+        height: 24
+    },
+    cartInput: {
+        width: 35,
+        height: 24,
+        marginHorizontal: 5,
+        borderWidth: 1,
+        borderColor: colors.grey,
+        borderRadius: 3,
+        textAlign: 'center',
+        fontFamily: 'GothamMedium',
+        color: colors.darkGrey,
+        fontSize: 12
+    },
+    addSubtractButton: {
+        width: 24,
+        height: 24,
+        backgroundColor: colors.blue,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 3
+    },
 })

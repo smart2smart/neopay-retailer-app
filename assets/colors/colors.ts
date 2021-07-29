@@ -13,6 +13,7 @@ const colors = {
     black:'#000000',
     // orange:"#D68060",
     green: "#00B140",
+    light_pink: '#F9E4D1',
 }
 
 export default colors;

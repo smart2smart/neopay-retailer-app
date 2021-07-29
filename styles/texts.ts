@@ -225,6 +225,11 @@ const texts = StyleSheet.create({
         fontFamily: "GothamMedium",
         fontSize: 16
     },
+    lightRedBold24: {
+        color: colors.light_red,
+        fontFamily: "GothamMedium",
+        fontSize: 24
+    },
     lightRedBold37: {
         color: colors.light_red,
         fontFamily: "GothamMedium",

@@ -30,10 +30,14 @@ export default function NeoCash(props) {
     const [neoCash, setNeoCash] = useState(props.route.params.data);
     // console.log('DATA', neoCash);
 
+    const cashExpire = () => {
+        
+    }
+
     return(
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
             <SecondaryHeader title={"NeoCash"}/>
-            <View style={{backgroundColor:colors.lightGrey, padding:30, marginTop:20, borderRadius:5}}>
+            <View style={{backgroundColor:'#F2F2F2', padding:30, marginTop:20, borderRadius:5}}>
                 <View style={{alignSelf:'center'}}>
                     <Text style={texts.lightRedBold37}>{'₹'}{neoCash}</Text>
                 </View>
@@ -44,6 +48,19 @@ export default function NeoCash(props) {
             <View style={{marginTop:20}}>
                 <Text style={texts.blackTextBold16}>Expiring Soon</Text>
             </View>
+            {/* <FlatList 
+                data={}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item) => item.name + ""}
+                renderItem={({item, index}) =>cashExpire(item, index)}
+            /> */}
+            <View style={{marginTop:20}}>
+                <Text style={texts.blackTextBold16}>Transaction History</Text>
+            </View>
         </View>
     )
 }
+
+const style = StyleSheet.create({
+
+})

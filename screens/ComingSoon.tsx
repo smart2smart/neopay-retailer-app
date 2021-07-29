@@ -1,6 +1,5 @@
-// import * as React from 'react';
 import React, {Component, useEffect, useState} from 'react';
-import {View, StyleSheet, Text,FlatList, Image} from "react-native";
+import {View, StyleSheet, Text,FlatList, Image, ScrollView, TouchableOpacity} from "react-native";
 import texts from "../styles/texts";
 import PrimaryHeader from "../headers/PrimaryHeader";
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
@@ -10,88 +9,146 @@ import colors from "../assets/colors/colors";
 
 export default function ComingSoon(props:any) {
 
+    const mockData = {
+        productOffer: 
+        [
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+            {
+                image: '',
+                company_name: 'C&C Products',
+                discount: '15% OFF',
+                offer_till: '3 June 2021',
+                discription: 'Offer Discription Lorem Ipsum',
+                Rewards:'',
+            },
+        ]
+    }
+
     const navigation = useNavigation();
+    const [offer, setOffer] = useState(mockData);
+
+    const offerDetails = (item) => {
+        navigation.navigate("OfferDetails", {data: item});
+    }
+
+    const renderOffer = (item,index) => {
+        return(
+            <ScrollView style={{backgroundColor:'#F6F6F6',  width:'50%'}}>
+                <TouchableOpacity onPress={() => offerDetails(item)} style={{margin:20,borderRadius:5, backgroundColor:colors.white, padding:10}}>
+                    {/* <Image style={styles.cardImage} source={{uri: item.image}}/> */}
+                    <Image style={styles.cardImage} source={require("../assets/images/adaptive-icon.png")}/>
+                    <View style={{marginVertical:5, alignSelf:'center'}}>
+                        <Text style={texts.darkGreyNormal14}>{item.company_name}</Text>
+                    </View>
+                    <View style={{backgroundColor:'#F1EBF6', borderRadius:5, margin:3, alignItems:'center'}}>
+                        <Text style={texts.blueNormal15}>{item.discount}</Text>
+                    </View>
+                </TouchableOpacity>
+            </ScrollView>
+        )
+    }
 
     return(
-        <View style={{flex: 1}}>
-            <PrimaryHeader navigation={props.navigation}/>
+        <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: colors.white }}>
+            {/* <PrimaryHeader navigation={props.navigation}/>
             <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
                 <Text style={texts.blackTextBold18}>
                     COMING SOON
                 </Text>
-            </View> 
+            </View>  */}
+            <View style={{marginVertical:25}}>
+                <Text style={texts.blackTextBold16}>OFFERS</Text>
+            </View>
+            <View>
+                <FlatList
+                    data={offer.productOffer}
+                    showsVerticalScrollIndicator={false}
+                    numColumns={2}
+                    keyExtractor={(item) => item.id + ""}
+                    renderItem={({item, index}) =>renderOffer(item, index)}
+                    ListFooterComponent = {<View style={{paddingBottom:80}}></View>}
+                />
+            </View>
+            {/* <View style={{backgroundColor:'#F6F6F6', borderRadius:5, padding:20, display:'flex', flexDirection:'row'}}>
+                <View style={{margin:20, backgroundColor:colors.white}}>
+                    <Image style={styles.cardImage} source={require("../assets/images/adaptive-icon.png")}/>
+                    <Text style={texts.darkGreyNormal14}>C&C Products</Text>
+                    <View style={{backgroundColor:'#F1EBF6', borderRadius:5, margin:3}}>
+                        <Text>15% OFF</Text>
+                    </View>
+                </View>
+                <View style={{margin:20, backgroundColor:colors.white}}>
+                    <Image style={styles.cardImage} source={require("../assets/images/adaptive-icon.png")}/>
+                    <Text style={texts.darkGreyNormal14}>C&C Products</Text>
+                    <View style={{backgroundColor:'#F1EBF6', borderRadius:5, margin:3}}>
+                        <Text>15% OFF</Text>
+                    </View>
+                </View>
+            </View> */}
         </View>
     )
-
-//     const mockData = {
-//         id: 534,
-//         name: "Vikram stores",
-//         distributors: [
-//             {
-//                 pk: 1475,
-//                 name: "Subodh Trading",
-//                 profile_picture: null
-//             },
-//             {
-//                 pk: 1461,
-//                 name: "Anannya1",
-//                 profile_picture: null
-//             },
-//             {
-//                 pk: 1480,
-//                 name: "Gloify_Distributor",
-//                 profile_picture: null
-//             },
-//         ],
-//     };
-
-//     const navigation = useNavigation();
-//     const [distributorData, setDistributorData] = useState(mockData);
-
-//     const createOrder = (distributorID) => {
-//         navigation.navigate("CreateOrder", {distributorID})
-//         // console.log("distrivutorID", distributorID);
-//     };
-
-//     const distributorDescription = (item) => {
-//         return(
-//             <View style={{marginVertical:20}}>
-//                 <View style={[commonStyles.row, {paddingHorizontal:20}]}> 
-//                     <View style={{width:'25%'}}>
-//                         {/* <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/> */}
-//                         <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
-//                     </View>
-//                     <View style={{width:'70%'}}>
-//                         <BorderButtonBigRed text={item.name} ctaFunction={() => createOrder(item.pk)}/>
-//                     </View>
-//                 </View>
-//             </View>
-//         )
-//     }
-
-
-//     return (
-//         <View style={{flex:1}}>
-//             <PrimaryHeader navigation={props.navigation}/>
-//             {/* <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-//                 <Text style={texts.blackTextBold18}>
-//                     COMING SOON
-//                 </Text>
-//             </View> */}
-//             <FlatList
-//                 data={distributorData.distributors}
-//                 showsVerticalScrollIndicator={false}
-//                 keyExtractor={(item) => item.name + ""}
-//                 renderItem={({item, index}) =>distributorDescription(item, index)}
-//             />
-//         </View>
-//     );
 }
 
 const styles = StyleSheet.create({
     cardImage: {
-        height: 40,
-        width: 80,
-        backgroundColor: colors.light_grey
+        height: 105,
+        width: 105,
+        backgroundColor: colors.light_grey,
+        alignSelf:'center'
     },
 })
