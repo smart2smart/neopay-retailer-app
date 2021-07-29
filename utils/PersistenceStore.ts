@@ -21,6 +21,14 @@ class PersistenceStore {
         await AsyncStorage.setItem('@refreshToken', token)
     }
 
+    static async getLandingScreen() {
+        return await AsyncStorage.getItem('@landingScreen');
+    }
+
+    static async setLandingScreen(token: string) {
+        await AsyncStorage.setItem('@landingScreen', token)
+    }
+
     static async removeRefreshToken() {
         await AsyncStorage.removeItem('@refreshToken');
     }

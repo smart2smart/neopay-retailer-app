@@ -3,39 +3,51 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import {ColorSchemeName} from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList } from '../types';
+import {RootStackParamList} from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import RetailerDetails from '../screens/details/RetailerDetails';
+import StoreDetails from '../screens/details/StoreDetails';
 import CreateOrder from '../screens/order/CreateOrder';
-import AddressDetails from '../screens/details/AddressDetails';
 import BusinessInfo from '../screens/details/BusinessInfo';
-import MapViewScreen from "../commons/MapView";
 import Drawer from "./Drawer";
 import HomeScreen from "../screens/home/HomeScreen";
 import UploadImage from "../screens/details/UploadImage";
 import EditProfile from "../screens/profile/EditProfile";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import ReviewCart from "../screens/order/ReviewCart";
+import {useSelector} from "react-redux";
+import AddressDetails from "../screens/details/AddressDetails";
+import MapViewScreen from "../screens/details/MapViewScreen";
 import ProductDescription from "../screens/productDetails/ProductDescription";
 import NeoCash from "../screens/neoCash/NeoCash";
 import OfferDetails from "../screens/offer/OfferDetails";
 
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
-    </NavigationContainer>
-  );
+export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
+    const landingScreen = useSelector((state: any) => state.landingScreen);
+    let initialScreen = "";
+    if (landingScreen === "profile") {
+        initialScreen = "StoreDetails"
+    } else if (landingScreen === "address") {
+        initialScreen = "AddressDetails"
+    } else if (landingScreen === "license") {
+        initialScreen = "BusinessInfo"
+    } else if (landingScreen === "home") {
+        initialScreen = "Home"
+    }
+    return (
+        <NavigationContainer
+            linking={LinkingConfiguration}
+            theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <RootNavigator initialScreen={initialScreen}/>
+        </NavigationContainer>
+    );
 }
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -48,7 +60,7 @@ function RootNavigator() {
         <Stack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="RetailerDetails" component={RetailerDetails} />
+      <Stack.Screen name="RetailerDetails" component={StoreDetails} />
       <Stack.Screen name="CreateOrder" component={CreateOrder} />
       <Stack.Screen name="AddressDetails" component={AddressDetails} />
       <Stack.Screen name="BusinessInfo" component={BusinessInfo} />

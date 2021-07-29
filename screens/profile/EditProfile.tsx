@@ -23,7 +23,6 @@ import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import Indicator from "../../utils/Indicator";
 import SelectModal from "../../commons/SelectModal";
-import SelectBeatModal from "../../commons/SelectBeatModal";
 import SelectLocalityModal from "../../commons/SelectLocality";
 import {connect, useSelector} from 'react-redux';
 import TextInputUnderline from "../../commons/TextInputUnderline";
@@ -31,7 +30,7 @@ import TextInputModal from "../../commons/TextInputModal";
 import commonStyles from "../../styles/commonStyles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default function ProfileData() {
+export default function EditProfile() {
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -50,13 +49,8 @@ export default function ProfileData() {
     const [line2, setLine2] = useState('');
     const [GSTIN, setGSTIN] = useState('');
     const [localityData, setLocalityData] = useState([]);
-    const [beatPlanData, setBeatPlanData] = useState({mapped: [], all: []});
-    const [selectedBeat, setSelectedBeat] = useState('');
     const [pincodeModalVisible, setPincodeModalVisible] = useState(false);
-    const [beatPlanModalVisible, setBeatPlanModal] = useState(false);
     const [localityModalVisible, setLocalityModalVisible] = useState(false);
-    const [retailerCode, setRetailerCode] = useState('');
-    const distributorId = useSelector((state: any) => state.distributor.distributorId);
     const [image, setImage] = useState('');
     const [contactNo, setContactNo] = useState('');
     const [addressId, setAddressId] = useState('');
@@ -87,7 +81,6 @@ export default function ProfileData() {
 
     useEffect(() => {
         setRetailerId(route.params.retailerId);
-        getBeatList();
         const data = {
             method: commonApi.getPinCodeList.method,
             url: commonApi.getPinCodeList.url,
@@ -108,26 +101,16 @@ export default function ProfileData() {
             setContactNo(data.contact_no);
             setEmail(data.email);
             setGSTIN(data.gst_number);
-            setRetailerCode(data.retailer_code);
-            if (data.distributor_retailer_maps.length > 0 && data.distributor_retailer_maps[0]["beat__name"]) {
-                setSelectedBeat({
-                    id: data.distributor_retailer_maps[0]["beat__id"],
-                    name: data.distributor_retailer_maps[0]["beat__name"]
-                })
-            }
-            if (data.distributor_retailer_maps.length > 0 && data.distributor_retailer_maps[0]["retailer_code"]) {
-                setRetailerCode(data.distributor_retailer_maps[0]["retailer_code"])
-            }
-            if (data.retailer_address) {
-                setAddressId(data.retailer_address.id);
-                setCity(data.retailer_address.city);
-                getLocalities(data.retailer_address.city.id);
-                setState(data.retailer_address.state);
-                setLine1(data.retailer_address.line_1);
-                setLine2(data.retailer_address.line_2);
-                setLocality(data.retailer_address.locality);
-                setSelectedPinCode(data.retailer_address.pincode);
-                setLocation({latitude: data.retailer_address.latitude, longitude: data.retailer_address.longitude});
+            if (data.address_data) {
+                setAddressId(data.address_data.id);
+                setCity(data.address_data.city);
+                getLocalities(data.address_data.city.id);
+                setState(data.address_data.state);
+                setLine1(data.address_data.line_1);
+                setLine2(data.address_data.line_2);
+                setLocality(data.address_data.locality);
+                setSelectedPinCode(data.address_data.pincode);
+                setLocation({latitude: data.address_data.latitude, longitude: data.address_data.longitude});
             }
         }
         if (route.params.image) {
@@ -162,7 +145,6 @@ export default function ProfileData() {
         },
         {type: "text", editable: true, property: contactNo, placeholder: "Contact No", onChange: setContactNo},
         {type: "text", editable: true, property: email, placeholder: "Email", onChange: setEmail},
-        {type: "text", editable: true, property: retailerCode, placeholder: "Retailer Code", onChange: setRetailerCode},
         {type: "text", editable: true, property: line1, placeholder: "Address Line 1*", onChange: setLine1},
         {type: "text", editable: true, property: line2, placeholder: "Address Line 2", onChange: setLine2},
         {
@@ -187,10 +169,6 @@ export default function ProfileData() {
         },
         {type: "text", editable: false, property: city.name, placeholder: "City", onChange: setCity},
         {type: "text", editable: false, property: state.name, placeholder: "State", onChange: setState},
-        {
-            type: "modal", property: selectedBeat, toggleModal: setBeatPlanModal, modal: SelectBeatModal, title: "Beat",
-            modalVisible: beatPlanModalVisible, data: beatPlanData, selectItem: setSelectedBeat
-        },
         {type: "text", editable: true, property: GSTIN, placeholder: "GSTIN No", onChange: setGSTIN}
     ]
 
@@ -211,27 +189,37 @@ export default function ProfileData() {
             alertMsg("Please select pincode");
             return
         }
+        let address = {
+            line_1: line1,
+            line_2: line2,
+            locality: locality.name,
+            pincode: selectedPinCode.id,
+            city:city.id,
+            state:state.id,
+        }
+        if (location.latitude){
+            address["latitude"] = location.latitude;
+        }if(location.longitude) {
+            address["longitude"] = location.longitude;
+        }
         let data = {
             name: shopName,
             contact_person_name: contactPersonName,
             email: email,
-            line1: line1,
-            line2: line2,
-            contact_no:contactNo,
-            locality: locality.name,
-            beat_id: selectedBeat.id,
-            pincode: selectedPinCode.pincode,
-            gst_number: GSTIN,
-            retailer_code: retailerCode
+            contact_no: contactNo,
+            address: JSON.stringify(address),
+            gst_number: GSTIN
         }
 
         if(route.params.comingFrom==="edit"){
             data["address_id"]=addressId;
         }
 
+        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+        console.log(data)
         const dataToSend = {
             method: commonApi.updateRetailerAddress.method,
-            url: commonApi.updateRetailerAddress.url + retailerId + '/?distributor_id=' + distributorId,
+            url: commonApi.updateRetailerAddress.url,
             header: commonApi.updateRetailerAddress.header,
             data: data
         }
@@ -240,13 +228,15 @@ export default function ProfileData() {
             if (res.status == 200) {
                 if (route.params.comingFrom === "edit") {
                     Alert.alert("Details updated successfully.");
-                    navigation.navigate('retailer-profile', {retailerId: retailerId});
+                    // navigation.navigate('retailer-profile', {retailerId: retailerId});
                 } else {
                     navigation.replace('map-view', {
-                        addressId: res.data.retailer_address,
+                        addressId: res.data.address_data,
                         retailerId: retailerId
                     });
                 }
+            }else{
+                Alert.alert(res.data.message);
             }
         })
     }
@@ -261,18 +251,6 @@ export default function ProfileData() {
 
     const goToUploadImage = () => {
         navigation.navigate('upload-image', {retailerId: retailerId, image: image, comingFrom: 'edit-profile'});
-    }
-
-    const getBeatList = () => {
-        const data = {
-            method: commonApi.getBeatPlanList.method,
-            url: commonApi.getBeatPlanList.url + "?distributor_id=" + distributorId,
-            header: commonApi.getBeatPlanList.header
-        }
-        // @ts-ignore
-        AuthenticatedGetRequest(data).then((res) => {
-            setBeatPlanData(res.data);
-        })
     }
 
     return (
@@ -343,7 +321,7 @@ export default function ProfileData() {
                     </View>
                 </View>
             </ScrollView>
-            <View style={{paddingHorizontal: 24, paddingBottom: 20, paddingTop: 10}}>
+            <View style={[commonStyles.row, {paddingHorizontal: 24, paddingBottom: 20, paddingTop: 10}]}>
                 <SolidButtonBlue ctaFunction={addRetailerAddress} text={route.params.comingFrom === "edit"?"Save":"Next"}/>
             </View>
         </View>

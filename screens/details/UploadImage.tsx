@@ -77,33 +77,24 @@ export default function UploadImage() {
         let match = /\.(\w+)$/.exec(filename);
         let type = match ? `image/${match[1]}` : `image`;
 
-
         const formData = new FormData();
         formData.append('attachment', {
             uri: localUri,
             type: type, // or photo.type
             name: filename
         });
-
         setIsLoading(true);
         const data = {
             method: commonApi.updateRetailerImage.method,
-            // url: commonApi.updateRetailerImage.url + retailerId + '/',
             url: commonApi.updateRetailerImage.url,
             header: commonApi.updateRetailerImage.header,
             data: formData
         }
-        console.log("*******", data)
         UploadFileRequest(data)
             .then((res) => {
                 setIsLoading(false);
                 if (res && res.status == 200) {
-                    if (route.params.comingFrom === 'retailer-details') {
-                        navigation.navigate('RetailerDetails', {image: image})
-                    } 
-                    // else {
-                    //     navigation.replace("RetailersList")
-                    // }
+                    navigation.navigate('StoreDetails', {image: image})
                 } else {
                     Alert.alert(res.data.error);
                 }
@@ -121,10 +112,10 @@ export default function UploadImage() {
                     <View style={commonStyles.imageContainer}>
                         {image ? <Image source={{uri: image}} style={{width: '100%', height: '100%'}}/> :
                             <View style={style.textDiv}>
-                            <Text style={texts.darkGrey18Bold}>
-                                Add storage image
-                            </Text>
-                                <Text style={[texts.darkGreyNormal14, {marginTop:10}]}>
+                                <Text style={texts.darkGrey18Bold}>
+                                    Add store image
+                                </Text>
+                                <Text style={[texts.darkGreyNormal14, {marginTop: 10}]}>
                                     Select one of the options from below
                                 </Text>
                             </View>}
@@ -133,7 +124,7 @@ export default function UploadImage() {
                         <View style={style.ctaContainer}>
                             <View style={[style.ctaDiv, style.borderBottom]}>
                                 <Text style={texts.blueBoldl14}>
-                                    {image?"Change Profile Photo":"Add New Photo"}
+                                    {image ? "Change Profile Photo" : "Add New Photo"}
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={captureImage} style={[style.ctaDiv, style.borderBottom]}>
@@ -198,13 +189,13 @@ const style = StyleSheet.create({
         backgroundColor: colors.orangeFaded,
         borderRadius: 10
     },
-    buttonContainer:{
-        marginHorizontal:20,
-        marginBottom:16,
-        flexDirection:'row'
+    buttonContainer: {
+        marginHorizontal: 20,
+        marginBottom: 16,
+        flexDirection: 'row'
     },
-    textDiv:{
-        justifyContent:'center',
-        alignItems:'center'
+    textDiv: {
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

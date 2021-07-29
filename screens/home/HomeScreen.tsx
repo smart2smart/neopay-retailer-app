@@ -18,33 +18,11 @@ import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native"
 import commonStyles from '../../styles/commonStyles';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
+import texts from "../../styles/texts";
 
 export function HomeScreen(props: any) {
-
-    const mockData = {
-        id: 534,
-        name: "Vikram stores",
-        distributors: [
-            {
-                pk: 1475,
-                name: "Subodh Trading",
-                profile_picture: null
-            },
-            {
-                pk: 1461,
-                name: "Anannya1",
-                profile_picture: null
-            },
-            {
-                pk: 1480,
-                name: "Gloify_Distributor",
-                profile_picture: null
-            },
-        ],
-    };
-
     const navigation = useNavigation();
-    const [distributorData, setDistributorData] = useState(mockData);
+    const [distributorData, setDistributorData] = useState([]);
 
     useEffect(() => {
         getDistributorDetails();
@@ -69,35 +47,36 @@ export function HomeScreen(props: any) {
     };
 
     const storeDetails = () => {
-        navigation.navigate("RetailerDetails")
+        navigation.navigate("StoreDetails")
     };
 
-    const distributorDescription = (item) => {
-        return(
-            <View style={{marginVertical:20}}>
-                <View style={[commonStyles.row, {paddingHorizontal:20}]}> 
-                    <View style={{width:'25%'}}>
-                        {/* <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/> */}
-                        <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
-                    </View>
-                    <View style={{width:'70%'}}>
-                        <BorderButtonBigRed text={item.name} ctaFunction={() => createOrder(item.pk)}/>
-                    </View>
+    const distributorDescription = ({item}) => {
+        return (
+            <View style={{borderRadius: 5,
+                paddingVertical:5,
+                marginTop:12,
+                paddingHorizontal:12,
+                marginHorizontal:12,
+                borderWidth: 1, borderColor: colors.grey, flexDirection:"row", alignItems:'center'}}>
+                <Image resizeMode={"contain"} style={styles.cardImage}
+                       source={item.profile_picture?{uri: item.profile_picture}:require("../../assets/images/placeholder_profile_pic.jpg")}/>
+                <View style={{paddingLeft:12}}>
+                    <Text style={texts.greyTextBold14}>
+                        {item.name}
+                    </Text>
                 </View>
             </View>
         )
     }
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, paddingBottom:20}}>
             <PrimaryHeader navigation={props.navigation}/>
-            {/* <BorderButtonBigRed text={'Create Order'} ctaFunction={() => createOrder()}/> */}
-            <BorderButtonBigRed text={'Temprary Store details'} ctaFunction={() => storeDetails()}/>
             <FlatList
-                data={distributorData.distributors}
+                data={distributorData}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.name + ""}
-                renderItem={({item, index}) => distributorDescription(item, index)}
+                keyExtractor={(item) => item.user + ""}
+                renderItem={distributorDescription}
             />
         </View>
     )
@@ -127,9 +106,9 @@ const styles = StyleSheet.create({
         paddingBottom: 16
     },
     cardImage: {
-        height: 40,
-        width: 80,
-        backgroundColor: colors.light_grey
+        height: 50,
+        width: 50,
+        borderRadius:10
     }
 });
 

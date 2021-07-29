@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
     Text,
     View,
@@ -11,28 +11,27 @@ import {
     Alert
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
-import mapStateToProps from "../../store/mapStateToProps";
-import { setIsLoggedIn } from "../../actions/actions";
-// @ts-ignore
-import { connect, useSelector } from 'react-redux';
-import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
-import { BorderButtonBigBlue, BorderButtonSmallBlue, SolidButtonBlue } from '../../buttons/Buttons';
-import { useFocusEffect, useNavigation, useRoute } from "@react-navigation/native";
+import {BorderButtonBigBlue, BorderButtonSmallBlue, SolidButtonBlue} from '../../buttons/Buttons';
+import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 import SelectModal from "../../commons/SelectModal";
 import TextInputModal from "../../commons/TextInputModal";
 import SelectLocalityModal from "../../commons/SelectLocality";
-import { commonApi } from "../../api/api";
-import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import {commonApi} from "../../api/api";
+import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
+import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
+import PersistenceStore from "../../utils/PersistenceStore";
+import {connect} from "react-redux";
+import mapStateToProps from "../../store/mapStateToProps";
+import {setLandingScreen} from "../../actions/actions";
 
-export default function AddressDetails(props) {
+function AddressDetails(props) {
 
     const navigation = useNavigation();
-    const [postalZip, setPostalZip] = useState('');
+    const route = useRoute();
     const [locality, setLocality] = useState('');
     const [address1, setAddress1] = useState('');
     const [address2, setAddress2] = useState('');
@@ -43,6 +42,8 @@ export default function AddressDetails(props) {
     const [localityData, setLocalityData] = useState([]);
     const [pinCodeData, setPinCodeData] = useState([]);
     const [selectedPinCode, setSelectedPinCode] = useState();
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
 
     const selectPinCode = (item) => {
         setCity(item.city);
@@ -67,37 +68,63 @@ export default function AddressDetails(props) {
     }
 
     const businessInfo = () => {
+        if (!selectedPinCode) {
+            alertMsg("Please select pincode");
+            return;
+        }
+        if (!locality) {
+            alertMsg("Please enter your locality");
+            return;
+        }
         if (!address1) {
             alertMsg("Please enter your address");
             return
         }
+        if(!latitude){
+            alertMsg("Please select location");
+        }
 
         let data = {
-            line_1: address1,
-            line_2: address2,
-            locality: locality.name,
-            pincode: parseInt(selectedPinCode.pincode),
+            address: JSON.stringify({
+                line_1: address1,
+                line_2: address2,
+                locality: locality.id,
+                pincode: selectedPinCode.id,
+                latitude: latitude,
+                longitude: longitude,
+                city:selectedPinCode.city.id,
+                state:selectedPinCode.state.id
+            })
         }
 
-        let dataToSend = {}
-
-        dataToSend = {
-            method: commonApi.retailerAddrerss.method,
-            url: commonApi.retailerAddrerss.url,
-            header: commonApi.retailerAddrerss.header,
+        let dataToSend = {
+            method: commonApi.updateRetailerProfile.method,
+            url: commonApi.updateRetailerProfile.url,
+            header: commonApi.updateRetailerProfile.header,
             data: data
         }
-        console.log('^^^^^^^', dataToSend);
-        // @ts-ignore
         AuthenticatedPostRequest(dataToSend).then((res) => {
             console.log("**", JSON.stringify(res));
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.");
+                props.setLandingScreen("license");
+                PersistenceStore.setLandingScreen("license");
                 navigation.navigate("BusinessInfo")
             }
         })
         // navigation.navigate("BusinessInfo")
     }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (route.params) {
+                if (route.params.location) {
+                    setLatitude(route.params.location.latitude);
+                    setLongitude(route.params.location.longitude);
+                }
+            }
+        }, [route.params])
+    );
 
     const alertMsg = (text: string) => {
         Alert.alert(text);
@@ -133,8 +160,8 @@ export default function AddressDetails(props) {
             data: localityData,
             selectItem: setLocality
         },
-        { type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1 },
-        { type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2 },
+        {type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1},
+        {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2},
     ];
 
     // const businessInfo = () => {
@@ -142,11 +169,11 @@ export default function AddressDetails(props) {
     // }
 
     const storeDetails = () => {
-        navigation.navigate("RetailerDetails")
+        navigation.navigate("StoreDetails")
     }
 
     const goToMapView = () => {
-        navigation.navigate('MapView');
+        navigation.navigate('MapViewScreen');
     }
 
     useEffect(() => {
@@ -164,24 +191,24 @@ export default function AddressDetails(props) {
     }, [])
 
     return (
-        <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: colors.white }}>
-            <SecondaryHeader title={"Store Address"} />
-            <View style={{ marginTop: 20 }}>
+        <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
+            <SecondaryHeader title={"Store Address"}/>
+            <View style={{marginTop: 20}}>
                 {data.map((item, index) => {
                     if (item.type === "text") {
                         return (
                             <View style={styles.textInputDiv}>
                                 <TextInput key={index} editable={item.editable}
-                                    placeholder={item.placeholder}
-                                    onChangeText={item.onChange} style={styles.textInput} />
+                                           placeholder={item.placeholder}
+                                           onChangeText={item.onChange} style={styles.textInput}/>
                             </View>
                         )
                     } else {
                         return (
                             <TextInputModal key={index} property={item.property} toggleModal={item.toggleModal}
-                                modal={item.modal} title={item.title}
-                                modalVisible={item.modalVisible} data={item.data}
-                                selectItem={item.selectItem}
+                                            modal={item.modal} title={item.title}
+                                            modalVisible={item.modalVisible} data={item.data}
+                                            selectItem={item.selectItem}
                             />)
                     }
                 })}
@@ -189,16 +216,33 @@ export default function AddressDetails(props) {
             <View style={commonStyles.row}>
                 <Text style={texts.redTextBold14}> Geo Location: </Text>
             </View>
-            <View style={[commonStyles.row, { marginVertical: 20 }]}>
-                <TouchableOpacity onPress={goToMapView}>
+            <View style={[commonStyles.row, {marginVertical: 10}]}>
+                {latitude?
+                    <View style={[commonStyles.rowSpaceBetween, {width:'100%'}]}>
+                    <View>
+                        <Text style={texts.greyTextBold14}>
+                            Latitude: {latitude}
+                        </Text>
+                        <Text style={texts.greyTextBold14}>
+                            Longitude: {longitude}
+                        </Text>
+                    </View>
+                    <TouchableOpacity  onPress={goToMapView}>
+                        <Text style={[texts.redTextBold14, {textDecorationLine:"underline"}]}>
+                            Change
+                        </Text>
+                    </TouchableOpacity>
+                    </View> :<TouchableOpacity onPress={goToMapView}>
                     <Text style={[texts.blueBoldl14, styles.underline]}>
                         Choose on Map
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </View>
-            <View style={commonStyles.rowFlexEnd}>
-                <BorderButtonBigBlue text={'BACK'} ctaFunction={() => storeDetails()} />
-                <SolidButtonBlue text={'NEXT'} ctaFunction={() => businessInfo()} />
+            <View style={[commonStyles.rowSpaceBetween, {paddingTop:30}]}>
+                <BorderButtonBigBlue text={'BACK'} ctaFunction={() => storeDetails()}/>
+                <View style={{width: 10}}>
+                </View>
+                <SolidButtonBlue text={'NEXT'} ctaFunction={() => businessInfo()}/>
             </View>
         </View>
     );
@@ -223,3 +267,5 @@ const styles = StyleSheet.create({
         paddingBottom: 2
     },
 })
+
+export default connect(mapStateToProps, {setLandingScreen})(AddressDetails);

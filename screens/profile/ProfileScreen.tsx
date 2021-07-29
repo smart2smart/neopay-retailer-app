@@ -22,7 +22,7 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
 import OrdersCard from "../../commons/OrdersCard";
-import RetailerDetails from '../details/RetailerDetails';
+import StoreDetails from '../details/StoreDetails';
 import * as Linking from "expo-linking";
 
 
@@ -45,27 +45,25 @@ export default function ProfileScreen() {
         }
         AuthenticatedGetRequest(data).then((res) => {
             setRetailerData(res.data);
-            console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
-            console.log(res)
         })
     }
 
-    // useEffect(() => {
-    //     const data = {
-    //         method: commonApi.getRetailerDetails.method,
-    //         url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
-    //         header: commonApi.getRetailerDetails.header
-    //     }
-    //     // @ts-ignore
-    //     AuthenticatedGetRequest(data).then((res) => {
-    //         if (res.data) {
-    //             setRetailerData(res.data)
-    //         }
-    //     })
-    // }, [route.params]);
 
     useEffect(() => {
-    }, []);
+        const data = {
+            method: commonApi.getRetailerDetails.method,
+            url: commonApi.getRetailerDetails.url,
+            header: commonApi.getRetailerDetails.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setRetailerData(res.data)
+            }
+        })
+    }, [route.params]);
+
+
 
     const callRetailer = (mobile)=>{
         Linking.openURL(`tel:${mobile}`)
@@ -132,12 +130,12 @@ export default function ProfileScreen() {
                                 <Image style={style.phoneIcon} source={require('../../assets/images/Group_590.png')}/>
                             </TouchableOpacity>
                         </View>
-                        {retailerData.retailer_address ?
+                        {retailerData.address_data ?
                             <Text style={[texts.greyNormal14, , {marginTop: 10, lineHeight: 20}]}>
                                 Address
-                                : {retailerData.retailer_address.line_1}, {retailerData.retailer_address.line_2},
-                                {' ' + retailerData.retailer_address.city.name}, {' ' + retailerData.retailer_address.state.name},
-                                {' ' + retailerData.retailer_address.pincode.pincode}
+                                : {retailerData.address_data.line_1}, {retailerData.address_data.line_2},
+                                {' ' + retailerData.address_data.city.name}, {' ' + retailerData.address_data.state.name},
+                                {' ' + retailerData.address_data.pincode.pincode}
                             </Text> : null}
                         <View style={style.underline}>
                         </View>
