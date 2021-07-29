@@ -6,7 +6,7 @@ export default class Indicator extends Component{
     render(){
         if (this.props.isLoading){
             return (
-                <ActivityIndicator style={[styles.loading]} size="large" color={colors.primary_color} animating={this.props.isLoading} hidesWhenStopped={true} />
+                <ActivityIndicator style={[styles.loading]} size="large" color={colors.primaryThemeColor} animating={this.props.isLoading} hidesWhenStopped={true} />
             )
         }else {
             return null;

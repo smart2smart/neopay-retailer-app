@@ -69,7 +69,7 @@ export function HomeScreen(props: any) {
     };
 
     const storeDetails = () => {
-        navigation.navigate("RetailerDetails")
+        navigation.navigate("StoreDetails")
     };
 
     const distributorDescription = (item) => {

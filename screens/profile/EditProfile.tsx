@@ -225,8 +225,6 @@ export default function EditProfile() {
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {
             setIsLoading(false);
-            console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-            console.log(res)
             if (res.status == 200) {
                 if (route.params.comingFrom === "edit") {
                     Alert.alert("Details updated successfully.");

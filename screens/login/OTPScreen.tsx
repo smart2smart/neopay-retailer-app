@@ -5,7 +5,7 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 import {authApi} from "../../api/api";
 import {PostRequest} from "../../api/postRequest";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setIsLoggedIn, setTokens} from "../../actions/actions";
+import {setIsLoggedIn, setLandingScreen, setTokens} from "../../actions/actions";
 // @ts-ignore
 import {connect} from "react-redux";
 import PersistenceStore from "../../utils/PersistenceStore";
@@ -41,8 +41,10 @@ class OTPScreen extends Component {
                     PersistenceStore.setTimeStamp((new Date()).toString());
                     PersistenceStore.setAccessToken(res["data"]["access"]);
                     PersistenceStore.setRefreshToken(res["data"]["refresh"]);
+                    PersistenceStore.setLandingScreen(res.data.screen);
                     // @ts-ignore
                     this.props.setIsLoggedIn(true);
+                    this.props.setLandingScreen(res.data.screen)
                 } else {
                     Alert.alert(res.data.error);
                 }
@@ -111,7 +113,7 @@ class OTPScreen extends Component {
 
 export default connect(
     mapStateToProps,
-    {setIsLoggedIn, setTokens}
+    {setIsLoggedIn, setTokens, setLandingScreen}
 )(OTPScreen);
 
 const styles = StyleSheet.create({

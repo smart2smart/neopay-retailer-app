@@ -22,7 +22,7 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
 import OrdersCard from "../../commons/OrdersCard";
-import RetailerDetails from '../details/RetailerDetails';
+import StoreDetails from '../details/StoreDetails';
 import * as Linking from "expo-linking";
 
 
@@ -44,8 +44,6 @@ export default function ProfileScreen() {
             header: commonApi.getRetailerDetails.header,
         }
         AuthenticatedGetRequest(data).then((res) => {
-            console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-            console.log(res)
             setRetailerData(res.data);
         })
     }
@@ -53,7 +51,7 @@ export default function ProfileScreen() {
     useEffect(() => {
         const data = {
             method: commonApi.getRetailerDetails.method,
-            url: commonApi.getRetailerDetails.url + route.params.retailerId + '/',
+            url: commonApi.getRetailerDetails.url,
             header: commonApi.getRetailerDetails.header
         }
         // @ts-ignore

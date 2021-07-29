@@ -5,9 +5,10 @@ import AppLoading from "expo-app-loading";
 import Navigation from "./index";
 import AuthStack from "./AuthStack";
 import mapStateToProps from "../store/mapStateToProps";
-import {setIsLoggedIn, setTokens} from "../actions/actions";
+import {setIsLoggedIn, setLandingScreen, setTokens} from "../actions/actions";
 import {connect, useSelector} from 'react-redux';
 import {SafeAreaView, View} from "react-native";
+import PersistenceStore from "../utils/PersistenceStore";
 
 function Routes(props: any) {
 
@@ -18,7 +19,9 @@ function Routes(props: any) {
     const getUserDetails = async () => {
         let tokens = await checkTokenFromStorage();
         if (tokens) {
+            let initialScreen = await PersistenceStore.getLandingScreen();
             props.setIsLoggedIn(true);
+            props.setLandingScreen(initialScreen);
         }
         setLoading(false);
     }
@@ -38,4 +41,4 @@ function Routes(props: any) {
         );
     }
 }
-export default connect(mapStateToProps, {setIsLoggedIn, setTokens})(Routes);
+export default connect(mapStateToProps, {setIsLoggedIn, setTokens, setLandingScreen})(Routes);
