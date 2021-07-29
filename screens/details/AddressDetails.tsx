@@ -24,8 +24,11 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import PersistenceStore from "../../utils/PersistenceStore";
+import {connect} from "react-redux";
+import mapStateToProps from "../../store/mapStateToProps";
+import {setLandingScreen} from "../../actions/actions";
 
-export default function AddressDetails(props) {
+function AddressDetails(props) {
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -82,7 +85,7 @@ export default function AddressDetails(props) {
         }
 
         let data = {
-            address: {
+            address: JSON.stringify({
                 line_1: address1,
                 line_2: address2,
                 locality: locality.id,
@@ -91,14 +94,14 @@ export default function AddressDetails(props) {
                 longitude: longitude,
                 city:selectedPinCode.city.id,
                 state:selectedPinCode.state.id
-            }
+            })
         }
 
         let dataToSend = {
             method: commonApi.updateRetailerProfile.method,
             url: commonApi.updateRetailerProfile.url,
             header: commonApi.updateRetailerProfile.header,
-            data: JSON.stringify(data)
+            data: data
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {
             console.log("**", JSON.stringify(res));
@@ -264,3 +267,5 @@ const styles = StyleSheet.create({
         paddingBottom: 2
     },
 })
+
+export default connect(mapStateToProps, {setLandingScreen})(AddressDetails);
