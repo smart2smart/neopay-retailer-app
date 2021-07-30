@@ -1,13 +1,13 @@
 import React, {Component, useEffect, useState} from 'react';
 import {View, StyleSheet, Text,FlatList, Image, ScrollView, TouchableOpacity} from "react-native";
-import texts from "../styles/texts";
-import PrimaryHeader from "../headers/PrimaryHeader";
+import texts from "../../styles/texts";
+import PrimaryHeader from "../../headers/PrimaryHeader";
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
-import commonStyles from '../styles/commonStyles';
-import { BorderButtonBigRed } from '../buttons/Buttons';
-import colors from "../assets/colors/colors";
+import commonStyles from '../../styles/commonStyles';
+import { BorderButtonBigRed } from '../../buttons/Buttons';
+import colors from "../../assets/colors/colors";
 
-export default function ComingSoon(props:any) {
+export default function Offer(props:any) {
 
     const mockData = {
         productOffer: 
@@ -19,6 +19,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'BOGO',
             },
             {
                 image: '',
@@ -27,6 +28,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'',
             },
             {
                 image: '',
@@ -35,6 +37,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'',
             },
             {
                 image: '',
@@ -43,6 +46,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'',
             },
             {
                 image: '',
@@ -51,6 +55,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'',
             },
             {
                 image: '',
@@ -59,6 +64,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'',
             },
             {
                 image: '',
@@ -67,6 +73,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'',
             },
             {
                 image: '',
@@ -75,6 +82,7 @@ export default function ComingSoon(props:any) {
                 offer_till: '3 June 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
+                hot_deal:'',
             },
         ]
     }
@@ -91,7 +99,14 @@ export default function ComingSoon(props:any) {
             <ScrollView style={{backgroundColor:'#F6F6F6',  width:'50%'}}>
                 <TouchableOpacity onPress={() => offerDetails(item)} style={{margin:20,borderRadius:5, backgroundColor:colors.white, padding:10}}>
                     {/* <Image style={styles.cardImage} source={{uri: item.image}}/> */}
-                    <Image style={styles.cardImage} source={require("../assets/images/adaptive-icon.png")}/>
+                    <View>
+                        <View>
+                            <Image style={styles.cardImage} source={require("../../assets/images/adaptive-icon.png")}/>
+                        </View>
+                        <View style={{position:'absolute', alignSelf:'flex-end', backgroundColor:'#D68060', borderRadius:4}}>
+                            <Text style={texts.whiteNormal12}> {item.hot_deal} </Text>
+                        </View>
+                    </View>
                     <View style={{marginVertical:5, alignSelf:'center'}}>
                         <Text style={texts.darkGreyNormal14}>{item.company_name}</Text>
                     </View>

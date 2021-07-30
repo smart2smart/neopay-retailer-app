@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useColorScheme from '../hooks/useColorScheme';
 import colors from "../assets/colors/colors";
 import Cart from "../screens/Cart";
-import ComingSoon from "../screens/ComingSoon";
+import Offer from "../screens/offer/Offer";
 import {HomeScreen} from "../screens/home/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 
@@ -64,7 +64,7 @@ export default function BottomTabNavigator() {
                 component={Cart}/>
             <BottomTabsStack.Screen
                 name="Offers"
-                component={ComingSoon}/>
+                component={Offer}/>
             <BottomTabsStack.Screen
                 name="Account"
                 component={ProfileScreen}/>

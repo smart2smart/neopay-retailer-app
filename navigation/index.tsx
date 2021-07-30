@@ -26,6 +26,7 @@ import AddressDetails from "../screens/details/AddressDetails";
 import MapViewScreen from "../screens/details/MapViewScreen";
 import ProductDescription from "../screens/productDetails/ProductDescription";
 import NeoCash from "../screens/neoCash/NeoCash";
+import Offer from "../screens/offer/Offer";
 import OfferDetails from "../screens/offer/OfferDetails";
 
 
@@ -72,6 +73,7 @@ function RootNavigator() {
       <Stack.Screen name="ReviewCart" component={ReviewCart} />
       <Stack.Screen name="ProductDescription" component={ProductDescription} />
       <Stack.Screen name="NeoCash" component={NeoCash} />
+      <Stack.Screen name="Offer" component={Offer} />
       <Stack.Screen name="OfferDetails" component={OfferDetails} />
     </Stack.Navigator>
   );

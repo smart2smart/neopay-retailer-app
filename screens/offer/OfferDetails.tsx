@@ -40,6 +40,27 @@ export default function OfferDetails(props:any) {
                 <View style={{marginTop:15}}>
                     <Text style={texts.blackTextBold16}>Terms and Conditions</Text>
                 </View>
+                <View style={{marginTop:10}}> 
+                    <Text style={texts.greyNormal12}>Offer Eligibility</Text>
+                </View>
+                <View style={{marginTop:5}}> 
+                    <Text style={texts.greyNormal10}>{'• Lorem Ipsum Dolor'}</Text>
+                    <Text style={texts.greyNormal10}>{'• Lorem Ipsum Dolor'}</Text>
+                </View>
+                <View style={{marginTop:10}}> 
+                    <Text style={texts.greyNormal12}>Offer Duration</Text>
+                </View>
+                <View style={{marginTop:5}}> 
+                    <Text style={texts.greyNormal10}>{'• Lorem Ipsum Dolor'}</Text>
+                    <Text style={texts.greyNormal10}>{'• Lorem Ipsum Dolor'}</Text>
+                </View>
+                <View style={{marginTop:10}}> 
+                    <Text style={texts.greyNormal12}>Rewards</Text>
+                </View>
+                <View style={{marginTop:5}}> 
+                    <Text style={texts.greyNormal10}>{'• Lorem Ipsum Dolor'}</Text>
+                    <Text style={texts.greyNormal10}>{'• Lorem Ipsum Dolor'}</Text>
+                </View>
                 <View style={{marginVertical:25}}>
                     <SolidButtonBlue text={'CLAIM OFFER'}/>
                 </View>
