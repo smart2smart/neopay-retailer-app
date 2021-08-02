@@ -63,7 +63,9 @@ export default function ProfileScreen() {
         })
     }, [route.params]);
 
-
+    const orderDetails = () => {
+        navigation.navigate('Orders');
+    }
 
     const callRetailer = (mobile)=>{
         Linking.openURL(`tel:${mobile}`)
@@ -163,7 +165,7 @@ export default function ProfileScreen() {
                     <Text style={texts.blackTextBold14}>Loyalty Points</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                <TouchableOpacity onPress={() => orderDetails()} style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
                     <Text style={texts.blackTextBold14}>My Orders</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>

@@ -47,6 +47,11 @@ const texts = StyleSheet.create({
         fontFamily: "GothamMedium",
         fontSize: 12
     },
+    redTextNormal10: {
+        color: colors.red,
+        fontFamily: "GothamMedium",
+        fontSize: 10
+    },
     redTextBold12: {
         color: colors.red,
         fontFamily: "GothamMedium",

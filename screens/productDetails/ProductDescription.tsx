@@ -149,7 +149,6 @@ export default function ProductDescription(props) {
                     </View>
                     <View style={{width:'45%'}}>
                         <Text style={texts.blackTextBold14}>Select Quantity</Text>
-                     
                         <View style={[commonStyles.rowSpaceBetween, {marginTop:15}]}>
                             {productDetails.value === 0 ?
                             <BorderButtonSmallRed ctaFunction={() => {
