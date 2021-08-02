@@ -17,9 +17,11 @@ import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native"
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import texts from "../../styles/texts";
+import CartButton from "../../commons/CartButton";
 
 export function HomeScreen(props: any) {
     const navigation = useNavigation();
+    const cart = useSelector((state: any) => state.cart);
     const [distributorData, setDistributorData] = useState([]);
 
     useEffect(() => {
@@ -66,6 +68,7 @@ export function HomeScreen(props: any) {
                 keyExtractor={(item) => item.user + ""}
                 renderItem={distributorDescription}
             />
+            {cart.data.length > 0 ? <CartButton/> : null}
         </View>
     )
 }

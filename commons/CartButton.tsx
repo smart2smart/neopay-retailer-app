@@ -17,33 +17,30 @@ function CartButton() {
     const cart = useSelector((state: any) => state.cart);
 
     const openCart = () => {
-        navigation.navigate("ReviewCart", {})
+        navigation.navigate("Cart")
     }
-
 
 
     return (<TouchableOpacity onPress={() => {
         openCart()
     }} style={styles.footer}>
-        <View style={[commonStyles.rowSpaceBetween, {paddingHorizontal: 24}]}>
-            <View style={commonStyles.row}>
-                <View style={{borderRightWidth: 1, borderRightColor: colors.white, paddingHorizontal: 10}}>
-                    <Text style={texts.whiteNormal14}>{cart.count}</Text>
-                </View>
-                <View style={{paddingHorizontal: 10}}>
-                    <Text style={texts.whiteNormal14}>{0}</Text>
-                </View>
+        <View style={commonStyles.row}>
+            <View>
+                <Text style={texts.whiteNormal14}>Items: </Text>
             </View>
-            <View style={[commonStyles.row, {marginLeft: 40}]}>
-                <View>
-                    <Text style={texts.whiteNormal14}>Order Value: </Text>
-                </View>
-                <View>
-                    <Text style={texts.whiteNormal14}>{0}</Text>
-                </View>
-                <View style={{marginLeft: 10}}>
-                    <Icon name="chevron-right" size={14} color={colors.white}/>
-                </View>
+            <View style={{paddingHorizontal: 10}}>
+                <Text style={texts.whiteNormal14}>{cart.count}</Text>
+            </View>
+        </View>
+        <View style={commonStyles.row}>
+            <View>
+                <Text style={texts.whiteNormal14}>Order Value: </Text>
+            </View>
+            <View>
+                <Text style={texts.whiteNormal14}>{parseFloat(cart.value).toFixed(2)}</Text>
+            </View>
+            <View style={{marginLeft: 5}}>
+                <Icon name="chevron-right" size={14} color={colors.white}/>
             </View>
         </View>
     </TouchableOpacity>)
@@ -51,7 +48,7 @@ function CartButton() {
 
 export default connect(
     mapStateToProps,
-    { addToCart, updateCartAdd, updateCartSubtract }
+    {addToCart, updateCartAdd, updateCartSubtract}
 )(CartButton);
 
 const styles = StyleSheet.create({
@@ -59,9 +56,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        bottom: 0,
+        bottom: 10,
+        marginHorizontal: 12,
+        borderRadius: 5,
         backgroundColor: colors.blue,
         flexDirection: 'row',
+        justifyContent: "space-between",
+        paddingHorizontal: 12,
         height: 50,
         alignItems: 'center',
     }

@@ -11,10 +11,10 @@ class AddProductButton extends PureComponent {
             <View>
                 {parseInt(this.props.item.quantity) === 0 ?
                     <BorderButtonSmallRed ctaFunction={() => {
-                        this.props.selectProduct(this.props.item, "new")
+                        this.props.selectProduct(this.props.item, "new", this.props.mainIndex, this.props.subIndex)
                     }} text={"Add"}/> : <View style={styles.quantityButton}>
                         <TouchableOpacity onPress={() => {
-                            this.props.selectProduct(this.props.index, "subtract")
+                            this.props.selectProduct(this.props.item, "subtract", this.props.mainIndex, this.props.subIndex)
                         }} style={styles.addSubtractButton}>
                             <Text style={texts.whiteTextBold16}>
                                 -
@@ -24,11 +24,11 @@ class AddProductButton extends PureComponent {
                             value={this.props.item.quantity.toString()}
                             maxLength={10}
                             keyboardType={"numeric"}
-                            onChangeText={(text) => this.props.setProductQuantity(text, this.props.index)}
+                            onChangeText={(text) => this.props.setProductQuantity(this.props.item, text, this.props.mainIndex, this.props.subIndex)}
                             style={styles.cartInput}>
                         </TextInput>
                         <TouchableOpacity onPress={() => {
-                            this.props.selectProduct(this.props.item, "add")
+                            this.props.selectProduct(this.props.item, "add", this.props.mainIndex, this.props.subIndex)
                         }} style={styles.addSubtractButton}>
                             <Text style={texts.whiteTextBold16}>
                                 +

@@ -20,12 +20,12 @@ import HomeScreen from "../screens/home/HomeScreen";
 import UploadImage from "../screens/details/UploadImage";
 import EditProfile from "../screens/profile/EditProfile";
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import ReviewCart from "../screens/order/ReviewCart";
 import {useSelector} from "react-redux";
 import AddressDetails from "../screens/details/AddressDetails";
 import MapViewScreen from "../screens/details/MapViewScreen";
 import ProductDescription from "../screens/productDetails/ProductDescription";
 import NeoCash from "../screens/neoCash/NeoCash";
+import Cart from "../screens/cart/Cart";
 
 
 export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -68,7 +68,7 @@ function RootNavigator() {
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <Stack.Screen name="ReviewCart" component={ReviewCart} />
+      <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="ProductDescription" component={ProductDescription} />
       <Stack.Screen name="NeoCash" component={NeoCash} />
     </Stack.Navigator>
