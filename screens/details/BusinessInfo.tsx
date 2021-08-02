@@ -45,7 +45,6 @@ function BusinessInfo(props) {
             fssai_no: faasino,
             pan_no: pan
         }
-        console.log("DATAAAAAAAAAAA", data)
 
         let dataToSend = {
             method: commonApi.updateRetailerProfile.method,

@@ -13,7 +13,7 @@ import {RootStackParamList} from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import StoreDetails from '../screens/details/StoreDetails';
-import CreateOrder from '../screens/order/CreateOrder';
+import ProductList from '../screens/order/ProductList';
 import BusinessInfo from '../screens/details/BusinessInfo';
 import Drawer from "./Drawer";
 import HomeScreen from "../screens/home/HomeScreen";
@@ -60,7 +60,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="RetailerDetails" component={StoreDetails} />
-      <Stack.Screen name="CreateOrder" component={CreateOrder} />
+      <Stack.Screen name="ProductList" component={ProductList} />
       <Stack.Screen name="AddressDetails" component={AddressDetails} />
       <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
       <Stack.Screen name="MapView" component={MapViewScreen} />

@@ -14,9 +14,6 @@ import Icon from "react-native-vector-icons/AntDesign";
 
 export default function ProductVarient(props) {
   const [quantityData, setQuantityData] = useState(props.data);
-
-  console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&',quantityData);
-
   const onQuantitySelect = (item) => {
       
   }

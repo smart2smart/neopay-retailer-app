@@ -15,12 +15,9 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 
-export default function ReviewCart(props) { 
-
-    // console.log('DATA', props.route.params.data);
+export default function ReviewCart(props) {
     const navigation = useNavigation();
     const [reviewOrder, setReviewOrder] = useState(props.route.params.data);
-    // console.log('DATA', reviewOrder);
 
     const selectProduct = (index: number, item, type: string) => {
         let data = item;
@@ -36,7 +33,6 @@ export default function ReviewCart(props) {
         }
         productDataMap.orderedData[index].value = quantity;
         setReviewOrder(productDataMap);
-        // console.log('%%%%%%',productDataMap);
     }
 
     const setProductQuantity = (item, text) => {

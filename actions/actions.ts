@@ -1,4 +1,12 @@
-import {IS_LOGGED_IN, TOKENS, RETAILER_DETAILS, CART, SCREEN} from "./actionTypes";
+import {
+    IS_LOGGED_IN,
+    TOKENS,
+    RETAILER_DETAILS,
+    SCREEN,
+    ADD_TO_CART,
+    UPDATE_CART_ADD,
+    UPDATE_CART_SUBTRACT, CART_CHANGE_QUANTITY
+} from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
     return ({
@@ -22,9 +30,30 @@ export const setRetailerDetails = (value: any) => {
     });
 }
 
-export const setCart = (value:any)=>{
+export const addToCart = (value:any)=>{
     return({
-        type:CART,
+        type:ADD_TO_CART,
+        payload:value
+    })
+}
+
+export const updateCartAdd = (value:any)=>{
+    return({
+        type:UPDATE_CART_ADD,
+        payload:value
+    })
+}
+
+export const cartChangeQuantity = (value:any)=>{
+    return({
+        type:CART_CHANGE_QUANTITY,
+        payload:value
+    })
+}
+
+export const updateCartSubtract = (value:any)=>{
+    return({
+        type:UPDATE_CART_SUBTRACT,
         payload:value
     })
 }

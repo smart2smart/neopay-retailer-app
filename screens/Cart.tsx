@@ -36,8 +36,7 @@ export default function Cart(props:any) {
     const [distributorData, setDistributorData] = useState(mockData);
 
     const createOrder = (distributorID) => {
-        navigation.navigate("CreateOrder", {distributorID})
-        // console.log("distrivutorID", distributorID);
+        navigation.navigate("ProductList", {distributorID})
     };
 
     const distributorDescription = (item) => {
@@ -45,7 +44,6 @@ export default function Cart(props:any) {
             <View style={{marginVertical:20}}>
                 <View style={[commonStyles.row, {paddingHorizontal:20}]}> 
                     <View style={{width:'25%'}}>
-                        {/* <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/> */}
                         <Image resizeMode={"contain"} style={styles.cardImage} source={{uri: item.profile_picture}}/>
                     </View>
                     <View style={{width:'70%'}}>
@@ -60,11 +58,6 @@ export default function Cart(props:any) {
     return (
         <View style={{flex:1}}>
             <PrimaryHeader navigation={props.navigation}/>
-            {/* <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-                <Text style={texts.blackTextBold18}>
-                    COMING SOON
-                </Text>
-            </View> */}
             <FlatList
                 data={distributorData.distributors}
                 showsVerticalScrollIndicator={false}

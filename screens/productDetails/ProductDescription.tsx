@@ -32,14 +32,12 @@ export default function ProductDescription(props) {
     const navigation = useNavigation();
     const [productDetails, setProductDetails] = useState(props.route.params.data);
     const [modalVisible, setModalVisible] = useState(false);
-    console.log('DATAAAAAAAAAA', productDetails);
 
     const varientModal = () => {
         setModalVisible(true);
     }
 
     const setSelectQuantity = (variant) => {
-        console.log("###########", variant);
         const {product_group} = variant;
         return product_group ? `${product_group}` : "";
     }

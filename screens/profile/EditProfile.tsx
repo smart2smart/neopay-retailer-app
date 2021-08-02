@@ -214,9 +214,6 @@ export default function EditProfile() {
         if(route.params.comingFrom==="edit"){
             data["address_id"]=addressId;
         }
-
-        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
-        console.log(data)
         const dataToSend = {
             method: commonApi.updateRetailerAddress.method,
             url: commonApi.updateRetailerAddress.url,

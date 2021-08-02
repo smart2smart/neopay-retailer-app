@@ -28,7 +28,6 @@ import * as Linking from "expo-linking";
 export default function NeoCash(props) {
 
     const [neoCash, setNeoCash] = useState(props.route.params.data);
-    // console.log('DATA', neoCash);
 
     return(
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>

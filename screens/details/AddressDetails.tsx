@@ -104,7 +104,6 @@ function AddressDetails(props) {
             data: data
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {
-            console.log("**", JSON.stringify(res));
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.");
                 props.setLandingScreen("license");
@@ -112,7 +111,6 @@ function AddressDetails(props) {
                 navigation.navigate("BusinessInfo")
             }
         })
-        // navigation.navigate("BusinessInfo")
     }
 
     useFocusEffect(

@@ -82,8 +82,6 @@ function CustomDrawerContent(props) {
             header: commonApi.getRetailerDetails.header,
         }
         AuthenticatedGetRequest(data).then((res) => {
-            console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
-            console.log(res)
         })
     }
 

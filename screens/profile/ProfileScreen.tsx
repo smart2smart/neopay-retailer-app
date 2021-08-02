@@ -75,7 +75,6 @@ export default function ProfileScreen() {
 
     const neoCash = () => {
         navigation.navigate('NeoCash', {data: retailerData.neo_cash});
-        // console.log('NEOCASH', retailerData.neo_cash);
     }
 
     const goToBuildOrder = () => {

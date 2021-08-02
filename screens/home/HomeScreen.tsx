@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Dimensions,
     FlatList,
-    Image,
+    Image, TouchableOpacity,
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
 import {setIsLoggedIn} from "../../actions/actions";
@@ -13,9 +13,7 @@ import {setIsLoggedIn} from "../../actions/actions";
 import {connect, useSelector} from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
-import {BorderButtonBigRed} from '../../buttons/Buttons';
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
-import commonStyles from '../../styles/commonStyles';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import texts from "../../styles/texts";
@@ -36,28 +34,18 @@ export function HomeScreen(props: any) {
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
-            console.log('#############', res);
             setDistributorData(res.data);
         })
     }
 
-    const createOrder = (distributorID) => {
-        navigation.navigate("CreateOrder", {distributorID})
-        // console.log("distrivutorID", distributorID);
-    };
 
-    const storeDetails = () => {
-        navigation.navigate("StoreDetails")
-    };
+    const goToDistributorProducts = (distributorId)=>{
+        navigation.navigate("ProductList", {distributorId:distributorId})
+    }
 
     const distributorDescription = ({item}) => {
         return (
-            <View style={{borderRadius: 5,
-                paddingVertical:5,
-                marginTop:12,
-                paddingHorizontal:12,
-                marginHorizontal:12,
-                borderWidth: 1, borderColor: colors.grey, flexDirection:"row", alignItems:'center'}}>
+            <TouchableOpacity onPress={()=>{goToDistributorProducts(item.user)}} style={styles.distributorCard}>
                 <Image resizeMode={"contain"} style={styles.cardImage}
                        source={item.profile_picture?{uri: item.profile_picture}:require("../../assets/images/placeholder_profile_pic.jpg")}/>
                 <View style={{paddingLeft:12}}>
@@ -65,7 +53,7 @@ export function HomeScreen(props: any) {
                         {item.name}
                     </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -109,6 +97,17 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius:10
+    },
+    distributorCard:{
+        borderRadius: 5,
+        paddingVertical:5,
+        marginTop:12,
+        paddingHorizontal:12,
+        marginHorizontal:12,
+        borderWidth: 1,
+        borderColor: colors.grey,
+        flexDirection:"row",
+        alignItems:'center'
     }
 });
 
