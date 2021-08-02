@@ -91,6 +91,11 @@ const texts = StyleSheet.create({
         fontFamily: "GothamMedium",
         fontSize: 14
     },
+    redTextBold16: {
+        color: colors.red,
+        fontFamily: "GothamMedium",
+        fontSize: 16
+    },
     redTextBold20: {
         color: colors.light_red,
         fontFamily: "GothamMedium",
@@ -214,6 +219,11 @@ const texts = StyleSheet.create({
         color: colors.green,
         fontFamily: "GothamMedium",
         fontSize: 13
+    },
+    greenNormal15: {
+        color: colors.green,
+        fontFamily: "GothamMedium",
+        fontSize: 15
     },
     greenTextBold16: {
         color: colors.green,

@@ -38,13 +38,18 @@ export default function ProductDescription(props) {
         setModalVisible(true);
     }
 
-    const setSelectQuantity = (variant) => {
+    const setSelectVarient = (variant) => {
         console.log("###########", variant);
-        const {product_group} = variant;
-        return product_group ? `${product_group}` : "";
+        return variant;
+        // const {product_group} = variant;
+        // return product_group ? `${product_group}` : "";
     }
 
-    const selectProduct = (index: number, item, type: string) => {
+    const setSelectSku = (sku) => {
+        return sku;
+    }
+
+    const selectProduct = (item, type: string) => {
         let data = item;
         const productDataMap = {...productDetails};
         let quantity = productDataMap.value;
@@ -107,10 +112,10 @@ export default function ProductDescription(props) {
                 </TouchableOpacity> */}
                 <View>
                     <GreyBorderButtonBig
-                        // text={setSelectQuantity(
-                        //     productDetails && 
-                        //     productDetails.find((el) => el.product_group)
-                        // )} 
+                        text={setSelectVarient(
+                            productDetails && 
+                            productDetails.variant)
+                        } 
                         ctaFunction={() => varientModal()}
                     />
                     <ProductVarient
@@ -124,18 +129,13 @@ export default function ProductDescription(props) {
                 <View style={[commonStyles.rowSpaceBetween, {marginTop:25}]}>
                     <View>
                         <Text style={texts.blackTextBold14}>Select SKU (Weight)</Text>
-                        {/* <TouchableOpacity style={[commonStyles.rowSpaceBetween, {borderWidth:1, borderColor:colors.grey, borderRadius:5, padding:10, marginTop:10}]}>
-                            <View style={{marginLeft:12}}>
-                                <Text style={texts.greyNormal14}>200 ml</Text>
-                            </View>
-                            <Image style={styles.modalImage} source={require("../../assets/images/Group_1080.png")}/>
-                        </TouchableOpacity> */}
                         <View style={{marginTop:10}}>
                             <GreyBorderButtonBig
-                                // text={setSelectQuantity(
+                                // text={setSelectSku(
                                 //     productDetails && 
-                                //     productDetails.find((el) => el.product_group)
+                                //     productDetails.sku
                                 // )} 
+                                text={'50gm'}
                                 ctaFunction={() => varientModal()}
                             />
                             <ProductSku
@@ -149,19 +149,14 @@ export default function ProductDescription(props) {
                     </View>
                     <View style={{width:'45%'}}>
                         <Text style={texts.blackTextBold14}>Select Quantity</Text>
-                        {/* <TouchableOpacity style={[commonStyles.rowSpaceBetween, {borderWidth:1, borderColor:colors.grey, borderRadius:5, padding:10, marginTop:10}]}>
-                            <View style={{marginLeft:12}}>
-                                <Text style={texts.greyNormal14}>10 items</Text>
-                            </View>
-                            <Image style={styles.modalImage} source={require("../../assets/images/Group_1080.png")}/>
-                        </TouchableOpacity> */}
+                     
                         <View style={[commonStyles.rowSpaceBetween, {marginTop:15}]}>
                             {productDetails.value === 0 ?
                             <BorderButtonSmallRed ctaFunction={() => {
-                                selectProduct(index, item, "add");
+                                selectProduct(productDetails.value, "add");
                             }} text={"Add"}/> : <View style={styles.quantityButton}>
                                 <TouchableOpacity onPress={() => {
-                                    selectProduct(index, item, "subtract")
+                                    selectProduct(productDetails.value, "subtract")
                                 }} style={styles.addSubtractButton}>
                                     <Text style={texts.whiteTextBold16}>
                                         -
@@ -171,11 +166,11 @@ export default function ProductDescription(props) {
                                     value={productDetails.value.toString()}
                                     maxLength={10}
                                     keyboardType={"numeric"}
-                                    onChangeText={(text) => setProductQuantity(item, text)}
+                                    onChangeText={(text) => setProductQuantity(productDetails.value, text)}
                                     style={styles.cartInput}>
                                 </TextInput>
                                 <TouchableOpacity onPress={() => {
-                                    selectProduct(index,item, "add")
+                                    selectProduct(productDetails.value, "add")
                                 }} style={styles.addSubtractButton}>
                                     <Text style={texts.whiteTextBold16}>
                                         +

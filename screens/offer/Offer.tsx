@@ -79,7 +79,7 @@ export default function Offer(props:any) {
                 image: '',
                 company_name: 'C&C Products',
                 discount: '15% OFF',
-                offer_till: '3 June 2021',
+                offer_till: '3 August 2021',
                 discription: 'Offer Discription Lorem Ipsum',
                 Rewards:'',
                 hot_deal:'',
@@ -104,7 +104,7 @@ export default function Offer(props:any) {
                             <Image style={styles.cardImage} source={require("../../assets/images/adaptive-icon.png")}/>
                         </View>
                         <View style={{position:'absolute', alignSelf:'flex-end', backgroundColor:'#D68060', borderRadius:4}}>
-                            <Text style={texts.whiteNormal12}> {item.hot_deal} </Text>
+                            {item.hot_deal ? <Text style={texts.whiteNormal12}> {item.hot_deal} </Text> : null }
                         </View>
                     </View>
                     <View style={{marginVertical:5, alignSelf:'center'}}>
