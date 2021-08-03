@@ -14,6 +14,7 @@ const colors = {
     // orange:"#D68060",
     green: "#00B140",
     light_pink: '#F9E4D1',
+    greyFaded: '#F6F6F6',
 }
 
 export default colors;
