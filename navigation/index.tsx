@@ -26,6 +26,9 @@ import MapViewScreen from "../screens/details/MapViewScreen";
 import ProductDescription from "../screens/productDetails/ProductDescription";
 import NeoCash from "../screens/neoCash/NeoCash";
 import Cart from "../screens/cart/Cart";
+import Offer from "../screens/offer/Offer";
+import OfferDetails from "../screens/offer/OfferDetails";
+import Orders from "../screens/order/Orders";
 
 
 export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -71,6 +74,9 @@ function RootNavigator() {
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="ProductDescription" component={ProductDescription} />
       <Stack.Screen name="NeoCash" component={NeoCash} />
+      <Stack.Screen name="Offer" component={Offer} />
+      <Stack.Screen name="OfferDetails" component={OfferDetails} />
+      <Stack.Screen name="Orders" component={Orders} />
     </Stack.Navigator>
   );
 }

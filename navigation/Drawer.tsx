@@ -145,6 +145,11 @@ function CustomDrawerContent(props) {
                     }}/>
                 </View>
                 <View>
+                    <RenderItem title={"Offer"} onPress={() => {
+                        navigate("Offer");
+                    }}/>
+                </View>
+                <View>
                     <RenderItem title={"Profile"} onPress={() => {
                         navigate("ProfileScreen");
                     }}/>

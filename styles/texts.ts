@@ -47,6 +47,16 @@ const texts = StyleSheet.create({
         fontFamily: "GothamMedium",
         fontSize: 12
     },
+    primaryThemeTextBold12: {
+        color: colors.primaryThemeColor,
+        fontFamily: "GothamMedium",
+        fontSize: 14
+    },
+    redTextNormal10: {
+        color: colors.red,
+        fontFamily: "GothamMedium",
+        fontSize: 10
+    },
     redTextBold12: {
         color: colors.red,
         fontFamily: "GothamMedium",
@@ -90,6 +100,11 @@ const texts = StyleSheet.create({
         color: colors.red,
         fontFamily: "GothamMedium",
         fontSize: 14
+    },
+    redTextBold16: {
+        color: colors.red,
+        fontFamily: "GothamMedium",
+        fontSize: 16
     },
     redTextBold20: {
         color: colors.light_red,
@@ -220,6 +235,11 @@ const texts = StyleSheet.create({
         fontFamily: "GothamMedium",
         fontSize: 12
     },
+    greenNormal15: {
+        color: colors.green,
+        fontFamily: "GothamMedium",
+        fontSize: 15
+    },
     greenTextBold16: {
         color: colors.green,
         fontFamily: "GothamMedium",
@@ -229,6 +249,11 @@ const texts = StyleSheet.create({
         color: colors.light_red,
         fontFamily: "GothamMedium",
         fontSize: 16
+    },
+    lightRedBold24: {
+        color: colors.light_red,
+        fontFamily: "GothamMedium",
+        fontSize: 24
     },
     lightRedBold37: {
         color: colors.light_red,
