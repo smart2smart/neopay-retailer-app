@@ -6,6 +6,7 @@ import {
     UPDATE_CART_SUBTRACT,
     CART_CHANGE_QUANTITY
 } from "../actions/actionTypes";
+import PersistenceStore from "../utils/PersistenceStore";
 
 
 const cart = {
@@ -21,66 +22,83 @@ const cartReducer = (state = {...cart}, action: any) => {
         case NEW_CART:
             return action.payload
         case CLEAR_CART:
+            PersistenceStore.removeCart();
             return {...cart}
-        case ADD_TO_CART: {
-            let product = action.payload["product"]
-            product["quantity"] = 1;
-            let new_state = JSON.parse(JSON.stringify(state));
-            new_state["distributorId"] = action.payload["distributorId"];
+        case ADD_TO_CART:
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+            let product_new = action.payload["product"]
+            console.log(product_new)
+            product_new["quantity"] = 1;
+            let state_new = JSON.parse(JSON.stringify(state));
+            state_new["distributorId"] = action.payload["distributorId"];
             let available = false;
-            new_state.data.forEach((item) => {
-                if (item["product_group_id"] === product["product_group_id"]) {
+            state_new.data.forEach((item) => {
+                if (item["product_group_id"] === product_new["product_group_id"]) {
                     available = true;
-                    item.data.push(product)
+                    item.data.push(product_new)
                 }
             });
             if(!available) {
                 let item = {
-                    company_name: product["company_name"], brand_name: product["brand_name"],
-                    image: product["product_group_image"], product_group: product["product_group"],
-                    product_group_id: product["product_group_id"], data: [product]
+                    company_name: product_new["company_name"], brand_name: product_new["brand_name"],
+                    image: product_new["product_group_image"], product_group: product_new["product_group"],
+                    product_group_id: product_new["product_group_id"], data: [product_new]
                 }
-                new_state.data.push(item)
+                state_new.data.push(item)
             }
-            new_state["count"] += 1;
-            new_state["value"] += parseFloat(product["rate"]);
-            return new_state;
-        }
+            state_new["count"] += 1;
+            state_new["value"] += parseFloat(product_new["rate"]);
+            PersistenceStore.setCart(JSON.stringify(state_new));
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            console.log(state_new)
+            return state_new;
         case UPDATE_CART_ADD:
-            let new_state = JSON.parse(JSON.stringify(state))
-            let product = action.payload["product"]
-            new_state.data.forEach((item) => {
-                if (item["product_group_id"] === product["product_group_id"]) {
+            console.log("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
+            let state_add = JSON.parse(JSON.stringify(state))
+            let product_add = action.payload["product"]
+            state_add.data.forEach((item) => {
+                if (item["product_group_id"] === product_add["product_group_id"]) {
                     item.data.forEach((itm) => {
-                        if (product["id"] == itm["id"]) {
+                        if (product_add["id"] == itm["id"]) {
+                            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                            console.log(itm)
                             itm.quantity += 1
+                            console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+                            console.log(itm)
                         }
                     })
                 }
             });
-            new_state["count"] += 1;
-            new_state["value"] += parseFloat(product["rate"]);
-            new_state["distributorId"] = action.payload["distributorId"]
-            return new_state
+            state_add["count"] += 1;
+            state_add["value"] += parseFloat(product_add["rate"]);
+            state_add["distributorId"] = action.payload["distributorId"]
+            PersistenceStore.setCart(JSON.stringify(state_add));
+            return state_add
         case UPDATE_CART_SUBTRACT:
-            let state_new = JSON.parse(JSON.stringify(state))
-            let product_new = action.payload["product"]
-            state_new.data.forEach((item) => {
-                if (item["product_group_id"] === product_new["product_group_id"]) {
-                    item.data.forEach((itm) => {
-                        if (product_new["id"] == itm["id"]) {
+            console.log("tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
+            let state_subtract = JSON.parse(JSON.stringify(state))
+            let product_subtract = action.payload["product"]
+            state_subtract.data.forEach((item) => {
+                if (item["product_group_id"] === product_subtract["product_group_id"]) {
+                    item.data.forEach((itm, idx) => {
+                        if (product_subtract["id"] == itm["id"]) {
                             if (itm.quantity > 0) {
                                 itm.quantity -= 1
+                            }
+                            if(itm.quantity==0){
+                                item.data.splice(idx, 1);
                             }
                         }
                     })
                 }
             });
-            state_new["count"] -= 1;
-            state_new["value"] -= parseFloat(product_new["rate"]);
-            state_new["distributorId"] = action.payload["distributorId"];
-            return state_new
+            state_subtract["count"] -= 1;
+            state_subtract["value"] -= parseFloat(product_subtract["rate"]);
+            state_subtract["distributorId"] = action.payload["distributorId"];
+            PersistenceStore.setCart(JSON.stringify(state_subtract));
+            return state_subtract
         case CART_CHANGE_QUANTITY:
+            console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
             let state_change = JSON.parse(JSON.stringify(state))
             let product_change = action.payload["product"]
             let text = action.payload.text;
@@ -89,8 +107,6 @@ const cartReducer = (state = {...cart}, action: any) => {
                 if (item["product_group_id"] === product_change["product_group_id"]) {
                     item.data.forEach((itm) => {
                         if (product_change["id"] == itm["id"]) {
-                            console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-                            console.log(itm)
                             currentQuantity = itm.quantity;
                             itm.quantity = text;
                         }
@@ -105,6 +121,7 @@ const cartReducer = (state = {...cart}, action: any) => {
                 state_change.value += (parseInt(text)  - currentQuantity)*product_change["rate"];
             }
             state_change["distributorId"] = action.payload["distributorId"]
+            PersistenceStore.setCart(JSON.stringify(state_change));
             return state_change
         default:
             return state

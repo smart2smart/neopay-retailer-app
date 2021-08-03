@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     TextInput,
     FlatList,
-    Image,
+    Image, Alert,
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import colors from "../../assets/colors/colors";
@@ -20,8 +20,10 @@ import Icon from "react-native-vector-icons/Feather";
 import AddProductButton from "./AddProductButton";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity} from "../../actions/actions";
+import {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity, clearCart} from "../../actions/actions";
 import CartButton from "../../commons/CartButton";
+import store from "../../store/store";
+import PersistenceStore from "../../utils/PersistenceStore";
 
 
 const sku_units = {
@@ -73,20 +75,62 @@ function ProductList(props) {
                     product_group_id: value[0]["product_group_id"],
                     data: value
                 })).value()
-            setProductData(groupedData)
-        })
+            matchQuantityWithCart(groupedData);
+        });
     }
 
+
+    const matchQuantityWithCart = (groupedData)=>{
+        let data = {}
+        cart.data.forEach((item)=>{
+            item.data.forEach((itm)=>{
+                data[itm.id] = itm.quantity
+            })
+        })
+        groupedData.forEach((item)=>{
+            item.data.forEach((itm)=>{
+                if(data[itm.id]){
+                    itm["quantity"] = data[itm.id]
+                }
+            })
+        })
+        setProductData(groupedData);
+    }
+
+
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: data, text:text};
+        let item = {distributorId: route.params.distributorId, product: {...data}, text:text};
         let allProducts = [...productData];
         allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
         setProductData(allProducts);
         props.cartChangeQuantity(item)
     }
 
-    const selectProduct = (data, type, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: data};
+    const selectProductAlert = (data, type, mainIndex, subIndex) => {
+        if(cart.distributorId !== route.params.distributorId){
+            Alert.alert(
+                'Change Distributor',
+                `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
+                [
+                    {
+                        text: 'Yes',
+                        onPress: () => {
+                            props.clearCart();
+                            PersistenceStore.removeCart();
+                            selectProduct(data, type, mainIndex, subIndex);
+
+                        },
+                    },
+                    {text: 'No', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+            );
+        }
+
+    }
+
+    const selectProduct = (data, type, mainIndex, subIndex)=>{
+        let item = {distributorId: route.params.distributorId, product: {...data}};
         let allProducts = [...productData];
         if (type === "new") {
             allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
@@ -170,7 +214,7 @@ function ProductList(props) {
                                     mainIndex={index}
                                     subIndex={subIndex}
                                     setProductQuantity={setProductQuantity}
-                                    selectProduct={selectProduct}
+                                    selectProduct={selectProductAlert}
                                 />
                             </View>
                         </View>
@@ -202,7 +246,7 @@ function ProductList(props) {
                 data={productData}
                 ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
                 showsVerticalScrollIndicator={false}
-                keyExtractor={(item, index) => item.product_group_id + "" + index}
+                keyExtractor={(item, index) => item.product_group_id + "" + item.product_group_name}
                 renderItem={renderItem}
                 ListFooterComponent={() => <View style={{paddingBottom: 50}}></View>}
             />
@@ -213,7 +257,7 @@ function ProductList(props) {
 
 export default connect(
     mapStateToProps,
-    {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity}
+    {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity, clearCart}
 )(ProductList);
 
 

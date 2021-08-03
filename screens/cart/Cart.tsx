@@ -1,16 +1,17 @@
-// import * as React from 'react';
 import React, {Component, useEffect, useState} from 'react';
-import {View, StyleSheet, Text,FlatList, Image} from "react-native";
+import {View, StyleSheet, Text, FlatList, Image} from "react-native";
 import texts from "../../styles/texts";
 import PrimaryHeader from "../../headers/PrimaryHeader";
-import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import commonStyles from '../../styles/commonStyles';
-import { BorderButtonBigRed } from '../../buttons/Buttons';
+import {SolidButtonBlue} from '../../buttons/Buttons';
 import colors from "../../assets/colors/colors";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {addToCart, cartChangeQuantity, updateCartAdd, updateCartSubtract} from "../../actions/actions";
+import {addToCart, cartChangeQuantity, clearCart, updateCartAdd, updateCartSubtract} from "../../actions/actions";
 import AddProductButton from "../order/AddProductButton";
+import {commonApi} from "../../api/api";
+import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 
 const sku_units = {
     1: 'kg',
@@ -25,34 +26,68 @@ const sku_units = {
     10: 'bag'
 }
 
-function Cart(props:any) {
+function Cart(props: any) {
     const navigation = useNavigation();
     const route = useRoute();
-    const cart = useSelector((state: any) => state.cart.data);
+    const cart = useSelector((state: any) => state.cart);
+    const cartData = [...cart.data];
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: data, text:text};
-        let allProducts = [...cart];
+        let item = {distributorId: route.params.distributorId, product: data, text: text};
+        let allProducts = [...cartData];
         allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
         props.cartChangeQuantity(item)
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: data};
-        let allProducts = [...cart];
+        let item = {distributorId: route.params.distributorId, product: {...data}};
         if (type === "new") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
             props.addToCart(item);
         } else if (type == "add") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"])+1;
             props.updateCartAdd(item);
         } else if (type == "subtract") {
-            if (allProducts[mainIndex]["data"][subIndex]["quantity"] > 0) {
-                allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"])-1 ;
-            }
             props.updateCartSubtract(item);
         }
     }
+
+    const getProducts  = ()=>{
+        let products: any = {};
+        let available = false;
+        cartData.forEach((item) => {
+            console.log(item)
+            item.data.forEach((itm)=>{
+                if (parseInt(itm.quantity) > 0) {
+                    products[itm.id] = parseInt(itm.quantity);
+                    available = true;
+                }
+            })
+        })
+        return {products, available};
+    }
+
+    const placeOrder = () => {
+        let {products} = getProducts();
+        const dataToSend = {
+            method: commonApi.placeOrder.method,
+            url: commonApi.placeOrder.url,
+            header: commonApi.placeOrder.header,
+            data: {
+                products: JSON.stringify(products),
+                distributor: route.params.distributorId,
+                retailer:534
+            }
+        }
+        console.log(dataToSend)
+        AuthenticatedPostRequest(dataToSend).then((res) => {
+            console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+            console.log(res)
+            if (res.status == 201) {
+                props.clearCart();
+                navigation.goBack()
+            }
+        })
+    }
+
 
 
     const renderItem = ({item, index}) => {
@@ -78,7 +113,7 @@ function Cart(props:any) {
                     </View>
                 </View>
                 {item.data.map((item, subIndex) => {
-                    return (<View style={styles.underline}>
+                    return (<View key={index + "" + subIndex} style={styles.underline}>
                         <View style={commonStyles.rowSpaceBetween}>
                             <View style={{width: '70%'}}>
                                 <View style={[commonStyles.rowAlignCenter, {paddingVertical: 5}]}>
@@ -133,23 +168,62 @@ function Cart(props:any) {
     }
 
     return (
-        <View style={{flex:1}}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <FlatList
-                data={cart}
-                ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item, index) => item.product_group_id + "" + index}
-                renderItem={renderItem}
-                ListFooterComponent={() => <View style={{paddingBottom: 50}}></View>}
-            />
+            <View style={{paddingHorizontal: 24, paddingTop: 20}}>
+                <FlatList
+                    data={cartData}
+                    ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={(item, index) => item.product_group_id + "" + index}
+                    renderItem={renderItem}
+                    ListFooterComponent={() => <View style={{paddingBottom: 12}}></View>}
+                />
+                <View style={styles.underline}>
+                    <View style={commonStyles.rowSpaceBetween}>
+                        <Text style={texts.redTextBold14}>
+                            Total Items:
+                        </Text>
+                        <Text style={texts.darkGreyTextBold14}>
+                            {cart.count}
+                        </Text>
+                    </View>
+                    <View style={commonStyles.rowSpaceBetween}>
+                        <Text style={texts.redTextBold14}>
+                            Item Total:
+                        </Text>
+                        <Text style={texts.darkGreyTextBold14}>
+                            {cart.value}
+                        </Text>
+                    </View>
+                    <View style={commonStyles.rowSpaceBetween}>
+                        <Text style={texts.redTextBold14}>
+                            Discount:
+                        </Text>
+                        <Text style={texts.darkGreyTextBold14}>
+                            {0}
+                        </Text>
+                    </View>
+                    <View style={commonStyles.rowSpaceBetween}>
+                        <Text style={texts.redTextBold14}>
+                            Net Payable:
+                        </Text>
+                        <Text style={texts.darkGreyTextBold14}>
+                            {cart.value}
+                        </Text>
+                    </View>
+                </View>
+            </View>
+            <View style={[commonStyles.row, {position:"absolute", bottom:10, marginHorizontal:24}]}>
+                <SolidButtonBlue ctaFunction={placeOrder} text={"Place Order"}/>
+            </View>
         </View>
     );
 }
 
 export default connect(
     mapStateToProps,
-    {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity}
+    {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity, clearCart}
 )(Cart);
 
 const styles = StyleSheet.create({
@@ -158,4 +232,16 @@ const styles = StyleSheet.create({
         width: 80,
         backgroundColor: colors.light_grey
     },
+    underline: {
+        borderBottomWidth: 1,
+        borderBottomColor: colors.grey,
+        paddingBottom: 10
+    },
+    productImage: {
+        width: 60,
+        height: 60,
+        borderWidth: 1,
+        borderColor: colors.grey,
+        borderRadius: 5
+    }
 })

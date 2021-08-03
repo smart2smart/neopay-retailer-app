@@ -44,6 +44,18 @@ class PersistenceStore {
     static async removeTimeStamp() {
         await AsyncStorage.removeItem('@timeStamp');
     }
+
+    static async setCart(cart: string) {
+        await AsyncStorage.setItem('@cart', cart)
+    }
+
+    static async getCart() {
+        return await AsyncStorage.getItem('@cart');
+    }
+
+    static async removeCart() {
+        await AsyncStorage.removeItem('@cart');
+    }
 }
 
 export default PersistenceStore

@@ -17,7 +17,7 @@ function CartButton() {
     const cart = useSelector((state: any) => state.cart);
 
     const openCart = () => {
-        navigation.navigate("Cart")
+        navigation.navigate("Cart", {distributorId:cart.distributorId})
     }
 
 

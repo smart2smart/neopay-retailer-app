@@ -8,7 +8,7 @@ import {
     Image, TouchableOpacity,
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
-import {setIsLoggedIn} from "../../actions/actions";
+import {newCart, setIsLoggedIn} from "../../actions/actions";
 // @ts-ignore
 import {connect, useSelector} from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
@@ -18,14 +18,22 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import texts from "../../styles/texts";
 import CartButton from "../../commons/CartButton";
+import PersistenceStore from "../../utils/PersistenceStore";
 
-export function HomeScreen(props: any) {
+function HomeScreen(props: any) {
     const navigation = useNavigation();
     const cart = useSelector((state: any) => state.cart);
     const [distributorData, setDistributorData] = useState([]);
 
     useEffect(() => {
         getDistributorDetails();
+        PersistenceStore.getCart().then((data)=>{
+            if(data){
+                console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                console.log(data)
+                props.newCart(JSON.parse(data));
+            }
+        })
     }, []);
 
     const getDistributorDetails = () => {
@@ -73,6 +81,8 @@ export function HomeScreen(props: any) {
     )
 }
 
+export default connect(mapStateToProps, {setIsLoggedIn, newCart})(HomeScreen);
+
 const styles = StyleSheet.create({
     card: {
         height: 200,
@@ -113,5 +123,3 @@ const styles = StyleSheet.create({
         alignItems:'center'
     }
 });
-
-export default connect(mapStateToProps, {setIsLoggedIn})(HomeScreen);
