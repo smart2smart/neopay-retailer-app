@@ -2,28 +2,11 @@ import React, {Component, useEffect, useState} from 'react';
 import {
     Text,
     View,
-    StyleSheet,
-    ScrollView,
-    TextInput,
-    Dimensions,
-    TouchableOpacity,
-    Image,
-    Alert,
-    FlatList
 } from 'react-native';
 // @ts-ignore
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import colors from "../../assets/colors/colors";
-import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
-import {useNavigation} from "@react-navigation/native";
-import {useRoute} from '@react-navigation/native';
-import {commonApi} from "../../api/api";
-import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
-import OrdersCard from "../../commons/OrdersCard";
-import RetailerDetails from '../details/RetailerDetails';
-import * as Linking from "expo-linking";
 
 export default function NeoCash(props) {
 

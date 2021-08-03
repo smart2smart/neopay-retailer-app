@@ -84,6 +84,11 @@ export const commonApi = {
         url: `${base_url}/orders/`,
         method: 'POST',
     },
+    getOrderList:{
+        header: header,
+        url: `${base_url}/orders/`,
+        method: 'GET',
+    }
 
 }
 

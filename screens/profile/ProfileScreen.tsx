@@ -21,8 +21,6 @@ import {useRoute} from '@react-navigation/native';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
-import OrdersCard from "../../commons/OrdersCard";
-import StoreDetails from '../details/StoreDetails';
 import * as Linking from "expo-linking";
 
 

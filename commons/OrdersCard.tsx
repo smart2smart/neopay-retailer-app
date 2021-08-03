@@ -8,8 +8,6 @@ import moment from "moment";
 
 
 function OrdersCard(props: any) {
-    let orderValue = 0;
-    let totalQuantity = 0;
     let itemString = "";
 
     const buttonStyle = {
@@ -17,17 +15,17 @@ function OrdersCard(props: any) {
         "released": {backgroundColor: colors.green},
         "approved": {backgroundColor: colors.green},
         "delivered": {backgroundColor: colors.green},
-        "rejected": {backgroundColor: colors.red}
+        "rejected": {backgroundColor: colors.red},
+        "returned": {backgroundColor: colors.red},
+
     }
 
     props.data.products.map((item) => {
-        orderValue += item.value * item.rate;
-        totalQuantity += item.value;
         itemString += item.name + ' x ' + item.value + ' Units' + ", ";
     })
 
     const viewOrderDetails = () => {
-        props.goToOrderDetails(props.data, props.index, totalQuantity, orderValue)
+        props.goToOrderDetails(props.data, props.index)
     }
 
     return (
@@ -46,7 +44,7 @@ function OrdersCard(props: any) {
             <View style={commonStyles.rowSpaceBetween}>
                 <View style={[commonStyles.rowAlignCenter, {paddingVertical: 6}]}>
                     <Text style={texts.darkGreyTextBold12}>Order value: </Text>
-                    <Text style={texts.primaryTextBold12}>{'₹' + parseFloat(orderValue).toFixed(2)}</Text>
+                    <Text style={texts.primaryTextBold12}>{props.data.order_value}</Text>
                 </View>
                 <View style={[commonStyles.rowAlignCenter, commonStyles.statusButton, buttonStyle[props.data.status]]}>
                     <Text style={[texts.whiteTextBold12, {textTransform: "capitalize"}]}>

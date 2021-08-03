@@ -10,9 +10,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useColorScheme from '../hooks/useColorScheme';
 import colors from "../assets/colors/colors";
 import Cart from "../screens/cart/Cart";
-import ComingSoon from "../screens/ComingSoon";
 import HomeScreen from "../screens/home/HomeScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
+import OrderList from "../screens/orderList/OrderList";
 
 const BottomTabsStack = createBottomTabNavigator();
 
@@ -31,7 +31,7 @@ export default function BottomTabNavigator() {
                         case 'Cart':
                             icon = <EvilIcons name="cart" size={25} color={focused?colors.primaryThemeColor:colors.lightGrey} />
                             break;
-                        case 'Offers':
+                        case 'Orders':
                             icon = <Octicons name="file" size={18} color={focused?colors.primaryThemeColor:colors.lightGrey} />
                             break;
                         case 'Account':
@@ -63,8 +63,8 @@ export default function BottomTabNavigator() {
                 name="Cart"
                 component={Cart}/>
             <BottomTabsStack.Screen
-                name="Offers"
-                component={ComingSoon}/>
+                name="Orders"
+                component={OrderList}/>
             <BottomTabsStack.Screen
                 name="Account"
                 component={ProfileScreen}/>

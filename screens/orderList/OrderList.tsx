@@ -41,10 +41,12 @@ function OrderList() {
     const getOrderData = () => {
         const data = {
             method: commonApi.getOrderList.method,
-            url: url,
+            url: commonApi.getOrderList.url,
             header: commonApi.getOrderList.header,
         }
         AuthenticatedGetRequest(data).then((res) => {
+            console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+            console.log(res)
             setRefreshing(false);
             setIsLoading(false);
             setOrdersData(res.data);
