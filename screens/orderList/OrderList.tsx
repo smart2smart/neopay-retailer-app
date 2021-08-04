@@ -45,8 +45,6 @@ function OrderList() {
             header: commonApi.getOrderList.header,
         }
         AuthenticatedGetRequest(data).then((res) => {
-            console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-            console.log(res)
             setRefreshing(false);
             setIsLoading(false);
             setOrdersData(res.data);
@@ -55,7 +53,7 @@ function OrderList() {
     }
 
     const goToOrderDetails = (data: any, index: number) => {
-        navigation.navigate('order-list-details', {
+        navigation.navigate('OrderListDetails', {
             orderDetailsData: data,
         });
     }

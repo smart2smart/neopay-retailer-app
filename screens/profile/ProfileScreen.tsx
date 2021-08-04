@@ -48,17 +48,7 @@ export default function ProfileScreen() {
 
 
     useEffect(() => {
-        const data = {
-            method: commonApi.getRetailerDetails.method,
-            url: commonApi.getRetailerDetails.url,
-            header: commonApi.getRetailerDetails.header
-        }
-        // @ts-ignore
-        AuthenticatedGetRequest(data).then((res) => {
-            if (res.data) {
-                setRetailerData(res.data)
-            }
-        })
+        retailerDetails();
     }, [route.params]);
 
     const orderDetails = () => {

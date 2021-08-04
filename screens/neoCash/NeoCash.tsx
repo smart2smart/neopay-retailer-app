@@ -4,6 +4,8 @@ import {
     ScrollView,
     Text,
     View,
+    Image,
+    StyleSheet
 } from 'react-native';
 // @ts-ignore
 import SecondaryHeader from "../../headers/SecondaryHeader";
@@ -55,7 +57,6 @@ export default function NeoCash(props) {
             });
             data.offerDetails = data.offerDetails.sort((x,y) => x.daysRemaining - y.daysRemaining).filter(el => el.daysRemaining > 0);
             // const remDays = data.offerDetails.filter(el => el.daysRemaining < 0)
-            // console.log(remDays);
 
             setPointsDetails(data);
         }

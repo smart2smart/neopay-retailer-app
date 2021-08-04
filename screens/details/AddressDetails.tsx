@@ -80,9 +80,9 @@ function AddressDetails(props) {
             alertMsg("Please enter your address");
             return
         }
-        if(!latitude){
-            alertMsg("Please select location");
-        }
+        // if(!latitude){
+        //     alertMsg("Please select location");
+        // }
 
         let data = {
             address: JSON.stringify({

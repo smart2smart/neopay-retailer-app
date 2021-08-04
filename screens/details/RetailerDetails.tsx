@@ -25,7 +25,7 @@ import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PersistenceStore from "../../utils/PersistenceStore";
 
-function StoreDetails(props) {
+function RetailerDetails(props) {
 
     const route = useRoute();
     const navigation = useNavigation();
@@ -67,9 +67,10 @@ function StoreDetails(props) {
                 props.setLandingScreen("address");
                 PersistenceStore.setLandingScreen("address");
                 navigation.navigate("AddressDetails");
+            } else {
+                Alert.alert(res.data.error);
             }
         })
-        // navigation.navigate("AddressDetails")
     }
 
     const alertMsg = (text: string) => {
@@ -105,12 +106,12 @@ function StoreDetails(props) {
 
     useFocusEffect(
         React.useCallback(() => {
-        if(route.params){
-            if(route.params.image){
-                setImage(route.params.image)
+            if (route.params) {
+                if (route.params.image) {
+                    setImage(route.params.image)
+                }
             }
-        }
-            }, [route.params])
+        }, [route.params])
     );
 
     const goToUploadImage = () => {
@@ -123,7 +124,7 @@ function StoreDetails(props) {
             <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     <View style={[commonStyles.imageContainer, {marginBottom: 20}]}>
-                        {image?<Image source={{uri: image}} style={{width: '100%', height: '100%'}}/>:null}
+                        {image ? <Image source={{uri: image}} style={{width: '100%', height: '100%'}}/> : null}
                         <TouchableOpacity onPress={goToUploadImage} style={styles.editButtonDiv}>
                             <MaterialIcons name="edit" size={24} color={colors.red}/>
                         </TouchableOpacity>
@@ -234,4 +235,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default connect(mapStateToProps, {setLandingScreen})(StoreDetails);
+export default connect(mapStateToProps, {setLandingScreen})(RetailerDetails);

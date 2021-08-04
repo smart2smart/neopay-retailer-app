@@ -2,16 +2,18 @@ import * as React from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from "react-native";
 import colors from "../assets/colors/colors";
 import commonStyles from "../styles/commonStyles";
-import {BlueButtonSmall, BorderButtonSmallRed} from "../buttons/Buttons";
+import {BlueButtonSmall, BorderButtonSmallBlue, BorderButtonSmallRed} from "../buttons/Buttons";
 import texts from "../styles/texts";
 import moment from "moment";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import * as Linking from "expo-linking";
 
 
 function OrdersCard(props: any) {
     let itemString = "";
 
     const buttonStyle = {
-        "ordered": {backgroundColor: colors.primary_color},
+        "ordered": {backgroundColor: colors.primaryThemeColor},
         "released": {backgroundColor: colors.green},
         "approved": {backgroundColor: colors.green},
         "delivered": {backgroundColor: colors.green},
@@ -26,6 +28,10 @@ function OrdersCard(props: any) {
 
     const viewOrderDetails = () => {
         props.goToOrderDetails(props.data, props.index)
+    }
+
+    const callRetailer = (mobile)=>{
+        Linking.openURL(`tel:${mobile}`)
     }
 
     return (
@@ -59,11 +65,18 @@ function OrdersCard(props: any) {
                 </Text>
             </View>
             <View style={[commonStyles.rowSpaceBetween, {paddingTop: 10}]}>
-                <View>
-
+                <View style={commonStyles.row}>
+                    <TouchableOpacity onPress={() => {callRetailer(props.data.supplier_no)}} style={[commonStyles.borderButtonSmallBlue, {flexDirection:'row'}]}>
+                        <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
+                        <Text style={texts.primaryThemeTextBold12}> Supplier</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {callRetailer(props.data.salesman_no)}} style={[commonStyles.borderButtonSmallBlue, {flexDirection:"row",marginLeft:10}]}>
+                        <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
+                        <Text style={texts.primaryThemeTextBold12}> Salesman</Text>
+                    </TouchableOpacity>
                 </View>
                 <View>
-                    <BorderButtonSmallRed ctaFunction={viewOrderDetails} text={"View Details"}/>
+                    <BorderButtonSmallBlue ctaFunction={viewOrderDetails} text={"View Details"}/>
                 </View>
             </View>
         </TouchableOpacity>
@@ -74,6 +87,15 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'column',
         justifyContent: "center",
+    },
+    callIcon: {
+        borderWidth:1,
+        height:30,
+        borderColor:colors.primaryThemeColor,
+        borderRadius:5,
+        alignItems:'center',
+        flexDirection:'row',
+        paddingHorizontal:8
     },
 })
 

@@ -12,7 +12,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList} from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
-import StoreDetails from '../screens/details/StoreDetails';
+import RetailerDetails from '../screens/details/RetailerDetails';
 import ProductList from '../screens/order/ProductList';
 import BusinessInfo from '../screens/details/BusinessInfo';
 import Drawer from "./Drawer";
@@ -28,14 +28,14 @@ import NeoCash from "../screens/neoCash/NeoCash";
 import Cart from "../screens/cart/Cart";
 import Offer from "../screens/offer/Offer";
 import OfferDetails from "../screens/offer/OfferDetails";
-import Orders from "../screens/order/Orders";
+import OrderListDetails from "../screens/orderList/OrderListDetails";
 
 
 export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
     const landingScreen = useSelector((state: any) => state.landingScreen);
     let initialScreen = "";
     if (landingScreen === "profile") {
-        initialScreen = "StoreDetails"
+        initialScreen = "RetailerDetails"
     } else if (landingScreen === "address") {
         initialScreen = "AddressDetails"
     } else if (landingScreen === "license") {
@@ -56,17 +56,17 @@ export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeNam
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+function RootNavigator(props) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName={props.initialScreen} screenOptions={{ headerShown: false }}>
         <Stack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="RetailerDetails" component={StoreDetails} />
+      <Stack.Screen name="RetailerDetails" component={RetailerDetails} />
       <Stack.Screen name="ProductList" component={ProductList} />
       <Stack.Screen name="AddressDetails" component={AddressDetails} />
       <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
-      <Stack.Screen name="MapView" component={MapViewScreen} />
+      <Stack.Screen name="MapViewScreen" component={MapViewScreen} />
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
@@ -76,7 +76,7 @@ function RootNavigator() {
       <Stack.Screen name="NeoCash" component={NeoCash} />
       <Stack.Screen name="Offer" component={Offer} />
       <Stack.Screen name="OfferDetails" component={OfferDetails} />
-      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrderListDetails" component={OrderListDetails} />
     </Stack.Navigator>
   );
 }

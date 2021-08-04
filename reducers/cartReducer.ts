@@ -25,9 +25,7 @@ const cartReducer = (state = {...cart}, action: any) => {
             PersistenceStore.removeCart();
             return {...cart}
         case ADD_TO_CART:
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
             let product_new = action.payload["product"]
-            console.log(product_new)
             product_new["quantity"] = 1;
             let state_new = JSON.parse(JSON.stringify(state));
             state_new["distributorId"] = action.payload["distributorId"];
@@ -49,22 +47,15 @@ const cartReducer = (state = {...cart}, action: any) => {
             state_new["count"] += 1;
             state_new["value"] += parseFloat(product_new["rate"]);
             PersistenceStore.setCart(JSON.stringify(state_new));
-            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            console.log(state_new)
             return state_new;
         case UPDATE_CART_ADD:
-            console.log("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
             let state_add = JSON.parse(JSON.stringify(state))
             let product_add = action.payload["product"]
             state_add.data.forEach((item) => {
                 if (item["product_group_id"] === product_add["product_group_id"]) {
                     item.data.forEach((itm) => {
                         if (product_add["id"] == itm["id"]) {
-                            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-                            console.log(itm)
                             itm.quantity += 1
-                            console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-                            console.log(itm)
                         }
                     })
                 }
@@ -75,7 +66,6 @@ const cartReducer = (state = {...cart}, action: any) => {
             PersistenceStore.setCart(JSON.stringify(state_add));
             return state_add
         case UPDATE_CART_SUBTRACT:
-            console.log("tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
             let state_subtract = JSON.parse(JSON.stringify(state))
             let product_subtract = action.payload["product"]
             state_subtract.data.forEach((item) => {
@@ -98,7 +88,6 @@ const cartReducer = (state = {...cart}, action: any) => {
             PersistenceStore.setCart(JSON.stringify(state_subtract));
             return state_subtract
         case CART_CHANGE_QUANTITY:
-            console.log("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
             let state_change = JSON.parse(JSON.stringify(state))
             let product_change = action.payload["product"]
             let text = action.payload.text;

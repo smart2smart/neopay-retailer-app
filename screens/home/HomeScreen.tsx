@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Dimensions,
     FlatList,
-    Image, TouchableOpacity,
+    Image, TouchableOpacity, Alert,
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
 import {newCart, setIsLoggedIn} from "../../actions/actions";
@@ -29,8 +29,6 @@ function HomeScreen(props: any) {
         getDistributorDetails();
         PersistenceStore.getCart().then((data)=>{
             if(data){
-                console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-                console.log(data)
                 props.newCart(JSON.parse(data));
             }
         })
@@ -44,7 +42,11 @@ function HomeScreen(props: any) {
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
-            setDistributorData(res.data);
+            if(res.status==200){
+                setDistributorData(res.data);
+            }else{
+                Alert.alert(res.data.error);
+            }
         })
     }
 

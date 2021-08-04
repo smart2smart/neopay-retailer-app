@@ -16,6 +16,13 @@ const commonStyles = StyleSheet.create({
         borderRadius:5,
         flex:1
     },
+    borderButtonSmallRed:{
+        borderRadius:4,
+        borderColor:colors.red,
+        borderWidth:2,
+        paddingHorizontal:12,
+        paddingVertical:5
+    },
     solidButtonRed:{
         justifyContent:'center',
         alignItems:'center',
@@ -36,16 +43,16 @@ const commonStyles = StyleSheet.create({
         flex:1,
         padding: 10
     },
-    borderButtonSmallRed:{
+    borderButtonSmallBlue:{
         borderRadius:4,
-        borderColor:colors.primary_color,
+        borderColor:colors.primaryThemeColor,
         borderWidth:1.5,
         paddingHorizontal:12,
         paddingVertical:5
     },
     solidButtonSmallRed:{
         borderRadius:4,
-        borderColor:colors.primary_color,
+        borderColor:colors.primaryThemeColor,
         borderWidth:1.5,
         paddingHorizontal:10,
         paddingVertical:5,
@@ -94,7 +101,7 @@ const commonStyles = StyleSheet.create({
         alignItems:'center',
         borderRadius:5,
         flex:1,
-        backgroundColor:colors.primary_color
+        backgroundColor:colors.primaryThemeColor
     },
     greyBorderButton:{
         borderRadius:4,

@@ -10,9 +10,7 @@ import SecondaryHeader from "../../headers/SecondaryHeader";
 
 export default function OfferDetails(props:any) {
 
-    // console.log("DATA", props.route.params.data);
     const [offerData, setOfferData] = useState(props.route.params.data);
-    console.log("DATA", offerData);
     
     return(
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>

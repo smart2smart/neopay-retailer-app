@@ -54,7 +54,6 @@ function Cart(props: any) {
         let products: any = {};
         let available = false;
         cartData.forEach((item) => {
-            console.log(item)
             item.data.forEach((itm)=>{
                 if (parseInt(itm.quantity) > 0) {
                     products[itm.id] = parseInt(itm.quantity);
@@ -77,10 +76,7 @@ function Cart(props: any) {
                 retailer:534
             }
         }
-        console.log(dataToSend)
         AuthenticatedPostRequest(dataToSend).then((res) => {
-            console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
-            console.log(res)
             if (res.status == 201) {
                 props.clearCart();
                 navigation.goBack()
@@ -168,7 +164,7 @@ function Cart(props: any) {
     }
 
     return (
-        <View style={{flex: 1, backgroundColor: colors.white}}>
+        cartData.length>0?<View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
             <View style={{paddingHorizontal: 24, paddingTop: 20}}>
                 <FlatList
@@ -216,6 +212,13 @@ function Cart(props: any) {
             </View>
             <View style={[commonStyles.row, {position:"absolute", bottom:10, marginHorizontal:24}]}>
                 <SolidButtonBlue ctaFunction={placeOrder} text={"Place Order"}/>
+            </View>
+        </View>:<View style={{flex:1}}>
+            <PrimaryHeader navigation={props.navigation}/>
+            <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+                <Text style={texts.greyTextBold18}>
+                    No items in your cart
+                </Text>
             </View>
         </View>
     );

@@ -2,16 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/test.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/CartButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/CartButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buttons/Buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/buttons/Buttons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/OrdersCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/details/StoreDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/RetailerDetails.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/neoCash/NeoCash.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/neoCash/NeoCash.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/order/Orders.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/order/ProductList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/ProductList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/PersistenceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/PersistenceStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/orderList/OrderList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/orderList/OrderList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/commonStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/commonStyles.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,11 +58,11 @@
       <recent name="$PROJECT_DIR$/screens/cart" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/commons" />
+      <recent name="$PROJECT_DIR$/screens/orderList" />
       <recent name="$PROJECT_DIR$/screens/order" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/screens/details" />
-      <recent name="$PROJECT_DIR$/commons" />
-      <recent name="$PROJECT_DIR$/screens/profile" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -80,7 +86,9 @@
       <workItem from="1627447716871" duration="6649000" />
       <workItem from="1627466603928" duration="4378000" />
       <workItem from="1627546021186" duration="29600000" />
-      <workItem from="1627832051928" duration="30228000" />
+      <workItem from="1627832051928" duration="36475000" />
+      <workItem from="1627992397136" duration="1423000" />
+      <workItem from="1628057822206" duration="3624000" />
     </task>
     <servers />
   </component>
@@ -88,18 +96,18 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1627910387539">
+    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1627988211647">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1627910387539" />
-    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl" timestamp="1627976133151">
+    <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1627988211647" />
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl" timestamp="1628057920702">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1627976133151" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1627980795272">
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1628057920702" />
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1628065383936">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1627980795272" />
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1628065383936" />
     <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1627968230437">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

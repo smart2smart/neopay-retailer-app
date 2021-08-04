@@ -107,7 +107,7 @@ function ProductList(props) {
     }
 
     const selectProductAlert = (data, type, mainIndex, subIndex) => {
-        if(cart.distributorId !== route.params.distributorId){
+        if(cart.distributorId && cart.distributorId !== route.params.distributorId){
             Alert.alert(
                 'Change Distributor',
                 `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
@@ -125,6 +125,8 @@ function ProductList(props) {
                 ],
                 {cancelable: false},
             );
+        }else{
+            selectProduct(data, type, mainIndex, subIndex);
         }
 
     }

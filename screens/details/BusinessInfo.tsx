@@ -54,7 +54,6 @@ function BusinessInfo(props) {
         }
         // @ts-ignore
         AuthenticatedPostRequest(dataToSend).then((res) => {
-            console.log("**", res);
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.");
                 props.setLandingScreen("home");
