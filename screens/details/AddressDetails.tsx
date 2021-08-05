@@ -3,10 +3,7 @@ import {
     Text,
     View,
     StyleSheet,
-    Image,
-    Dimensions,
     TouchableOpacity,
-    ScrollView,
     TextInput,
     Alert
 } from 'react-native';
@@ -16,7 +13,6 @@ import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
 import {BorderButtonBigBlue, BorderButtonSmallBlue, SolidButtonBlue} from '../../buttons/Buttons';
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/AntDesign';
 import SelectModal from "../../commons/SelectModal";
 import TextInputModal from "../../commons/TextInputModal";
 import SelectLocalityModal from "../../commons/SelectLocality";
@@ -80,9 +76,9 @@ function AddressDetails(props) {
             alertMsg("Please enter your address");
             return
         }
-        // if(!latitude){
-        //     alertMsg("Please select location");
-        // }
+        if(!latitude){
+            alertMsg("Please select location");
+        }
 
         let data = {
             address: JSON.stringify({
@@ -162,12 +158,8 @@ function AddressDetails(props) {
         {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2},
     ];
 
-    // const businessInfo = () => {
-    //     navigation.navigate("BusinessInfo")
-    // }
-
-    const storeDetails = () => {
-        navigation.navigate("StoreDetails")
+    const goToRetailerDetails = () => {
+        navigation.navigate("RetailerDetails")
     }
 
     const goToMapView = () => {
@@ -237,7 +229,7 @@ function AddressDetails(props) {
                 </TouchableOpacity>}
             </View>
             <View style={[commonStyles.rowSpaceBetween, {paddingTop:30}]}>
-                <BorderButtonBigBlue text={'BACK'} ctaFunction={() => storeDetails()}/>
+                <BorderButtonBigBlue text={'BACK'} ctaFunction={goToRetailerDetails}/>
                 <View style={{width: 10}}>
                 </View>
                 <SolidButtonBlue text={'NEXT'} ctaFunction={() => businessInfo()}/>

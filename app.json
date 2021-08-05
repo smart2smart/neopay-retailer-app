@@ -44,7 +44,8 @@
         "googleMaps": {
           "apiKey": "AIzaSyCYc4Wdn7dgUtvaZiAkmA2vJPSaoDomGUE"
         }
-      }
+      },
+      "package": "com.neopay.neopayretailerapp"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

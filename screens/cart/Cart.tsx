@@ -189,7 +189,7 @@ function Cart(props: any) {
                             Item Total:
                         </Text>
                         <Text style={texts.darkGreyTextBold14}>
-                            {cart.value}
+                            {parseFloat(cart.value).toFixed(2)}
                         </Text>
                     </View>
                     <View style={commonStyles.rowSpaceBetween}>
@@ -205,7 +205,7 @@ function Cart(props: any) {
                             Net Payable:
                         </Text>
                         <Text style={texts.darkGreyTextBold14}>
-                            {cart.value}
+                            {parseFloat(cart.value).toFixed(2)}
                         </Text>
                     </View>
                 </View>

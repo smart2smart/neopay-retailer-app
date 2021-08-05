@@ -94,7 +94,7 @@ export default function UploadImage() {
             .then((res) => {
                 setIsLoading(false);
                 if (res && res.status == 200) {
-                    navigation.navigate('StoreDetails', {image: image})
+                    navigation.navigate('RetailerDetails', {image: image})
                 } else {
                     Alert.alert(res.data.error);
                 }

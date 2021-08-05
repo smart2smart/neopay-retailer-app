@@ -22,6 +22,7 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
 import * as Linking from "expo-linking";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 
 export default function ProfileScreen() {
@@ -30,6 +31,7 @@ export default function ProfileScreen() {
     const route = useRoute();
 
     const [retailerData, setRetailerData] = useState({});
+    const [address, setAddress] = useState("");
 
     useEffect(() => {
         retailerDetails();
@@ -43,6 +45,21 @@ export default function ProfileScreen() {
         }
         AuthenticatedGetRequest(data).then((res) => {
             setRetailerData(res.data);
+            let address = "";
+            if(res.data.address_data){
+                address += res.data.address_data.line_1;
+                address+= ", " + res.data.address_data.line_2;
+                if(res.data.address_data.city){
+                    address+= ", " + res.data.address_data.city.name;
+                }
+                if(res.data.address_data.state){
+                    address+= ", " + res.data.address_data.state.name;
+                }
+                if(res.data.address_data.pincode){
+                    address+= ", " + res.data.address_data.pincode.pincode;
+                }
+            }
+            setAddress(address)
         })
     }
 
@@ -77,6 +94,10 @@ export default function ProfileScreen() {
         navigation.navigate('build-order', {data: data})
     }
 
+    const goToUploadImage = () => {
+        navigation.navigate('upload-image', {retailerId: retailerId, image: image, comingFrom: 'edit-profile'});
+    }
+
     return (
         <View style={style.container}>
             <View style={{paddingHorizontal: 24, paddingBottom: 10}}>
@@ -88,6 +109,9 @@ export default function ProfileScreen() {
                         <View style={commonStyles.imageContainer}>
                             <Image source={{uri: retailerData.attachment}}
                                    style={{width: '100%', height: '100%'}}/>
+                            <TouchableOpacity onPress={goToUploadImage} style={style.editButtonDiv}>
+                                <MaterialIcons name="edit" size={24} color={colors.red}/>
+                            </TouchableOpacity>
                         </View> :
                         <View style={commonStyles.imageContainer}>
                             <Text style={[texts.darkGrey18Bold, {marginBottom: 50}]}>
@@ -122,9 +146,7 @@ export default function ProfileScreen() {
                         {retailerData.address_data ?
                             <Text style={[texts.greyNormal14, , {marginTop: 10, lineHeight: 20}]}>
                                 Address
-                                : {retailerData.address_data.line_1}, {retailerData.address_data.line_2},
-                                {' ' + retailerData.address_data.city.name}, {' ' + retailerData.address_data.state.name},
-                                {' ' + retailerData.address_data.pincode.pincode}
+                                : {address}
                             </Text> : null}
                         <View style={style.underline}>
                         </View>
@@ -235,6 +257,15 @@ const style = StyleSheet.create({
     phoneIcon: {
         width: 24,
         height: 24,
-// backgroundColor:colors.darkGrey
+    },
+    editButtonDiv: {
+        backgroundColor: colors.orangeFaded,
+        borderWidth: 1,
+        borderColor: colors.red,
+        padding: 7,
+        borderRadius: 2,
+        position: 'absolute',
+        right: 20,
+        top: 20
     },
 });

@@ -8,15 +8,16 @@ import {
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setIsLoggedIn, setLandingScreen} from "../../actions/actions";
-import {connect, useSelector} from 'react-redux';
+import {setLandingScreen} from "../../actions/actions";
+import {connect} from 'react-redux';
 import colors from "../../assets/colors/colors";
 import commonStyles from '../../styles/commonStyles';
-import {BorderButtonSmallBlue, SolidButtonBlue, BorderButtonBigBlue} from '../../buttons/Buttons';
-import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
+import {SolidButtonBlue, BorderButtonBigBlue} from '../../buttons/Buttons';
+import {useNavigation} from "@react-navigation/native";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import PersistenceStore from "../../utils/PersistenceStore";
+import { StackActions } from '@react-navigation/native';
 
 function BusinessInfo(props) {
 
@@ -27,11 +28,7 @@ function BusinessInfo(props) {
     const [drugLicense, setDrugLicense] = useState('');
 
     const addressDetails = () => {
-        if (!gstno) {
-            alertMsg("Please enter GST Number");
-            return
-        }
-        // navigation.navigate("AddressDetails")
+        navigation.navigate("AddressDetails")
     }
 
     const homePage = () => {
@@ -58,7 +55,8 @@ function BusinessInfo(props) {
                 Alert.alert("Details updated successfully.");
                 props.setLandingScreen("home");
                 PersistenceStore.setLandingScreen("home");
-                navigation.navigate("HomeScreen")
+                // navigation.navigate("HomeScreen");
+                // navigation.dispatch(StackActions.popToTop());
             }
         })
     }
@@ -107,11 +105,11 @@ function BusinessInfo(props) {
                     })}
                 </View>
                 <View style={commonStyles.rowFlexEnd}>
-                    <BorderButtonBigBlue text={'BACK'} ctaFunction={() => addressDetails()}/>
+                    <BorderButtonBigBlue text={'BACK'} ctaFunction={addressDetails}/>
                     <View style={{width:10}}>
 
                     </View>
-                    <SolidButtonBlue text={'SUBMIT'} ctaFunction={() => homePage()}/>
+                    <SolidButtonBlue text={'SUBMIT'} ctaFunction={homePage}/>
                 </View>
             </ScrollView>
         </View>

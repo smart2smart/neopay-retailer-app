@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Dimensions,
     FlatList,
-    Image, TouchableOpacity, Alert,
+    Image, TouchableOpacity, Alert, Button,
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
 import {newCart, setIsLoggedIn} from "../../actions/actions";

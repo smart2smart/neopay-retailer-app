@@ -20,7 +20,7 @@ import HomeScreen from "../screens/home/HomeScreen";
 import UploadImage from "../screens/details/UploadImage";
 import EditProfile from "../screens/profile/EditProfile";
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import {useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import AddressDetails from "../screens/details/AddressDetails";
 import MapViewScreen from "../screens/details/MapViewScreen";
 import ProductDescription from "../screens/productDetails/ProductDescription";
@@ -29,9 +29,11 @@ import Cart from "../screens/cart/Cart";
 import Offer from "../screens/offer/Offer";
 import OfferDetails from "../screens/offer/OfferDetails";
 import OrderListDetails from "../screens/orderList/OrderListDetails";
+import {setLandingScreen} from "../actions/actions";
+import mapStateToProps from "../store/mapStateToProps";
 
 
-export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
+function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
     const landingScreen = useSelector((state: any) => state.landingScreen);
     let initialScreen = "";
     if (landingScreen === "profile") {
@@ -43,40 +45,59 @@ export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeNam
     } else if (landingScreen === "home") {
         initialScreen = "Home"
     }
+    console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+    console.log(initialScreen)
     return (
         <NavigationContainer
             linking={LinkingConfiguration}
             theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <RootNavigator initialScreen={initialScreen}/>
+            {initialScreen==="Home"?<RootNavigator/>:<ProfileNavigator  initialScreen={initialScreen}/>}
         </NavigationContainer>
     );
 }
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
-const Stack = createStackNavigator<RootStackParamList>();
+const RootStack = createStackNavigator<RootStackParamList>();
+const ProfileStack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator(props) {
   return (
-    <Stack.Navigator initialRouteName={props.initialScreen} screenOptions={{ headerShown: false }}>
-        <Stack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="RetailerDetails" component={RetailerDetails} />
-      <Stack.Screen name="ProductList" component={ProductList} />
-      <Stack.Screen name="AddressDetails" component={AddressDetails} />
-      <Stack.Screen name="BusinessInfo" component={BusinessInfo} />
-      <Stack.Screen name="MapViewScreen" component={MapViewScreen} />
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="EditProfile" component={EditProfile} />
-      <Stack.Screen name="UploadImage" component={UploadImage} />
-      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <Stack.Screen name="Cart" component={Cart} />
-      <Stack.Screen name="ProductDescription" component={ProductDescription} />
-      <Stack.Screen name="NeoCash" component={NeoCash} />
-      <Stack.Screen name="Offer" component={Offer} />
-      <Stack.Screen name="OfferDetails" component={OfferDetails} />
-      <Stack.Screen name="OrderListDetails" component={OrderListDetails} />
-    </Stack.Navigator>
+    <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        <RootStack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
+      <RootStack.Screen name="Root" component={BottomTabNavigator} />
+      <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <RootStack.Screen name="RetailerDetails" component={RetailerDetails} />
+      <RootStack.Screen name="ProductList" component={ProductList} />
+      <RootStack.Screen name="AddressDetails" component={AddressDetails} />
+      <RootStack.Screen name="BusinessInfo" component={BusinessInfo} />
+      <RootStack.Screen name="MapViewScreen" component={MapViewScreen} />
+      <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+      <RootStack.Screen name="EditProfile" component={EditProfile} />
+      <RootStack.Screen name="UploadImage" component={UploadImage} />
+      <RootStack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <RootStack.Screen name="Cart" component={Cart} />
+      <RootStack.Screen name="ProductDescription" component={ProductDescription} />
+      <RootStack.Screen name="NeoCash" component={NeoCash} />
+      <RootStack.Screen name="Offer" component={Offer} />
+      <RootStack.Screen name="OfferDetails" component={OfferDetails} />
+      <RootStack.Screen name="OrderListDetails" component={OrderListDetails} />
+    </RootStack.Navigator>
   );
 }
+
+
+function ProfileNavigator(props) {
+    return (
+        <ProfileStack.Navigator initialRouteName={props.initialScreen} screenOptions={{ headerShown: false }}>
+            <ProfileStack.Screen name="RetailerDetails" component={RetailerDetails} />
+            <ProfileStack.Screen name="AddressDetails" component={AddressDetails} />
+            <ProfileStack.Screen name="BusinessInfo" component={BusinessInfo} />
+            <ProfileStack.Screen name="MapViewScreen" component={MapViewScreen} />
+            <ProfileStack.Screen name="UploadImage" component={UploadImage} />
+        </ProfileStack.Navigator>
+    );
+}
+
+export default connect(mapStateToProps, {setLandingScreen})(Navigation)
+
