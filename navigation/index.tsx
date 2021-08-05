@@ -31,6 +31,7 @@ import OfferDetails from "../screens/offer/OfferDetails";
 import OrderListDetails from "../screens/orderList/OrderListDetails";
 import {setLandingScreen} from "../actions/actions";
 import mapStateToProps from "../store/mapStateToProps";
+import InvoiceList from "../screens/invoice/InvoiceList";
 
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -45,8 +46,6 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
     } else if (landingScreen === "home") {
         initialScreen = "Home"
     }
-    console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-    console.log(initialScreen)
     return (
         <NavigationContainer
             linking={LinkingConfiguration}
@@ -69,8 +68,6 @@ function RootNavigator(props) {
       <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <RootStack.Screen name="RetailerDetails" component={RetailerDetails} />
       <RootStack.Screen name="ProductList" component={ProductList} />
-      <RootStack.Screen name="AddressDetails" component={AddressDetails} />
-      <RootStack.Screen name="BusinessInfo" component={BusinessInfo} />
       <RootStack.Screen name="MapViewScreen" component={MapViewScreen} />
       <RootStack.Screen name="HomeScreen" component={HomeScreen} />
       <RootStack.Screen name="EditProfile" component={EditProfile} />
@@ -85,7 +82,6 @@ function RootNavigator(props) {
     </RootStack.Navigator>
   );
 }
-
 
 function ProfileNavigator(props) {
     return (

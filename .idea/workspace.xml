@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/DateRangeModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/InvoiceCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/invoice/InvoiceList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/colors/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/colors/colors.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/details/BusinessInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/BusinessInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/details/UploadImage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/UploadImage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +82,7 @@
       <workItem from="1627832051928" duration="36475000" />
       <workItem from="1627992397136" duration="1423000" />
       <workItem from="1628057822206" duration="5635000" />
-      <workItem from="1628077567016" duration="7706000" />
+      <workItem from="1628077567016" duration="8438000" />
     </task>
     <servers />
   </component>
