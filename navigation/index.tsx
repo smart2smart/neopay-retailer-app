@@ -29,6 +29,7 @@ import Cart from "../screens/cart/Cart";
 import Offer from "../screens/offer/Offer";
 import OfferDetails from "../screens/offer/OfferDetails";
 import OrderListDetails from "../screens/orderList/OrderListDetails";
+import InvoiceList from "../screens/invoice/InvoiceList";
 
 
 export default function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -77,6 +78,7 @@ function RootNavigator(props) {
       <Stack.Screen name="Offer" component={Offer} />
       <Stack.Screen name="OfferDetails" component={OfferDetails} />
       <Stack.Screen name="OrderListDetails" component={OrderListDetails} />
+      <Stack.Screen name="InvoiceList" component={InvoiceList} />
     </Stack.Navigator>
   );
 }

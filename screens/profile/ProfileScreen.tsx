@@ -20,7 +20,7 @@ import {useNavigation} from "@react-navigation/native";
 import {useRoute} from '@react-navigation/native';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
+import {BlueButtonSmall, BorderButtonSmallBlue, BorderButtonSmallRed} from "../../buttons/Buttons";
 import * as Linking from "expo-linking";
 
 
@@ -53,6 +53,14 @@ export default function ProfileScreen() {
 
     const orderDetails = () => {
         navigation.navigate('Orders');
+    }
+
+    const invoice = () => {
+        navigation.navigate('InvoiceList');
+    }
+
+    const goToMapView = () => {
+        navigation.navigate('MapViewScreen');
     }
 
     const callRetailer = (mobile)=>{
@@ -128,20 +136,22 @@ export default function ProfileScreen() {
                             </Text> : null}
                         <View style={style.underline}>
                         </View>
-                        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+                        <View style={commonStyles.rowSpaceBetween}>
+                            <View>
+                                <BlueButtonSmall ctaFunction={goToMapView} text={"Location"}/>
+                            </View>
+                            <View>
+                                <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"}/>
+                            </View>
+                        </View>
+                        {/* <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                             <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"}/>
                             <View style={{marginLeft: 16}}>
                                 <BlueButtonSmall ctaFunction={goToBuildOrder} text={"Build Order"}/>
                             </View>
-                        </View>
+                        </View> */}
                     </View>
                 </View>
-                {/* <View style={{paddingHorizontal: 24, justifyContent: 'flex-end', paddingBottom: 20}}>
-                    <View style={[style.textContainer, commonStyles.rowSpaceBetween]}>
-                        <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
-                        <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
-                    </View>
-                </View> */}
                 <TouchableOpacity onPress={() => {neoCash()}}>
                     <View style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
                         <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
@@ -156,7 +166,7 @@ export default function ProfileScreen() {
                     <Text style={texts.blackTextBold14}>My Orders</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                <TouchableOpacity onPress={() => invoice()} style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
                     <Text style={texts.blackTextBold14}>Invoice</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
