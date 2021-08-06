@@ -72,7 +72,6 @@ function HomeScreen(props: any) {
     return (
         <View style={{flex: 1, paddingBottom:20}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <Button onPress={()=>{PersistenceStore.setLandingScreen("profile")}} title={"Set me"} />
             <FlatList
                 data={distributorData}
                 showsVerticalScrollIndicator={false}

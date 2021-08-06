@@ -108,7 +108,6 @@ function ProductList(props) {
             let removeBoolean = filteredData.filter((item)=>{
                 return item.data.length>0
             })
-            console.log(removeBoolean)
             setProductData(removeBoolean);
         }
     }

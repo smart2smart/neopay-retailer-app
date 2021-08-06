@@ -9,7 +9,7 @@ import {
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
 import {setLandingScreen} from "../../actions/actions";
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import colors from "../../assets/colors/colors";
 import commonStyles from '../../styles/commonStyles';
 import {SolidButtonBlue, BorderButtonBigBlue} from '../../buttons/Buttons';
@@ -17,7 +17,7 @@ import {useNavigation} from "@react-navigation/native";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import PersistenceStore from "../../utils/PersistenceStore";
-import { StackActions } from '@react-navigation/native';
+import {StackActions} from '@react-navigation/native';
 
 function BusinessInfo(props) {
 
@@ -26,10 +26,20 @@ function BusinessInfo(props) {
     const [gstno, setGstno] = useState('');
     const [faasino, setFaasino] = useState('');
     const [drugLicense, setDrugLicense] = useState('');
+    const retailerData = useSelector((state: any) => state.retailerDetails);
 
     const addressDetails = () => {
         navigation.navigate("AddressDetails")
     }
+
+    useEffect(() => {
+        if (retailerData) {
+            setPan(retailerData.pan_no);
+            setGstno(retailerData.gst_number);
+            setDrugLicense(retailerData.drug_registeration_no);
+            setFaasino(retailerData.fssai_no);
+        }
+    }, []);
 
     const homePage = () => {
         if (!gstno) {
@@ -64,21 +74,29 @@ function BusinessInfo(props) {
     }
 
     const data = [
-        {editable: true, placeholder: "PAN No:", onChange: setPan},
+        {
+            editable: true,
+            placeholder: "PAN No:",
+            onChange: setPan,
+            value: pan
+        },
         {
             editable: true,
             placeholder: "GST Number:",
-            onChange: setGstno
+            onChange: setGstno,
+            value: gstno
         },
         {
             editable: true,
             placeholder: "FASSAI Number:",
-            onChange: setFaasino
+            onChange: setFaasino,
+            value: faasino
         },
         {
             editable: true,
             placeholder: "Drug License:",
-            onChange: setDrugLicense
+            onChange: setDrugLicense,
+            value: drugLicense
         }
     ];
 
@@ -91,6 +109,7 @@ function BusinessInfo(props) {
                         return (
                             <View style={styles.textInputDiv}>
                                 <TextInput key={index} editable={item.editable}
+                                           value={item.value}
                                            placeholder={item.placeholder}
                                            onChangeText={(text) => {
                                                item.onChange(text);
@@ -101,7 +120,7 @@ function BusinessInfo(props) {
                 </View>
                 <View style={commonStyles.rowFlexEnd}>
                     <BorderButtonBigBlue text={'BACK'} ctaFunction={addressDetails}/>
-                    <View style={{width:10}}>
+                    <View style={{width: 10}}>
 
                     </View>
                     <SolidButtonBlue text={'SUBMIT'} ctaFunction={homePage}/>
