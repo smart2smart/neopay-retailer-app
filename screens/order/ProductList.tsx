@@ -16,7 +16,7 @@ import {BorderButtonSmallRed} from '../../buttons/Buttons';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Feather";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import AddProductButton from "./AddProductButton";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
@@ -45,13 +45,9 @@ function ProductList(props) {
     let _ = require('underscore')
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
-    const [showSearch, setShowSearch] = useState(false);
+    const [searchText, setSearchText] = useState("");
     const [productData, setProductData] = useState([]);
-
-    const showSearchBar = () => {
-        setShowSearch(true);
-        if (showSearch === true) setShowSearch(false);
-    };
+    const [originalProductData, setOriginalProductData] = useState([]);
 
     useEffect(() => {
         getproductData();
@@ -72,6 +68,7 @@ function ProductList(props) {
                     brand_name: value[0]["brand_name"],
                     image: value[0]["product_group_image"],
                     product_group: key,
+                    image_expanded: false,
                     product_group_id: value[0]["product_group_id"],
                     data: value
                 })).value()
@@ -95,6 +92,25 @@ function ProductList(props) {
             })
         })
         setProductData(groupedData);
+        setOriginalProductData(groupedData);
+    }
+
+    const searchProduct = (text)=>{
+        setSearchText(text);
+        if(text===""){
+            setProductData(originalProductData);
+        }else{
+            let filteredData = originalProductData.map((item)=>{
+                return {...item, data: item.data.filter((itm)=>{
+                    return itm.name.toLowerCase().includes(text.toLowerCase())
+                })}
+            })
+            let removeBoolean = filteredData.filter((item)=>{
+                return item.data.length>0
+            })
+            console.log(removeBoolean)
+            setProductData(removeBoolean);
+        }
     }
 
 
@@ -149,15 +165,21 @@ function ProductList(props) {
         setProductData(allProducts);
     }
 
+    const expandImage = (mainIndex, subIndex)=>{
+        let allProducts = [...productData];
+        allProducts[mainIndex]["data"][subIndex]["image_expanded"] = !allProducts[mainIndex]["data"][subIndex]["image_expanded"];
+        setProductData(allProducts);
+    }
+
     const renderItem = ({item, index}) => {
         return (
             <View>
                 <View style={styles.underline}>
-                    <Text style={texts.darkGreyTextBold14}>
+                    {item.product_group_id?<Text style={texts.darkGreyTextBold14}>
                         {item.company_name}
-                    </Text>
+                    </Text>:<Text style={texts.darkGreyTextBold14}>Others</Text>}
                 </View>
-                <View style={[commonStyles.rowAlignCenter, {paddingTop: 10}]}>
+                {item.product_group_id?<View style={[commonStyles.rowAlignCenter, {paddingTop: 10}]}>
                     <View>
                         <Image style={styles.productImage}
                                source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
@@ -170,18 +192,22 @@ function ProductList(props) {
                             {item.product_group}
                         </Text>
                     </View>
-                </View>
+                </View>:null}
                 {item.data.map((item, subIndex) => {
-                    return (<View style={styles.underline}>
+                    return (<View key={item.id+subIndex+''+item.name} style={styles.underline}>
+                        {item.image_expanded?<TouchableOpacity onPress={()=>{expandImage(index, subIndex)}}>
+                            <Image style={{width: '100%', height:200, borderRadius:5}}
+                                   source={item.sku_image ? {uri: item.sku_image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                        </TouchableOpacity>:null}
                         <View style={commonStyles.rowSpaceBetween}>
                             <View style={{width: '70%'}}>
                                 <View style={[commonStyles.rowAlignCenter, {paddingVertical: 5}]}>
                                     <Text style={texts.darkGreyTextBold14}>
                                         {item.name}
                                     </Text>
-                                    <Text style={texts.redTextBold14}>
+                                    {item.product_group_id?<Text style={texts.redTextBold14}>
                                         {" " + item.sku_quantity}{sku_units[item.sku_unit]}
-                                    </Text>
+                                    </Text>:null}
                                 </View>
                                 <View style={commonStyles.rowSpaceBetween}>
                                     <View style={commonStyles.row}>
@@ -210,14 +236,21 @@ function ProductList(props) {
                                     </View>
                                 </View>
                             </View>
-                            <View style={{width: '30%', justifyContent: "flex-end", flexDirection: "row"}}>
-                                <AddProductButton
-                                    item={item}
-                                    mainIndex={index}
-                                    subIndex={subIndex}
-                                    setProductQuantity={setProductQuantity}
-                                    selectProduct={selectProductAlert}
-                                />
+                            <View style={{width: '30%', flexDirection:"column", alignItems:"flex-end"}}>
+                                {!item.image_expanded?<TouchableOpacity onPress={()=>{expandImage(index, subIndex)}}>
+                                    <Image style={{width:50, height:50}}
+                                          resizeMode={"contain"} source={item.sku_image ? {uri: item.sku_image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                                </TouchableOpacity>:null}
+                                <View>
+                                    <AddProductButton
+                                        item={item}
+                                        mainIndex={index}
+                                        subIndex={subIndex}
+                                        setProductQuantity={setProductQuantity}
+                                        selectProduct={selectProductAlert}
+                                    />
+                                </View>
+
                             </View>
                         </View>
                     </View>)
@@ -231,18 +264,18 @@ function ProductList(props) {
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
             <View style={commonStyles.rowSpaceBetween}>
                 <SecondaryHeader title={"Create Order"}/>
-                <TouchableOpacity style={{marginTop: 24}} onPress={() => {
-                    showSearchBar()
-                }}>
-                    <Icon name="search" size={24} color={colors.blue}/>
-                </TouchableOpacity>
             </View>
             <View style={[commonStyles.searchContainer, {marginTop: 24, marginBottom: 12}]}>
                 <TextInput
-                    maxLength={10}
+                    value={searchText}
+                    onChangeText={(text) => searchProduct(text)}
                     placeholder={"Search for Products"}
                     style={commonStyles.textInput}
                 />
+                {searchText !== '' ? <TouchableOpacity onPress={() => searchProduct('')}
+                                                       style={{position: "absolute", right: 0, padding: 10}}>
+                    <AntDesign name="close" size={18} color={colors.black}/>
+                </TouchableOpacity> : null}
             </View>
             <FlatList
                 data={productData}

@@ -31,7 +31,10 @@ import OfferDetails from "../screens/offer/OfferDetails";
 import OrderListDetails from "../screens/orderList/OrderListDetails";
 import {setLandingScreen} from "../actions/actions";
 import mapStateToProps from "../store/mapStateToProps";
-import InvoiceList from "../screens/invoice/InvoiceList";
+import {commonApi} from "../api/api";
+import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
+import store from "../store/store";
+import {useEffect, useState} from "react";
 
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -46,6 +49,25 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
     } else if (landingScreen === "home") {
         initialScreen = "Home"
     }
+    useEffect(()=>{
+        retailerDetails();
+    }, [])
+
+    const retailerDetails = () => {
+        const data = {
+            method: commonApi.getRetailerDetails.method,
+            url: commonApi.getRetailerDetails.url,
+            header: commonApi.getRetailerDetails.header,
+        }
+        AuthenticatedGetRequest(data).then((res) => {
+            if(res.status==200){
+                store.dispatch({
+                    type: 'RETAILER_DETAILS', payload: res.data
+                })
+            }
+        })
+    }
+
     return (
         <NavigationContainer
             linking={LinkingConfiguration}
@@ -66,7 +88,6 @@ function RootNavigator(props) {
         <RootStack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
       <RootStack.Screen name="Root" component={BottomTabNavigator} />
       <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <RootStack.Screen name="RetailerDetails" component={RetailerDetails} />
       <RootStack.Screen name="ProductList" component={ProductList} />
       <RootStack.Screen name="MapViewScreen" component={MapViewScreen} />
       <RootStack.Screen name="HomeScreen" component={HomeScreen} />

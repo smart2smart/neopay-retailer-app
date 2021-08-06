@@ -103,7 +103,7 @@ export default function ProfileScreen() {
     }
 
     const goToUploadImage = () => {
-        navigation.navigate('upload-image', {retailerId: retailerId, image: image, comingFrom: 'edit-profile'});
+        navigation.navigate('UploadImage', {comingFrom: 'profile'});
     }
 
     return (
@@ -125,6 +125,9 @@ export default function ProfileScreen() {
                             <Text style={[texts.darkGrey18Bold, {marginBottom: 50}]}>
                                 Image not available
                             </Text>
+                            <TouchableOpacity onPress={goToUploadImage} style={style.editButtonDiv}>
+                                <MaterialIcons name="edit" size={24} color={colors.red}/>
+                            </TouchableOpacity>
                         </View>}
                 </View>
                 <View style={{
@@ -166,12 +169,6 @@ export default function ProfileScreen() {
                                 <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"}/>
                             </View>
                         </View>
-                        {/* <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-                            <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"}/>
-                            <View style={{marginLeft: 16}}>
-                                <BlueButtonSmall ctaFunction={goToBuildOrder} text={"Build Order"}/>
-                            </View>
-                        </View> */}
                     </View>
                 </View>
                 <TouchableOpacity onPress={() => {neoCash()}}>

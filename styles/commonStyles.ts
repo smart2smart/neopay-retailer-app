@@ -158,9 +158,8 @@ const commonStyles = StyleSheet.create({
         borderColor: colors.grey,
         alignItems: 'center',
         backgroundColor: '#ffffff',
-        elevation: 2,
         flexDirection: 'row',
-        height: 40
+        height: 36
     },
     imageContainer: {
         height:250,

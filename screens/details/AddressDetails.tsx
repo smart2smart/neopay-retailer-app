@@ -20,7 +20,7 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import PersistenceStore from "../../utils/PersistenceStore";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
 import {setLandingScreen} from "../../actions/actions";
 
@@ -40,6 +40,7 @@ function AddressDetails(props) {
     const [selectedPinCode, setSelectedPinCode] = useState();
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
+    const retailerData = useSelector((state: any) => state.retailerDetails);
 
     const selectPinCode = (item) => {
         setCity(item.city);
@@ -48,6 +49,21 @@ function AddressDetails(props) {
         setLocality('');
         getLocalities(item.city.id)
     }
+
+    useEffect(()=>{
+        if(retailerData){
+            if(retailerData.address_data){
+                setSelectedPinCode(retailerData.address_data.pincode);
+                setLocality(retailerData.address_data.locality);
+                setAddress1(retailerData.address_data.line_1);
+                setAddress2(retailerData.address_data.line_2);
+                setLatitude(retailerData.address_data.latitude);
+                setLongitude(retailerData.address_data.longitude);
+                setCity(retailerData.address_data.city);
+                setState(retailerData.address_data.state);
+            }
+        }
+    },[])
 
     const getLocalities = (cityId) => {
         const data = {
@@ -88,8 +104,8 @@ function AddressDetails(props) {
                 pincode: selectedPinCode.id,
                 latitude: latitude,
                 longitude: longitude,
-                city:selectedPinCode.city.id,
-                state:selectedPinCode.state.id
+                city:city.id,
+                state:state.id
             })
         }
 
@@ -154,8 +170,8 @@ function AddressDetails(props) {
             data: localityData,
             selectItem: setLocality
         },
-        {type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1},
-        {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2},
+        {type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1, value:address1},
+        {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2, value: address2},
     ];
 
     const goToRetailerDetails = () => {
@@ -190,7 +206,9 @@ function AddressDetails(props) {
                             <View style={styles.textInputDiv}>
                                 <TextInput key={index} editable={item.editable}
                                            placeholder={item.placeholder}
-                                           onChangeText={item.onChange} style={styles.textInput}/>
+                                           onChangeText={item.onChange}
+                                           value={item.value}
+                                           style={styles.textInput}/>
                             </View>
                         )
                     } else {

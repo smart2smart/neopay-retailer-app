@@ -55,8 +55,6 @@ function BusinessInfo(props) {
                 Alert.alert("Details updated successfully.");
                 props.setLandingScreen("home");
                 PersistenceStore.setLandingScreen("home");
-                // navigation.navigate("HomeScreen");
-                // navigation.dispatch(StackActions.popToTop());
             }
         })
     }
@@ -66,22 +64,19 @@ function BusinessInfo(props) {
     }
 
     const data = [
-        {editable: true, placeholder: "PAN: V125852BUI", onChange: setPan},
+        {editable: true, placeholder: "PAN No:", onChange: setPan},
         {
             editable: true,
-            // property: gstno,
             placeholder: "GST Number:",
             onChange: setGstno
         },
         {
             editable: true,
-            // property: fassiNo,
             placeholder: "FASSAI Number:",
             onChange: setFaasino
         },
         {
             editable: true,
-            // property: drugLicense,
             placeholder: "Drug License:",
             onChange: setDrugLicense
         }

@@ -242,19 +242,19 @@ export default function EditProfile() {
         if (!addressId) {
             Alert.alert("Please save retailer address first.")
         } else {
-            navigation.navigate('map-view', {addressId: addressId, comingFrom: 'edit-profile'});
+            navigation.navigate('MapViewScreen', {addressId: addressId, comingFrom: 'edit-profile'});
         }
     }
 
     const goToUploadImage = () => {
-        navigation.navigate('upload-image', {retailerId: retailerId, image: image, comingFrom: 'edit-profile'});
+        navigation.navigate('UploadImage', {retailerId: retailerId, image: image, comingFrom: 'editProfile'});
     }
 
     return (
         <View style={style.container}>
             <Indicator isLoading={isLoading}/>
             <View style={{paddingHorizontal: 24, paddingBottom: 10}}>
-                <SecondaryHeader title={"Add Retailer"}/>
+                <SecondaryHeader title={"Edit Profile"}/>
             </View>
             <ScrollView nestedScrollEnabled={true} style={{flex: 1}}
                         showsVerticalScrollIndicator={false}>

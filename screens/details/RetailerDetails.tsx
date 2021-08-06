@@ -28,12 +28,24 @@ import PersistenceStore from "../../utils/PersistenceStore";
 function RetailerDetails(props) {
 
     const route = useRoute();
+    const retailerData = useSelector((state: any) => state.retailerDetails);
     const navigation = useNavigation();
     const [emailId, setEmailId] = useState('');
     const [storeName, setStoreName] = useState('');
     const [contactPersonName, setContactPersonName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     const [image, setImage] = useState('');
+
+    useEffect(() => {
+        if (retailerData) {
+            setStoreName(retailerData.name);
+            setContactPersonName(retailerData.contact_person_name);
+            setEmailId(retailerData.email);
+            if(retailerData.attachment){
+                setImage(retailerData.attachment);
+            }
+        }
+    }, [retailerData]);
 
     const addressDetails = () => {
         if (!storeName) {
@@ -82,25 +94,22 @@ function RetailerDetails(props) {
             type: "text",
             editable: true,
             placeholder: "Store Name*",
-            onChange: setStoreName
+            onChange: setStoreName,
+            value:storeName
         },
         {
             type: "text",
             editable: true,
             placeholder: "Contact Person*",
-            onChange: setContactPersonName
-        },
-        {
-            type: "number",
-            editable: true,
-            placeholder: "Contact Number",
-            onChange: setContactNumber
+            onChange: setContactPersonName,
+            value:contactPersonName
         },
         {
             type: "text",
             editable: true,
             placeholder: "Email Id",
-            onChange: setEmailId
+            onChange: setEmailId,
+            value: emailId
         }
     ];
 
@@ -133,9 +142,12 @@ function RetailerDetails(props) {
                         if (item.type === "text") {
                             return (
                                 <View style={styles.textInputDiv}>
-                                    <TextInput key={index} editable={item.editable}
+                                    <TextInput key={index}
+                                               value={item.value}
+                                               editable={item.editable}
                                                placeholder={item.placeholder}
-                                               onChangeText={item.onChange} style={styles.textInput}/>
+                                               onChangeText={item.onChange}
+                                               style={styles.textInput}/>
                                 </View>
                             )
                         } else {

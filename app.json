@@ -4,11 +4,11 @@
     "slug": "neopay-retailer-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -45,7 +45,7 @@
           "apiKey": "AIzaSyCYc4Wdn7dgUtvaZiAkmA2vJPSaoDomGUE"
         }
       },
-      "package": "com.neopay.neopayretailerapp"
+      "package": "com.neopay.retailer"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

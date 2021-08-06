@@ -10,17 +10,24 @@ import colors from "../assets/colors/colors";
 import {commonApi} from "../api/api";
 import {useEffect, useState} from "react";
 import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
+import {setRetailerDetails} from "../actions/actions";
+import mapStateToProps from "../store/mapStateToProps";
+import {connect} from "react-redux";
 
 
 const DrawerNavigator = createDrawerNavigator();
 
-export default function Drawer() {
+function Drawer() {
     return (
         <DrawerNavigator.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
             <DrawerNavigator.Screen key={"Home"} name={"Home"} component={BottomTabNavigator}/>
         </DrawerNavigator.Navigator>
     );
 }
+
+export default connect(mapStateToProps, {setRetailerDetails})(Drawer);
+
+
 
 const LogOut = () => {
     Alert.alert(
@@ -64,46 +71,12 @@ const RenderItem = (props) => <TouchableOpacity style={{
     </View>
 </TouchableOpacity>
 
+
 function CustomDrawerContent(props) {
 
     const navigate = (screen:String)=>{
         props.navigation.navigate(screen);
         props.navigation.closeDrawer();
-    }
-
-    useEffect(() => {
-        retailerDetails();
-    }, []);
-
-    const retailerDetails = () => {
-        const data = {
-            method: commonApi.getRetailerDetails.method,
-            url: commonApi.getRetailerDetails.url,
-            header: commonApi.getRetailerDetails.header,
-        }
-        AuthenticatedGetRequest(data).then((res) => {
-        })
-    }
-
-    const getRetailerDistributorMap = (distributorId) => {
-        const data = {
-            method: commonApi.distributorSalesmanMap.method,
-            url: commonApi.distributorSalesmanMap.url,
-            header: commonApi.distributorSalesmanMap.header
-        }
-        // @ts-ignore
-        AuthenticatedGetRequest(data).then((res) => {
-            if (res.data) {
-                if (!distributorId && res.data.length > 0) {
-                    store.dispatch({
-                        type: 'DISTRIBUTOR', payload: {
-                            distributorId: res.data[0].user_id,
-                            name: res.data[0].name
-                        }
-                    })
-                }
-            }
-        })
     }
 
     return (
