@@ -27,20 +27,21 @@ const sku_units = {
 }
 
 function Cart(props: any) {
+    let _ = require('underscore')
     const navigation = useNavigation();
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
-    const cartData = [...cart.data];
+    const [groupedData, setGroupedData] = useState([]);
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: data, text: text};
-        let allProducts = [...cartData];
+        let item = {distributorId: cart.distributorId, product: data, text: text};
+        let allProducts = [...cart.data];
         allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
         props.cartChangeQuantity(item)
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: {...data}};
+        let item = {distributorId: cart.distributorId, product: {...data}};
         if (type === "new") {
             props.addToCart(item);
         } else if (type == "add") {
@@ -50,22 +51,33 @@ function Cart(props: any) {
         }
     }
 
-    const getProducts  = ()=>{
+    const getProducts = () => {
         let products: any = {};
-        let available = false;
-        cartData.forEach((item) => {
-            item.data.forEach((itm)=>{
-                if (parseInt(itm.quantity) > 0) {
-                    products[itm.id] = parseInt(itm.quantity);
-                    available = true;
-                }
-            })
+        cart.data.forEach((itm) => {
+            if (parseInt(itm.quantity) > 0) {
+                products[itm.id] = parseInt(itm.quantity);
+            }
         })
-        return {products, available};
+        return products;
     }
 
+    useEffect(()=>{
+        let groupedData = _.chain(cart.data)
+            .groupBy("product_group")
+            .map((value, key) => ({
+                company_name: value[0]["company_name"],
+                brand_name: value[0]["brand_name"],
+                image: value[0]["product_group_image"],
+                product_group: key,
+                image_expanded: false,
+                product_group_id: value[0]["product_group_id"],
+                data: value
+            })).value()
+        setGroupedData(groupedData)
+    }, [])
+
     const placeOrder = () => {
-        let {products} = getProducts();
+        let products = getProducts();
         const dataToSend = {
             method: commonApi.placeOrder.method,
             url: commonApi.placeOrder.url,
@@ -73,7 +85,7 @@ function Cart(props: any) {
             data: {
                 products: JSON.stringify(products),
                 distributor: route.params.distributorId,
-                retailer:534
+                retailer: 534
             }
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {
@@ -83,7 +95,6 @@ function Cart(props: any) {
             }
         })
     }
-
 
 
     const renderItem = ({item, index}) => {
@@ -164,11 +175,11 @@ function Cart(props: any) {
     }
 
     return (
-        cartData.length>0?<View style={{flex: 1, backgroundColor: colors.white}}>
+        cart.data.length > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
             <View style={{paddingHorizontal: 24, paddingTop: 20}}>
                 <FlatList
-                    data={cartData}
+                    data={groupedData}
                     ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => item.product_group_id + "" + index}
@@ -210,12 +221,12 @@ function Cart(props: any) {
                     </View>
                 </View>
             </View>
-            <View style={[commonStyles.row, {position:"absolute", bottom:10, marginHorizontal:24}]}>
+            <View style={[commonStyles.row, {position: "absolute", bottom: 10, marginHorizontal: 24}]}>
                 <SolidButtonBlue ctaFunction={placeOrder} text={"Place Order"}/>
             </View>
-        </View>:<View style={{flex:1}}>
+        </View> : <View style={{flex: 1}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <Text style={texts.greyTextBold18}>
                     No items in your cart
                 </Text>

@@ -132,14 +132,6 @@ export default function EditProfile() {
         Alert.alert(text);
     }
 
-    const openLocalityModal = () => {
-        if (selectedPinCode === '') {
-            Alert.alert("Please select pincode first.")
-        } else {
-            setLocalityModalVisible(true);
-        }
-    }
-
     const data = [
         {type: "text", editable: true, property: shopName, placeholder: "Shop Name*", onChange: setShopName},
         {
@@ -243,7 +235,7 @@ export default function EditProfile() {
         if (!addressId) {
             Alert.alert("Please save retailer address first.")
         } else {
-            navigation.navigate('MapViewScreen', {addressId: addressId, comingFrom: 'edit-profile'});
+            navigation.navigate('MapViewScreen', {addressId: addressId, comingFrom: 'edit'});
         }
     }
 

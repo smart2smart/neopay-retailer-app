@@ -4,7 +4,6 @@ import {
     View,
     StyleSheet,
     ScrollView,
-    TextInput,
     Dimensions,
     TouchableOpacity,
     Image,
@@ -21,9 +20,9 @@ import {useRoute} from '@react-navigation/native';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
-import * as Linking from "expo-linking";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Indicator from "../../utils/Indicator";
+import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 
 
 export default function ProfileScreen() {
@@ -32,14 +31,44 @@ export default function ProfileScreen() {
     const route = useRoute();
 
     useEffect(() => {
-        if(route.params){
-            if(route.params.comingFrom=="edit"){
+        if (route.params) {
+            if (route.params.comingFrom == "edit") {
                 setData(route.params.data);
             }
-        }else{
+            if (route.params.comingFrom == "map") {
+                updateLocation(route.params.location);
+            }
+        } else {
             retailerDetails();
         }
     }, [route.params]);
+
+    const updateLocation = (location) => {
+        let address = {};
+        let data = {};
+        if (location.latitude) {
+            address["latitude"] = location.latitude;
+        }
+        if (location.longitude) {
+            address["longitude"] = location.longitude;
+        }
+        data["address"] = JSON.stringify(address)
+        const dataToSend = {
+            method: commonApi.updateRetailerProfile.method,
+            url: commonApi.updateRetailerProfile.url,
+            header: commonApi.updateRetailerProfile.header,
+            data: data
+        }
+        AuthenticatedPostRequest(dataToSend).then((res) => {
+            setIsLoading(false);
+            if (res.status == 200) {
+                Alert.alert("Details updated successfully.");
+                setData(res);
+            } else {
+                Alert.alert(res.data.message);
+            }
+        })
+    }
 
 
     const [refreshing, setRefreshing] = useState(false);
@@ -61,7 +90,7 @@ export default function ProfileScreen() {
         })
     }
 
-    const setData = (res)=>{
+    const setData = (res) => {
         setRetailerData(res.data);
         let address = "";
         if (res.data.address_data) {
@@ -84,34 +113,12 @@ export default function ProfileScreen() {
         navigation.navigate('Orders');
     }
 
-    const invoice = () => {
-        navigation.navigate('InvoiceList');
-    }
-
     const goToMapView = () => {
-        navigation.navigate('MapViewScreen');
-    }
-
-    const callRetailer = (mobile) => {
-        Linking.openURL(`tel:${mobile}`)
+        navigation.navigate('MapViewScreen', {comingFrom: "profile", addressId: retailerData.address_data.id});
     }
 
     const goToEditProfile = () => {
         navigation.navigate('EditProfile', {data: retailerData, comingFrom: "edit"})
-    }
-
-    const neoCash = () => {
-        navigation.navigate('NeoCash', {data: retailerData.neo_cash});
-    }
-
-    const goToBuildOrder = () => {
-        let data = {
-            contact_no: retailerData.contact_no,
-            id: retailerData.id,
-            contact_person_name: retailerData.contact_person_name,
-            name: retailerData.name,
-        }
-        navigation.navigate('build-order', {data: data})
     }
 
     const goToUploadImage = () => {
@@ -179,18 +186,27 @@ export default function ProfileScreen() {
                         <View style={style.underline}>
                         </View>
                         <View style={commonStyles.rowSpaceBetween}>
-                            <View>
-                                <BlueButtonSmall ctaFunction={goToMapView} text={"Location"}/>
-                            </View>
+                            {retailerData.address_data && retailerData.address_data.latitude != 0 ?
+                                <View>
+                                    <View style={commonStyles.rowAlignCenter}>
+                                        <Text style={texts.greyTextBold14}>{retailerData.address_data.latitude.toString().substring(0, 10)}, </Text>
+                                        <Text  style={texts.greyTextBold14}>{retailerData.address_data.longitude.toString().substring(0, 10)}</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={[texts.redTextBold14, {textDecorationLine: "underline"}]}>
+                                            Change
+                                        </Text>
+                                    </View>
+                                </View> : <View>
+                                    <BlueButtonSmall ctaFunction={goToMapView} text={"Location"}/>
+                                </View>}
                             <View>
                                 <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"}/>
                             </View>
                         </View>
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => {
-                    neoCash()
-                }}>
+                <TouchableOpacity>
                     <View style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
                         <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
                         <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
@@ -205,7 +221,7 @@ export default function ProfileScreen() {
                     <Text style={texts.blackTextBold14}>My Orders</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => invoice()}
+                <TouchableOpacity
                                   style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
                     <Text style={texts.blackTextBold14}>Invoice</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>

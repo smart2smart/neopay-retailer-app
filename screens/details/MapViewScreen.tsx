@@ -42,7 +42,16 @@ export default function MapViewScreen() {
     }
 
     const selectLocation = () => {
-        navigation.navigate('AddressDetails', {location: location})
+        if (route.params) {
+            if (route.params.comingFrom === "profile") {
+                navigation.navigate('ProfileScreen', {location: location, comingFrom:"map"})
+            }else if (route.params.comingFrom === "edit") {
+                navigation.navigate('EditProfile', {location: location})
+            }
+        }
+        else{
+            navigation.navigate('AddressDetails', {location: location})
+        }
     }
 
     return (

@@ -12,17 +12,15 @@ import SecondaryHeader from "../../headers/SecondaryHeader";
 import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
-import {BorderButtonSmallRed} from '../../buttons/Buttons';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
+import {useRoute} from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AddProductButton from "./AddProductButton";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
 import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart} from "../../actions/actions";
 import CartButton from "../../commons/CartButton";
-import store from "../../store/store";
 import PersistenceStore from "../../utils/PersistenceStore";
 import Indicator from "../../utils/Indicator";
 
@@ -42,7 +40,6 @@ const sku_units = {
 
 
 function ProductList(props) {
-
     let _ = require('underscore')
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
