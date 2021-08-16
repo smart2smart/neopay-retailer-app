@@ -44,6 +44,7 @@ function OrderList() {
             url: commonApi.getOrderList.url,
             header: commonApi.getOrderList.header,
         }
+        setIsLoading(true);
         AuthenticatedGetRequest(data).then((res) => {
             setRefreshing(false);
             setIsLoading(false);

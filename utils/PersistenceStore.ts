@@ -56,6 +56,14 @@ class PersistenceStore {
     static async removeCart() {
         await AsyncStorage.removeItem('@cart');
     }
+
+    static async getVerificationStatus() {
+        return await AsyncStorage.getItem('@verificationStatus');
+    }
+
+    static async setVerificationStatus(token: string) {
+        await AsyncStorage.setItem('@verificationStatus', token)
+    }
 }
 
 export default PersistenceStore

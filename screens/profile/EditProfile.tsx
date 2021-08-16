@@ -53,6 +53,7 @@ export default function EditProfile() {
     const [localityModalVisible, setLocalityModalVisible] = useState(false);
     const [image, setImage] = useState('');
     const [contactNo, setContactNo] = useState('');
+    const [panNo, setPanNo] = useState('');
     const [addressId, setAddressId] = useState('');
     const [location, setLocation] = useState({latitude: '', longitude: ''});
 
@@ -93,25 +94,7 @@ export default function EditProfile() {
             }
         })
         if (route.params.data) {
-            let data = route.params.data;
-            setRetailerId(data.id);
-            setImage(data.attachment);
-            setShopName(data.name);
-            setContactPersonName(data.contact_person_name);
-            setContactNo(data.contact_no);
-            setEmail(data.email);
-            setGSTIN(data.gst_number);
-            if (data.address_data) {
-                setAddressId(data.address_data.id);
-                setCity(data.address_data.city);
-                getLocalities(data.address_data.city.id);
-                setState(data.address_data.state);
-                setLine1(data.address_data.line_1);
-                setLine2(data.address_data.line_2);
-                setLocality(data.address_data.locality);
-                setSelectedPinCode(data.address_data.pincode);
-                setLocation({latitude: data.address_data.latitude, longitude: data.address_data.longitude});
-            }
+            setData(route.params.data);
         }
         if (route.params.image) {
             setImage(route.params.image);
@@ -120,6 +103,29 @@ export default function EditProfile() {
             setLocation(route.params.location);
         }
     }, [route.params]);
+
+
+    const setData = (data)=>{
+        setRetailerId(data.id);
+        setImage(data.attachment);
+        setShopName(data.name);
+        setContactPersonName(data.contact_person_name);
+        setContactNo(data.contact_no);
+        setEmail(data.email);
+        setGSTIN(data.gst_number);
+        setPanNo(data.pan_no);
+        if (data.address_data) {
+            setAddressId(data.address_data.id);
+            setCity(data.address_data.city);
+            getLocalities(data.address_data.city.id);
+            setState(data.address_data.state);
+            setLine1(data.address_data.line_1);
+            setLine2(data.address_data.line_2);
+            setLocality(data.address_data.locality);
+            setSelectedPinCode(data.address_data.pincode);
+            setLocation({latitude: data.address_data.latitude, longitude: data.address_data.longitude});
+        }
+    }
 
 
     const alertMsg = (text: string) => {
@@ -169,7 +175,8 @@ export default function EditProfile() {
         },
         {type: "text", editable: false, property: city.name, placeholder: "City", onChange: setCity},
         {type: "text", editable: false, property: state.name, placeholder: "State", onChange: setState},
-        {type: "text", editable: true, property: GSTIN, placeholder: "GSTIN No", onChange: setGSTIN}
+        {type: "text", editable: true, property: GSTIN, placeholder: "GSTIN No", onChange: setGSTIN},
+        {type: "text", editable: true, property: panNo, placeholder: "Pan No", onChange: setPanNo}
     ]
 
     const addRetailerAddress = () => {
@@ -192,7 +199,7 @@ export default function EditProfile() {
         let address = {
             line_1: line1,
             line_2: line2,
-            locality: locality.name,
+            locality: locality.id,
             pincode: selectedPinCode.id,
             city:city.id,
             state:state.id,
@@ -208,30 +215,24 @@ export default function EditProfile() {
             email: email,
             contact_no: contactNo,
             address: JSON.stringify(address),
-            gst_number: GSTIN
+            gst_number: GSTIN,
+            pan_no:panNo
         }
 
         if(route.params.comingFrom==="edit"){
             data["address_id"]=addressId;
         }
         const dataToSend = {
-            method: commonApi.updateRetailerAddress.method,
-            url: commonApi.updateRetailerAddress.url,
-            header: commonApi.updateRetailerAddress.header,
+            method: commonApi.updateRetailerProfile.method,
+            url: commonApi.updateRetailerProfile.url,
+            header: commonApi.updateRetailerProfile.header,
             data: data
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {
             setIsLoading(false);
             if (res.status == 200) {
-                if (route.params.comingFrom === "edit") {
-                    Alert.alert("Details updated successfully.");
-                    // navigation.navigate('retailer-profile', {retailerId: retailerId});
-                } else {
-                    navigation.replace('map-view', {
-                        addressId: res.data.address_data,
-                        retailerId: retailerId
-                    });
-                }
+                Alert.alert("Details updated successfully.")
+                navigation.navigate("ProfileScreen", {comingFrom:"edit", data:res});
             }else{
                 Alert.alert(res.data.message);
             }

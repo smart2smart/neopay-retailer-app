@@ -22,6 +22,7 @@ function Routes(props: any) {
             let initialScreen = await PersistenceStore.getLandingScreen();
             props.setIsLoggedIn(true);
             props.setLandingScreen(initialScreen);
+            props.setLandingScreen(initialScreen);
         }
         setLoading(false);
     }

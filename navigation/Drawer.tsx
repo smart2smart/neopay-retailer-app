@@ -28,7 +28,6 @@ function Drawer() {
 export default connect(mapStateToProps, {setRetailerDetails})(Drawer);
 
 
-
 const LogOut = () => {
     Alert.alert(
         'LogOut',
@@ -48,7 +47,6 @@ const LogOut = () => {
         {cancelable: false},
     );
 };
-
 
 
 const RenderItem = (props) => <TouchableOpacity style={{
@@ -74,22 +72,18 @@ const RenderItem = (props) => <TouchableOpacity style={{
 
 function CustomDrawerContent(props) {
 
-    const navigate = (screen:String)=>{
+    const navigate = (screen: String) => {
         props.navigation.navigate(screen);
         props.navigation.closeDrawer();
     }
 
     return (
-        <DrawerContentScrollView showsVerticalScrollIndicator={false} style={{height: Dimensions.get("window").height}} {...props}>
+        <DrawerContentScrollView showsVerticalScrollIndicator={false}
+                                 style={{height: Dimensions.get("window").height}} {...props}>
             <View style={{justifyContent: 'space-between', flex: 1, flexDirection: 'column'}}>
                 <View>
                     <RenderItem title={"Home"} onPress={() => {
-                        navigate("HomeScreen")
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Invoice"} onPress={() => {
-                        navigate("InvoiceList");
+                        navigate("Home")
                     }}/>
                 </View>
                 <View>
@@ -98,28 +92,8 @@ function CustomDrawerContent(props) {
                     }}/>
                 </View>
                 <View>
-                    <RenderItem title={"Payments"} onPress={() => {
-                        
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Sales"} onPress={() => {
-
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Reports"} onPress={() => {
-
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Search"} onPress={() => {
-
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Offer"} onPress={() => {
-                        navigate("Offer");
+                    <RenderItem title={"Orders"} onPress={() => {
+                        navigate("Orders")
                     }}/>
                 </View>
                 <View>
@@ -132,8 +106,11 @@ function CustomDrawerContent(props) {
                         LogOut()
                     }}/>
                 </View>
-
             </View>
         </DrawerContentScrollView>
     )
 }
+
+
+
+

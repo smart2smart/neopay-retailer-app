@@ -19,11 +19,13 @@ import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import texts from "../../styles/texts";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
+import moment from "moment";
 
 function HomeScreen(props: any) {
     const navigation = useNavigation();
     const cart = useSelector((state: any) => state.cart);
     const [distributorData, setDistributorData] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         getDistributorDetails();
@@ -32,7 +34,7 @@ function HomeScreen(props: any) {
                 props.newCart(JSON.parse(data));
             }
         })
-    }, []);
+    }, [cart]);
 
     const getDistributorDetails = () => {
         const data = {
@@ -73,6 +75,10 @@ function HomeScreen(props: any) {
         <View style={{flex: 1, paddingBottom:20}}>
             <PrimaryHeader navigation={props.navigation}/>
             <FlatList
+                onRefresh={() => {
+                    getDistributorDetails()
+                }}
+                refreshing={refreshing}
                 data={distributorData}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.user + ""}

@@ -4,11 +4,13 @@ import tokenReducer from "./tokenReducer";
 import retailerDetailsReducer from "./retailerDetailsReducer";
 import cartReducer from "./cartReducer";
 import landingScreenReducer from "./landingScreen";
+import verificationStatusReducer from "./verificationStatusReducer";
 
 export default combineReducers({
     isLoggedIn : loginReducer,
     tokens:tokenReducer,
     retailerDetails:retailerDetailsReducer,
     cart:cartReducer,
-    landingScreen:landingScreenReducer
+    landingScreen:landingScreenReducer,
+    verificationStatus:verificationStatusReducer
 })

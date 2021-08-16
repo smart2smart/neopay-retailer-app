@@ -35,9 +35,12 @@ import {commonApi} from "../api/api";
 import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
 import store from "../store/store";
 import {useEffect, useState} from "react";
+import VerificationPending from "../screens/VerificationPending";
 
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
+    const [verificationStatus, setVerificationStatus] = useState(1);
+    const [fetchingData, setFetchingData] = useState(true);
     const landingScreen = useSelector((state: any) => state.landingScreen);
     let initialScreen = "";
     if (landingScreen === "profile") {
@@ -60,19 +63,26 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
             header: commonApi.getRetailerDetails.header,
         }
         AuthenticatedGetRequest(data).then((res) => {
+            setFetchingData(false);
             if(res.status==200){
                 store.dispatch({
                     type: 'RETAILER_DETAILS', payload: res.data
                 })
+                setVerificationStatus(res.data.verification_status);
             }
         })
+    }
+
+    if(fetchingData){
+        return null;
     }
 
     return (
         <NavigationContainer
             linking={LinkingConfiguration}
             theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            {initialScreen==="Home"?<RootNavigator/>:<ProfileNavigator  initialScreen={initialScreen}/>}
+            {initialScreen==="Home"?(verificationStatus == 2 || verificationStatus ==3)?<RootNavigator/>:
+                <UserUnverifiedNavigator />:<ProfileNavigator  initialScreen={initialScreen}/>}
         </NavigationContainer>
     );
 }
@@ -81,6 +91,7 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
 // Read more here: https://reactnavigation.org/docs/modal
 const RootStack = createStackNavigator<RootStackParamList>();
 const ProfileStack = createStackNavigator<RootStackParamList>();
+const UserUnverifiedStack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator(props) {
   return (
@@ -113,6 +124,15 @@ function ProfileNavigator(props) {
             <ProfileStack.Screen name="MapViewScreen" component={MapViewScreen} />
             <ProfileStack.Screen name="UploadImage" component={UploadImage} />
         </ProfileStack.Navigator>
+    );
+}
+
+
+function UserUnverifiedNavigator(props) {
+    return (
+        <UserUnverifiedStack.Navigator initialRouteName={props.initialScreen} screenOptions={{ headerShown: false }}>
+            <UserUnverifiedStack.Screen name="VerificationPending" component={VerificationPending} />
+        </UserUnverifiedStack.Navigator>
     );
 }
 

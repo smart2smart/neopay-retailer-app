@@ -4,7 +4,8 @@ const mapStateToProps = (state: any) => {
         tokens: state.tokens,
         retailerDetails: state.retailerDetails,
         cart: state.cart,
-        landingScreen: state.landingScreen
+        landingScreen: state.landingScreen,
+        verificationStatus:state.verificationStatus
     };
 };
 

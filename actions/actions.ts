@@ -5,7 +5,11 @@ import {
     SCREEN,
     ADD_TO_CART,
     UPDATE_CART_ADD,
-    UPDATE_CART_SUBTRACT, CART_CHANGE_QUANTITY, NEW_CART, CLEAR_CART
+    UPDATE_CART_SUBTRACT,
+    CART_CHANGE_QUANTITY,
+    NEW_CART,
+    CLEAR_CART,
+    VERIFICATION_STATUS, REMOVE_FROM_CART
 } from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
@@ -44,23 +48,10 @@ export const clearCart = (value: any) => {
     });
 }
 
-export const addToCart = (value: any) => {
-    return ({
-        type: ADD_TO_CART,
-        payload: value
-    })
-}
 
 export const updateCartAdd = (value: any) => {
     return ({
         type: UPDATE_CART_ADD,
-        payload: value
-    })
-}
-
-export const cartChangeQuantity = (value: any) => {
-    return ({
-        type: CART_CHANGE_QUANTITY,
         payload: value
     })
 }
@@ -72,9 +63,23 @@ export const updateCartSubtract = (value: any) => {
     })
 }
 
+export const removeFromCart = (value: any) => {
+    return ({
+        type: REMOVE_FROM_CART,
+        payload: value
+    })
+}
+
 export const setLandingScreen = (value: any) => {
     return ({
         type: SCREEN,
+        payload: value
+    })
+}
+
+export const setVerificationStatus = (value: any) => {
+    return ({
+        type: VERIFICATION_STATUS,
         payload: value
     })
 }

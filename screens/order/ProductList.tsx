@@ -15,15 +15,16 @@ import commonStyles from '../../styles/commonStyles';
 import {BorderButtonSmallRed} from '../../buttons/Buttons';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import {useNavigation, useRoute} from "@react-navigation/native";
+import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AddProductButton from "./AddProductButton";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity, clearCart} from "../../actions/actions";
+import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart} from "../../actions/actions";
 import CartButton from "../../commons/CartButton";
 import store from "../../store/store";
 import PersistenceStore from "../../utils/PersistenceStore";
+import Indicator from "../../utils/Indicator";
 
 
 const sku_units = {
@@ -48,6 +49,7 @@ function ProductList(props) {
     const [searchText, setSearchText] = useState("");
     const [productData, setProductData] = useState([]);
     const [originalProductData, setOriginalProductData] = useState([]);
+    const [loading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getproductData();
@@ -60,7 +62,9 @@ function ProductList(props) {
             header: commonApi.getDistributorProducts.header,
         }
         // @ts-ignore
+        setIsLoading(true);
         AuthenticatedGetRequest(data).then((res) => {
+            setIsLoading(false);
             let groupedData = _.chain(res.data)
                 .groupBy("product_group")
                 .map((value, key) => ({
@@ -76,17 +80,24 @@ function ProductList(props) {
         });
     }
 
+    // useFocusEffect(
+    //     React.useCallback(() => {
+    //         if(productData.length>0){
+    //             matchQuantityWithCart(productData)
+    //         }
+    //     }, [cart])
+    // );
 
-    const matchQuantityWithCart = (groupedData)=>{
+
+    const matchQuantityWithCart = (items) => {
+        let groupedData = [...items];
         let data = {}
-        cart.data.forEach((item)=>{
-            item.data.forEach((itm)=>{
-                data[itm.id] = itm.quantity
-            })
+        cart.data.forEach((item) => {
+            data[item.id] = item.quantity
         })
-        groupedData.forEach((item)=>{
-            item.data.forEach((itm)=>{
-                if(data[itm.id]){
+        groupedData.forEach((item) => {
+            item.data.forEach((itm) => {
+                if (data[itm.id]) {
                     itm["quantity"] = data[itm.id]
                 }
             })
@@ -95,18 +106,20 @@ function ProductList(props) {
         setOriginalProductData(groupedData);
     }
 
-    const searchProduct = (text)=>{
+    const searchProduct = (text) => {
         setSearchText(text);
-        if(text===""){
+        if (text === "") {
             setProductData(originalProductData);
-        }else{
-            let filteredData = originalProductData.map((item)=>{
-                return {...item, data: item.data.filter((itm)=>{
-                    return itm.name.toLowerCase().includes(text.toLowerCase())
-                })}
+        } else {
+            let filteredData = originalProductData.map((item) => {
+                return {
+                    ...item, data: item.data.filter((itm) => {
+                        return itm.name.toLowerCase().includes(text.toLowerCase())
+                    })
+                }
             })
-            let removeBoolean = filteredData.filter((item)=>{
-                return item.data.length>0
+            let removeBoolean = filteredData.filter((item) => {
+                return item.data.length > 0
             })
             setProductData(removeBoolean);
         }
@@ -114,7 +127,7 @@ function ProductList(props) {
 
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: {...data}, text:text};
+        let item = {distributorId: route.params.distributorId, product: {...data}, text: text};
         let allProducts = [...productData];
         allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
         setProductData(allProducts);
@@ -122,7 +135,7 @@ function ProductList(props) {
     }
 
     const selectProductAlert = (data, type, mainIndex, subIndex) => {
-        if(cart.distributorId && cart.distributorId !== route.params.distributorId){
+        if (cart.distributorId && cart.distributorId !== route.params.distributorId) {
             Alert.alert(
                 'Change Distributor',
                 `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
@@ -140,31 +153,36 @@ function ProductList(props) {
                 ],
                 {cancelable: false},
             );
-        }else{
+        } else {
             selectProduct(data, type, mainIndex, subIndex);
         }
 
     }
 
-    const selectProduct = (data, type, mainIndex, subIndex)=>{
+    const selectProduct = (data, type, mainIndex, subIndex) => {
         let item = {distributorId: route.params.distributorId, product: {...data}};
         let allProducts = [...productData];
         if (type === "new") {
             allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
-            props.addToCart(item);
+            item.product.quantity = 1;
+            props.updateCartAdd(item);
         } else if (type == "add") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"])+1;
+            allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1;
+            item.product.quantity += 1;
             props.updateCartAdd(item);
         } else if (type == "subtract") {
+            item.product.quantity -= 1;
             if (allProducts[mainIndex]["data"][subIndex]["quantity"] > 0) {
-                allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"])-1 ;
+                allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) - 1;
+                props.updateCartSubtract(item);
+            } else {
+                props.removeFromCart(item);
             }
-            props.updateCartSubtract(item);
         }
         setProductData(allProducts);
     }
 
-    const expandImage = (mainIndex, subIndex)=>{
+    const expandImage = (mainIndex, subIndex) => {
         let allProducts = [...productData];
         allProducts[mainIndex]["data"][subIndex]["image_expanded"] = !allProducts[mainIndex]["data"][subIndex]["image_expanded"];
         setProductData(allProducts);
@@ -174,11 +192,11 @@ function ProductList(props) {
         return (
             <View>
                 <View style={styles.underline}>
-                    {item.product_group_id?<Text style={texts.darkGreyTextBold14}>
+                    {item.product_group_id ? <Text style={texts.darkGreyTextBold14}>
                         {item.company_name}
-                    </Text>:<Text style={texts.darkGreyTextBold14}>Others</Text>}
+                    </Text> : <Text style={texts.darkGreyTextBold14}>Others</Text>}
                 </View>
-                {item.product_group_id?<View style={[commonStyles.rowAlignCenter, {paddingTop: 10}]}>
+                {item.product_group_id ? <View style={[commonStyles.rowAlignCenter, {paddingTop: 10}]}>
                     <View>
                         <Image style={styles.productImage}
                                source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
@@ -191,22 +209,25 @@ function ProductList(props) {
                             {item.product_group}
                         </Text>
                     </View>
-                </View>:null}
+                </View> : null}
                 {item.data.map((item, subIndex) => {
-                    return (<View key={item.id+subIndex+''+item.name} style={styles.underline}>
-                        {item.image_expanded?<TouchableOpacity onPress={()=>{expandImage(index, subIndex)}}>
-                            <Image style={{width: '100%', height:200, borderRadius:5}}
+                    let margin = ((item.mrp - item.rate) / item.rate) * 100
+                    return (<View key={item.id + subIndex + '' + item.name} style={styles.underline}>
+                        {item.image_expanded ? <TouchableOpacity onPress={() => {
+                            expandImage(index, subIndex)
+                        }}>
+                            <Image style={{width: '100%', height: 200, borderRadius: 5}}
                                    source={item.sku_image ? {uri: item.sku_image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
-                        </TouchableOpacity>:null}
+                        </TouchableOpacity> : null}
                         <View style={commonStyles.rowSpaceBetween}>
                             <View style={{width: '70%'}}>
                                 <View style={[commonStyles.rowAlignCenter, {paddingVertical: 5}]}>
                                     <Text style={texts.darkGreyTextBold14}>
-                                        {item.name}
+                                        {item.product_group_id ? item.variant : item.name}
                                     </Text>
-                                    {item.product_group_id?<Text style={texts.redTextBold14}>
+                                    {item.product_group_id ? <Text style={texts.redTextBold14}>
                                         {" " + item.sku_quantity}{sku_units[item.sku_unit]}
-                                    </Text>:null}
+                                    </Text> : null}
                                 </View>
                                 <View style={commonStyles.rowSpaceBetween}>
                                     <View style={commonStyles.row}>
@@ -225,21 +246,26 @@ function ProductList(props) {
                                             {" " + item.rate}
                                         </Text>
                                     </View>
-                                    <View style={commonStyles.rowAlignCenter}>
-                                        <Text style={texts.greyTextBold12}>
-                                            Margin:
-                                        </Text>
-                                        <Text style={texts.greenBold12}>
-                                            {" " + (((item.mrp - item.rate) / item.rate) * 100).toFixed(1)}
-                                        </Text>
+                                    <View>
+                                        {margin > 0 ? <View style={commonStyles.rowAlignCenter}>
+                                            <Text style={texts.greyTextBold12}>
+                                                Margin:
+                                            </Text>
+                                            <Text style={texts.greenBold12}>
+                                                {" " + margin.toFixed(1) + '%'}
+                                            </Text>
+                                        </View> : null}
                                     </View>
                                 </View>
                             </View>
-                            <View style={{width: '30%', flexDirection:"column", alignItems:"flex-end"}}>
-                                {!item.image_expanded?<TouchableOpacity onPress={()=>{expandImage(index, subIndex)}}>
-                                    <Image style={{width:50, height:50}}
-                                          resizeMode={"contain"} source={item.sku_image ? {uri: item.sku_image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
-                                </TouchableOpacity>:null}
+                            <View style={{width: '30%', flexDirection: "column", alignItems: "flex-end"}}>
+                                {!item.image_expanded ? <TouchableOpacity onPress={() => {
+                                    expandImage(index, subIndex)
+                                }}>
+                                    {item.sku_image ? <Image style={{width: 50, height: 50}}
+                                                             resizeMode={"contain"}
+                                                             source={{uri: item.sku_image}}/> : null}
+                                </TouchableOpacity> : null}
                                 <View>
                                     <AddProductButton
                                         item={item}
@@ -261,6 +287,7 @@ function ProductList(props) {
 
     return (
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
+            <Indicator isLoading={loading}/>
             <View style={commonStyles.rowSpaceBetween}>
                 <SecondaryHeader title={"Create Order"}/>
             </View>
@@ -291,7 +318,7 @@ function ProductList(props) {
 
 export default connect(
     mapStateToProps,
-    {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity, clearCart}
+    {updateCartAdd, updateCartSubtract, removeFromCart, clearCart}
 )(ProductList);
 
 
