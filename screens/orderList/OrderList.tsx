@@ -46,8 +46,6 @@ function OrderList() {
         }
         setIsLoading(true);
         AuthenticatedGetRequest(data).then((res) => {
-            console.log("nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
-            console.log(res)
             setRefreshing(false);
             setIsLoading(false);
             setOrdersData(res.data);

@@ -34,7 +34,7 @@ function HomeScreen(props: any) {
                 props.newCart(JSON.parse(data));
             }
         })
-    }, [cart]);
+    }, []);
 
     const getDistributorDetails = () => {
         const data = {

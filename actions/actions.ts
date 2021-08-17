@@ -70,6 +70,13 @@ export const removeFromCart = (value: any) => {
     })
 }
 
+export const cartChangeQuantity = (value: any) => {
+    return ({
+        type: CART_CHANGE_QUANTITY,
+        payload: value
+    })
+}
+
 export const setLandingScreen = (value: any) => {
     return ({
         type: SCREEN,

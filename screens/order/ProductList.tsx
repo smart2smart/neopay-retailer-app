@@ -19,7 +19,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import AddProductButton from "./AddProductButton";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart} from "../../actions/actions";
+import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity} from "../../actions/actions";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import Indicator from "../../utils/Indicator";
@@ -122,13 +122,13 @@ function ProductList(props) {
         }
     }
 
-
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: {...data}, text: text};
+        let item = {distributorId: route.params.distributorId, product: {...data}, text: text, originalQuantity:parseInt(data.quantity)};
         let allProducts = [...productData];
+        item.product["quantity"] = text;
         allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
         setProductData(allProducts);
-        props.cartChangeQuantity(item)
+        props.cartChangeQuantity(item);
     }
 
     const selectProductAlert = (data, type, mainIndex, subIndex) => {
@@ -164,15 +164,17 @@ function ProductList(props) {
             item.product.quantity = 1;
             props.updateCartAdd(item);
         } else if (type == "add") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1;
+            allProducts[mainIndex]["data"][subIndex]["quantity"] = data.quantity?parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1:1;
             item.product.quantity += 1;
             props.updateCartAdd(item);
         } else if (type == "subtract") {
-            item.product.quantity -= 1;
-            if (allProducts[mainIndex]["data"][subIndex]["quantity"] > 0) {
+            if (allProducts[mainIndex]["data"][subIndex]["quantity"] > 1) {
                 allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) - 1;
+                item.product.quantity -= 1;
                 props.updateCartSubtract(item);
             } else {
+                item.product.quantity =0;
+                allProducts[mainIndex]["data"][subIndex]["quantity"]=0;
                 props.removeFromCart(item);
             }
         }
@@ -315,7 +317,7 @@ function ProductList(props) {
 
 export default connect(
     mapStateToProps,
-    {updateCartAdd, updateCartSubtract, removeFromCart, clearCart}
+    {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity}
 )(ProductList);
 
 

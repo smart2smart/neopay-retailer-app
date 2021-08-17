@@ -1,5 +1,5 @@
-import React, {Component, useEffect, useState} from 'react';
-import {View, StyleSheet, Text, FlatList, Image} from "react-native";
+import React, {useEffect} from 'react';
+import {FlatList, Image, StyleSheet, Text, View} from "react-native";
 import texts from "../../styles/texts";
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import {useNavigation, useRoute} from "@react-navigation/native";
@@ -8,7 +8,7 @@ import {SolidButtonBlue} from '../../buttons/Buttons';
 import colors from "../../assets/colors/colors";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {addToCart, cartChangeQuantity, clearCart, updateCartAdd, updateCartSubtract} from "../../actions/actions";
+import {clearCart, removeFromCart, updateCartAdd, updateCartSubtract} from "../../actions/actions";
 import AddProductButton from "../order/AddProductButton";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
@@ -27,11 +27,24 @@ const sku_units = {
 }
 
 function Cart(props: any) {
+    const groupData = (data) => {
+        return _.chain(data)
+            .groupBy("product_group")
+            .map((value, key) => ({
+                company_name: value[0]["company_name"],
+                brand_name: value[0]["brand_name"],
+                image: value[0]["product_group_image"],
+                product_group: key,
+                image_expanded: false,
+                product_group_id: value[0]["product_group_id"],
+                data: value
+            })).value();
+    }
     let _ = require('underscore')
     const navigation = useNavigation();
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
-    const [groupedData, setGroupedData] = useState([]);
+    const groupedData = groupData(cart.data);
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
         let item = {distributorId: cart.distributorId, product: data, text: text};
@@ -43,11 +56,19 @@ function Cart(props: any) {
     const selectProduct = (data, type, mainIndex, subIndex) => {
         let item = {distributorId: cart.distributorId, product: {...data}};
         if (type === "new") {
-            props.addToCart(item);
+            item.product.quantity = 1;
+            props.updateCartAdd(item);
         } else if (type == "add") {
+            item.product.quantity += 1;
             props.updateCartAdd(item);
         } else if (type == "subtract") {
-            props.updateCartSubtract(item);
+            if (item.product.quantity > 1) {
+                item.product.quantity -= 1;
+                props.updateCartSubtract(item);
+            } else {
+                item.product.quantity = 0;
+                props.removeFromCart(item);
+            }
         }
     }
 
@@ -61,20 +82,10 @@ function Cart(props: any) {
         return products;
     }
 
-    useEffect(()=>{
-        let groupedData = _.chain(cart.data)
-            .groupBy("product_group")
-            .map((value, key) => ({
-                company_name: value[0]["company_name"],
-                brand_name: value[0]["brand_name"],
-                image: value[0]["product_group_image"],
-                product_group: key,
-                image_expanded: false,
-                product_group_id: value[0]["product_group_id"],
-                data: value
-            })).value()
-        setGroupedData(groupedData)
+    useEffect(() => {
+
     }, [])
+
 
     const placeOrder = () => {
         let products = getProducts();
@@ -125,12 +136,15 @@ function Cart(props: any) {
                             <View style={{width: '70%'}}>
                                 <View style={[commonStyles.rowAlignCenter, {paddingVertical: 5}]}>
                                     <Text style={texts.darkGreyTextBold14}>
-                                        {item.name}
+                                        {item.product_group_id ? item.variant : item.name}
                                     </Text>
                                     <Text style={texts.redTextBold14}>
                                         {" " + item.sku_quantity}{sku_units[item.sku_unit]}
                                     </Text>
                                 </View>
+                                <Text>
+                                    {item.name}
+                                </Text>
                                 <View style={commonStyles.rowSpaceBetween}>
                                     <View style={commonStyles.row}>
                                         <Text style={texts.greyTextBold12}>
@@ -237,7 +251,7 @@ function Cart(props: any) {
 
 export default connect(
     mapStateToProps,
-    {addToCart, updateCartAdd, updateCartSubtract, cartChangeQuantity, clearCart}
+    {removeFromCart, updateCartAdd, updateCartSubtract, clearCart}
 )(Cart);
 
 const styles = StyleSheet.create({

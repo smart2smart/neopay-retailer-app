@@ -1,12 +1,8 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     Text,
     View,
     StyleSheet,
-    TouchableOpacity,
-    Image,
-    processColor,
-    TextInput,
     ScrollView,
     Alert
 } from 'react-native';
@@ -14,15 +10,15 @@ import colors from "../../assets/colors/colors";
 import texts from "../../styles/texts";
 import commonStyles from "../../styles/commonStyles";
 import SecondaryHeader from "../../headers/SecondaryHeader";
-import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
+import {useFocusEffect, useRoute} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Feather';
+import {BorderButtonSmallBlue} from "../../buttons/Buttons";
+import * as WebBrowser from 'expo-web-browser';
 
 export default function OrderListDetails() {
 
     const route = useRoute();
-    const navigation = useNavigation();
     const [orderDetails, setOrderDetails] = useState(route.params.orderDetailsData);
-    const [isLoading, setIsLoading] = useState(false);
 
 
     const setOrderData = (data)=>{
@@ -34,6 +30,14 @@ export default function OrderListDetails() {
             setOrderData(route.params.orderDetailsData);
         }, [])
     );
+
+    const downloadInvoice = (invoiceUrl)=>{
+        if(invoiceUrl) {
+            WebBrowser.openBrowserAsync(invoiceUrl);
+        }else {
+            Alert.alert("Invoice not available. Order not approved yet.")
+        }
+    }
 
     return (
         <ScrollView style={{flex: 1}}>
@@ -114,6 +118,9 @@ export default function OrderListDetails() {
                                 Rs {orderDetails.order_value}
                             </Text>
                         </View>
+                    </View>
+                    <View style={{flexDirection:"row", justifyContent:"flex-end", marginTop:10}}>
+                        <BorderButtonSmallBlue ctaFunction={()=>{downloadInvoice(orderDetails.invoice)}} text={"Invoice"} />
                     </View>
                 </View>
             </View>

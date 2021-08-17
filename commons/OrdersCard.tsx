@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity} from "react-native";
+import {View, StyleSheet, Text, TouchableOpacity} from "react-native";
 import colors from "../assets/colors/colors";
 import commonStyles from "../styles/commonStyles";
-import {BlueButtonSmall, BorderButtonSmallBlue, BorderButtonSmallRed} from "../buttons/Buttons";
+import {BorderButtonSmallBlue} from "../buttons/Buttons";
 import texts from "../styles/texts";
 import moment from "moment";
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -70,10 +70,10 @@ function OrdersCard(props: any) {
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
                         <Text style={texts.primaryThemeTextBold12}> Supplier</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {callRetailer(props.data.salesman_no)}} style={[commonStyles.borderButtonSmallBlue, {flexDirection:"row",marginLeft:10}]}>
+                    {props.data.salesman?<TouchableOpacity onPress={() => {callRetailer(props.data.salesman_no)}} style={[commonStyles.borderButtonSmallBlue, {flexDirection:"row",marginLeft:10}]}>
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
                         <Text style={texts.primaryThemeTextBold12}> Salesman</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>:null}
                 </View>
                 <View>
                     <BorderButtonSmallBlue ctaFunction={viewOrderDetails} text={"View Details"}/>
