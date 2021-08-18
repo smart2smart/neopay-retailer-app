@@ -83,6 +83,7 @@ function HomeScreen(props: any) {
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.user + ""}
                 renderItem={distributorDescription}
+                ListFooterComponent={<View style={{paddingBottom:100}}></View>}
             />
             {cart.data.length > 0 ? <CartButton/> : null}
         </View>

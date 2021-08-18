@@ -14,7 +14,6 @@ import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import {useRoute} from "@react-navigation/native";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AddProductButton from "./AddProductButton";
 import {connect, useSelector} from "react-redux";
@@ -23,6 +22,7 @@ import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChange
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import Indicator from "../../utils/Indicator";
+import {useFocusEffect, useRoute} from "@react-navigation/native";
 
 
 const sku_units = {
@@ -77,13 +77,13 @@ function ProductList(props) {
         });
     }
 
-    // useFocusEffect(
-    //     React.useCallback(() => {
-    //         if(productData.length>0){
-    //             matchQuantityWithCart(productData)
-    //         }
-    //     }, [cart])
-    // );
+    useFocusEffect(
+        React.useCallback(() => {
+            if(productData.length>0){
+                matchQuantityWithCart(productData)
+            }
+        }, [])
+    );
 
 
     const matchQuantityWithCart = (items) => {

@@ -4,11 +4,11 @@ import texts from "../../styles/texts";
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import commonStyles from '../../styles/commonStyles';
-import {SolidButtonBlue} from '../../buttons/Buttons';
+import {BorderButtonSmallBlue, SolidButtonBlue} from '../../buttons/Buttons';
 import colors from "../../assets/colors/colors";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {clearCart, removeFromCart, updateCartAdd, updateCartSubtract} from "../../actions/actions";
+import {clearCart, removeFromCart, updateCartAdd, updateCartSubtract, cartChangeQuantity} from "../../actions/actions";
 import AddProductButton from "../order/AddProductButton";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
@@ -47,9 +47,8 @@ function Cart(props: any) {
     const groupedData = groupData(cart.data);
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: cart.distributorId, product: data, text: text};
-        let allProducts = [...cart.data];
-        allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
+        let item = {distributorId: cart.distributorId, product: {...data}, text: text, originalQuantity:parseInt(data.quantity)};
+        item.product["quantity"] = text;
         props.cartChangeQuantity(item)
     }
 
@@ -80,6 +79,10 @@ function Cart(props: any) {
             }
         })
         return products;
+    }
+
+    const goToDistributorProducts = ()=>{
+        navigation.replace("ProductList", {distributorId:cart.distributorId})
     }
 
     useEffect(() => {
@@ -142,9 +145,6 @@ function Cart(props: any) {
                                         {" " + item.sku_quantity}{sku_units[item.sku_unit]}
                                     </Text>
                                 </View>
-                                <Text>
-                                    {item.name}
-                                </Text>
                                 <View style={commonStyles.rowSpaceBetween}>
                                     <View style={commonStyles.row}>
                                         <Text style={texts.greyTextBold12}>
@@ -191,49 +191,53 @@ function Cart(props: any) {
     return (
         cart.data.length > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <View style={{paddingHorizontal: 24, paddingTop: 20}}>
+            <View style={{paddingHorizontal: 24, paddingTop: 20, flex:1}}>
                 <FlatList
                     data={groupedData}
                     ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => item.product_group_id + "" + index}
                     renderItem={renderItem}
-                    ListFooterComponent={() => <View style={{paddingBottom: 12}}></View>}
+                    ListFooterComponent={() => <View style={{paddingBottom: 100, paddingTop:10}}>
+                        <View style={styles.underline}>
+                            <View style={commonStyles.rowSpaceBetween}>
+                                <Text style={texts.redTextBold14}>
+                                    Total Items:
+                                </Text>
+                                <Text style={texts.darkGreyTextBold14}>
+                                    {cart.count}
+                                </Text>
+                            </View>
+                            <View style={commonStyles.rowSpaceBetween}>
+                                <Text style={texts.redTextBold14}>
+                                    Item Total:
+                                </Text>
+                                <Text style={texts.darkGreyTextBold14}>
+                                    {parseFloat(cart.value).toFixed(2)}
+                                </Text>
+                            </View>
+                            <View style={commonStyles.rowSpaceBetween}>
+                                <Text style={texts.redTextBold14}>
+                                    Discount:
+                                </Text>
+                                <Text style={texts.darkGreyTextBold14}>
+                                    {0}
+                                </Text>
+                            </View>
+                            <View style={commonStyles.rowSpaceBetween}>
+                                <Text style={texts.redTextBold14}>
+                                    Net Payable:
+                                </Text>
+                                <Text style={texts.darkGreyTextBold14}>
+                                    {parseFloat(cart.value).toFixed(2)}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={{marginTop:16}}>
+                            <BorderButtonSmallBlue ctaFunction={goToDistributorProducts} text={"Add more items"}/>
+                        </View>
+                    </View>}
                 />
-                <View style={styles.underline}>
-                    <View style={commonStyles.rowSpaceBetween}>
-                        <Text style={texts.redTextBold14}>
-                            Total Items:
-                        </Text>
-                        <Text style={texts.darkGreyTextBold14}>
-                            {cart.count}
-                        </Text>
-                    </View>
-                    <View style={commonStyles.rowSpaceBetween}>
-                        <Text style={texts.redTextBold14}>
-                            Item Total:
-                        </Text>
-                        <Text style={texts.darkGreyTextBold14}>
-                            {parseFloat(cart.value).toFixed(2)}
-                        </Text>
-                    </View>
-                    <View style={commonStyles.rowSpaceBetween}>
-                        <Text style={texts.redTextBold14}>
-                            Discount:
-                        </Text>
-                        <Text style={texts.darkGreyTextBold14}>
-                            {0}
-                        </Text>
-                    </View>
-                    <View style={commonStyles.rowSpaceBetween}>
-                        <Text style={texts.redTextBold14}>
-                            Net Payable:
-                        </Text>
-                        <Text style={texts.darkGreyTextBold14}>
-                            {parseFloat(cart.value).toFixed(2)}
-                        </Text>
-                    </View>
-                </View>
             </View>
             <View style={[commonStyles.row, {position: "absolute", bottom: 10, marginHorizontal: 24}]}>
                 <SolidButtonBlue ctaFunction={placeOrder} text={"Place Order"}/>
@@ -251,7 +255,7 @@ function Cart(props: any) {
 
 export default connect(
     mapStateToProps,
-    {removeFromCart, updateCartAdd, updateCartSubtract, clearCart}
+    {removeFromCart, updateCartAdd, updateCartSubtract, clearCart,cartChangeQuantity}
 )(Cart);
 
 const styles = StyleSheet.create({

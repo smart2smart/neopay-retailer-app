@@ -76,7 +76,7 @@ const cartReducer = (state = {...cart}, action: any) => {
             let item = action.payload.product;
             let change_quantity = {
                 ...state,
-                data: item.quantity ? getData(state, action.payload.product, "change") : [...state.data.filter((item) => item.id !== item.id)],
+                data: item.quantity ? getData(state, action.payload.product, "change") : [...state.data.filter((item) => item.id !== action.payload.product.id)],
                 count: action.payload.text === "" ? parseFloat(state.count) - action.payload.originalQuantity : state.count - action.payload.originalQuantity + parseInt(action.payload.text),
                 value: (action.payload.text === "" ? parseFloat(state.value) - parseFloat(item["rate"] * action.payload.originalQuantity) : parseFloat(state.value) + parseFloat(item["rate"] * (parseInt(action.payload.text) - action.payload.originalQuantity))).toFixed(2),
                 distributorId: action.payload["distributorId"]
