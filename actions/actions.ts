@@ -3,13 +3,20 @@ import {
     TOKENS,
     RETAILER_DETAILS,
     SCREEN,
-    ADD_TO_CART,
     UPDATE_CART_ADD,
     UPDATE_CART_SUBTRACT,
     CART_CHANGE_QUANTITY,
     NEW_CART,
     CLEAR_CART,
-    VERIFICATION_STATUS, REMOVE_FROM_CART
+    VERIFICATION_STATUS, REMOVE_FROM_CART,
+    COMPANY_FILTER_ADD,
+    COMPANY_FILTER_REMOVE,
+    BRAND_FILTER_ADD,
+    BRAND_FILTER_REMOVE,
+    PRODUCT_GROUP_FILTER_ADD,
+    PRODUCT_GROUP_FILTER_REMOVE,
+    RESET_FILTERS,
+    SELECT_FILTER_TYPE
 } from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
@@ -91,4 +98,59 @@ export const setVerificationStatus = (value: any) => {
     })
 }
 
+export const companyFilterAdd = (value: any) => {
+    return ({
+        type: COMPANY_FILTER_ADD,
+        payload: value
+    })
+}
 
+export const companyFilterRemove = (value: any) => {
+    return ({
+        type: COMPANY_FILTER_REMOVE,
+        payload: value
+    })
+}
+
+export const brandFilterAdd = (value: any) => {
+    return ({
+        type: BRAND_FILTER_ADD,
+        payload: value
+    })
+}
+
+export const brandFilterRemove = (value: any) => {
+    return ({
+        type: BRAND_FILTER_REMOVE,
+        payload: value
+    })
+}
+
+
+export const productGroupFilterAdd = (value: any) => {
+    return ({
+        type: PRODUCT_GROUP_FILTER_ADD,
+        payload: value
+    })
+}
+
+export const productGroupFilterRemove = (value: any) => {
+    return ({
+        type: PRODUCT_GROUP_FILTER_REMOVE,
+        payload: value
+    })
+}
+
+export const resetFilters = (value: any) => {
+    return ({
+        type: RESET_FILTERS,
+        payload: value
+    })
+}
+
+export const selectFilterType = (value: any) => {
+    return ({
+        type: SELECT_FILTER_TYPE,
+        payload: value
+    })
+}

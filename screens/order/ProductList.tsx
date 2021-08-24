@@ -23,6 +23,7 @@ import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import Indicator from "../../utils/Indicator";
 import {useFocusEffect, useRoute} from "@react-navigation/native";
+import FilterBox from "../../commons/FilterBox";
 
 
 const sku_units = {
@@ -47,6 +48,7 @@ function ProductList(props) {
     const [productData, setProductData] = useState([]);
     const [originalProductData, setOriginalProductData] = useState([]);
     const [loading, setIsLoading] = useState(true);
+    const [filterOptions, setFilterOptions] = useState({})
 
     useEffect(() => {
         getproductData();
@@ -66,6 +68,8 @@ function ProductList(props) {
                 .groupBy("product_group")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
+                    company_id: value[0]["company_id"],
+                    brand_id: value[0]["brand_id"],
                     brand_name: value[0]["brand_name"],
                     image: value[0]["product_group_image"],
                     product_group: key,
@@ -74,12 +78,55 @@ function ProductList(props) {
                     data: value
                 })).value()
             matchQuantityWithCart(groupedData);
+            setFiltersInitialData(res.data);
         });
+    }
+
+    const applyFilters = (filters) => {
+        let data = [...productData]
+        data = data.filter((item) => {
+            return filters.companies.indexOf(item.company_id) != -1 ||
+                filters.brands.indexOf(item.brand_id) != -1 ||
+                filters.productGroups.indexOf(item.product_group_id) != -1;
+        })
+        setProductData(data);
+    }
+
+    const setFiltersInitialData = (data) => {
+        let companyData = _.chain(data)
+            .groupBy("company_name")
+            .map((value, key) => ({
+                name: value[0]["company_name"],
+                id: value[0]["company_id"],
+            })).value().filter((item) => {
+                return item.id
+            })
+        let brandData = _.chain(data)
+            .groupBy("brand_name")
+            .map((value, key) => ({
+                name: value[0]["brand_name"],
+                id: value[0]["brand_id"],
+            })).value().filter((item) => {
+                return item.id
+            })
+        let productGroupData = _.chain(data)
+            .groupBy("product_group")
+            .map((value, key) => ({
+                name: value[0]["product_group"],
+                id: value[0]["product_group_id"],
+            })).value().filter((item) => {
+                return item.id
+            })
+        setFilterOptions({
+            companies: companyData,
+            brands: brandData,
+            productGroups: productGroupData
+        })
     }
 
     useFocusEffect(
         React.useCallback(() => {
-            if(productData.length>0){
+            if (productData.length > 0) {
                 matchQuantityWithCart(productData)
             }
         }, [])
@@ -111,7 +158,11 @@ function ProductList(props) {
             let filteredData = originalProductData.map((item) => {
                 return {
                     ...item, data: item.data.filter((itm) => {
-                        return itm.name.toLowerCase().includes(text.toLowerCase())
+                        return itm.name.toLowerCase().includes(text.toLowerCase()) ||
+                            (itm.brand_name && itm.brand_name.toLowerCase().includes(text.toLowerCase())) ||
+                            (itm.company_name && itm.company_name.toLowerCase().includes(text.toLowerCase())) ||
+                            (itm.product_group && itm.product_group.toLowerCase().includes(text.toLowerCase())) ||
+                            (itm.variant && itm.variant.toLowerCase().includes(text.toLowerCase()))
                     })
                 }
             })
@@ -123,7 +174,12 @@ function ProductList(props) {
     }
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: {...data}, text: text, originalQuantity:parseInt(data.quantity)};
+        let item = {
+            distributorId: route.params.distributorId,
+            product: {...data},
+            text: text,
+            originalQuantity: parseInt(data.quantity)
+        };
         let allProducts = [...productData];
         item.product["quantity"] = text;
         allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
@@ -164,7 +220,7 @@ function ProductList(props) {
             item.product.quantity = 1;
             props.updateCartAdd(item);
         } else if (type == "add") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = data.quantity?parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1:1;
+            allProducts[mainIndex]["data"][subIndex]["quantity"] = data.quantity ? parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1 : 1;
             item.product.quantity += 1;
             props.updateCartAdd(item);
         } else if (type == "subtract") {
@@ -173,8 +229,8 @@ function ProductList(props) {
                 item.product.quantity -= 1;
                 props.updateCartSubtract(item);
             } else {
-                item.product.quantity =0;
-                allProducts[mainIndex]["data"][subIndex]["quantity"]=0;
+                item.product.quantity = 0;
+                allProducts[mainIndex]["data"][subIndex]["quantity"] = 0;
                 props.removeFromCart(item);
             }
         }
@@ -301,6 +357,9 @@ function ProductList(props) {
                                                        style={{position: "absolute", right: 0, padding: 10}}>
                     <AntDesign name="close" size={18} color={colors.black}/>
                 </TouchableOpacity> : null}
+            </View>
+            <View style={[commonStyles.row, {justifyContent: "flex-end"}]}>
+                <FilterBox applyFilters={applyFilters} filterOptions={filterOptions}/>
             </View>
             <FlatList
                 data={productData}

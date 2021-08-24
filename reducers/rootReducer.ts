@@ -5,6 +5,7 @@ import retailerDetailsReducer from "./retailerDetailsReducer";
 import cartReducer from "./cartReducer";
 import landingScreenReducer from "./landingScreen";
 import verificationStatusReducer from "./verificationStatusReducer";
+import filterReducer from "./filterReducer";
 
 export default combineReducers({
     isLoggedIn : loginReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     retailerDetails:retailerDetailsReducer,
     cart:cartReducer,
     landingScreen:landingScreenReducer,
-    verificationStatus:verificationStatusReducer
+    verificationStatus:verificationStatusReducer,
+    filters:filterReducer,
 })

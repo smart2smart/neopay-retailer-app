@@ -5,7 +5,8 @@ const mapStateToProps = (state: any) => {
         retailerDetails: state.retailerDetails,
         cart: state.cart,
         landingScreen: state.landingScreen,
-        verificationStatus:state.verificationStatus
+        verificationStatus:state.verificationStatus,
+        filters:state.filters
     };
 };
 

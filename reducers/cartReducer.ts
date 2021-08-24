@@ -15,9 +15,7 @@ const cart = {
 }
 
 function setCartToStorage(state) {
-    return new Promise(resolve => {
-        PersistenceStore.setCart(JSON.stringify(state));
-    })
+    PersistenceStore.setCart(JSON.stringify(state));
 }
 
 const getData = (state, product, type) => {
@@ -29,7 +27,7 @@ const getData = (state, product, type) => {
             item.quantity = product.quantity
         }
     })
-    if(!available && type=="add"){
+    if (!available && type == "add") {
         data.push(product)
     }
     return data;

@@ -2,12 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/commons/FilterBox.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commons/FilterModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reducers/filterReducer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo-shared/assets.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actionTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/colors/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/colors/colors.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/rootReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/rootReducer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/order/ProductList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/ProductList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/mapStateToProps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/mapStateToProps.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/PersistenceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/PersistenceStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,9 +26,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
         <option value="HTML File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -41,22 +50,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/neopay-distributor-app" />
+    <property name="last_opened_file_path" value="$USER_HOME$/NeopaySalesmanApp" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets" />
-      <recent name="$PROJECT_DIR$/screens/cart" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/commons" />
+      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/screens/orderList" />
       <recent name="$PROJECT_DIR$/screens/order" />
       <recent name="$PROJECT_DIR$/assets/images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
+      <recent name="$PROJECT_DIR$/screens/cart" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -91,7 +100,10 @@
       <workItem from="1628850198113" duration="22887000" />
       <workItem from="1629106257485" duration="34695000" />
       <workItem from="1629200932154" duration="5448000" />
-      <workItem from="1629265020368" duration="324000" />
+      <workItem from="1629265020368" duration="3042000" />
+      <workItem from="1629280453294" duration="12268000" />
+      <workItem from="1629442425503" duration="6990000" />
+      <workItem from="1629784090466" duration="9301000" />
     </task>
     <servers />
   </component>
@@ -99,18 +111,18 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1628489136479">
+    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1629374532364">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.683@0.27.1366.683" timestamp="1628489136479" />
+    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.683@0.27.1366.683" timestamp="1629374532364" />
     <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1627988211647">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1627988211647" />
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1629200946654">
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1629458482692">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1629200946654" />
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1629458482692" />
     <state x="187" y="27" width="982" height="683" key="SettingsEditor" timestamp="1628490241311">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
@@ -119,10 +131,10 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="336" y="27" width="683" height="683" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.683@0.27.1366.683" timestamp="1629098705148" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1629226132176">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1629372803973">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1629226132176" />
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1629372803973" />
     <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1629194899143">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

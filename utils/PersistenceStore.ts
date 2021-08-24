@@ -46,7 +46,8 @@ class PersistenceStore {
     }
 
     static async setCart(cart: string) {
-        await AsyncStorage.setItem('@cart', cart)
+        await AsyncStorage.setItem('@cart', cart);
+        console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
     }
 
     static async getCart() {

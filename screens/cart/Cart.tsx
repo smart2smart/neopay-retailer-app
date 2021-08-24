@@ -47,7 +47,12 @@ function Cart(props: any) {
     const groupedData = groupData(cart.data);
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {distributorId: cart.distributorId, product: {...data}, text: text, originalQuantity:parseInt(data.quantity)};
+        let item = {
+            distributorId: cart.distributorId,
+            product: {...data},
+            text: text,
+            originalQuantity: parseInt(data.quantity)
+        };
         item.product["quantity"] = text;
         props.cartChangeQuantity(item)
     }
@@ -81,8 +86,8 @@ function Cart(props: any) {
         return products;
     }
 
-    const goToDistributorProducts = ()=>{
-        navigation.replace("ProductList", {distributorId:cart.distributorId})
+    const goToDistributorProducts = () => {
+        navigation.navigate("ProductList", {distributorId: cart.distributorId})
     }
 
     useEffect(() => {
@@ -191,14 +196,14 @@ function Cart(props: any) {
     return (
         cart.data.length > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <View style={{paddingHorizontal: 24, paddingTop: 20, flex:1}}>
+            <View style={{paddingHorizontal: 24, paddingTop: 20, flex: 1}}>
                 <FlatList
                     data={groupedData}
                     ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => item.product_group_id + "" + index}
                     renderItem={renderItem}
-                    ListFooterComponent={() => <View style={{paddingBottom: 100, paddingTop:10}}>
+                    ListFooterComponent={() => <View style={{paddingBottom: 100, paddingTop: 10}}>
                         <View style={styles.underline}>
                             <View style={commonStyles.rowSpaceBetween}>
                                 <Text style={texts.redTextBold14}>
@@ -233,7 +238,7 @@ function Cart(props: any) {
                                 </Text>
                             </View>
                         </View>
-                        <View style={{marginTop:16}}>
+                        <View style={{marginTop: 16}}>
                             <BorderButtonSmallBlue ctaFunction={goToDistributorProducts} text={"Add more items"}/>
                         </View>
                     </View>}
@@ -255,7 +260,7 @@ function Cart(props: any) {
 
 export default connect(
     mapStateToProps,
-    {removeFromCart, updateCartAdd, updateCartSubtract, clearCart,cartChangeQuantity}
+    {removeFromCart, updateCartAdd, updateCartSubtract, clearCart, cartChangeQuantity}
 )(Cart);
 
 const styles = StyleSheet.create({

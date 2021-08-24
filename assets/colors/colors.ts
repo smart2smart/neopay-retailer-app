@@ -1,6 +1,5 @@
 const colors = {
     primaryThemeColor:'#583d72',
-    // primary_color:"#D68060",
     white:'#ffffff',
     lightGrey:'#e6e6e6',
     darkGrey:'#545454',
