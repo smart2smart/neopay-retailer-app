@@ -92,6 +92,10 @@ function ProductList(props) {
         setProductData(data);
     }
 
+    const clearFilters = ()=>{
+        setProductData(originalProductData);
+    }
+
     const setFiltersInitialData = (data) => {
         let companyData = _.chain(data)
             .groupBy("company_name")
@@ -257,7 +261,7 @@ function ProductList(props) {
                                source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
                     </View>
                     <View style={{paddingLeft: 10}}>
-                        <Text style={[texts.greyNormal14, {paddingBottom: 8}]}>
+                        <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
                             {item.company_name} {">"} {item.brand_name}
                         </Text>
                         <Text style={texts.redTextBold14}>
@@ -283,6 +287,11 @@ function ProductList(props) {
                                     {item.product_group_id ? <Text style={texts.redTextBold14}>
                                         {" " + item.sku_quantity}{sku_units[item.sku_unit]}
                                     </Text> : null}
+                                </View>
+                                <View>
+                                    <Text style={[texts.greyNormal12]}>
+                                        {item.name}
+                                    </Text>
                                 </View>
                                 <View style={commonStyles.rowSpaceBetween}>
                                     <View style={commonStyles.row}>
@@ -359,7 +368,7 @@ function ProductList(props) {
                 </TouchableOpacity> : null}
             </View>
             <View style={[commonStyles.row, {justifyContent: "flex-end"}]}>
-                <FilterBox applyFilters={applyFilters} filterOptions={filterOptions}/>
+                <FilterBox clearFilters={clearFilters} applyFilters={applyFilters} filterOptions={filterOptions}/>
             </View>
             <FlatList
                 data={productData}

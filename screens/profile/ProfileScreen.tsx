@@ -32,7 +32,7 @@ export default function ProfileScreen() {
 
     useEffect(() => {
         if (route.params) {
-            if (route.params.comingFrom == "edit") {
+            if (route.params.comingFrom == "image") {
                 setData(route.params.data);
             }
             if (route.params.comingFrom == "map") {
@@ -86,7 +86,6 @@ export default function ProfileScreen() {
         AuthenticatedGetRequest(data).then((res) => {
             setData(res);
             setIsLoading(false)
-
         })
     }
 
@@ -122,7 +121,7 @@ export default function ProfileScreen() {
     }
 
     const goToUploadImage = () => {
-        navigation.navigate('UploadImage', {comingFrom: 'profile'});
+        navigation.navigate('UploadImage', {comingFrom: 'profile', data: retailerData});
     }
 
     return (
@@ -189,14 +188,16 @@ export default function ProfileScreen() {
                             {retailerData.address_data && retailerData.address_data.latitude != 0 ?
                                 <View>
                                     <View style={commonStyles.rowAlignCenter}>
-                                        <Text style={texts.greyTextBold14}>{retailerData.address_data.latitude.toString().substring(0, 10)}, </Text>
-                                        <Text  style={texts.greyTextBold14}>{retailerData.address_data.longitude.toString().substring(0, 10)}</Text>
+                                        <Text
+                                            style={texts.greyTextBold14}>{retailerData.address_data.latitude.toString().substring(0, 10)}, </Text>
+                                        <Text
+                                            style={texts.greyTextBold14}>{retailerData.address_data.longitude.toString().substring(0, 10)}</Text>
                                     </View>
-                                    <View>
+                                    <TouchableOpacity onPress={goToMapView}>
                                         <Text style={[texts.redTextBold14, {textDecorationLine: "underline"}]}>
                                             Change
                                         </Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 </View> : <View>
                                     <BlueButtonSmall ctaFunction={goToMapView} text={"Location"}/>
                                 </View>}
@@ -213,7 +214,7 @@ export default function ProfileScreen() {
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
-                    <Text style={texts.blackTextBold14}>Loyalty Points</Text>
+                    <Text style={[texts.blackTextBold14, {opacity:0.2}]}>Loyalty Points</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => orderDetails()}
@@ -222,13 +223,13 @@ export default function ProfileScreen() {
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity
-                                  style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
-                    <Text style={texts.blackTextBold14}>Invoice</Text>
+                    style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
+                    <Text style={[texts.blackTextBold14,  {opacity:0.2}]}>Invoice</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[style.textContainerWrapper, commonStyles.rowSpaceBetween, {marginBottom: 20}]}>
-                    <Text style={texts.blackTextBold14}>Payments</Text>
+                    <Text style={[texts.blackTextBold14, {opacity:0.2}]}>Payments</Text>
                     <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
             </ScrollView>

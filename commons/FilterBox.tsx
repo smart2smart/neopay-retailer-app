@@ -13,7 +13,7 @@ import {
     brandFilterRemove,
     companyFilterAdd,
     companyFilterRemove,
-    productGroupFilterAdd, productGroupFilterRemove, selectFilterType
+    productGroupFilterAdd, productGroupFilterRemove, resetFilters, selectFilterType
 } from "../actions/actions";
 
 
@@ -41,17 +41,11 @@ function FilterBox(props) {
     }
 
     const resetFilters = () => {
-        dispatch({
-            type: props.type === "report" ? "RESET_REPORTS_FILTERS" : "RESET_ORDERS_FILTERS",
-            payload: undefined
-        });
-        props.getOrderData({});
-        // getSalesmanTeam([]);
+       props.resetFilters();
+       props.clearFilters();
     }
 
     const applyFilters = ()=>{
-        console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
-        console.log(filters)
         setModalVisible(false);
         props.applyFilters(filters)
     }
@@ -97,7 +91,8 @@ export default connect(mapStateToProps, {
     brandFilterRemove,
     productGroupFilterAdd,
     productGroupFilterRemove,
-    selectFilterType
+    selectFilterType,
+    resetFilters
 })(FilterBox);
 
 const styles = StyleSheet.create({

@@ -2,21 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/commons/FilterBox.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commons/FilterModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reducers/filterReducer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.expo-shared/assets.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/actionTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/colors/colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/colors/colors.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/rootReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/rootReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/FilterBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/FilterBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/OrdersCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/details/UploadImage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/UploadImage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/order/ProductList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/ProductList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/mapStateToProps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/mapStateToProps.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/PersistenceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/PersistenceStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +98,8 @@
       <workItem from="1629265020368" duration="3042000" />
       <workItem from="1629280453294" duration="12268000" />
       <workItem from="1629442425503" duration="6990000" />
-      <workItem from="1629784090466" duration="9301000" />
+      <workItem from="1629784090466" duration="20986000" />
+      <workItem from="1629877552094" duration="1525000" />
     </task>
     <servers />
   </component>
@@ -135,9 +131,9 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1629372803973" />
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1629194899143">
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1629799806284">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1629194899143" />
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1629799806284" />
   </component>
 </project>

@@ -19,13 +19,11 @@ import Drawer from "./Drawer";
 import HomeScreen from "../screens/home/HomeScreen";
 import UploadImage from "../screens/details/UploadImage";
 import EditProfile from "../screens/profile/EditProfile";
-import ProfileScreen from "../screens/profile/ProfileScreen";
 import {connect, useSelector} from "react-redux";
 import AddressDetails from "../screens/details/AddressDetails";
 import MapViewScreen from "../screens/details/MapViewScreen";
 import ProductDescription from "../screens/productDetails/ProductDescription";
 import NeoCash from "../screens/neoCash/NeoCash";
-import Cart from "../screens/cart/Cart";
 import Offer from "../screens/offer/Offer";
 import OfferDetails from "../screens/offer/OfferDetails";
 import OrderListDetails from "../screens/orderList/OrderListDetails";
@@ -104,8 +102,6 @@ function RootNavigator(props) {
       <RootStack.Screen name="HomeScreen" component={HomeScreen} />
       <RootStack.Screen name="EditProfile" component={EditProfile} />
       <RootStack.Screen name="UploadImage" component={UploadImage} />
-      <RootStack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <RootStack.Screen name="Cart" component={Cart} />
       <RootStack.Screen name="ProductDescription" component={ProductDescription} />
       <RootStack.Screen name="NeoCash" component={NeoCash} />
       <RootStack.Screen name="Offer" component={Offer} />

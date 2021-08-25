@@ -24,7 +24,6 @@ import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import Indicator from "../../utils/Indicator";
 import SelectModal from "../../commons/SelectModal";
 import SelectLocalityModal from "../../commons/SelectLocality";
-import {connect, useSelector} from 'react-redux';
 import TextInputUnderline from "../../commons/TextInputUnderline";
 import TextInputModal from "../../commons/TextInputModal";
 import commonStyles from "../../styles/commonStyles";
@@ -224,7 +223,7 @@ export default function EditProfile() {
             setIsLoading(false);
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.")
-                navigation.navigate("ProfileScreen", {comingFrom:"edit", data:res});
+                navigation.navigate("Account");
             }else{
                 Alert.alert(res.data.message);
             }

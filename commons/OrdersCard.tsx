@@ -30,7 +30,7 @@ function OrdersCard(props: any) {
         props.goToOrderDetails(props.data, props.index)
     }
 
-    const callRetailer = (mobile)=>{
+    const callRetailer = (mobile) => {
         Linking.openURL(`tel:${mobile}`)
     }
 
@@ -52,13 +52,20 @@ function OrdersCard(props: any) {
                     <Text style={texts.darkGreyTextBold12}>Order value: </Text>
                     <Text style={texts.primaryTextBold12}>{props.data.order_value}</Text>
                 </View>
+                {props.data.created_by !== "" ? <View style={[commonStyles.rowAlignCenter, {paddingVertical: 6}]}>
+                    <Text style={texts.darkGreyTextBold12}>Created by: </Text>
+                    <Text style={texts.primaryTextBold12}>{
+                        props.data.created_by === "retailer" ?
+                            props.data.created_by === "salesman" ?
+                                props.data.retailer_name : props.data.salesman_name : props.data.distibutor_name}</Text>
+                </View> : null}
                 <View style={[commonStyles.rowAlignCenter, commonStyles.statusButton, buttonStyle[props.data.status]]}>
                     <Text style={[texts.whiteTextBold12, {textTransform: "capitalize"}]}>
                         {props.data.status}
                     </Text>
                 </View>
             </View>
-            <View style={{flexDirection: "row", flexWrap:"wrap"}}>
+            <View style={{flexDirection: "row", flexWrap: "wrap"}}>
                 <Text style={texts.darkGreyTextBold12}>Items: </Text>
                 <Text style={texts.greyNormal12} textBreakStrategy="simple">
                     {itemString}
@@ -66,14 +73,18 @@ function OrdersCard(props: any) {
             </View>
             <View style={[commonStyles.rowSpaceBetween, {paddingTop: 10}]}>
                 <View style={commonStyles.row}>
-                    <TouchableOpacity onPress={() => {callRetailer(props.data.supplier_no)}} style={[commonStyles.borderButtonSmallBlue, {flexDirection:'row'}]}>
+                    <TouchableOpacity onPress={() => {
+                        callRetailer(props.data.supplier_no)
+                    }} style={[commonStyles.borderButtonSmallBlue, {flexDirection: 'row'}]}>
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
                         <Text style={texts.primaryThemeTextBold12}> Supplier</Text>
                     </TouchableOpacity>
-                    {props.data.salesman?<TouchableOpacity onPress={() => {callRetailer(props.data.salesman_no)}} style={[commonStyles.borderButtonSmallBlue, {flexDirection:"row",marginLeft:10}]}>
+                    {props.data.salesman ? <TouchableOpacity onPress={() => {
+                        callRetailer(props.data.salesman_no)
+                    }} style={[commonStyles.borderButtonSmallBlue, {flexDirection: "row", marginLeft: 10}]}>
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
                         <Text style={texts.primaryThemeTextBold12}> Salesman</Text>
-                    </TouchableOpacity>:null}
+                    </TouchableOpacity> : null}
                 </View>
                 <View>
                     <BorderButtonSmallBlue ctaFunction={viewOrderDetails} text={"View Details"}/>
@@ -89,13 +100,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     callIcon: {
-        borderWidth:1,
-        height:30,
-        borderColor:colors.primaryThemeColor,
-        borderRadius:5,
-        alignItems:'center',
-        flexDirection:'row',
-        paddingHorizontal:8
+        borderWidth: 1,
+        height: 30,
+        borderColor: colors.primaryThemeColor,
+        borderRadius: 5,
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingHorizontal: 8
     },
 })
 

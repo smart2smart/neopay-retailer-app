@@ -23,7 +23,6 @@ export default function UploadImage() {
     const [isLoading, setIsLoading] = useState(false);
     const [isNewImage, setIsNewImage] = useState(false);
 
-
     useEffect(() => {
         // setImage(route.params.image);
         (async () => {
@@ -96,7 +95,9 @@ export default function UploadImage() {
                 if (res && res.status == 200) {
                     if(route.params){
                         if(route.params.comingFrom==="profile"){
-                            navigation.navigate('ProfileScreen', {image: image})
+                            let data = route.params.data;
+                            data["attachment"] = image;
+                            navigation.navigate('Account', {data:{data:data}, comingFrom:"image"})
                         }else if(route.params.comingFrom==="editProfile"){
                             navigation.navigate('EditProfile', {image: image})
                         }else{

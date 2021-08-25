@@ -44,7 +44,7 @@ export default function MapViewScreen() {
     const selectLocation = () => {
         if (route.params) {
             if (route.params.comingFrom === "profile") {
-                navigation.navigate('ProfileScreen', {location: location, comingFrom:"map"})
+                navigation.navigate('Account', {location: location, comingFrom:"map"})
             }else if (route.params.comingFrom === "edit") {
                 navigation.navigate('EditProfile', {location: location})
             }
