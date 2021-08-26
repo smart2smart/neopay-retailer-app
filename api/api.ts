@@ -94,6 +94,10 @@ export const commonApi = {
         method: 'GET',
         header: header
     },
-
+    getDiscountAmount:{
+        url: `${base_url}/orders/calculate-discount/`,
+        method: 'GET',
+        header: header
+    }
 }
 

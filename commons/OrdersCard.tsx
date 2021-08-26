@@ -52,18 +52,23 @@ function OrdersCard(props: any) {
                     <Text style={texts.darkGreyTextBold12}>Order value: </Text>
                     <Text style={texts.primaryTextBold12}>{props.data.order_value}</Text>
                 </View>
-                {props.data.created_by !== "" ? <View style={[commonStyles.rowAlignCenter, {paddingVertical: 6}]}>
-                    <Text style={texts.darkGreyTextBold12}>Created by: </Text>
-                    <Text style={texts.primaryTextBold12}>{
-                        props.data.created_by === "retailer" ?
-                            props.data.created_by === "salesman" ?
-                                props.data.retailer_name : props.data.salesman_name : props.data.distibutor_name}</Text>
-                </View> : null}
                 <View style={[commonStyles.rowAlignCenter, commonStyles.statusButton, buttonStyle[props.data.status]]}>
                     <Text style={[texts.whiteTextBold12, {textTransform: "capitalize"}]}>
                         {props.data.status}
                     </Text>
                 </View>
+            </View>
+            <View style={commonStyles.rowSpaceBetween}>
+                <View style={[commonStyles.rowAlignCenter, {paddingVertical: 6}]}>
+                    <Text style={texts.darkGreyTextBold12}>{props.data.distributor_name}</Text>
+                </View>
+                {props.data.created_by !== "" ? <View style={[commonStyles.rowAlignCenter, {paddingVertical: 6}]}>
+                    <Text style={texts.darkGreyTextBold12}>Created by: </Text>
+                    <Text style={texts.primaryTextBold12}>{
+                        props.data.created_by === "retailer" ?
+                            "Self" : props.data.created_by === "salesman" ?
+                                  "Salesman" : "Partner"}</Text>
+                </View> : null}
             </View>
             <View style={{flexDirection: "row", flexWrap: "wrap"}}>
                 <Text style={texts.darkGreyTextBold12}>Items: </Text>

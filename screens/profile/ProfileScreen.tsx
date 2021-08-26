@@ -11,7 +11,6 @@ import {
     FlatList, RefreshControl
 } from 'react-native';
 // @ts-ignore
-import SecondaryHeader from "../../headers/SecondaryHeader";
 import colors from "../../assets/colors/colors";
 import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
@@ -23,9 +22,10 @@ import {BlueButtonSmall, BorderButtonSmallRed} from "../../buttons/Buttons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Indicator from "../../utils/Indicator";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
+import PrimaryHeader from "../../headers/PrimaryHeader";
 
 
-export default function ProfileScreen() {
+export default function ProfileScreen(props) {
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -127,9 +127,7 @@ export default function ProfileScreen() {
     return (
         <View style={style.container}>
             <Indicator isLoading={loading}/>
-            <View style={{paddingHorizontal: 24, paddingBottom: 10}}>
-                <SecondaryHeader title={"Profile"}/>
-            </View>
+            <PrimaryHeader navigation={props.navigation}/>
             <ScrollView refreshControl={
                 <RefreshControl
                     refreshing={refreshing}
@@ -212,10 +210,6 @@ export default function ProfileScreen() {
                         <Text style={texts.blackTextBold14}>NeoCash Balance</Text>
                         <Text style={texts.redTextBold20}>₹ {retailerData.neo_cash}</Text>
                     </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>
-                    <Text style={[texts.blackTextBold14, {opacity:0.2}]}>Loyalty Points</Text>
-                    <Image style={style.phoneIcon} source={require('../../assets/images/Group_582.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => orderDetails()}
                                   style={[style.textContainerWrapper, commonStyles.rowSpaceBetween]}>

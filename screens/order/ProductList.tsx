@@ -65,6 +65,7 @@ function ProductList(props) {
         AuthenticatedGetRequest(data).then((res) => {
             setIsLoading(false);
             let groupedData = _.chain(res.data)
+                .sortBy(function(item){ return item.company_name; })
                 .groupBy("product_group")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
@@ -280,18 +281,18 @@ function ProductList(props) {
                         </TouchableOpacity> : null}
                         <View style={commonStyles.rowSpaceBetween}>
                             <View style={{width: '70%'}}>
-                                <View style={[commonStyles.rowAlignCenter, {paddingVertical: 5}]}>
+                                <View>
+                                    <Text style={[texts.greyNormal12, {paddingTop:5}]}>
+                                        {item.name}
+                                    </Text>
+                                </View>
+                                <View style={[commonStyles.rowAlignCenter]}>
                                     <Text style={texts.darkGreyTextBold14}>
                                         {item.product_group_id ? item.variant : item.name}
                                     </Text>
                                     {item.product_group_id ? <Text style={texts.redTextBold14}>
                                         {" " + item.sku_quantity}{sku_units[item.sku_unit]}
                                     </Text> : null}
-                                </View>
-                                <View>
-                                    <Text style={[texts.greyNormal12]}>
-                                        {item.name}
-                                    </Text>
                                 </View>
                                 <View style={commonStyles.rowSpaceBetween}>
                                     <View style={commonStyles.row}>

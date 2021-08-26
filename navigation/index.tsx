@@ -10,13 +10,11 @@ import {ColorSchemeName} from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList} from '../types';
-import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import RetailerDetails from '../screens/details/RetailerDetails';
 import ProductList from '../screens/order/ProductList';
 import BusinessInfo from '../screens/details/BusinessInfo';
 import Drawer from "./Drawer";
-import HomeScreen from "../screens/home/HomeScreen";
 import UploadImage from "../screens/details/UploadImage";
 import EditProfile from "../screens/profile/EditProfile";
 import {connect, useSelector} from "react-redux";
@@ -50,7 +48,7 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
     } else if (landingScreen === "home") {
         initialScreen = "Home"
     }
-    useEffect(()=>{
+    useEffect(() => {
         retailerDetails();
     }, [])
 
@@ -62,7 +60,7 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
         }
         AuthenticatedGetRequest(data).then((res) => {
             setFetchingData(false);
-            if(res.status==200){
+            if (res.status == 200) {
                 store.dispatch({
                     type: 'RETAILER_DETAILS', payload: res.data
                 })
@@ -71,7 +69,7 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
         })
     }
 
-    if(fetchingData){
+    if (fetchingData) {
         return null;
     }
 
@@ -79,8 +77,8 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
         <NavigationContainer
             linking={LinkingConfiguration}
             theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            {initialScreen==="Home"?(verificationStatus == 2 || verificationStatus ==3)?<RootNavigator/>:
-                <UserUnverifiedNavigator />:<ProfileNavigator  initialScreen={initialScreen}/>}
+            {initialScreen === "Home" ? (verificationStatus == 2 || verificationStatus == 3) ? <RootNavigator/> :
+                <UserUnverifiedNavigator/> : <ProfileNavigator initialScreen={initialScreen}/>}
         </NavigationContainer>
     );
 }
@@ -92,33 +90,31 @@ const ProfileStack = createStackNavigator<RootStackParamList>();
 const UserUnverifiedStack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator(props) {
-  return (
-    <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        <RootStack.Screen key={"Home"} options={{headerShown:false}}  name={"Home"} component={Drawer} />
-      <RootStack.Screen name="Root" component={BottomTabNavigator} />
-      <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <RootStack.Screen name="ProductList" component={ProductList} />
-      <RootStack.Screen name="MapViewScreen" component={MapViewScreen} />
-      <RootStack.Screen name="HomeScreen" component={HomeScreen} />
-      <RootStack.Screen name="EditProfile" component={EditProfile} />
-      <RootStack.Screen name="UploadImage" component={UploadImage} />
-      <RootStack.Screen name="ProductDescription" component={ProductDescription} />
-      <RootStack.Screen name="NeoCash" component={NeoCash} />
-      <RootStack.Screen name="Offer" component={Offer} />
-      <RootStack.Screen name="OfferDetails" component={OfferDetails} />
-      <RootStack.Screen name="OrderListDetails" component={OrderListDetails} />
-    </RootStack.Navigator>
-  );
+    return (
+        <RootStack.Navigator screenOptions={{headerShown: false}}>
+            <RootStack.Screen key={"HomeScreen"} options={{headerShown:false}} name={"HomeScreen"} component={Drawer}/>
+            <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
+            <RootStack.Screen name="ProductList" component={ProductList}/>
+            <RootStack.Screen name="MapViewScreen" component={MapViewScreen}/>
+            <RootStack.Screen name="EditProfile" component={EditProfile}/>
+            <RootStack.Screen name="UploadImage" component={UploadImage}/>
+            <RootStack.Screen name="ProductDescription" component={ProductDescription}/>
+            <RootStack.Screen name="NeoCash" component={NeoCash}/>
+            <RootStack.Screen name="Offer" component={Offer}/>
+            <RootStack.Screen name="OfferDetails" component={OfferDetails}/>
+            <RootStack.Screen name="OrderListDetails" component={OrderListDetails}/>
+        </RootStack.Navigator>
+    );
 }
 
 function ProfileNavigator(props) {
     return (
-        <ProfileStack.Navigator initialRouteName={props.initialScreen} screenOptions={{ headerShown: false }}>
-            <ProfileStack.Screen name="RetailerDetails" component={RetailerDetails} />
-            <ProfileStack.Screen name="AddressDetails" component={AddressDetails} />
-            <ProfileStack.Screen name="BusinessInfo" component={BusinessInfo} />
-            <ProfileStack.Screen name="MapViewScreen" component={MapViewScreen} />
-            <ProfileStack.Screen name="UploadImage" component={UploadImage} />
+        <ProfileStack.Navigator initialRouteName={props.initialScreen} screenOptions={{headerShown: false}}>
+            <ProfileStack.Screen name="RetailerDetails" component={RetailerDetails}/>
+            <ProfileStack.Screen name="AddressDetails" component={AddressDetails}/>
+            <ProfileStack.Screen name="BusinessInfo" component={BusinessInfo}/>
+            <ProfileStack.Screen name="MapViewScreen" component={MapViewScreen}/>
+            <ProfileStack.Screen name="UploadImage" component={UploadImage}/>
         </ProfileStack.Navigator>
     );
 }
@@ -126,8 +122,8 @@ function ProfileNavigator(props) {
 
 function UserUnverifiedNavigator(props) {
     return (
-        <UserUnverifiedStack.Navigator initialRouteName={props.initialScreen} screenOptions={{ headerShown: false }}>
-            <UserUnverifiedStack.Screen name="VerificationPending" component={VerificationPending} />
+        <UserUnverifiedStack.Navigator initialRouteName={props.initialScreen} screenOptions={{headerShown: false}}>
+            <UserUnverifiedStack.Screen name="VerificationPending" component={VerificationPending}/>
         </UserUnverifiedStack.Navigator>
     );
 }

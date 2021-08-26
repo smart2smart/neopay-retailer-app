@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "neopay-simplify-retailer",
-    "slug": "neopay-simplify-retailer",
-    "version": "1.0.0",
+    "name": "NeoPay",
+    "slug": "neopay-retailer-app",
+    "version": "1.6.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "myapp",
@@ -25,6 +25,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
+      "versionCode": 18,
       "permissions": [
         "CAMERA",
         "READ_INTERNAL_STORAGE",
@@ -44,7 +45,7 @@
           "apiKey": "AIzaSyCYc4Wdn7dgUtvaZiAkmA2vJPSaoDomGUE"
         }
       },
-      "package": "com.neopay.retailer"
+      "package": "com.simplyfi.neopay"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

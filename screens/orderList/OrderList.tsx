@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TextInput, FlatList} from 'react-native';
 import commonStyles from "../../styles/commonStyles";
 import SecondaryHeader from "../../headers/SecondaryHeader";
@@ -11,8 +11,9 @@ import {useNavigation} from "@react-navigation/native";
 import Indicator from "../../utils/Indicator";
 import mapStateToProps from "../../store/mapStateToProps";
 import {connect, useSelector} from "react-redux";
+import PrimaryHeader from "../../headers/PrimaryHeader";
 
-function OrderList() {
+function OrderList(props) {
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
     const [ordersData, setOrdersData] = useState([]);
@@ -68,40 +69,44 @@ function OrderList() {
     }
 
     return (
-        <View style={{flex: 1, paddingHorizontal: 24}}>
+        <View style={{flex: 1}}>
             <Indicator isLoading={isLoading}/>
-            <SecondaryHeader title={"Orders"}/>
-            <View style={[commonStyles.searchContainer, {marginTop: 10}]}>
-                <TextInput
-                    value={searchText}
-                    maxLength={10}
-                    placeholder={"Search Orders"}
-                    onChangeText={(text) => searchOrders(text)}
-                    style={commonStyles.textInput}>
-                </TextInput>
-            </View>
-            <View style={[commonStyles.rowSpaceBetween, {paddingTop: 16}]}>
-                <Text style={texts.greyTextBold14}>
-                    Orders Till:
-                </Text>
-            </View>
-            {ordersData.length===0 && !isLoading?<View style={[commonStyles.rowCenter, {flex:1}]}>
-                    <Text style={texts.darkGreyTextBold16}>
-                        No orders available
+            <PrimaryHeader navigation={props.navigation}/>
+            <View style={{paddingHorizontal: 24, flex:1}}>
+                <View style={[commonStyles.searchContainer, {marginTop: 10}]}>
+                    <TextInput
+                        value={searchText}
+                        maxLength={10}
+                        placeholder={"Search Orders"}
+                        onChangeText={(text) => searchOrders(text)}
+                        style={commonStyles.textInput}>
+                    </TextInput>
+                </View>
+                <View style={[commonStyles.rowSpaceBetween, {paddingTop: 16}]}>
+                    <Text style={texts.greyTextBold14}>
+                        Orders Till:
                     </Text>
-                </View>:
-                <View style={{paddingTop: 16, flex: 1}}>
-                    <FlatList
-                        data={ordersData}
-                        onRefresh={()=>{getOrderData()}}
-                        refreshing={refreshing}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({item, index}) => <OrdersCard index={index} goToOrderDetails={goToOrderDetails}
-                                                                   data={item}/>}
-                        keyExtractor={(item, index) => index + ''}
-                        ListFooterComponent={renderFooter}
-                    />
-                </View>}
+                </View>
+                {ordersData.length === 0 && !isLoading ? <View style={[commonStyles.rowCenter, {flex: 1}]}>
+                        <Text style={texts.darkGreyTextBold16}>
+                            No orders available
+                        </Text>
+                    </View> :
+                    <View style={{paddingTop: 16, flex: 1}}>
+                        <FlatList
+                            data={ordersData}
+                            onRefresh={() => {
+                                getOrderData()
+                            }}
+                            refreshing={refreshing}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({item, index}) => <OrdersCard index={index} goToOrderDetails={goToOrderDetails}
+                                                                       data={item}/>}
+                            keyExtractor={(item, index) => index + ''}
+                            ListFooterComponent={renderFooter}
+                        />
+                    </View>}
+            </View>
         </View>
     )
 }

@@ -7,9 +7,6 @@ import store from "../store/store";
 import PersistenceStore from "../utils/PersistenceStore";
 import BottomTabNavigator from "./BottomTabNavigator";
 import colors from "../assets/colors/colors";
-import {commonApi} from "../api/api";
-import {useEffect, useState} from "react";
-import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
 import {setRetailerDetails} from "../actions/actions";
 import mapStateToProps from "../store/mapStateToProps";
 import {connect} from "react-redux";
@@ -20,7 +17,7 @@ const DrawerNavigator = createDrawerNavigator();
 function Drawer() {
     return (
         <DrawerNavigator.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-            <DrawerNavigator.Screen key={"Home"} name={"Home"} component={BottomTabNavigator}/>
+            <DrawerNavigator.Screen key={"HomeScreen"} name={"HomeScreen"} component={BottomTabNavigator}/>
         </DrawerNavigator.Navigator>
     );
 }
@@ -98,7 +95,7 @@ function CustomDrawerContent(props) {
                 </View>
                 <View>
                     <RenderItem title={"Profile"} onPress={() => {
-                        navigate("ProfileScreen");
+                        navigate("Account");
                     }}/>
                 </View>
                 <View>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Image, StyleSheet, Text, View} from "react-native";
 import texts from "../../styles/texts";
 import PrimaryHeader from "../../headers/PrimaryHeader";
@@ -12,6 +12,7 @@ import {clearCart, removeFromCart, updateCartAdd, updateCartSubtract, cartChange
 import AddProductButton from "../order/AddProductButton";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
+import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 
 const sku_units = {
     1: 'kg',
@@ -45,6 +46,7 @@ function Cart(props: any) {
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
     const groupedData = groupData(cart.data);
+    const [discount, setDiscount] = useState(0);
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
         let item = {
@@ -90,11 +92,6 @@ function Cart(props: any) {
         navigation.navigate("ProductList", {distributorId: cart.distributorId})
     }
 
-    useEffect(() => {
-
-    }, [])
-
-
     const placeOrder = () => {
         let products = getProducts();
         const dataToSend = {
@@ -115,6 +112,23 @@ function Cart(props: any) {
         })
     }
 
+    useEffect(() => {
+        getDiscount();
+    }, [])
+
+    const getDiscount = () => {
+        const data = {
+            method: commonApi.getDiscountAmount.method,
+            url: commonApi.getDiscountAmount.url + "?distributor_id=" + cart.distributorId + "&amount=" + cart.value,
+            header: commonApi.getDiscountAmount.header,
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.status == 200) {
+                setDiscount(res.data.discount_amount);
+            }
+        });
+    }
 
     const renderItem = ({item, index}) => {
         return (
@@ -221,20 +235,20 @@ function Cart(props: any) {
                                     {parseFloat(cart.value).toFixed(2)}
                                 </Text>
                             </View>
-                            <View style={commonStyles.rowSpaceBetween}>
+                            {discount !== 0 ? <View style={commonStyles.rowSpaceBetween}>
                                 <Text style={texts.redTextBold14}>
                                     Discount:
                                 </Text>
                                 <Text style={texts.darkGreyTextBold14}>
                                     {0}
                                 </Text>
-                            </View>
+                            </View> : null}
                             <View style={commonStyles.rowSpaceBetween}>
                                 <Text style={texts.redTextBold14}>
                                     Net Payable:
                                 </Text>
                                 <Text style={texts.darkGreyTextBold14}>
-                                    {parseFloat(cart.value).toFixed(2)}
+                                    {parseFloat(cart.value - discount).toFixed(2)}
                                 </Text>
                             </View>
                         </View>
