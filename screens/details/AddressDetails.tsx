@@ -24,6 +24,8 @@ import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
 import {setLandingScreen} from "../../actions/actions";
 
+let timeout: any = null;
+
 function AddressDetails(props) {
 
     const navigation = useNavigation();
@@ -47,12 +49,11 @@ function AddressDetails(props) {
         setState(item.state);
         setSelectedPinCode(item);
         setLocality('');
-        getLocalities(item.city.id)
     }
 
-    useEffect(()=>{
-        if(retailerData){
-            if(retailerData.address_data){
+    useEffect(() => {
+        if (retailerData) {
+            if (retailerData.address_data) {
                 setSelectedPinCode(retailerData.address_data.pincode);
                 setLocality(retailerData.address_data.locality);
                 setAddress1(retailerData.address_data.line_1);
@@ -63,16 +64,31 @@ function AddressDetails(props) {
                 setState(retailerData.address_data.state);
             }
         }
-    },[])
+    }, [])
 
-    const getLocalities = (cityId) => {
+    const searchLocalities = (text:string) => {
+        if (timeout) {
+            clearTimeout(timeout)
+        }
+        timeout = setTimeout(() => {
+            if(text !== ""){
+                getLocalities(text)
+            }
+        }, 500)
+    }
+
+    const getLocalities = (text:string) => {
+        console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+        console.log(text);
         const data = {
             method: commonApi.getLocalities.method,
-            url: commonApi.getLocalities.url + "?city=" + cityId,
+            url: commonApi.getLocalities.url + "?search=" + text,
             header: commonApi.getLocalities.header,
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
+            console.log("dddddddddddddddddddddddddddddddddddddddddddddddd")
+            console.log(res)
             if (res.data) {
                 setLocalityData(res.data);
             }
@@ -92,7 +108,7 @@ function AddressDetails(props) {
             alertMsg("Please enter your address");
             return
         }
-        if(!latitude){
+        if (!latitude) {
             alertMsg("Please select location");
         }
 
@@ -104,8 +120,8 @@ function AddressDetails(props) {
                 pincode: selectedPinCode.id,
                 latitude: latitude,
                 longitude: longitude,
-                city:city.id,
-                state:state.id
+                city: city.id,
+                state: state.id
             })
         }
 
@@ -148,6 +164,32 @@ function AddressDetails(props) {
         }
     }
 
+    const getPinCodes = (text) => {
+        const data = {
+            method: commonApi.getPinCodeList.method,
+            url: commonApi.getPinCodeList.url + "?search=" + text,
+            header: commonApi.getPinCodeList.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setPinCodeData(res.data);
+            }
+            timeout = null;
+        })
+    }
+
+    const searchPinCode = (text) => {
+        if (timeout) {
+            clearTimeout(timeout)
+        }
+        timeout = setTimeout(() => {
+            if(text !== ""){
+                getPinCodes(text)
+            }
+        }, 500)
+    }
+
 
     const data = [
         {
@@ -158,7 +200,9 @@ function AddressDetails(props) {
             title: "Postal Zip",
             modalVisible: pincodeModalVisible,
             data: pinCodeData,
-            selectItem: selectPinCode
+            selectItem: selectPinCode,
+            searchItem: searchPinCode,
+            searchType: "api"
         },
         {
             type: "modal",
@@ -168,9 +212,11 @@ function AddressDetails(props) {
             title: "Locality",
             modalVisible: localityModalVisible,
             data: localityData,
-            selectItem: setLocality
+            selectItem: setLocality,
+            searchItem: searchLocalities,
+            searchType: "api"
         },
-        {type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1, value:address1},
+        {type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1, value: address1},
         {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2, value: address2},
     ];
 
@@ -183,22 +229,12 @@ function AddressDetails(props) {
     }
 
     useEffect(() => {
-        const data = {
-            method: commonApi.getPinCodeList.method,
-            url: commonApi.getPinCodeList.url,
-            header: commonApi.getPinCodeList.header
-        }
-        // @ts-ignore
-        AuthenticatedGetRequest(data).then((res) => {
-            if (res.data) {
-                setPinCodeData(res.data);
-            }
-        })
+
     }, [])
 
     return (
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
-            <SecondaryHeader title={"Store Address"}/>
+            <SecondaryHeader manualNavigate={"RetailerDetails"} title={"Store Address"}/>
             <View style={{marginTop: 20}}>
                 {data.map((item, index) => {
                     if (item.type === "text") {
@@ -213,7 +249,8 @@ function AddressDetails(props) {
                         )
                     } else {
                         return (
-                            <TextInputModal key={index} property={item.property} toggleModal={item.toggleModal}
+                            <TextInputModal searchItem={item.searchItem} searchType={item.searchType}
+                                            key={index} property={item.property} toggleModal={item.toggleModal}
                                             modal={item.modal} title={item.title}
                                             modalVisible={item.modalVisible} data={item.data}
                                             selectItem={item.selectItem}
@@ -225,28 +262,28 @@ function AddressDetails(props) {
                 <Text style={texts.redTextBold14}> Geo Location: </Text>
             </View>
             <View style={[commonStyles.row, {marginVertical: 10}]}>
-                {latitude?
-                    <View style={[commonStyles.rowSpaceBetween, {width:'100%'}]}>
-                    <View>
-                        <Text style={texts.greyTextBold14}>
-                            Latitude: {latitude}
+                {latitude ?
+                    <View style={[commonStyles.rowSpaceBetween, {width: '100%'}]}>
+                        <View>
+                            <Text style={texts.greyTextBold14}>
+                                Latitude: {latitude}
+                            </Text>
+                            <Text style={texts.greyTextBold14}>
+                                Longitude: {longitude}
+                            </Text>
+                        </View>
+                        <TouchableOpacity onPress={goToMapView}>
+                            <Text style={[texts.redTextBold14, {textDecorationLine: "underline"}]}>
+                                Change
+                            </Text>
+                        </TouchableOpacity>
+                    </View> : <TouchableOpacity onPress={goToMapView}>
+                        <Text style={[texts.blueBoldl14, styles.underline]}>
+                            Choose on Map
                         </Text>
-                        <Text style={texts.greyTextBold14}>
-                            Longitude: {longitude}
-                        </Text>
-                    </View>
-                    <TouchableOpacity  onPress={goToMapView}>
-                        <Text style={[texts.redTextBold14, {textDecorationLine:"underline"}]}>
-                            Change
-                        </Text>
-                    </TouchableOpacity>
-                    </View> :<TouchableOpacity onPress={goToMapView}>
-                    <Text style={[texts.blueBoldl14, styles.underline]}>
-                        Choose on Map
-                    </Text>
-                </TouchableOpacity>}
+                    </TouchableOpacity>}
             </View>
-            <View style={[commonStyles.rowSpaceBetween, {paddingTop:30}]}>
+            <View style={[commonStyles.rowSpaceBetween, {paddingTop: 30}]}>
                 <BorderButtonBigBlue text={'BACK'} ctaFunction={goToRetailerDetails}/>
                 <View style={{width: 10}}>
                 </View>

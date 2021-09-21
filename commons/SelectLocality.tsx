@@ -11,23 +11,14 @@ export default function SelectLocalityModal(props) {
     const [searchText, setSearchText] = useState('');
     const [localityText, setLocalityText] = useState('');
     const [data, setData] = useState([]);
-    const [originalData, setOriginalData] = useState([]);
     const [addingNew, setAddingNew] = useState(false);
 
     useEffect(() => {
         setData(props.data);
-        setOriginalData(props.data);
     }, [props])
 
     const search = (text: string) => {
-        if (text === '') {
-            setData(originalData);
-        } else {
-            let filteredData = originalData.filter((item) => {
-                return item.name.toLowerCase().includes(text.toLowerCase());
-            });
-            setData(filteredData);
-        }
+        props.searchItem(text);
         setSearchText(text);
     }
 

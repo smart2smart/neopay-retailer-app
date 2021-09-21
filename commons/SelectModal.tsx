@@ -16,17 +16,24 @@ export default function SelectModal(props) {
         setOriginalData(props.data);
     }, [props])
 
+
     const search = (text: string) => {
-        if(text===''){
-            setData(originalData);
-        }else {
-            let filteredData = originalData.filter((item)=>{
-                return item.pincode.toLowerCase().includes(text.toLowerCase());
-            });
-            setData(filteredData);
+        if (props.searchType === "api") {
+            props.searchItem(text)
+        } else {
+            if (text === '') {
+                setData(originalData);
+            } else {
+                let filteredData = originalData.filter((item) => {
+                    return item.pincode.toLowerCase().includes(text.toLowerCase());
+                });
+                setData(filteredData);
+            }
         }
         setSearchText(text);
     }
+
+
     return (
         <Modal
             animationType="none"
@@ -61,7 +68,7 @@ export default function SelectModal(props) {
                         </Text>
                         {data && data.map((item) => {
                             return (
-                                <TouchableOpacity key={item.id+item.pincode} onPress={() => {
+                                <TouchableOpacity key={item.id + item.pincode} onPress={() => {
                                     props.selectItem(item)
                                 }} style={commonStyles.modalBeatPlanDiv}>
                                     <Text style={texts.greyTextBold14}>

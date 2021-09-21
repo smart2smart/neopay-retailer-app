@@ -20,6 +20,8 @@ export default function TextInputModal(props: any) {
             <props.modal
                 modalVisible={props.modalVisible}
                 data={props.data}
+                searchItem={props.searchItem}
+                searchType={props.searchType}
                 type={""}
                 closeModal={() => {
                     props.toggleModal(false);

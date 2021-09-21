@@ -3,16 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actionTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/OrdersCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/Drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/Drawer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/order/ProductList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/ProductList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/orderList/OrderList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/orderList/OrderList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/SelectLocality.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/SelectLocality.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/SelectModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/SelectModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/TextInputModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/TextInputModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/AddressDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +44,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/NeopaySalesmanApp" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
@@ -102,7 +100,21 @@
       <workItem from="1629784090466" duration="20986000" />
       <workItem from="1629877552094" duration="9250000" />
       <workItem from="1629957457281" duration="1941000" />
-      <workItem from="1629969083902" duration="6088000" />
+      <workItem from="1629969083902" duration="6089000" />
+      <workItem from="1630411210126" duration="1532000" />
+      <workItem from="1631189133041" duration="355000" />
+      <workItem from="1631190033520" duration="1351000" />
+      <workItem from="1631263340652" duration="1240000" />
+      <workItem from="1631275371296" duration="200000" />
+      <workItem from="1631521671105" duration="2394000" />
+      <workItem from="1631532590395" duration="1801000" />
+      <workItem from="1631788887897" duration="94000" />
+      <workItem from="1631793489399" duration="7760000" />
+      <workItem from="1631821781121" duration="1615000" />
+      <workItem from="1631860248952" duration="1147000" />
+      <workItem from="1631887021975" duration="709000" />
+      <workItem from="1632143045700" duration="1908000" />
+      <workItem from="1632214573272" duration="164000" />
     </task>
     <servers />
   </component>
@@ -118,10 +130,10 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="416" y="118" width="524" height="507" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1366.683@0.27.1366.683" timestamp="1627988211647" />
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1629972801403">
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1632214735170">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1629972801403" />
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1632214735170" />
     <state x="187" y="27" width="982" height="683" key="SettingsEditor" timestamp="1628490241311">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
@@ -130,13 +142,13 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="336" y="27" width="683" height="683" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.683@0.27.1366.683" timestamp="1629098705148" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1629973464978">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1631821438661">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1629973464978" />
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1629799806284">
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1631821438661" />
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1631797843020">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1629799806284" />
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1631797843020" />
   </component>
 </project>

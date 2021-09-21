@@ -104,7 +104,7 @@ export default function EditProfile() {
     }, [route.params]);
 
 
-    const setData = (data)=>{
+    const setData = (data) => {
         setRetailerId(data.id);
         setImage(data.attachment);
         setShopName(data.name);
@@ -133,37 +133,13 @@ export default function EditProfile() {
 
     const data = [
         {type: "text", editable: true, property: shopName, placeholder: "Shop Name*", onChange: setShopName},
-        {
-            type: "text",
-            editable: true,
-            property: contactPersonName,
-            placeholder: "Contact Person*",
-            onChange: setContactPersonName
-        },
+        {type: "text", editable: true, property: contactPersonName, placeholder: "Contact Person*", onChange: setContactPersonName},
         {type: "text", editable: true, property: contactNo, placeholder: "Contact No", onChange: setContactNo},
         {type: "text", editable: true, property: email, placeholder: "Email", onChange: setEmail},
         {type: "text", editable: true, property: line1, placeholder: "Address Line 1*", onChange: setLine1},
         {type: "text", editable: true, property: line2, placeholder: "Address Line 2", onChange: setLine2},
-        {
-            type: "modal",
-            property: selectedPinCode,
-            toggleModal: setPincodeModalVisible,
-            modal: SelectModal,
-            title: "Pincode",
-            modalVisible: pincodeModalVisible,
-            data: pinCodeData,
-            selectItem: selectPinCode
-        },
-        {
-            type: "modal",
-            property: locality,
-            toggleModal: setLocalityModalVisible,
-            modal: SelectLocalityModal,
-            title: "Locality",
-            modalVisible: localityModalVisible,
-            data: localityData,
-            selectItem: setLocality
-        },
+        {type: "modal", property: selectedPinCode, toggleModal: setPincodeModalVisible, modal: SelectModal, title: "Pincode", modalVisible: pincodeModalVisible, data: pinCodeData, selectItem: selectPinCode},
+        {type: "modal", property: locality, toggleModal: setLocalityModalVisible,modal: SelectLocalityModal,title: "Locality",modalVisible: localityModalVisible,data: localityData,selectItem: setLocality},
         {type: "text", editable: false, property: city.name, placeholder: "City", onChange: setCity},
         {type: "text", editable: false, property: state.name, placeholder: "State", onChange: setState},
         {type: "text", editable: true, property: GSTIN, placeholder: "GSTIN No", onChange: setGSTIN},
@@ -192,12 +168,13 @@ export default function EditProfile() {
             line_2: line2,
             locality: locality.id,
             pincode: selectedPinCode.id,
-            city:city.id,
-            state:state.id,
+            city: city.id,
+            state: state.id,
         }
-        if (location.latitude){
+        if (location.latitude) {
             address["latitude"] = location.latitude;
-        }if(location.longitude) {
+        }
+        if (location.longitude) {
             address["longitude"] = location.longitude;
         }
         let data = {
@@ -207,11 +184,11 @@ export default function EditProfile() {
             contact_no: contactNo,
             address: JSON.stringify(address),
             gst_number: GSTIN,
-            pan_no:panNo
+            pan_no: panNo
         }
 
-        if(route.params.comingFrom==="edit"){
-            data["address_id"]=addressId;
+        if (route.params.comingFrom === "edit") {
+            data["address_id"] = addressId;
         }
         const dataToSend = {
             method: commonApi.updateRetailerProfile.method,
@@ -224,7 +201,7 @@ export default function EditProfile() {
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.")
                 navigation.navigate("Account");
-            }else{
+            } else {
                 Alert.alert(res.data.message);
             }
         })
@@ -275,7 +252,8 @@ export default function EditProfile() {
                     justifyContent: 'flex-end',
                     paddingBottom: 20
                 } : {}}>
-                    <View style={route.params.comingFrom==="edit"?style.textContainerAbsolute:style.textContainer}>
+                    <View
+                        style={route.params.comingFrom === "edit" ? style.textContainerAbsolute : style.textContainer}>
                         {data.map((item, index) => {
                             if (item.type === "text") {
                                 return (
@@ -311,7 +289,8 @@ export default function EditProfile() {
                 </View>
             </ScrollView>
             <View style={[commonStyles.row, {paddingHorizontal: 24, paddingBottom: 20, paddingTop: 10}]}>
-                <SolidButtonBlue ctaFunction={addRetailerAddress} text={route.params.comingFrom === "edit"?"Save":"Next"}/>
+                <SolidButtonBlue ctaFunction={addRetailerAddress}
+                                 text={route.params.comingFrom === "edit" ? "Save" : "Next"}/>
             </View>
         </View>
     )
