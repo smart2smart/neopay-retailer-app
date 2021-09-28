@@ -28,7 +28,8 @@ export default function MapViewScreen() {
             if (status !== 'granted') {
                 return;
             }
-            let currentLocation = await Location.getCurrentPositionAsync({});
+            // let currentLocation = await Location.getCurrentPositionAsync({});
+            let currentLocation = await Location.getLastKnownPositionAsync({});
             let data = location;
             data.latitude = currentLocation.coords.latitude;
             data.longitude = currentLocation.coords.longitude;

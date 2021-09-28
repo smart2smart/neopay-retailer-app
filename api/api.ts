@@ -6,9 +6,9 @@ const formHeader = {
 
 }
 
-const base_url = 'http://10.38.19.145:8000';
+//const base_url = 'http://10.38.19.145:8000';
 //const base_url = 'http://qa-api.neopay.club';
-//const base_url = 'https://api.neopay.club';
+const base_url = 'https://api.neopay.club';
 
 export const authApi = {
     mobileLogin: {
@@ -62,6 +62,11 @@ export const commonApi = {
     getLocalities:{
         header: header,
         url: `${base_url}/localities/locality/`,
+        method: 'GET',
+    },
+    getCities:{
+        header: header,
+        url: `${base_url}/localities/city/`,
         method: 'GET',
     },
     updateRetailerImage: {

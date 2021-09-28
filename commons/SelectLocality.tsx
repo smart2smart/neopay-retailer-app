@@ -9,7 +9,7 @@ import {BlueButtonMedium, BlueButtonSmall, BorderButtonSmallRed} from "../button
 
 export default function SelectLocalityModal(props) {
     const [searchText, setSearchText] = useState('');
-    const [localityText, setLocalityText] = useState('');
+    // const [localityText, setLocalityText] = useState('');
     const [data, setData] = useState([]);
     const [addingNew, setAddingNew] = useState(false);
 
@@ -22,13 +22,13 @@ export default function SelectLocalityModal(props) {
         setSearchText(text);
     }
 
-    const addNewLocation = () => {
-        props.selectItem(localityText);
-    }
+    // const addNewLocation = () => {
+    //     props.selectItem(localityText);
+    // }
 
     const close = ()=>{
-        setLocalityText('');
-        setAddingNew(false);
+        // setLocalityText('');
+        // setAddingNew(false);
         setSearchText('');
         props.closeModal();
     }
@@ -68,6 +68,7 @@ export default function SelectLocalityModal(props) {
                                 {data && data.map((item) => {
                                     return (
                                         <TouchableOpacity key={item.id + item.name} onPress={() => {
+                                            setSearchText("")
                                             props.selectItem(item)
                                         }} style={commonStyles.modalBeatPlanDiv}>
                                             <Text style={texts.greyTextBold14}>
@@ -79,36 +80,36 @@ export default function SelectLocalityModal(props) {
                             </View>
                         </ScrollView>
                     : null}
-                {data.length === 0 && !addingNew ? <View style={{alignItems: 'center'}}>
-                    <Text style={[texts.blackTextBold18, {marginTop: 200, marginBottom: 30, textAlign: 'center'}]}>
-                        Locality not available
-                    </Text>
-                    <View>
-                        <BlueButtonMedium ctaFunction={() => {
-                            setAddingNew(true);
-                        }} text={"Add New"}>
-                        </BlueButtonMedium>
-                    </View>
-                </View> : null}
-                {addingNew ? <View style={{flex:1}}>
-                    <View>
-                        <TextInput
-                            placeholder={"Enter locality"}
-                            onChangeText={(text) => setLocalityText(text)}
-                            value={localityText}
-                            multiline={true}
-                            numberOfLines={5}
-                            textAlignVertical={"top"}
-                            style={styles.localityTextInput}>
-                        </TextInput>
-                    </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginTop:30}}>
-                        <BorderButtonSmallRed ctaFunction={close} text={"Cancel"}/>
-                        <View style={{marginLeft: 16}}>
-                            <BlueButtonSmall ctaFunction={addNewLocation} text={"Add"}/>
-                        </View>
-                    </View>
-                </View> : null}
+                {/*{data.length === 0 && !addingNew ? <View style={{alignItems: 'center'}}>*/}
+                {/*    <Text style={[texts.blackTextBold18, {marginTop: 200, marginBottom: 30, textAlign: 'center'}]}>*/}
+                {/*        Locality not available*/}
+                {/*    </Text>*/}
+                {/*    <View>*/}
+                {/*        <BlueButtonMedium ctaFunction={() => {*/}
+                {/*            setAddingNew(true);*/}
+                {/*        }} text={"Add New"}>*/}
+                {/*        </BlueButtonMedium>*/}
+                {/*    </View>*/}
+                {/*</View> : null}*/}
+                {/*{addingNew ? <View style={{flex:1}}>*/}
+                {/*    <View>*/}
+                {/*        <TextInput*/}
+                {/*            placeholder={"Enter locality"}*/}
+                {/*            onChangeText={(text) => setLocalityText(text)}*/}
+                {/*            value={localityText}*/}
+                {/*            multiline={true}*/}
+                {/*            numberOfLines={5}*/}
+                {/*            textAlignVertical={"top"}*/}
+                {/*            style={styles.localityTextInput}>*/}
+                {/*        </TextInput>*/}
+                {/*    </View>*/}
+                {/*    <View style={{flexDirection: 'row', justifyContent: 'flex-end', marginTop:30}}>*/}
+                {/*        <BorderButtonSmallRed ctaFunction={close} text={"Cancel"}/>*/}
+                {/*        <View style={{marginLeft: 16}}>*/}
+                {/*            <BlueButtonSmall ctaFunction={addNewLocation} text={"Add"}/>*/}
+                {/*        </View>*/}
+                {/*    </View>*/}
+                {/*</View> : null}*/}
             </View>
         </Modal>
     )

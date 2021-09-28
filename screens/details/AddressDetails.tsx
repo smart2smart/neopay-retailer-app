@@ -43,9 +43,13 @@ function AddressDetails(props) {
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
     const retailerData = useSelector((state: any) => state.retailerDetails);
+    const [cityModalVisible, setCityModalVisible] = useState(false);
+    const [cityData, setCityData] = useState([]);
 
     const selectPinCode = (item) => {
-        setCity(item.city);
+        if(item.city){
+            setCity(item.city);
+        }
         setState(item.state);
         setSelectedPinCode(item);
         setLocality('');
@@ -78,8 +82,6 @@ function AddressDetails(props) {
     }
 
     const getLocalities = (text:string) => {
-        console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-        console.log(text);
         const data = {
             method: commonApi.getLocalities.method,
             url: commonApi.getLocalities.url + "?search=" + text,
@@ -87,8 +89,6 @@ function AddressDetails(props) {
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
-            console.log("dddddddddddddddddddddddddddddddddddddddddddddddd")
-            console.log(res)
             if (res.data) {
                 setLocalityData(res.data);
             }
@@ -104,14 +104,17 @@ function AddressDetails(props) {
             alertMsg("Please enter your locality");
             return;
         }
+        if(!city){
+            alertMsg("Please select city");
+            return
+        }
         if (!address1) {
-            alertMsg("Please enter your address");
+            alertMsg("Please enter address line 1");
             return
         }
         if (!latitude) {
             alertMsg("Please select location");
         }
-
         let data = {
             address: JSON.stringify({
                 line_1: address1,
@@ -179,6 +182,36 @@ function AddressDetails(props) {
         })
     }
 
+    const getCities = (text)=>{
+        const data = {
+            method: commonApi.getCities.method,
+            url: commonApi.getCities.url + "?search=" + text,
+            header: commonApi.getCities.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setCityData(res.data);
+            }
+        })
+    }
+
+    const selectCity = (city)=>{
+        setCity(city);
+        setCityData([]);
+    }
+
+    const searchCities = (text)=>{
+        if (timeout) {
+            clearTimeout(timeout)
+        }
+        timeout = setTimeout(() => {
+            if (text !== "") {
+                getCities(text)
+            }
+        }, 500)
+    }
+
     const searchPinCode = (text) => {
         if (timeout) {
             clearTimeout(timeout)
@@ -215,6 +248,16 @@ function AddressDetails(props) {
             selectItem: setLocality,
             searchItem: searchLocalities,
             searchType: "api"
+        },
+        {
+            type: "modal", property: city, toggleModal: setCityModalVisible,
+            modal: SelectLocalityModal,
+            title: "City",
+            modalVisible: cityModalVisible,
+            data: cityData,
+            selectItem: selectCity,
+            searchItem: searchCities,
+            searchType: "api",
         },
         {type: "text", editable: true, placeholder: "Address Line 1", onChange: setAddress1, value: address1},
         {type: "text", editable: true, placeholder: "Address Line 2", onChange: setAddress2, value: address2},

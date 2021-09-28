@@ -29,11 +29,12 @@ import TextInputModal from "../../commons/TextInputModal";
 import commonStyles from "../../styles/commonStyles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+let timeout: any = null;
+
 export default function EditProfile() {
 
     const navigation = useNavigation();
     const route = useRoute();
-
     const [isLoading, setIsLoading] = useState(false);
     const [shopName, setShopName] = useState('');
     const [contactPersonName, setContactPersonName] = useState('');
@@ -48,8 +49,10 @@ export default function EditProfile() {
     const [line2, setLine2] = useState('');
     const [GSTIN, setGSTIN] = useState('');
     const [localityData, setLocalityData] = useState([]);
+    const [cityData, setCityData] = useState([]);
     const [pincodeModalVisible, setPincodeModalVisible] = useState(false);
     const [localityModalVisible, setLocalityModalVisible] = useState(false);
+    const [cityModalVisible, setCityModalVisible] = useState(false);
     const [image, setImage] = useState('');
     const [contactNo, setContactNo] = useState('');
     const [panNo, setPanNo] = useState('');
@@ -57,17 +60,18 @@ export default function EditProfile() {
     const [location, setLocation] = useState({latitude: '', longitude: ''});
 
     const selectPinCode = (item) => {
-        setCity(item.city);
+        if(item.city){
+            setCity(item.city);
+        }
         setState(item.state);
         setSelectedPinCode(item);
         setLocality('');
-        getLocalities(item.city.id)
     }
 
-    const getLocalities = (cityId) => {
+    const getLocalities = (text) => {
         const data = {
             method: commonApi.getLocalities.method,
-            url: commonApi.getLocalities.url + "?city=" + cityId,
+            url: commonApi.getLocalities.url + "?search=" + text,
             header: commonApi.getLocalities.header,
         }
         // @ts-ignore
@@ -78,12 +82,56 @@ export default function EditProfile() {
         })
     }
 
+    const selectLocality = (locality)=>{
+        setLocality(locality);
+        setLocalityData([]);
+    }
 
-    useEffect(() => {
-        setRetailerId(route.params.retailerId);
+    const selectCity = (city)=>{
+        setCity(city);
+        setCityData([]);
+    }
+
+    const searchPinCode = (text) => {
+        if (timeout) {
+            clearTimeout(timeout)
+        }
+        timeout = setTimeout(() => {
+            if (text !== "") {
+                getPinCodeList(text)
+            }
+        }, 500)
+    }
+
+    const searchCities = (text)=>{
+        if (timeout) {
+            clearTimeout(timeout)
+        }
+        timeout = setTimeout(() => {
+            if (text !== "") {
+                getCities(text)
+            }
+        }, 500)
+    }
+
+    const getCities = (text)=>{
+        const data = {
+            method: commonApi.getCities.method,
+            url: commonApi.getCities.url + "?search=" + text,
+            header: commonApi.getCities.header
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setCityData(res.data);
+            }
+        })
+    }
+
+    const getPinCodeList = (text) => {
         const data = {
             method: commonApi.getPinCodeList.method,
-            url: commonApi.getPinCodeList.url,
+            url: commonApi.getPinCodeList.url + "?search=" + text,
             header: commonApi.getPinCodeList.header
         }
         // @ts-ignore
@@ -92,6 +140,10 @@ export default function EditProfile() {
                 setPinCodeData(res.data);
             }
         })
+    }
+
+    useEffect(() => {
+        setRetailerId(route.params.retailerId);
         if (route.params.data) {
             setData(route.params.data);
         }
@@ -103,6 +155,16 @@ export default function EditProfile() {
         }
     }, [route.params]);
 
+    const searchLocalities = (text) => {
+        if (timeout) {
+            clearTimeout(timeout)
+        }
+        timeout = setTimeout(() => {
+            if (text !== "") {
+                getLocalities(text)
+            }
+        }, 500)
+    }
 
     const setData = (data) => {
         setRetailerId(data.id);
@@ -116,7 +178,6 @@ export default function EditProfile() {
         if (data.address_data) {
             setAddressId(data.address_data.id);
             setCity(data.address_data.city);
-            getLocalities(data.address_data.city.id);
             setState(data.address_data.state);
             setLine1(data.address_data.line_1);
             setLine2(data.address_data.line_2);
@@ -133,14 +194,48 @@ export default function EditProfile() {
 
     const data = [
         {type: "text", editable: true, property: shopName, placeholder: "Shop Name*", onChange: setShopName},
-        {type: "text", editable: true, property: contactPersonName, placeholder: "Contact Person*", onChange: setContactPersonName},
+        {
+            type: "text",
+            editable: true,
+            property: contactPersonName,
+            placeholder: "Contact Person*",
+            onChange: setContactPersonName
+        },
         {type: "text", editable: true, property: contactNo, placeholder: "Contact No", onChange: setContactNo},
         {type: "text", editable: true, property: email, placeholder: "Email", onChange: setEmail},
         {type: "text", editable: true, property: line1, placeholder: "Address Line 1*", onChange: setLine1},
         {type: "text", editable: true, property: line2, placeholder: "Address Line 2", onChange: setLine2},
-        {type: "modal", property: selectedPinCode, toggleModal: setPincodeModalVisible, modal: SelectModal, title: "Pincode", modalVisible: pincodeModalVisible, data: pinCodeData, selectItem: selectPinCode},
-        {type: "modal", property: locality, toggleModal: setLocalityModalVisible,modal: SelectLocalityModal,title: "Locality",modalVisible: localityModalVisible,data: localityData,selectItem: setLocality},
-        {type: "text", editable: false, property: city.name, placeholder: "City", onChange: setCity},
+        {
+            type: "modal", property: selectedPinCode, toggleModal: setPincodeModalVisible,
+            modal: SelectModal,
+            title: "Pincode",
+            modalVisible: pincodeModalVisible,
+            data: pinCodeData,
+            selectItem: selectPinCode,
+            searchItem: searchPinCode,
+            searchType: "api",
+
+        },
+        {
+            type: "modal", property: locality, toggleModal: setLocalityModalVisible,
+            modal: SelectLocalityModal,
+            title: "Locality",
+            modalVisible: localityModalVisible,
+            data: localityData,
+            selectItem: selectLocality,
+            searchItem: searchLocalities,
+            searchType: "api",
+        },
+        {
+            type: "modal", property: city, toggleModal: setCityModalVisible,
+            modal: SelectLocalityModal,
+            title: "City",
+            modalVisible: cityModalVisible,
+            data: cityData,
+            selectItem: selectCity,
+            searchItem: searchCities,
+            searchType: "api",
+        },
         {type: "text", editable: false, property: state.name, placeholder: "State", onChange: setState},
         {type: "text", editable: true, property: GSTIN, placeholder: "GSTIN No", onChange: setGSTIN},
         {type: "text", editable: true, property: panNo, placeholder: "Pan No", onChange: setPanNo}
@@ -161,6 +256,14 @@ export default function EditProfile() {
         }
         if (!selectedPinCode) {
             alertMsg("Please select pincode");
+            return
+        }
+        if(!locality){
+            alertMsg("Please select locality");
+            return
+        }
+        if(!city){
+            alertMsg("Please select city");
             return
         }
         let address = {
@@ -186,7 +289,6 @@ export default function EditProfile() {
             gst_number: GSTIN,
             pan_no: panNo
         }
-
         if (route.params.comingFrom === "edit") {
             data["address_id"] = addressId;
         }
@@ -263,7 +365,9 @@ export default function EditProfile() {
                                 )
                             } else {
                                 return (
-                                    <TextInputModal key={index} property={item.property} toggleModal={item.toggleModal}
+                                    <TextInputModal key={index} searchItem={item.searchItem}
+                                                    searchType={item.searchType}
+                                                    property={item.property} toggleModal={item.toggleModal}
                                                     modal={item.modal} title={item.title}
                                                     modalVisible={item.modalVisible} data={item.data}
                                                     selectItem={item.selectItem}

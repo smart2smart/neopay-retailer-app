@@ -2,7 +2,7 @@
   "expo": {
     "name": "NeoPay",
     "slug": "neopay-retailer-app",
-    "version": "1.6.5",
+    "version": "1.6.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "myapp",
@@ -25,7 +25,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 19,
+      "versionCode": 20,
       "permissions": [
         "CAMERA",
         "READ_INTERNAL_STORAGE",
@@ -36,6 +36,7 @@
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
         "VIBRATE",
+        "ACCESS_BACKGROUND_LOCATION",
         "com.sec.android.provider.badge.permission.READ",
         "com.sec.android.provider.badge.permission.WRITE",
         "com.google.android.c2dm.permission.RECEIVE"

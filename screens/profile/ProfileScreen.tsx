@@ -14,7 +14,7 @@ import {
 import colors from "../../assets/colors/colors";
 import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
-import {useNavigation} from "@react-navigation/native";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
 import {useRoute} from '@react-navigation/native';
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
@@ -29,6 +29,13 @@ export default function ProfileScreen(props) {
 
     const navigation = useNavigation();
     const route = useRoute();
+
+    useFocusEffect(
+        React.useCallback(() => {
+            retailerDetails();
+        }, [])
+    );
+
 
     useEffect(() => {
         if (route.params) {
