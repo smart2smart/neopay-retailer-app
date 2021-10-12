@@ -45,25 +45,26 @@ function ProductList(props) {
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
     const [searchText, setSearchText] = useState("");
+    const [refreshing, setRefreshing] = useState(false);
     const [productData, setProductData] = useState([]);
     const [originalProductData, setOriginalProductData] = useState([]);
     const [loading, setIsLoading] = useState(true);
     const [filterOptions, setFilterOptions] = useState({})
 
     useEffect(() => {
-        getproductData();
+        getproductData("load");
     }, []);
 
-    const getproductData = () => {
+    const getproductData = (type) => {
         const data = {
             method: commonApi.getDistributorProducts.method,
             url: commonApi.getDistributorProducts.url + "?distributor_id=" + route.params.distributorId,
             header: commonApi.getDistributorProducts.header,
         }
         // @ts-ignore
-        setIsLoading(true);
+        type === "load"?setIsLoading(true):setRefreshing(true);
         AuthenticatedGetRequest(data).then((res) => {
-            setIsLoading(false);
+            type === "load"?setIsLoading(false):setRefreshing(false);
             let groupedData = _.chain(res.data)
                 .sortBy(function(item){ return item.company_name; })
                 .groupBy("product_group")
@@ -373,6 +374,10 @@ function ProductList(props) {
             </View>
             <FlatList
                 data={productData}
+                onRefresh={()=>{
+                    getproductData("refresh")
+                }}
+                refreshing={refreshing}
                 ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => item.product_group_id + "" + item.product_group_name}

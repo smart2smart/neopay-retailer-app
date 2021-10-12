@@ -29,7 +29,7 @@ export default function MapViewScreen() {
                 return;
             }
             // let currentLocation = await Location.getCurrentPositionAsync({});
-            let currentLocation = await Location.getLastKnownPositionAsync({});
+                let currentLocation = await Location.getLastKnownPositionAsync({});
             let data = location;
             data.latitude = currentLocation.coords.latitude;
             data.longitude = currentLocation.coords.longitude;

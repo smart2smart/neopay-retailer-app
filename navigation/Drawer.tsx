@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createDrawerNavigator, DrawerContentScrollView} from "@react-navigation/drawer";
-import {TouchableOpacity, View, Text, Alert, Dimensions} from "react-native";
+import {TouchableOpacity, View, Text, Alert, Dimensions, StyleSheet} from "react-native";
 import {Ionicons} from '@expo/vector-icons';
 import texts from "../styles/texts";
 import store from "../store/store";
@@ -10,6 +10,7 @@ import colors from "../assets/colors/colors";
 import {setRetailerDetails} from "../actions/actions";
 import mapStateToProps from "../store/mapStateToProps";
 import {connect} from "react-redux";
+import Constants from "expo-constants";
 
 
 const DrawerNavigator = createDrawerNavigator();
@@ -46,16 +47,7 @@ const LogOut = () => {
 };
 
 
-const RenderItem = (props) => <TouchableOpacity style={{
-    borderBottomColor: '#bfbfbf',
-    borderBottomWidth: 1,
-    marginHorizontal: 20,
-    paddingVertical: 16,
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center'
-}} onPress={() => {
+const RenderItem = (props) => <TouchableOpacity style={styles.renderItem} onPress={() => {
     props.onPress()
 }}>
     <Text style={texts.darkGreyTextBold14}>
@@ -76,38 +68,73 @@ function CustomDrawerContent(props) {
 
     return (
         <DrawerContentScrollView showsVerticalScrollIndicator={false}
-                                 style={{height: Dimensions.get("window").height}} {...props}>
-            <View style={{justifyContent: 'space-between', flex: 1, flexDirection: 'column'}}>
+                                 style={styles.drawer} {...props}>
+            <View style={styles.container}>
                 <View>
-                    <RenderItem title={"Home"} onPress={() => {
-                        navigate("Home")
-                    }}/>
+                    <View>
+                        <RenderItem title={"Home"} onPress={() => {
+                            navigate("Home")
+                        }}/>
+                    </View>
+                    <View>
+                        <RenderItem title={"Cart"} onPress={() => {
+                            navigate("Cart")
+                        }}/>
+                    </View>
+                    <View>
+                        <RenderItem title={"Orders"} onPress={() => {
+                            navigate("Orders")
+                        }}/>
+                    </View>
+                    <View>
+                        <RenderItem title={"Profile"} onPress={() => {
+                            navigate("Account");
+                        }}/>
+                    </View>
+                    <View>
+                        <RenderItem title={"Logout"} onPress={() => {
+                            LogOut()
+                        }}/>
+                    </View>
                 </View>
-                <View>
-                    <RenderItem title={"Cart"} onPress={() => {
-                        navigate("Cart")
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Orders"} onPress={() => {
-                        navigate("Orders")
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Profile"} onPress={() => {
-                        navigate("Account");
-                    }}/>
-                </View>
-                <View>
-                    <RenderItem title={"Logout"} onPress={() => {
-                        LogOut()
-                    }}/>
+                <View style={styles.version}>
+                    <Text style={texts.greyTextBold14}>
+                        Version - {Constants.manifest.version}
+                    </Text>
                 </View>
             </View>
         </DrawerContentScrollView>
     )
 }
 
-
+const styles = StyleSheet.create({
+    drawer: {
+        height: Dimensions.get("window").height,
+    },
+    container: {
+        height: Dimensions.get("window").height,
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+    },
+    renderItem: {
+        borderBottomColor: '#bfbfbf',
+        borderBottomWidth: 1,
+        marginHorizontal: 20,
+        paddingVertical: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    version: {
+        borderTopColor: '#bfbfbf',
+        borderTopWidth: 1,
+        marginHorizontal: 20,
+        paddingBottom: 20,
+        paddingTop:10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    }
+})
 
 
