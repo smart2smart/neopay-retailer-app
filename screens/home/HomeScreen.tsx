@@ -19,11 +19,10 @@ import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import texts from "../../styles/texts";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
-import * as Updates from 'expo-updates';
-import VersionCheck from 'react-native-version-check-expo'
+import VersionCheck from 'react-native-version-check-expo';
 import * as Linking from 'expo-linking';
+import * as Updates from 'expo-updates';
 import Constants from "expo-constants";
-import {useFocusEffect} from '@react-navigation/native';
 
 
 function HomeScreen(props: any) {
@@ -55,7 +54,15 @@ function HomeScreen(props: any) {
 
     const openPlayStoreLink = () => {
         VersionCheck.getLatestVersion().then(version => {
-            if (version[0] > Constants.manifest.version[0]) {
+            let update_available = false;
+            let version_list = version.split(".")
+            let app_version = Constants.manifest.version.split(".");
+            for (let i = 0; i < version_list.length; i++) {
+                if (parseInt(version_list[i]) > parseInt(app_version[i])) {
+                    update_available = true
+                }
+            }
+            if (update_available) {
                 Alert.alert(
                     "Update App",
                     "Please update the app to proceed further.",

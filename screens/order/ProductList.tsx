@@ -62,11 +62,13 @@ function ProductList(props) {
             header: commonApi.getDistributorProducts.header,
         }
         // @ts-ignore
-        type === "load"?setIsLoading(true):setRefreshing(true);
+        type === "load" ? setIsLoading(true) : setRefreshing(true);
         AuthenticatedGetRequest(data).then((res) => {
-            type === "load"?setIsLoading(false):setRefreshing(false);
+            type === "load" ? setIsLoading(false) : setRefreshing(false);
             let groupedData = _.chain(res.data)
-                .sortBy(function(item){ return item.company_name; })
+                .sortBy(function (item) {
+                    return item.company_name;
+                })
                 .groupBy("product_group")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
@@ -76,6 +78,7 @@ function ProductList(props) {
                     image: value[0]["product_group_image"],
                     product_group: key,
                     image_expanded: false,
+                    pg_image_expanded: false,
                     product_group_id: value[0]["product_group_id"],
                     data: value
                 })).value()
@@ -94,7 +97,7 @@ function ProductList(props) {
         setProductData(data);
     }
 
-    const clearFilters = ()=>{
+    const clearFilters = () => {
         setProductData(originalProductData);
     }
 
@@ -249,6 +252,12 @@ function ProductList(props) {
         setProductData(allProducts);
     }
 
+    const expandProductGroupImage = (mainIndex) => {
+        let allProducts = [...productData];
+        allProducts[mainIndex]["pg_image_expanded"] = !allProducts[mainIndex]["pg_image_expanded"];
+        setProductData(allProducts);
+    }
+
     const renderItem = ({item, index}) => {
         return (
             <View>
@@ -257,12 +266,14 @@ function ProductList(props) {
                         {item.company_name}
                     </Text> : <Text style={texts.darkGreyTextBold14}>Others</Text>}
                 </View>
-                {item.product_group_id ? <View style={[commonStyles.rowAlignCenter, {paddingTop: 10}]}>
-                    <View>
+                {item.product_group_id ? <TouchableOpacity onPress={() => {
+                    expandProductGroupImage(index)
+                }} style={[commonStyles.rowAlignCenter, {paddingVertical: 10}]}>
+                    {!item.pg_image_expanded ? <View style={{marginRight: 10}}>
                         <Image style={styles.productImage}
                                source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
-                    </View>
-                    <View style={{paddingLeft: 10}}>
+                    </View> : null}
+                    <View>
                         <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
                             {item.company_name} {">"} {item.brand_name}
                         </Text>
@@ -270,7 +281,13 @@ function ProductList(props) {
                             {item.product_group}
                         </Text>
                     </View>
-                </View> : null}
+                </TouchableOpacity> : null}
+                {item.pg_image_expanded ? <TouchableOpacity onPress={() => {
+                    expandProductGroupImage(index)
+                }}>
+                    <Image style={{width: '100%', height: 200, borderRadius: 5}}
+                           source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                </TouchableOpacity> : null}
                 {item.data.map((item, subIndex) => {
                     let margin = ((item.mrp - item.rate) / item.rate) * 100
                     return (<View key={item.id + subIndex + '' + item.name} style={styles.underline}>
@@ -283,7 +300,7 @@ function ProductList(props) {
                         <View style={commonStyles.rowSpaceBetween}>
                             <View style={{width: '70%'}}>
                                 <View>
-                                    <Text style={[texts.greyNormal12, {paddingTop:5}]}>
+                                    <Text style={[texts.greyNormal12, {paddingTop: 5}]}>
                                         {item.name}
                                     </Text>
                                 </View>
@@ -374,7 +391,7 @@ function ProductList(props) {
             </View>
             <FlatList
                 data={productData}
-                onRefresh={()=>{
+                onRefresh={() => {
                     getproductData("refresh")
                 }}
                 refreshing={refreshing}

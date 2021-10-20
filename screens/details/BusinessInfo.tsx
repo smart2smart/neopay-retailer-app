@@ -42,31 +42,40 @@ function BusinessInfo(props) {
     }, []);
 
     const homePage = () => {
-        if (!gstno) {
-            alertMsg("Please enter GST Number");
-            return
+        let available = false;
+        const data: any = {}
+        if (gstno) {
+            data["gst_number"] = gstno;
+            available = true;
         }
-        const data = {
-            gst_number: gstno,
-            drug_registeration_no: drugLicense,
-            fssai_no: faasino,
-            pan_no: pan
+        if (drugLicense) {
+            data["drug_registeration_no"] = drugLicense;
+            available = true;
         }
-
-        let dataToSend = {
-            method: commonApi.updateRetailerProfile.method,
-            url: commonApi.updateRetailerProfile.url,
-            header: commonApi.updateRetailerProfile.header,
-            data: data
+        if (faasino) {
+            data["fssai_no"] = faasino;
+            available = true;
         }
-        // @ts-ignore
-        AuthenticatedPostRequest(dataToSend).then((res) => {
-            if (res.status == 200) {
-                Alert.alert("Details updated successfully.");
-                props.setLandingScreen("home");
-                PersistenceStore.setLandingScreen("home");
+        if (pan) {
+            data["pan_no"] = pan;
+            available = true;
+        }
+        if (available) {
+            let dataToSend = {
+                method: commonApi.updateRetailerProfile.method,
+                url: commonApi.updateRetailerProfile.url,
+                header: commonApi.updateRetailerProfile.header,
+                data: data
             }
-        })
+            // @ts-ignore
+            AuthenticatedPostRequest(dataToSend).then((res) => {
+                if (res.status == 200) {
+                    Alert.alert("Details updated successfully.");
+                    props.setLandingScreen("home");
+                    PersistenceStore.setLandingScreen("home");
+                }
+            })
+        }
     }
 
     const alertMsg = (text: string) => {
