@@ -304,12 +304,12 @@ function ProductList(props) {
                                         {item.name}
                                     </Text>
                                 </View>
-                                <View style={[commonStyles.rowAlignCenter]}>
+                                <View style={[commonStyles.rowAlignCenter, {paddingVertical: 4}]}>
                                     <Text style={texts.darkGreyTextBold14}>
                                         {item.product_group_id ? item.variant : item.name}
                                     </Text>
                                     {item.product_group_id ? <Text style={texts.redTextBold14}>
-                                        {" " + item.sku_quantity}{sku_units[item.sku_unit]}
+                                        {" > " + item.sku}
                                     </Text> : null}
                                 </View>
                                 <View style={commonStyles.rowSpaceBetween}>
