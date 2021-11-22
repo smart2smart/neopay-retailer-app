@@ -27,7 +27,7 @@ const getData = (state, product, type) => {
             item.quantity = product.quantity
         }
     })
-    if (!available && type == "add") {
+    if (!available || type == "add") {
         data.push(product)
     }
     return data;
@@ -75,7 +75,7 @@ const cartReducer = (state = {...cart}, action: any) => {
             let change_quantity = {
                 ...state,
                 data: item.quantity ? getData(state, action.payload.product, "change") : [...state.data.filter((item) => item.id !== action.payload.product.id)],
-                count: action.payload.text === "" ? parseFloat(state.count) - action.payload.originalQuantity : state.count - action.payload.originalQuantity + parseInt(action.payload.text),
+                count: action.payload.text === "" ? parseInt(state.count) - action.payload.originalQuantity : parseInt(state.count) - action.payload.originalQuantity + parseInt(action.payload.text),
                 value: (action.payload.text === "" ? parseFloat(state.value) - parseFloat(item["rate"] * action.payload.originalQuantity) : parseFloat(state.value) + parseFloat(item["rate"] * (parseInt(action.payload.text) - action.payload.originalQuantity))).toFixed(2),
                 distributorId: action.payload["distributorId"]
             };

@@ -187,7 +187,7 @@ function ProductList(props) {
             distributorId: route.params.distributorId,
             product: {...data},
             text: text,
-            originalQuantity: parseInt(data.quantity)
+            originalQuantity: data.quantity=="" ? 0: parseInt(data.quantity)
         };
         let allProducts = [...productData];
         item.product["quantity"] = text;
