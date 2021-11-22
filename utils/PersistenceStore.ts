@@ -64,6 +64,18 @@ class PersistenceStore {
     static async setVerificationStatus(token: string) {
         await AsyncStorage.setItem('@verificationStatus', token)
     }
+
+    static async setDistributor(distributor: string) {
+        await AsyncStorage.setItem('distributor', distributor)
+    }
+
+    static async getDistributor() {
+        return await AsyncStorage.getItem('distributor')
+    }
+
+    static async removeDistributor() {
+        await AsyncStorage.removeItem('distributor')
+    }
 }
 
 export default PersistenceStore

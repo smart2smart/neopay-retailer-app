@@ -32,6 +32,7 @@ import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
 import store from "../store/store";
 import {useEffect, useState} from "react";
 import VerificationPending from "../screens/VerificationPending";
+import SelectDistributor from "../screens/home/SelectDistributor";
 
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -103,6 +104,7 @@ function RootNavigator(props) {
             <RootStack.Screen name="Offer" component={Offer}/>
             <RootStack.Screen name="OfferDetails" component={OfferDetails}/>
             <RootStack.Screen name="OrderListDetails" component={OrderListDetails}/>
+            <RootStack.Screen name="SelectDistributor" component={SelectDistributor}/>
         </RootStack.Navigator>
     );
 }

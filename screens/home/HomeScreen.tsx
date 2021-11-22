@@ -14,22 +14,23 @@ import {connect, useSelector} from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
 import {useNavigation} from "@react-navigation/native";
-import {commonApi} from "../../api/api";
-import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import texts from "../../styles/texts";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import VersionCheck from 'react-native-version-check-expo';
 import * as Linking from 'expo-linking';
 import * as Updates from 'expo-updates';
 import Constants from "expo-constants";
+import {commonApi} from "../../api/api";
+import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
+import {BorderButtonSmallBlue} from "../../buttons/Buttons";
+import CompanyList from "./CompanyList";
 
 
 function HomeScreen(props: any) {
     const navigation = useNavigation();
     const cart = useSelector((state: any) => state.cart);
-    const [distributorData, setDistributorData] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
+    const distributor = useSelector((state: any) => state.distributor);
+    const [data, setOrderData] = useState([]);
 
 
     const checkForUpdates = async () => {
@@ -77,67 +78,70 @@ function HomeScreen(props: any) {
         })
     }
 
+    const getProducts = (data) => {
+        console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+    }
+
     useEffect(() => {
         checkForUpdates();
-        getDistributorDetails();
         PersistenceStore.getCart().then((data) => {
             if (data) {
                 props.newCart(JSON.parse(data));
             }
-        })
-    }, []);
+        });
+        getOrders();
+    }, [])
 
-    const getDistributorDetails = () => {
+    const getOrders = () => {
         const data = {
-            method: commonApi.getDistributorDetails.method,
-            url: commonApi.getDistributorDetails.url,
-            header: commonApi.getDistributorDetails.header,
+            method: commonApi.getOrderList.method,
+            url: commonApi.getOrderList.url,
+            header: commonApi.getOrderList.header,
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
             if (res.status == 200) {
-                setDistributorData(res.data);
+                let data = res.data.filter((item) => {
+                    return item.status == "ordered" || item.status == "accepted"
+                })
+                setOrderData(data)
             } else {
                 Alert.alert(res.data.error);
             }
         })
     }
 
-
-    const goToDistributorProducts = (distributorId) => {
-        navigation.navigate("ProductList", {distributorId: distributorId})
+    const setUp = async () => {
+        if (!distributor) {
+            let data = await PersistenceStore.getDistributor()
+            if (data) {
+                getProducts(JSON.parse(data));
+            } else {
+                navigation.navigate("SelectDistributor")
+            }
+        } else {
+            getProducts(distributor);
+        }
     }
 
-    const distributorDescription = ({item}) => {
-        return (
-            <TouchableOpacity onPress={() => {
-                goToDistributorProducts(item.user)
-            }} style={[styles.distributorCard]}>
-                <Image resizeMode={"contain"} style={styles.cardImage}
-                       source={item.profile_picture ? {uri: item.profile_picture} : require("../../assets/images/placeholder_profile_pic.jpg")}/>
-                <View style={{paddingLeft: 12}}>
-                    <Text style={texts.greyTextBold14}>
-                        {item.name}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
+    useEffect(() => {
+        setUp()
+    }, [distributor]);
+
 
     return (
         <View style={{flex: 1, paddingBottom: 20}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <FlatList
-                onRefresh={() => {
-                    getDistributorDetails()
-                }}
-                refreshing={refreshing}
-                data={distributorData}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={(item) => item.user + ""}
-                renderItem={distributorDescription}
-                ListFooterComponent={<View style={{paddingBottom: 100}}></View>}
-            />
+            {distributor ? <View>
+                <CompanyList distributor={distributor} />
+            </View> : <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+                <Text>
+                    PLease select distributor
+                </Text>
+                <BorderButtonSmallBlue text={"Select Distributor"} ctaFunction={() => {
+                    navigation.navigate("SelectDistributor")
+                }}/>
+            </View>}
             {cart.data.length > 0 ? <CartButton/> : null}
         </View>
     )

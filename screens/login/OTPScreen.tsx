@@ -12,6 +12,7 @@ import PersistenceStore from "../../utils/PersistenceStore";
 import Indicator from "../../utils/Indicator";
 import {BorderButtonSmallRed, SolidButtonBlue} from "../../buttons/Buttons";
 import texts from "../../styles/texts";
+import SecondaryHeader from "../../headers/SecondaryHeader";
 
 class OTPScreen extends Component {
 
@@ -82,8 +83,9 @@ class OTPScreen extends Component {
 
     render() {
         return <View style={styles.container}>
+            <SecondaryHeader title={"Enter Otp"}/>
             <Indicator isLoading={this.state.isLoading}/>
-            <Text style={[texts.blueHeading1, {marginTop:30}]}>
+            <Text style={[texts.blueHeading1, {marginTop:80}]}>
                 Enter Verification code
             </Text>
             <Text style={[texts.greyNormal14,{marginTop:18}]}>
@@ -122,7 +124,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 24,
-        paddingTop: 70,
         backgroundColor: '#ffffff'
     },
     logo: {

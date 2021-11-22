@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/reducers/distributorReducer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/home/SelectDistributor.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/order/ProductList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/order/ProductList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actionTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/Drawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/Drawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/rootReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/rootReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/mapStateToProps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/store/mapStateToProps.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/PersistenceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/PersistenceStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,8 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="HTML File" />
+        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
       </list>
     </option>
@@ -32,13 +43,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="AnalyzeApkAction.lastApkPath" value="$USER_HOME$/Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
+    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/../Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/neopay-distributor-app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
@@ -132,6 +143,7 @@
       <workItem from="1637007683962" duration="39000" />
       <workItem from="1637143605024" duration="93000" />
       <workItem from="1637327217120" duration="2468000" />
+      <workItem from="1637565332791" duration="7966000" />
     </task>
     <servers />
   </component>
@@ -151,14 +163,14 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="336" y="27" width="683" height="683" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.683@0.27.1366.683" timestamp="1629098705148" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1637329135579">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1637578708167">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1637329135579" />
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1632824092306">
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1637578708167" />
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1637573629946">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1632824092306" />
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1637573629946" />
     <state x="408" y="273" width="540" height="197" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1632225771092">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
