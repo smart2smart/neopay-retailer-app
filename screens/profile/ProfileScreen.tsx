@@ -91,7 +91,6 @@ export default function ProfileScreen(props) {
         }
         setIsLoading(true);
         AuthenticatedGetRequest(data).then((res) => {
-            console.log(res)
             setData(res);
             setIsLoading(false)
         })

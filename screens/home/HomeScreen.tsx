@@ -123,8 +123,6 @@ function HomeScreen(props: any) {
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
-            console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
-            console.log(res)
             if (res.status == 200) {
                 setBannerData(res.data.results)
             } else {
@@ -277,5 +275,5 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         padding: 8,
         justifyContent: "space-between"
-    }
+    },
 });

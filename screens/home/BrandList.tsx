@@ -19,6 +19,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import colors from "../../assets/colors/colors";
 import texts from "../../styles/texts";
 import RenderCompanyCard from "./CompanyCard";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 function BrandList(props) {
@@ -93,15 +94,19 @@ function BrandList(props) {
     return (
         <View style={{flex: 1}}>
             <View style={styles.container}>
-                <View style={[commonStyles.rowSpaceBetween, {marginTop: 10}]}>
+                <View style={[commonStyles.rowSpaceBetween]}>
                     <SecondaryHeader title={"Browse Menu"}/>
+                    <TouchableOpacity onPress={goToBuildOrder} style={styles.listDiv}>
+                        <MaterialCommunityIcons name="table" size={22} color={colors.red}/>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={{marginTop:16}} onPress={goToBuildOrder}>
+                <TouchableOpacity style={{marginTop: 16}} onPress={goToBuildOrder}>
                     <TextInput
                         value={""}
                         editable={false}
                         placeholder={"Search products, companies, brands..."}
-                        onChangeText={(text) => {}}
+                        onChangeText={(text) => {
+                        }}
                         style={commonStyles.textInput}>
                     </TextInput>
                 </TouchableOpacity>
@@ -150,6 +155,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: colors.light_grey,
         marginBottom: 16
+    },
+    listDiv: {
+        marginTop: 10,
+        padding: 2,
+        borderWidth: 1,
+        borderColor: colors.red,
+        borderRadius: 5
     }
 });
 
