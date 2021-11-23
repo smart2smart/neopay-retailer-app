@@ -12,7 +12,6 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import RetailerDetails from '../screens/details/RetailerDetails';
-import ProductList from '../screens/order/ProductList';
 import BusinessInfo from '../screens/details/BusinessInfo';
 import Drawer from "./Drawer";
 import UploadImage from "../screens/details/UploadImage";
@@ -34,7 +33,7 @@ import {useEffect, useState} from "react";
 import VerificationPending from "../screens/VerificationPending";
 import SelectDistributor from "../screens/home/SelectDistributor";
 import BrandList from "../screens/home/BrandList";
-import {BuildOrder} from "../screens/home/BuildOrder";
+import BuildOrder from "../screens/home/BuildOrder";
 
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -97,7 +96,6 @@ function RootNavigator(props) {
         <RootStack.Navigator screenOptions={{headerShown: false}}>
             <RootStack.Screen key={"HomeScreen"} options={{headerShown:false}} name={"HomeScreen"} component={Drawer}/>
             <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
-            <RootStack.Screen name="ProductList" component={ProductList}/>
             <RootStack.Screen name="MapViewScreen" component={MapViewScreen}/>
             <RootStack.Screen name="EditProfile" component={EditProfile}/>
             <RootStack.Screen name="UploadImage" component={UploadImage}/>

@@ -24,6 +24,7 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BorderButtonSmallBlue} from "../../buttons/Buttons";
 import CompanyList from "./CompanyList";
+import Indicator from "../../utils/Indicator";
 
 
 function HomeScreen(props: any) {
@@ -31,6 +32,7 @@ function HomeScreen(props: any) {
     const cart = useSelector((state: any) => state.cart);
     const [distributor, setDistributor] = useState(useSelector((state: any) => state.distributor));
     const [orderData, setOrderData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     const checkForUpdates = async () => {
@@ -117,6 +119,7 @@ function HomeScreen(props: any) {
                 navigation.navigate("SelectDistributor")
             }
         }
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -125,18 +128,18 @@ function HomeScreen(props: any) {
 
 
     return (
-        <View style={{flex: 1, paddingBottom: 20}}>
+        <View style={{flex: 1}}>
             <PrimaryHeader navigation={props.navigation}/>
-            {distributor ? <View style={{flex:1}}>
+            {distributor && !isLoading ? <View style={{flex:1}}>
                 <CompanyList distributor={distributor} />
-            </View> : <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+            </View> : !isLoading ?<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <Text>
                     PLease select distributor
                 </Text>
                 <BorderButtonSmallBlue text={"Select Distributor"} ctaFunction={() => {
                     navigation.navigate("SelectDistributor")
                 }}/>
-            </View>}
+            </View>:null}
             {cart.data.length > 0 ? <CartButton/> : null}
         </View>
     )

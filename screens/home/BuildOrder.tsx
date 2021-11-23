@@ -1,17 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import colors from "../../assets/colors/colors";
-import {commonApi} from "../../api/api";
-import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
-import Indicator from "../../utils/Indicator";
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
-import {SolidButtonBlue} from "../../buttons/Buttons";
-import {connect, useSelector} from 'react-redux';
-import mapStateToProps from "../../store/mapStateToProps";
-import {useNavigation, useRoute} from "@react-navigation/native";
-import AddProductButton from "./AddProductButton";
+import {
+    Text,
+    View,
+    StyleSheet,
+    TouchableOpacity,
+    TextInput,
+    FlatList,
+    Image, Alert,
+} from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
+import colors from "../../assets/colors/colors";
+import texts from '../../styles/texts';
+import commonStyles from '../../styles/commonStyles';
+import {commonApi} from "../../api/api";
+import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import AddProductButton from "./AddProductButton";
+import {connect, useSelector} from "react-redux";
+import mapStateToProps from "../../store/mapStateToProps";
+import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity} from "../../actions/actions";
+import CartButton from "../../commons/CartButton";
+import PersistenceStore from "../../utils/PersistenceStore";
+import Indicator from "../../utils/Indicator";
+import {useFocusEffect, useRoute} from "@react-navigation/native";
+import FilterBox from "../../commons/FilterBox";
+
 
 const sku_units = {
     1: 'kg',
@@ -26,101 +39,174 @@ const sku_units = {
     10: 'bag'
 }
 
-export function BuildOrder(props) {
-    let _ = require('underscore');
-    const navigation = useNavigation();
+
+function BuildOrder(props) {
+    let _ = require('underscore')
     const route = useRoute();
+    const cart = useSelector((state: any) => state.cart);
+    const [searchText, setSearchText] = useState("");
     const [productsData, setProductsData] = useState([]);
     const [originalProductsData, setOriginalProductsData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [productCount, setProductCount] = useState(props.productCount);
+    const [loading, setIsLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
+    const retailerData = useSelector((state: any) => state.retailerDetails);
 
-    useEffect(() => {
-        if(route.params){
-            setProductsData(route.params.productData);
-            setOriginalProductsData(route.params.productData);
+    const getProductsData = () => {
+        const dataToSend = {
+            method: commonApi.getProducts.method,
+            url: commonApi.getProducts.url + '?retailer_id=' + retailerData.id + "&distributor_id=" + distributor.user,
+            header: commonApi.getProducts.header
         }
-    }, [])
-
-    const selectProduct = (data, type, mainIndex, subIndex) => {
-        let allProducts = [...productsData];
-        if (type === "new") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
-            setProductCount(prevCount => prevCount + 1);
-        } else if (type == "add") {
-            setProductCount(prevCount => prevCount + 1);
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = data.quantity ? parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1 : 1;
-        } else if (type == "subtract") {
-            setProductCount(prevCount => prevCount - 1);
-            if (allProducts[mainIndex]["data"][subIndex]["quantity"] > 1) {
-                allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) - 1;
-            } else {
-                allProducts[mainIndex]["data"][subIndex]["quantity"] = 0;
+        setIsLoading(true)
+        // @ts-ignore
+        AuthenticatedGetRequest(dataToSend).then((res) => {
+            let groupedData = _.chain(res.data)
+                .sortBy(function (item) {
+                    return item.company_name;
+                })
+                .groupBy("product_group")
+                .map((value, key) => ({
+                    company_name: value[0]["company_name"],
+                    company_id: value[0]["company_id"],
+                    company_image: value[0]["company_image"],
+                    brand_id: value[0]["brand_id"],
+                    brand_name: value[0]["brand_name"],
+                    brand_image: value[0]["brand_image"],
+                    category_1_id: value[0]["category_1_id"],
+                    category_1_name: value[0]["category_1_name"],
+                    category_1_image: value[0]["category_1_image"],
+                    image: value[0]["product_group_image"],
+                    product_group: key,
+                    image_expanded: false,
+                    product_group_id: value[0]["product_group_id"],
+                    data: value,
+                    pg_image_expanded: false,
+                    quantity: 0
+                })).value()
+            setIsLoading(false);
+            setProductsData(groupedData);
+            setOriginalProductsData(groupedData);
+            if (cart.data.length > 0) {
+                matchQuantityWithCart(groupedData);
             }
-        }
-        setProductsData(allProducts);
+        })
     }
 
-    const getProducts = () => {
-        let productsToSend = originalProductsData;
-        let products: any = {};
-        let available = false;
+    useEffect(() => {
+        if (route.params) {
+            if(route.params.productData) {
+                setProductsData(route.params.productData);
+                setOriginalProductsData(route.params.productData);
+                if (cart.data.length > 0) {
+                    matchQuantityWithCart(route.params.productData)
+                }
+            }else{
+                getProductsData();
+            }
+        }
+    }, []);
 
-        productsToSend.forEach((product) => {
-            product.data.forEach((item) => {
-                if (parseInt(item.quantity) > 0) {
-                    products[item.id] = item.quantity;
-                    available = true;
+    const matchQuantityWithCart = (items) => {
+        let groupedData = [...items];
+        let data = {}
+        cart.data.forEach((item) => {
+            data[item.id] = item.quantity
+        })
+        groupedData.forEach((item) => {
+            item.data.forEach((itm) => {
+                if (data[itm.id]) {
+                    itm["quantity"] = data[itm.id]
                 }
             })
         })
-        return {products, available};
+        setProductsData(groupedData);
+        setOriginalProductsData(groupedData);
     }
 
-
-    const placeOrder = () => {
-        const type = props.comingFrom;
-        const method = type === "edit" ? commonApi.editOrder.method : commonApi.placeOrder.method;
-        let url = type === "edit" ? commonApi.editOrder.url + props.existingOrderData.id + "/" : commonApi.placeOrder.url;
-        const header = type === "edit" ? commonApi.editOrder.header : commonApi.placeOrder.header
-        let {products} = getProducts();
-        setIsLoading(true);
-        let current = {
-            retailer: props.retailerData.id,
-            distributor: distributorId,
-            retailer_id: props.retailerData.id,
-            edit_type: "salesman_edit"
-        }
-        if (type == "edit") {
-            current["product_list"] = JSON.stringify(products)
+    const searchProduct = (text) => {
+        setSearchText(text);
+        if (text === "") {
+            setProductsData(originalProductsData);
         } else {
-            current["products"] = JSON.stringify(products)
+            let filteredData = originalProductsData.map((item) => {
+                return {
+                    ...item, data: item.data.filter((itm) => {
+                        return itm.name.toLowerCase().includes() ||
+                            (itm.brand_name && itm.brand_name.toLowerCase().includes(text.toLowerCase())) ||
+                            (itm.company_name && itm.company_name.toLowerCase().includes(text.toLowerCase())) ||
+                            (itm.product_group && itm.product_group.toLowerCase().includes(text.toLowerCase())) ||
+                            (itm.variant && itm.variant.toLowerCase().includes(text.toLowerCase()))
+                    })
+                }
+            })
+            let removeBoolean = filteredData.filter((item) => {
+                return item.data.length > 0
+            })
+            setProductsData([...removeBoolean]);
         }
-        const dataToSend = {
-            method: method,
-            url: url,
-            header: header,
-            data: current
-        }
-        AuthenticatedPostRequest(dataToSend).then((res) => {
-            setIsLoading(false);
-            if (res.status == 200 || res.status == 201) {
-                navigation.replace('order-placed', {orderData: res.data, retailerData: props.data})
-            }
-        })
     }
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
+        let item = {
+            distributorId: route.params.distributorId,
+            product: {...data},
+            text: text,
+            originalQuantity: data.quantity == "" ? 0 : parseInt(data.quantity)
+        };
         let allProducts = [...productsData];
-        let selected_value = allProducts[mainIndex]["data"][subIndex]["quantity"];
-        let current = selected_value != "" ? selected_value : 0;
-        if (text !== "") {
-            setProductCount(prevCount => prevCount + parseInt(text) - parseInt(current));
-        } else {
-            setProductCount(prevCount => prevCount - parseInt(current));
-        }
+        item.product["quantity"] = text;
         allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
+        setProductsData(allProducts);
+        props.cartChangeQuantity(item);
+    }
+
+    const selectProductAlert = (data, type, mainIndex, subIndex) => {
+        if (cart.distributorId && cart.distributorId !== route.params.distributorId) {
+            Alert.alert(
+                'Change Distributor',
+                `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
+                [
+                    {
+                        text: 'Yes',
+                        onPress: () => {
+                            props.clearCart();
+                            PersistenceStore.removeCart();
+                            selectProduct(data, type, mainIndex, subIndex);
+
+                        },
+                    },
+                    {text: 'No', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+            );
+        } else {
+            selectProduct(data, type, mainIndex, subIndex);
+        }
+
+    }
+
+    const selectProduct = (data, type, mainIndex, subIndex) => {
+        let item = {distributorId: route.params.distributorId, product: {...data}};
+        let allProducts = [...productsData];
+        if (type === "new") {
+            allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
+            item.product.quantity = 1;
+            props.updateCartAdd(item);
+        } else if (type == "add") {
+            allProducts[mainIndex]["data"][subIndex]["quantity"] = data.quantity ? parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1 : 1;
+            item.product.quantity += 1;
+            props.updateCartAdd(item);
+        } else if (type == "subtract") {
+            if (allProducts[mainIndex]["data"][subIndex]["quantity"] > 1) {
+                allProducts[mainIndex]["data"][subIndex]["quantity"] = parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) - 1;
+                item.product.quantity -= 1;
+                props.updateCartSubtract(item);
+            } else {
+                item.product.quantity = 0;
+                allProducts[mainIndex]["data"][subIndex]["quantity"] = 0;
+                props.removeFromCart(item);
+            }
+        }
         setProductsData(allProducts);
     }
 
@@ -233,7 +319,7 @@ export function BuildOrder(props) {
                                         mainIndex={index}
                                         subIndex={subIndex}
                                         setProductQuantity={setProductQuantity}
-                                        selectProduct={selectProduct}
+                                        selectProduct={selectProductAlert}
                                     />
                                 </View>
 
@@ -247,71 +333,80 @@ export function BuildOrder(props) {
 
 
     return (
-        <View style={{flex: 1, paddingHorizontal:24}}>
-            <Indicator isLoading={isLoading}/>
-            <SecondaryHeader title={"Create Order"} />
-            <View style={styles.container}>
-                <View style={[styles.productHeader, commonStyles.rowSpaceBetween]}>
-                    <Text style={texts.blueBoldl14}>
-                        Add Products
-                    </Text>
-                    <Text style={texts.blueBoldl14}>
-                        Quantity
-                    </Text>
-                </View>
-                <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-                    <FlatList
-                        data={productsData}
-                        ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
-                        showsVerticalScrollIndicator={false}
-                        keyExtractor={(item, index) => item.product_group_id + "" + item.product_group_name}
-                        renderItem={renderItem}
-                        ListFooterComponent={() => <View style={{paddingBottom: 50}}></View>}
-                    />
-                </ScrollView>
+        <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
+            <Indicator isLoading={loading}/>
+            <View style={commonStyles.rowSpaceBetween}>
+                <SecondaryHeader title={"Create Order"}/>
             </View>
+            <View style={[commonStyles.searchContainer, {marginTop: 12, marginBottom: 12}]}>
+                <TextInput
+                    value={searchText}
+                    onChangeText={(text) => searchProduct(text)}
+                    placeholder={"Search for Products"}
+                    style={commonStyles.textInput}
+                />
+                {searchText !== '' ? <TouchableOpacity onPress={() => searchProduct('')}
+                                                       style={{position: "absolute", right: 0, padding: 10}}>
+                    <AntDesign name="close" size={18} color={colors.black}/>
+                </TouchableOpacity> : null}
+            </View>
+            <FlatList
+                data={productsData}
+                ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
+                showsVerticalScrollIndicator={false}
+                keyExtractor={(item, index) => item.product_group_id + "" + item.product_group_name}
+                renderItem={renderItem}
+                ListFooterComponent={() => <View style={{paddingBottom: 50}}></View>}
+            />
+            {cart.data.length > 0 ? <CartButton/> : null}
         </View>
     )
 }
 
+export default connect(
+    mapStateToProps,
+    {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity}
+)(BuildOrder);
+
+
 const styles = StyleSheet.create({
-    container: {
-        position: 'relative',
-        flex: 1,
+    cardImage: {
+        height: 42,
+        width: 42,
     },
-    headerContainer: {
+    quantityButton: {
         flexDirection: 'row',
-        alignItems: "center",
-        marginTop: 20
+        height: 24
     },
-    card: {
-        marginTop: 20,
-        marginBottom: 16,
-        paddingHorizontal: 12,
-        paddingVertical: 12,
-        borderRadius: 5,
+    cartInput: {
+        width: 35,
+        height: 24,
+        marginHorizontal: 5,
+        borderWidth: 1,
         borderColor: colors.grey,
+        borderRadius: 3,
+        textAlign: 'center',
+        fontFamily: 'GothamMedium',
+        color: colors.darkGrey,
+        fontSize: 12
+    },
+    addSubtractButton: {
+        width: 24,
+        height: 24,
+        backgroundColor: colors.blue,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
-        elevation: 2
+        borderRadius: 3
     },
-    callIconDiv: {
-        width: 30,
-        height: 30,
-        borderRadius: 5,
-        borderColor: colors.red,
-        borderWidth: 1.5,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    callIcon: {
-        width: 15,
-        height: 15
-    },
-    productHeader: {
-        paddingTop: 20,
-        paddingBottom: 10
+    footer: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: colors.blue,
+        flexDirection: 'row',
+        height: 50,
+        alignItems: 'center',
     },
     underline: {
         borderBottomWidth: 1,
@@ -325,6 +420,4 @@ const styles = StyleSheet.create({
         borderColor: colors.grey,
         borderRadius: 5
     }
-});
-
-export default connect(mapStateToProps, {})(BuildOrder);
+})

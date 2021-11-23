@@ -1,5 +1,6 @@
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import texts from "../../styles/texts";
+import commonStyles from "../../styles/commonStyles";
 import {BorderButtonSmallRed} from "../../buttons/Buttons";
 import React, {PureComponent} from "react";
 import colors from "../../assets/colors/colors";

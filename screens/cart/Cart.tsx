@@ -9,10 +9,11 @@ import colors from "../../assets/colors/colors";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
 import {clearCart, removeFromCart, updateCartAdd, updateCartSubtract, cartChangeQuantity} from "../../actions/actions";
-import AddProductButton from "../order/AddProductButton";
+import AddProductButton from "../home/AddProductButton";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
+import Indicator from "../../utils/Indicator";
 
 const sku_units = {
     1: 'kg',
@@ -47,6 +48,8 @@ function Cart(props: any) {
     const cart = useSelector((state: any) => state.cart);
     const groupedData = groupData(cart.data);
     const [discount, setDiscount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const distributor = useSelector((state: any) => state.distributor);
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
         let item = {
@@ -89,10 +92,11 @@ function Cart(props: any) {
     }
 
     const goToDistributorProducts = () => {
-        navigation.navigate("ProductList", {distributorId: cart.distributorId})
+        navigation.navigate("BuildOrder", {distributorId: cart.distributorId})
     }
 
     const placeOrder = () => {
+        setLoading(true);
         let products = getProducts();
         const dataToSend = {
             method: commonApi.placeOrder.method,
@@ -100,11 +104,12 @@ function Cart(props: any) {
             header: commonApi.placeOrder.header,
             data: {
                 products: JSON.stringify(products),
-                distributor: route.params.distributorId,
+                distributor: distributor.user,
                 retailer: 534
             }
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {
+            setLoading(false);
             if (res.status == 201) {
                 props.clearCart();
                 navigation.goBack()
@@ -210,6 +215,7 @@ function Cart(props: any) {
     return (
         cart.data.length > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
+            <Indicator isLoading={loading}/>
             <View style={{paddingHorizontal: 24, paddingTop: 20, flex: 1}}>
                 <FlatList
                     data={groupedData}

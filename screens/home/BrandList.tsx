@@ -10,7 +10,6 @@ import {
     Dimensions,
     ScrollView
 } from 'react-native';
-import Indicator from "../../utils/Indicator";
 import {connect, useSelector} from 'react-redux';
 import mapStateToProps from "../../store/mapStateToProps";
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
@@ -29,8 +28,6 @@ function BrandList(props) {
     const [data, setData] = useState([]);
     const [type, setType] = useState([]);
     const [searchText, setSearchText] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const distributor = useSelector((state: any) => state.distributor);
 
     useEffect(() => {
         if (route.params) {
@@ -41,7 +38,7 @@ function BrandList(props) {
                 setType(route.params.type);
             }
         }
-    }, [])
+    }, []);
 
     const RenderList = (props) => {
         return (
@@ -73,10 +70,6 @@ function BrandList(props) {
         )
     }
 
-    const searchItem = () => {
-
-    }
-
     const selectCategory = (itemType, item) => {
         if (type === "brand") {
             let productData = data.filter((itm) => {
@@ -88,30 +81,30 @@ function BrandList(props) {
             let productData = data.filter((itm) => {
                 return itm.category_2_id == item.id;
             })
-            navigation.navigate("BuildOrder", {type: "category", productData: data})
+            navigation.navigate("BuildOrder", {type: "category", productData: productData})
         }
     }
 
+    const goToBuildOrder = () => {
+        navigation.navigate("BuildOrder", {productData: data})
+
+    }
 
     return (
         <View style={{flex: 1}}>
-            <Indicator isLoading={isLoading}/>
             <View style={styles.container}>
                 <View style={[commonStyles.rowSpaceBetween, {marginTop: 10}]}>
                     <SecondaryHeader title={"Browse Menu"}/>
                 </View>
-                <View style={[commonStyles.searchContainer, {marginTop: 16}]}>
+                <TouchableOpacity style={{marginTop:16}} onPress={goToBuildOrder}>
                     <TextInput
-                        value={searchText}
+                        value={""}
+                        editable={false}
                         placeholder={"Search products, companies, brands..."}
-                        onChangeText={(text) => searchItem(text)}
+                        onChangeText={(text) => {}}
                         style={commonStyles.textInput}>
                     </TextInput>
-                    {searchText !== "" ? <TouchableOpacity onPress={() => searchItem('')}
-                                                           style={{position: "absolute", right: 0, padding: 10}}>
-                        <AntDesign name="close" size={18} color={colors.black}/>
-                    </TouchableOpacity> : null}
-                </View>
+                </TouchableOpacity>
                 <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
                     <View style={{paddingBottom: 20}}>
                         <RenderList selectFunction={selectCategory}
