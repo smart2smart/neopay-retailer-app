@@ -343,7 +343,7 @@ function BuildOrder(props) {
                     value={searchText}
                     onChangeText={(text) => searchProduct(text)}
                     placeholder={"Search for Products"}
-                    style={commonStyles.textInput}
+                    style={styles.textInput}
                 />
                 {searchText !== '' ? <TouchableOpacity onPress={() => searchProduct('')}
                                                        style={{position: "absolute", right: 0, padding: 10}}>
@@ -419,5 +419,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.grey,
         borderRadius: 5
-    }
+    },
+    textInput:{
+        borderWidth:1,
+        borderColor:colors.greyFaded,
+        width:'100%',
+        height:36,
+        paddingLeft:10,
+        borderRadius:5
+    },
 })

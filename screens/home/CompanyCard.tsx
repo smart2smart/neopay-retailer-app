@@ -1,6 +1,7 @@
-import {Dimensions, Image, StyleSheet, TouchableOpacity} from "react-native";
+import {Dimensions, Image, StyleSheet, TouchableOpacity, Text} from "react-native";
 import React from "react";
 import colors from "../../assets/colors/colors";
+import texts from "../../styles/texts";
 
 
 const RenderCompanyCard = ({item, index}, props) => {
@@ -11,6 +12,9 @@ const RenderCompanyCard = ({item, index}, props) => {
         }} style={[styles.companyCard, (index + 1) % 3 !== 0 ? {marginRight: padding} : {}]}>
             <Image style={{width: "84%", height: "84%"}} resizeMode={"contain"} source={item.image?{uri:item.image}:
             require("../../assets/images/camera.png")}/>
+            <Text style={[texts.darkGreyTextBold12, {marginBottom:4}]}>
+                {item.name?item.name.slice(0,12):""}
+            </Text>
         </TouchableOpacity>
     )
 }
@@ -25,7 +29,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white
     },
     companyCard: {
-        height: 100,
+        height: 120,
         width: "30%",
         borderWidth: 1,
         borderRadius: 5,

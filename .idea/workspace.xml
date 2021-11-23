@@ -3,8 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/BrandList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BrandList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/CompanyCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/commonStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/commonStyles.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +138,7 @@
       <workItem from="1637327217120" duration="2468000" />
       <workItem from="1637565332791" duration="7966000" />
       <workItem from="1637583051550" duration="13684000" />
-      <workItem from="1637646311851" duration="16052000" />
+      <workItem from="1637646311851" duration="18289000" />
     </task>
     <servers />
   </component>
@@ -154,10 +158,10 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="336" y="27" width="683" height="683" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.683@0.27.1366.683" timestamp="1629098705148" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1637674138533">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1637674153731">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1637674138533" />
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1637674153731" />
     <state x="347" y="159" width="672" height="677" key="run.anything.popup" timestamp="1637590454375">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

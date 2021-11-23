@@ -107,7 +107,7 @@ function BrandList(props) {
                         placeholder={"Search products, companies, brands..."}
                         onChangeText={(text) => {
                         }}
-                        style={commonStyles.textInput}>
+                        style={styles.textInput}>
                     </TextInput>
                 </TouchableOpacity>
                 <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
@@ -162,7 +162,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.red,
         borderRadius: 5
-    }
+    },
+    textInput:{
+        borderWidth:1,
+        borderColor:colors.greyFaded,
+        width:'100%',
+        height:36,
+        paddingLeft:10,
+        borderRadius:5
+    },
 });
 
 export default connect(mapStateToProps, {})(BrandList);

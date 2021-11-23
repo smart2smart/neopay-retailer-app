@@ -186,7 +186,7 @@ function HomeScreen(props: any) {
                         placeholder={"Search products, companies, brands..."}
                         onChangeText={(text) => {
                         }}
-                        style={commonStyles.textInput}>
+                        style={styles.textInput}>
                     </TextInput>
                 </TouchableOpacity>
                 {bannerData.length ? <RenderCarousel bannerData={bannerData}/> : null}
@@ -275,5 +275,13 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         padding: 8,
         justifyContent: "space-between"
+    },
+    textInput:{
+        borderWidth:1,
+        borderColor:colors.greyFaded,
+        width:'100%',
+        height:36,
+        paddingLeft:10,
+        borderRadius:5
     },
 });
