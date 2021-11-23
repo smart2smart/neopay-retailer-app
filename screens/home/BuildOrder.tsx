@@ -100,9 +100,9 @@ function BuildOrder(props) {
                 if (cart.data.length > 0) {
                     matchQuantityWithCart(route.params.productData)
                 }
-            }else{
-                getProductsData();
             }
+        }else{
+            getProductsData();
         }
     }, []);
 
@@ -161,7 +161,7 @@ function BuildOrder(props) {
     }
 
     const selectProductAlert = (data, type, mainIndex, subIndex) => {
-        if (cart.distributorId && cart.distributorId !== route.params.distributorId) {
+        if (cart.distributorId && cart.distributorId !== distributor.user) {
             Alert.alert(
                 'Change Distributor',
                 `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
@@ -186,7 +186,7 @@ function BuildOrder(props) {
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let item = {distributorId: route.params.distributorId, product: {...data}};
+        let item = {distributorId: distributor.user, product: {...data}};
         let allProducts = [...productsData];
         if (type === "new") {
             allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;

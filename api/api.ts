@@ -109,5 +109,10 @@ export const commonApi = {
         method: 'GET',
         header: header
     },
+    getBanners: {
+        url: `${base_url}/banners/`,
+        method: 'GET',
+        header: header
+    },
 }
 

@@ -113,9 +113,10 @@ const commonStyles = StyleSheet.create({
     textInput:{
         borderWidth:1,
         borderColor:colors.greyFaded,
-        width:'100%',
+        width:Dimensions.get("window").width-32,
         height:36,
         paddingLeft:10,
+        backgroundColor:colors.white,
         borderRadius:5
     },
     modalTextInput:{
@@ -157,7 +158,6 @@ const commonStyles = StyleSheet.create({
         borderRadius: 5,
         borderColor: colors.grey,
         alignItems: 'center',
-        backgroundColor: '#ffffff',
         flexDirection: 'row',
         height: 36
     },

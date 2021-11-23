@@ -92,7 +92,7 @@ function Cart(props: any) {
     }
 
     const goToDistributorProducts = () => {
-        navigation.navigate("BuildOrder", {distributorId: cart.distributorId})
+        navigation.navigate("BuildOrder")
     }
 
     const placeOrder = () => {

@@ -213,17 +213,6 @@ function CompanyList(props) {
         <View style={{flex: 1}}>
             <Indicator isLoading={isLoading}/>
             {!isLoading ? <View style={styles.container}>
-                <View style={[commonStyles.searchContainer, {marginTop: 16}]}>
-                    <TouchableOpacity onPress={goToBuildOrder}>
-                        <TextInput
-                            value={""}
-                            editable={false}
-                            placeholder={"Search products, companies, brands..."}
-                            onChangeText={(text) => {}}
-                            style={commonStyles.textInput}>
-                        </TextInput>
-                    </TouchableOpacity>
-                </View>
                 <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
                     <View>
                         <View style={{paddingBottom: 20}}>
@@ -247,7 +236,7 @@ function CompanyList(props) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 24,
+        paddingHorizontal: 16,
         position: 'relative',
         flex: 1,
         backgroundColor: colors.white
@@ -272,11 +261,11 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     companyHeader: {
-        paddingTop: 20,
+        paddingTop: 12,
         paddingBottom: 5,
         borderBottomWidth: 1,
         borderBottomColor: colors.light_grey,
-        marginBottom: 16
+        marginBottom: 12
     }
 });
 

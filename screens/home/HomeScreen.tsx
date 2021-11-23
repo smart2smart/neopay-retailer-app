@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Dimensions,
     FlatList,
-    Image, TouchableOpacity, Alert
+    Image, TouchableOpacity, Alert, TextInput, ScrollView
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
 import {newCart, setDistributor, setIsLoggedIn} from "../../actions/actions";
@@ -25,6 +25,10 @@ import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BorderButtonSmallBlue} from "../../buttons/Buttons";
 import CompanyList from "./CompanyList";
 import Indicator from "../../utils/Indicator";
+import commonStyles from "../../styles/commonStyles";
+import texts from "../../styles/texts";
+import moment from "moment";
+import RenderCarousel from "./Carousel";
 
 
 function HomeScreen(props: any) {
@@ -32,6 +36,7 @@ function HomeScreen(props: any) {
     const cart = useSelector((state: any) => state.cart);
     const [distributor, setDistributor] = useState(useSelector((state: any) => state.distributor));
     const [orderData, setOrderData] = useState([]);
+    const [bannerData, setBannerData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -88,6 +93,7 @@ function HomeScreen(props: any) {
             }
         });
         getOrders();
+        getBanners();
     }, [])
 
     const getOrders = () => {
@@ -103,6 +109,24 @@ function HomeScreen(props: any) {
                     return item.status == "ordered" || item.status == "accepted"
                 })
                 setOrderData(data)
+            } else {
+                Alert.alert(res.data.error);
+            }
+        })
+    }
+
+    const getBanners = () => {
+        const data = {
+            method: commonApi.getBanners.method,
+            url: commonApi.getBanners.url,
+            header: commonApi.getBanners.header,
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+            console.log(res)
+            if (res.status == 200) {
+                setBannerData(res.data.results)
             } else {
                 Alert.alert(res.data.error);
             }
@@ -126,20 +150,78 @@ function HomeScreen(props: any) {
         setUp()
     }, [distributor]);
 
+    const goToBuildOrder = () => {
+        navigation.navigate("BuildOrder")
+    }
+
+    const renderOrderCard = ({item}) => {
+        return (<View style={styles.orderCard}>
+            <Text style={texts.darkGreyTextBold14}>
+                {"Order Id: " + item.id}
+            </Text>
+            <Text style={texts.greyNormal12}>
+                {item.products.length + " items"}
+            </Text>
+            <Text style={texts.greyNormal12}>
+                {"Place on: " + moment(item.created_at).format("DD MMM, yyyy")}
+            </Text>
+            <View style={{flexDirection: 'row', alignItems: "center"}}>
+                <Text style={texts.darkGreyTextBold12}>
+                    {"Status : "}
+                </Text>
+                <Text style={texts.greenBold12}>
+                    {item.status.toUpperCase()}
+                </Text>
+            </View>
+        </View>)
+    }
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
-            {distributor && !isLoading ? <View style={{flex:1}}>
-                <CompanyList distributor={distributor} />
-            </View> : !isLoading ?<View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-                <Text>
-                    PLease select distributor
-                </Text>
-                <BorderButtonSmallBlue text={"Select Distributor"} ctaFunction={() => {
-                    navigation.navigate("SelectDistributor")
-                }}/>
-            </View>:null}
+            <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+                <TouchableOpacity style={[commonStyles.searchContainer, {marginVertical: 10, paddingHorizontal: 16}]}
+                                  onPress={goToBuildOrder}>
+                    <TextInput
+                        value={""}
+                        editable={false}
+                        placeholder={"Search products, companies, brands..."}
+                        onChangeText={(text) => {
+                        }}
+                        style={commonStyles.textInput}>
+                    </TextInput>
+                </TouchableOpacity>
+                {bannerData.length ? <RenderCarousel bannerData={bannerData}/> : null}
+                {orderData.length > 0 ? <View style={{backgroundColor: colors.white}}>
+                    <View style={[commonStyles.rowSpaceBetween, {paddingHorizontal: 16, paddingTop: 10}]}>
+                        <View>
+                            <Text style={texts.greyTextBold16}>
+                                Order Tracking
+                            </Text>
+                        </View>
+                        <View>
+                            <BorderButtonSmallBlue text={"Create Order"} ctaFunction={goToBuildOrder}/>
+                        </View>
+                    </View>
+                    <View style={{paddingVertical: 10, paddingRight: 16}}>
+                        <FlatList
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                            data={orderData}
+                            renderItem={renderOrderCard}/>
+                    </View>
+                </View> : null}
+                {distributor && !isLoading ? <View style={{flex: 1}}>
+                    <CompanyList distributor={distributor}/>
+                </View> : !isLoading ? <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+                    <Text>
+                        PLease select distributor
+                    </Text>
+                    <BorderButtonSmallBlue text={"Select Distributor"} ctaFunction={() => {
+                        navigation.navigate("SelectDistributor")
+                    }}/>
+                </View> : null}
+            </ScrollView>
             {cart.data.length > 0 ? <CartButton/> : null}
         </View>
     )
@@ -185,5 +267,15 @@ const styles = StyleSheet.create({
         borderColor: colors.grey,
         flexDirection: "row",
         alignItems: 'center'
+    },
+    orderCard: {
+        width: 240,
+        height: 120,
+        borderWidth: 1,
+        borderColor: colors.light_grey,
+        borderRadius: 5,
+        marginLeft: 16,
+        padding: 8,
+        justifyContent: "space-between"
     }
 });
