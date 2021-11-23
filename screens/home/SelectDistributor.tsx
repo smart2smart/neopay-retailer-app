@@ -4,7 +4,6 @@ import {
     View,
 } from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
-import commonStyles from "../../styles/commonStyles";
 import {useNavigation} from "@react-navigation/native";
 import {useRoute} from '@react-navigation/native';
 import {commonApi} from "../../api/api";
@@ -13,14 +12,14 @@ import texts from "../../styles/texts";
 import colors from "../../assets/colors/colors";
 import {connect} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {newCart, setDistributor, setIsLoggedIn} from "../../actions/actions";
+import {setDistributor, setIsLoggedIn} from "../../actions/actions";
 import PersistenceStore from "../../utils/PersistenceStore";
 
 
 function SelectDistributor(props) {
 
     const [distributorData, setDistributorData] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
+    const [refreshing] = useState(false);
     const navigation = useNavigation();
     const route = useRoute();
 
@@ -41,10 +40,9 @@ function SelectDistributor(props) {
     }
 
     const selectDistributor = (distributor) => {
-        console.log("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
         PersistenceStore.setDistributor(JSON.stringify(distributor))
         props.setDistributor(distributor);
-        // navigation.goBack();
+        navigation.goBack();
     }
 
     useEffect(() => {

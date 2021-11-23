@@ -114,7 +114,7 @@ const commonStyles = StyleSheet.create({
         borderWidth:1,
         borderColor:colors.greyFaded,
         width:'100%',
-        height:48,
+        height:36,
         paddingLeft:10,
         borderRadius:5
     },

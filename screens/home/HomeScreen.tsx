@@ -8,7 +8,7 @@ import {
     Image, TouchableOpacity, Alert
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
-import {newCart, setIsLoggedIn} from "../../actions/actions";
+import {newCart, setDistributor, setIsLoggedIn} from "../../actions/actions";
 // @ts-ignore
 import {connect, useSelector} from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
@@ -29,8 +29,8 @@ import CompanyList from "./CompanyList";
 function HomeScreen(props: any) {
     const navigation = useNavigation();
     const cart = useSelector((state: any) => state.cart);
-    const distributor = useSelector((state: any) => state.distributor);
-    const [data, setOrderData] = useState([]);
+    const [distributor, setDistributor] = useState(useSelector((state: any) => state.distributor));
+    const [orderData, setOrderData] = useState([]);
 
 
     const checkForUpdates = async () => {
@@ -78,10 +78,6 @@ function HomeScreen(props: any) {
         })
     }
 
-    const getProducts = (data) => {
-        console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-    }
-
     useEffect(() => {
         checkForUpdates();
         PersistenceStore.getCart().then((data) => {
@@ -115,12 +111,11 @@ function HomeScreen(props: any) {
         if (!distributor) {
             let data = await PersistenceStore.getDistributor()
             if (data) {
-                getProducts(JSON.parse(data));
+                setDistributor(JSON.parse(data));
+                props.setDistributor(JSON.parse(data))
             } else {
                 navigation.navigate("SelectDistributor")
             }
-        } else {
-            getProducts(distributor);
         }
     }
 
@@ -132,7 +127,7 @@ function HomeScreen(props: any) {
     return (
         <View style={{flex: 1, paddingBottom: 20}}>
             <PrimaryHeader navigation={props.navigation}/>
-            {distributor ? <View>
+            {distributor ? <View style={{flex:1}}>
                 <CompanyList distributor={distributor} />
             </View> : <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                 <Text>
@@ -147,7 +142,7 @@ function HomeScreen(props: any) {
     )
 }
 
-export default connect(mapStateToProps, {setIsLoggedIn, newCart})(HomeScreen);
+export default connect(mapStateToProps, {setDistributor})(HomeScreen);
 
 const styles = StyleSheet.create({
     card: {

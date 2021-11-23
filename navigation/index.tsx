@@ -33,6 +33,8 @@ import store from "../store/store";
 import {useEffect, useState} from "react";
 import VerificationPending from "../screens/VerificationPending";
 import SelectDistributor from "../screens/home/SelectDistributor";
+import BrandList from "../screens/home/BrandList";
+import {BuildOrder} from "../screens/home/BuildOrder";
 
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -105,6 +107,8 @@ function RootNavigator(props) {
             <RootStack.Screen name="OfferDetails" component={OfferDetails}/>
             <RootStack.Screen name="OrderListDetails" component={OrderListDetails}/>
             <RootStack.Screen name="SelectDistributor" component={SelectDistributor}/>
+            <RootStack.Screen name="BrandList" component={BrandList}/>
+            <RootStack.Screen name="BuildOrder" component={BuildOrder}/>
         </RootStack.Navigator>
     );
 }

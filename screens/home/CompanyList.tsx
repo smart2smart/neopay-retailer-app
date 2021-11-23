@@ -15,19 +15,19 @@ import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import Indicator from "../../utils/Indicator";
 import {connect, useSelector} from 'react-redux';
 import mapStateToProps from "../../store/mapStateToProps";
-import {useFocusEffect, useRoute} from "@react-navigation/native";
+import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import commonStyles from "../../styles/commonStyles";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import colors from "../../assets/colors/colors";
 import texts from "../../styles/texts";
-import ToggleView from "./ToggleView";
-import {BuildOrder} from "./BuildOrder";
+import RenderCompanyCard from "./CompanyCard";
 
 
-export function CompanyList(props) {
+function CompanyList(props) {
     let _ = require('underscore');
     const route = useRoute();
+    const navigation = useNavigation();
     const [data, setData] = useState([]);
     const [productsData, setProductsData] = useState([]);
     const [originalProductsData, setOriginalProductsData] = useState([]);
@@ -47,13 +47,19 @@ export function CompanyList(props) {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [comingFrom, setComingFrom] = useState("");
     const distributor = useSelector((state: any) => state.distributor);
+    console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+    console.log(distributor)
     const retailerData = useSelector((state: any) => state.retailerDetails);
 
 
     useEffect(() => {
-        getProductsData();
-        setData(route.params.data);
-    }, []);
+        if(distributor){
+            getProductsData();
+        }
+        if (route.params) {
+            setData(route.params.data);
+        }
+    }, [distributor]);
 
     const getProductsData = () => {
         const dataToSend = {
@@ -64,6 +70,7 @@ export function CompanyList(props) {
         setIsLoading(true)
         // @ts-ignore
         AuthenticatedGetRequest(dataToSend).then((res) => {
+            console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
             console.log(res)
             let groupedData = _.chain(res.data)
                 .sortBy(function (item) {
@@ -90,12 +97,8 @@ export function CompanyList(props) {
                 })).value()
             setIsLoading(false);
             setValues(groupedData);
-            if (route.params.comingFrom == "edit") {
-                matchQuantities(groupedData);
-            } else {
-                setProductsData(groupedData);
-                setOriginalProductsData(groupedData);
-            }
+            setProductsData(groupedData);
+            setOriginalProductsData(groupedData);
         })
     }
 
@@ -124,7 +127,6 @@ export function CompanyList(props) {
         setOriginalProductsData(data);
         setProductCount(count);
         setSelectedTab("list");
-        setComingFrom("edit");
     }
 
 
@@ -201,23 +203,6 @@ export function CompanyList(props) {
         }
     }
 
-    const applyFilters = (type, item) => {
-        if (type === "brand") {
-            let data = productsData.filter((itm) => {
-                return itm.brand_id == item.id;
-            })
-            setProductsData([...data]);
-            setSelectedTab("list")
-        }
-        if (type === "category") {
-            let data = productsData.filter((itm) => {
-                return itm.category_2_id == item.id;
-            })
-            setProductsData([...data]);
-            setSelectedTab("list")
-        }
-    }
-
     const selectCategory = (category, itm) => {
         setIsCategorySelected(true);
         setSelectedCategory(itm);
@@ -226,29 +211,22 @@ export function CompanyList(props) {
                 return itm.id === item.company_id;
             })
             setBrandData([...data]);
+            navigation.navigate("BrandList", {type: "brand", brandData: data, productData: productsData})
         }
         if (category == "category") {
             let data = category2Data.filter((item) => {
                 return itm.id === item.category_1_id;
             })
             setCategory2Data([...data]);
+            navigation.navigate("BrandList", {type: "brand", categoryData: data, productData: productsData})
         }
         if (category == "brand") {
-            applyFilters("brand", itm)
+            let data = productsData.filter((itm) => {
+                return itm.brand_id == item.id;
+            })
+            navigation.navigate("BuildOrder", {type: "brand", productData: data})
         }
     }
-
-    const RenderCompanyCard = ({item, index}, props) => {
-        let padding = (Dimensions.get("window").width - 48) * 0.1 / 2;
-        return (
-            <TouchableOpacity onPress={() => {
-                props.selectFunction(item.type, item)
-            }} style={[styles.companyCard, (index + 1) % 3 !== 0 ? {marginRight: padding} : {}]}>
-                <Image style={{width: "84%", height: "84%"}} resizeMode={"contain"} source={{uri:item.image}}/>
-            </TouchableOpacity>
-        )
-    }
-
 
     const RenderList = (props) => {
         return (
@@ -292,11 +270,7 @@ export function CompanyList(props) {
         <View style={{flex: 1}}>
             <Indicator isLoading={isLoading}/>
             <View style={styles.container}>
-                <View style={[commonStyles.rowSpaceBetween, {marginTop: 10}]}>
-                    <SecondaryHeader title={comingFrom == "edit" ? "Edit Order" : "Browse Menu"}/>
-                    {comingFrom !== "edit" ? <ToggleView selectTab={selectTab} selectedTab={selectedTab}/> : null}
-                </View>
-                {comingFrom !== "edit" ? <View style={[commonStyles.searchContainer, {marginTop: 16}]}>
+                <View style={[commonStyles.searchContainer, {marginTop: 16}]}>
                     <TextInput
                         value={searchText}
                         placeholder={"Search products, companies, brands..."}
@@ -307,24 +281,10 @@ export function CompanyList(props) {
                                                            style={{position: "absolute", right: 0, padding: 10}}>
                         <AntDesign name="close" size={18} color={colors.black}/>
                     </TouchableOpacity> : null}
-                </View> : null}
-                {searching || selectedTab == "list" ?
-                    <BuildOrder
-                        productCount={productCount}
-                        comingFrom={comingFrom}
-                        retailerData={data}
-                        productsData={productsData}/> :
-                    <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-                        {isCategorySelected ? <View>
-                            {selectedCategory.type == "company" ?
-                                <RenderList selectFunction={applyFilters} back={true}
-                                            title={selectedCategory.name} data={brandData}
-                                            renderItem={RenderCompanyCard}/> : null}
-                            {selectedCategory.type == "category" ?
-                                <RenderList selectFunction={applyFilters} back={true}
-                                            title={selectedCategory.name} data={category2Data}
-                                            renderItem={RenderCompanyCard}/> : null}
-                        </View> : <View style={{paddingBottom: 20}}>
+                </View>
+                <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+                    <View>
+                        <View style={{paddingBottom: 20}}>
                             <RenderList selectFunction={selectCategory} title={"Companies"}
                                         data={companyData}
                                         renderItem={RenderCompanyCard}/>
@@ -332,8 +292,9 @@ export function CompanyList(props) {
                                         renderItem={RenderCompanyCard}/>
                             <RenderList selectFunction={selectCategory} title={"Categories"} data={categoryData}
                                         renderItem={RenderCompanyCard}/>
-                        </View>}
-                    </ScrollView>}
+                        </View>
+                    </View>
+                </ScrollView>
             </View>
         </View>
     )

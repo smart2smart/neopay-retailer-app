@@ -9,8 +9,9 @@ import commonStyles from "../../styles/commonStyles";
 import {SolidButtonBlue} from "../../buttons/Buttons";
 import {connect, useSelector} from 'react-redux';
 import mapStateToProps from "../../store/mapStateToProps";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import AddProductButton from "./AddProductButton";
+import SecondaryHeader from "../../headers/SecondaryHeader";
 
 const sku_units = {
     1: 'kg',
@@ -28,16 +29,19 @@ const sku_units = {
 export function BuildOrder(props) {
     let _ = require('underscore');
     const navigation = useNavigation();
+    const route = useRoute();
     const [productsData, setProductsData] = useState([]);
     const [originalProductsData, setOriginalProductsData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [productCount, setProductCount] = useState(props.productCount);
-    const distributorId = useSelector((state: any) => state.distributor.distributorId);
+    const distributor = useSelector((state: any) => state.distributor);
 
     useEffect(() => {
-        setProductsData(props.productsData);
-        setOriginalProductsData(props.productsData);
-    }, [props.productsData])
+        if(route.params){
+            setProductsData(route.params.productData);
+            setOriginalProductsData(route.params.productData);
+        }
+    }, [])
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
         let allProducts = [...productsData];
@@ -243,8 +247,9 @@ export function BuildOrder(props) {
 
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, paddingHorizontal:24}}>
             <Indicator isLoading={isLoading}/>
+            <SecondaryHeader title={"Create Order"} />
             <View style={styles.container}>
                 <View style={[styles.productHeader, commonStyles.rowSpaceBetween]}>
                     <Text style={texts.blueBoldl14}>
