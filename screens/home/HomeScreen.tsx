@@ -131,35 +131,56 @@ function HomeScreen(props: any) {
         })
     }
 
-    const setUp = async () => {
+    const getDistributorDetails = () => {
+        const data = {
+            method: commonApi.getDistributorDetails.method,
+            url: commonApi.getDistributorDetails.url,
+            header: commonApi.getDistributorDetails.header,
+        }
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.status == 200) {
+                if (res.data.length > 0) {
+                    setDistributor(res.data[0]);
+                    props.setDistributor(res.data[0])
+                }
+            } else {
+                Alert.alert(res.data.error);
+            }
+        })
+    }
+
+    const setUp = async (distributor) => {
         if (!distributor) {
             let data = await PersistenceStore.getDistributor()
             if (data) {
                 setDistributor(JSON.parse(data));
                 props.setDistributor(JSON.parse(data))
             } else {
-                navigation.navigate("SelectDistributor")
+                getDistributorDetails();
             }
         }
         setIsLoading(false);
     }
 
     useEffect(() => {
-        setUp()
+        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+        console.log(distributor)
+        setUp(distributor)
     }, [distributor]);
 
     const goToBuildOrder = () => {
         navigation.navigate("BuildOrder")
     }
 
-    const goToOrderDetails = (data)=>{
-        navigation.navigate("OrderListDetails", {orderDetailsData:data})
+    const goToOrderDetails = (data) => {
+        navigation.navigate("OrderListDetails", {orderDetailsData: data})
     }
 
     const renderOrderCard = ({item}) => {
-        return (<TouchableOpacity onPress={()=>{
+        return (<TouchableOpacity onPress={() => {
             goToOrderDetails(item)
-        }}  style={styles.orderCard}>
+        }} style={styles.orderCard}>
             <Text style={texts.darkGreyTextBold14}>
                 {"Order Id: " + item.id}
             </Text>
@@ -215,16 +236,9 @@ function HomeScreen(props: any) {
                             renderItem={renderOrderCard}/>
                     </View>
                 </View> : null}
-                {distributor && !isLoading ? <View style={{flex:1}}>
+                <View style={{flex: 1}}>
                     <CompanyList distributor={distributor}/>
-                </View> : !isLoading ? <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-                    <Text>
-                        PLease select distributor
-                    </Text>
-                    <BorderButtonSmallBlue text={"Select Distributor"} ctaFunction={() => {
-                        navigation.navigate("SelectDistributor")
-                    }}/>
-                </View> : null}
+                </View>
             </ScrollView>
             {cart.data.length > 0 ? <CartButton/> : null}
         </View>
@@ -282,12 +296,12 @@ const styles = StyleSheet.create({
         padding: 8,
         justifyContent: "space-between"
     },
-    textInput:{
-        borderWidth:1,
-        borderColor:colors.greyFaded,
-        width:'100%',
-        height:36,
-        paddingLeft:10,
-        borderRadius:5
+    textInput: {
+        borderWidth: 1,
+        borderColor: colors.greyFaded,
+        width: '100%',
+        height: 36,
+        paddingLeft: 10,
+        borderRadius: 5
     },
 });

@@ -59,6 +59,8 @@ function CompanyList(props) {
         }
         setIsLoading(true)
         AuthenticatedGetRequest(dataToSend).then((res) => {
+            console.log("gggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+            console.log(res)
             let companies = _.chain(res.data).groupBy("company_id").map((value, key) => ({
                 name: value[0]["company_name"],
                 id: value[0]["company_id"],
@@ -146,8 +148,6 @@ function CompanyList(props) {
             let productData = productsData.filter((item) => {
                 return itm.id == item.company_id;
             })
-            console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
-            console.log(productData)
             navigation.navigate("BrandList", {type: "brand", categoryData: data, productData: productData})
         }
         if (category == "category") {
@@ -228,22 +228,22 @@ function CompanyList(props) {
                 <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
                     <View>
                         <View style={{paddingBottom: 20}}>
-                            <RenderList modalVisible={companyModalVisible} seeAll={() => {
+                            {companyData.length > 0 ? <RenderList modalVisible={companyModalVisible} seeAll={() => {
                                 setModalVisible("company")
                             }} selectFunction={selectCategory} type={"company"} title={"Companies"}
-                                        data={companyData}
-                                        renderItem={RenderCompanyCard}/>
-                            <RenderList modalVisible={brandModalVisible} seeAll={() => {
+                                                                  data={companyData}
+                                                                  renderItem={RenderCompanyCard}/> : null}
+                            {brandData.length > 0 ? <RenderList modalVisible={brandModalVisible} seeAll={() => {
                                 setModalVisible("brand")
                             }} selectFunction={selectCategory} type={"brand"}
-                                        title={"Brands"} data={brandData}
-                                        renderItem={RenderCompanyCard}/>
-                            <RenderList modalVisible={categoryModalVisible} seeAll={() => {
+                                                                title={"Brands"} data={brandData}
+                                                                renderItem={RenderCompanyCard}/> : null}
+                            {categoryData.length > 0 ? <RenderList modalVisible={categoryModalVisible} seeAll={() => {
                                 setModalVisible("category")
                             }} selectFunction={selectCategory}
-                                        type={"category"} title={"Categories"}
-                                        data={categoryData}
-                                        renderItem={RenderCompanyCard}/>
+                                                                   type={"category"} title={"Categories"}
+                                                                   data={categoryData}
+                                                                   renderItem={RenderCompanyCard}/> : null}
                             <View style={{marginTop: 20}}>
                                 <BorderButtonBigBlue ctaFunction={goToBuildOrder} text={"All Products"}/>
                             </View>

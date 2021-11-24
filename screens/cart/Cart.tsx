@@ -39,7 +39,9 @@ function Cart(props: any) {
                 product_group: key,
                 image_expanded: false,
                 product_group_id: value[0]["product_group_id"],
-                data: value
+                data: value,
+                pg_image_expanded: false,
+                quantity: 0
             })).value();
     }
     let _ = require('underscore')
@@ -51,19 +53,20 @@ function Cart(props: any) {
     const [loading, setLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
 
+
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
         let item = {
-            distributorId: cart.distributorId,
+            distributorId: distributor.user,
             product: {...data},
             text: text,
-            originalQuantity: parseInt(data.quantity)
+            originalQuantity: data.quantity == "" ? 0 : parseInt(data.quantity)
         };
         item.product["quantity"] = text;
-        props.cartChangeQuantity(item)
+        props.cartChangeQuantity(item);
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let item = {distributorId: cart.distributorId, product: {...data}};
+        let item = {distributorId: distributor.user, product: {...data}};
         if (type === "new") {
             item.product.quantity = 1;
             props.updateCartAdd(item);

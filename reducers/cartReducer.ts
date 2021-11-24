@@ -27,7 +27,7 @@ const getData = (state, product, type) => {
             item.quantity = product.quantity
         }
     })
-    if (!available || type == "add") {
+    if (!available && type == "add") {
         data.push(product)
     }
     return data;

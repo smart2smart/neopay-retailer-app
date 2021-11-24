@@ -55,7 +55,7 @@ class LoginScreen extends Component {
             <View style={styles.container}>
                 <Indicator isLoading={this.state.isLoading}/>
                 <View>
-                    <Image style={styles.logo} resizeMode={"contain"} source={require('../../assets/images/neopay_logo_2x.png')} />
+                    <Image style={styles.logo} resizeMode={"contain"} source={require('../../assets/images/neomart_logo.png')} />
                     <Text style={[texts.blueHeading1, {marginTop:30}]}>
                         Enter Mobile Number
                     </Text>
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
         justifyContent:"space-between"
     },
     logo:{
-        width:72,
-        height:56
+        width:100,
+        height:100
     },
     mobileInputContainer:{
         height:48,

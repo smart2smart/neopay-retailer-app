@@ -2,18 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/images/neomart_white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/neomart_logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/VerificationPending.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VerificationPending.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/details/BusinessInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/BusinessInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/BrandList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BrandList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/CompanyCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/SeeAllCompaniesModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/SeeAllCompaniesModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/SelectDistributor.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/SelectDistributor.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +40,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/../Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
+    <property name="AnalyzeApkAction.lastApkPath" value="$USER_HOME$/Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -53,16 +52,16 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
+      <recent name="$PROJECT_DIR$/screens/cart" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/screens/home" />
       <recent name="$PROJECT_DIR$/commons" />
       <recent name="$PROJECT_DIR$/screens/orderList" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets" />
-      <recent name="$PROJECT_DIR$/screens/cart" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -144,7 +143,9 @@
       <workItem from="1637565332791" duration="7966000" />
       <workItem from="1637583051550" duration="13684000" />
       <workItem from="1637646311851" duration="27420000" />
-      <workItem from="1637735347012" duration="12123000" />
+      <workItem from="1637735347012" duration="12340000" />
+      <workItem from="1637755786946" duration="495000" />
+      <workItem from="1637758793155" duration="3357000" />
     </task>
     <servers />
   </component>
@@ -160,14 +161,10 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1637738508536" />
-    <state x="336" y="27" width="683" height="683" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1629098705148">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1637761219116">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="336" y="27" width="683" height="683" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.1366.683@0.27.1366.683" timestamp="1629098705148" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1637751198518">
-      <screen x="0" y="27" width="1366" height="683" />
-    </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1637751198518" />
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1637761219116" />
     <state x="347" y="159" width="672" height="677" key="run.anything.popup" timestamp="1637590454375">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

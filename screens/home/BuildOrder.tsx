@@ -141,7 +141,7 @@ function BuildOrder(props) {
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
         let item = {
-            distributorId: route.params.distributorId,
+            distributorId: distributor.user,
             product: {...data},
             text: text,
             originalQuantity: data.quantity == "" ? 0 : parseInt(data.quantity)
@@ -327,7 +327,6 @@ function BuildOrder(props) {
 
     return (
         <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
-            <Indicator isLoading={loading}/>
             <View style={commonStyles.rowSpaceBetween}>
                 <SecondaryHeader title={"Create Order"}/>
             </View>

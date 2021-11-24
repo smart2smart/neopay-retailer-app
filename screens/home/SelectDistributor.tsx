@@ -12,7 +12,7 @@ import texts from "../../styles/texts";
 import colors from "../../assets/colors/colors";
 import {connect} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setDistributor, setIsLoggedIn} from "../../actions/actions";
+import {setDistributor, clearCart} from "../../actions/actions";
 import PersistenceStore from "../../utils/PersistenceStore";
 
 
@@ -40,9 +40,10 @@ function SelectDistributor(props) {
     }
 
     const selectDistributor = (distributor) => {
-        PersistenceStore.setDistributor(JSON.stringify(distributor))
         props.setDistributor(distributor);
-        navigation.goBack();
+        PersistenceStore.setDistributor(JSON.stringify(distributor))
+        props.clearCart();
+        navigation.navigate("Home");
     }
 
     useEffect(() => {
@@ -105,4 +106,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default connect(mapStateToProps, {setDistributor})(SelectDistributor);
+export default connect(mapStateToProps, {setDistributor, clearCart})(SelectDistributor);
