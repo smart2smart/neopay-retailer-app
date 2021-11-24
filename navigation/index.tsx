@@ -46,7 +46,7 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
     } else if (landingScreen === "address") {
         initialScreen = "AddressDetails"
     } else if (landingScreen === "license") {
-        initialScreen = "BusinessInfo"
+        initialScreen = "Home"
     } else if (landingScreen === "home") {
         initialScreen = "Home"
     }

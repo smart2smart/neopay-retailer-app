@@ -28,7 +28,6 @@ function CompanyList(props) {
     let _ = require('underscore');
     const route = useRoute();
     const navigation = useNavigation();
-    const [data, setData] = useState([]);
     const [productsData, setProductsData] = useState([]);
     const [originalProductsData, setOriginalProductsData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +38,6 @@ function CompanyList(props) {
     const [category2Data, setCategory2Data] = useState([]);
     const [originalCategory2Data, setOriginalCategory2Data] = useState([]);
     const [originalCategoryData, setOriginalCategoryData] = useState([]);
-    const [isCategorySelected, setIsCategorySelected] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState("");
     const [companyModalVisible, setCompanyModalVisible] = useState(false);
     const [brandModalVisible, setBrandModalVisible] = useState(false);
@@ -114,7 +112,14 @@ function CompanyList(props) {
                 .groupBy("product_group")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
+                    company_id: value[0]["company_id"],
+                    company_image: value[0]["company_image"],
+                    brand_id: value[0]["brand_id"],
                     brand_name: value[0]["brand_name"],
+                    brand_image: value[0]["brand_image"],
+                    category_1_id: value[0]["category_1_id"],
+                    category_1_name: value[0]["category_1_name"],
+                    category_1_image: value[0]["category_1_image"],
                     image: value[0]["product_group_image"],
                     product_group: key,
                     image_expanded: false,
@@ -129,27 +134,39 @@ function CompanyList(props) {
         })
     }
 
-    const selectCategory = (category, itm) => {
-        setModalVisible(category);
-        setIsCategorySelected(true);
+    const selectCategory = (category, itm, modal) => {
+        if (modal) {
+            setModalVisible(category);
+        }
         setSelectedCategory(itm);
         if (category == "company") {
             let data = brandData.filter((item) => {
                 return itm.id === item.company_id;
             })
-            navigation.navigate("BrandList", {type: "brand", categoryData: data, productData: productsData})
+            let productData = productsData.filter((item) => {
+                return itm.id == item.company_id;
+            })
+            console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
+            console.log(productData)
+            navigation.navigate("BrandList", {type: "brand", categoryData: data, productData: productData})
         }
         if (category == "category") {
             let data = category2Data.filter((item) => {
                 return itm.id === item.category_1_id;
             })
-            navigation.navigate("BrandList", {type: "brand", categoryData: data, productData: productsData})
+            let productData = productsData.filter((item) => {
+                return itm.id == item.category_1_id;
+            })
+            navigation.navigate("BrandList", {type: "category", categoryData: data, productData: productData})
         }
         if (category == "brand") {
-            let data = productsData.filter((itm) => {
-                return itm.brand_id == item.id;
+            let data = productsData.filter((item) => {
+                return itm.id == item.brand_id;
             })
-            navigation.navigate("BuildOrder", {type: "brand", categoryData:data, productData: data})
+            let productData = productsData.filter((item) => {
+                return itm.id == item.brand_id;
+            })
+            navigation.navigate("BuildOrder", {type: "brand", categoryData: data, productData: productData})
         }
     }
 

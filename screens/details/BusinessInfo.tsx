@@ -134,6 +134,12 @@ function BusinessInfo(props) {
                     </View>
                     <SolidButtonBlue text={'SUBMIT'} ctaFunction={homePage}/>
                 </View>
+                <View style={[commonStyles.row, {marginTop:20}]}>
+                    <BorderButtonBigBlue text={"Skip this step"} ctaFunction={() => {
+                        props.setLandingScreen("home");
+                        PersistenceStore.setLandingScreen("home");
+                    }}/>
+                </View>
             </ScrollView>
         </View>
     );

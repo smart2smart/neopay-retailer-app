@@ -19,7 +19,6 @@ export default function SeeAllCompaniesModal(props) {
 
     useEffect(() => {
         setData(props.data);
-
     }, [props])
 
 

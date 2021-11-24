@@ -69,18 +69,18 @@ function BrandList(props) {
         )
     }
 
-    const selectCategory = (itemType, item) => {
-        if (type === "brand") {
-            let productData = data.filter((itm) => {
-                return itm.brand_id == item.id;
+    const selectCategory = (category, itm) => {
+        if (category == "category") {
+            let productData = data.filter((item) => {
+                return itm.id == item.category_2_id;
             })
-            navigation.navigate("BuildOrder", {type: "brand", productData: productData})
+            navigation.navigate("BuildOrder", {productData: productData})
         }
-        if (type === "category") {
-            let productData = data.filter((itm) => {
-                return itm.category_2_id == item.id;
+        if (category == "brand") {
+            let productData = data.filter((item) => {
+                return itm.id == item.brand_id;
             })
-            navigation.navigate("BuildOrder", {type: "category", productData: productData})
+            navigation.navigate("BuildOrder", {productData: productData})
         }
     }
 

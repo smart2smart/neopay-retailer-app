@@ -69,9 +69,13 @@ export default function EditProfile() {
     }
 
     const getLocalities = (text) => {
+        let url = commonApi.getLocalities.url + "?search=" + text;
+        if(city){
+            url+= "&city="+city.id
+        }
         const data = {
             method: commonApi.getLocalities.method,
-            url: commonApi.getLocalities.url + "?search=" + text,
+            url: url,
             header: commonApi.getLocalities.header,
         }
         // @ts-ignore
