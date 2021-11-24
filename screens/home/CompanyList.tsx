@@ -130,7 +130,27 @@ function CompanyList(props) {
     }
 
     const selectCategory = (category, itm) => {
-
+        setModalVisible(category);
+        setIsCategorySelected(true);
+        setSelectedCategory(itm);
+        if (category == "company") {
+            let data = brandData.filter((item) => {
+                return itm.id === item.company_id;
+            })
+            navigation.navigate("BrandList", {type: "brand", categoryData: data, productData: productsData})
+        }
+        if (category == "category") {
+            let data = category2Data.filter((item) => {
+                return itm.id === item.category_1_id;
+            })
+            navigation.navigate("BrandList", {type: "brand", categoryData: data, productData: productsData})
+        }
+        if (category == "brand") {
+            let data = productsData.filter((itm) => {
+                return itm.brand_id == item.id;
+            })
+            navigation.navigate("BuildOrder", {type: "brand", categoryData:data, productData: data})
+        }
     }
 
 
@@ -157,7 +177,12 @@ function CompanyList(props) {
                     keyExtractor={(item, index) => item.id + index + ""}
                     renderItem={(item) => props.renderItem(item, props)}/>
 
-                {props.modalVisible ? <SeeAllCompaniesModal closeModal={setModalVisible} renderItem={RenderCompanyCard} data={props.data} type={props.type}/> : null}
+                {props.modalVisible ? <SeeAllCompaniesModal
+                    modalVisible={props.modalVisible}
+                    selectFunction={selectCategory}
+                    closeModal={setModalVisible}
+                    renderItem={RenderCompanyCard}
+                    data={props.data} type={props.type}/> : null}
             </View>
         )
     }
@@ -193,12 +218,12 @@ function CompanyList(props) {
                                         renderItem={RenderCompanyCard}/>
                             <RenderList modalVisible={brandModalVisible} seeAll={() => {
                                 setModalVisible("brand")
-                            }}  selectFunction={selectCategory} type={"brand"}
+                            }} selectFunction={selectCategory} type={"brand"}
                                         title={"Brands"} data={brandData}
                                         renderItem={RenderCompanyCard}/>
                             <RenderList modalVisible={categoryModalVisible} seeAll={() => {
                                 setModalVisible("category")
-                            }}  selectFunction={selectCategory}
+                            }} selectFunction={selectCategory}
                                         type={"category"} title={"Categories"}
                                         data={categoryData}
                                         renderItem={RenderCompanyCard}/>

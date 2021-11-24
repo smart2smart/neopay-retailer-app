@@ -5,7 +5,7 @@ import texts from "../../styles/texts";
 
 
 const RenderCompanyCard = ({item, index}, props) => {
-    let padding = (Dimensions.get("window").width - 48) * 0.1 / 2;
+    let padding = (Dimensions.get("window").width - 24) * 0.07 / 2;
     return (
         <TouchableOpacity onPress={() => {
             props.selectFunction(item.type, item)
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     companyCard: {
         height: 120,
-        width: "30%",
+        width: "31%",
         borderWidth: 1,
         borderRadius: 5,
         borderColor: colors.light_grey,

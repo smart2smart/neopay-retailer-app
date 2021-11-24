@@ -42,6 +42,8 @@ export default function SeeAllCompaniesModal(props) {
                 </View>
                 <FlatList
                     data={data}
+                    ListFooterComponent={()=><View style={{paddingBottom:30}}></View>}
+                    ListHeaderComponent={()=><View style={{paddingTop:10}}></View>}
                     showsVerticalScrollIndicator={false}
                     numColumns={3}
                     ItemSeparatorComponent={() => <View style={{height: 16}}></View>}
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
         backgroundColor: colors.white,
-        padding: 24
+        padding: 12,
     },
     closeIconDiv: {
         alignItems: 'flex-end'

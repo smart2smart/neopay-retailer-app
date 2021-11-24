@@ -57,14 +57,9 @@ function BrandList(props) {
                             {props.title}
                         </Text>
                     </View>
-                    <View>
-                        <Text style={texts.redTextBold14}>
-                            See All
-                        </Text>
-                    </View>
                 </View>
                 <FlatList
-                    data={props.data.slice(0, 6)}
+                    data={props.data}
                     showsVerticalScrollIndicator={false}
                     numColumns={3}
                     ItemSeparatorComponent={() => <View style={{height: 16}}></View>}
@@ -128,7 +123,7 @@ function BrandList(props) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 24,
+        paddingHorizontal: 12,
         position: 'relative',
         flex: 1,
         backgroundColor: colors.white

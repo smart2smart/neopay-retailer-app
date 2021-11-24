@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/screens/home/SeeAllCompaniesModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/BrandList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BrandList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/CompanyCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/SeeAllCompaniesModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/SeeAllCompaniesModal.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +137,7 @@
       <workItem from="1637565332791" duration="7966000" />
       <workItem from="1637583051550" duration="13684000" />
       <workItem from="1637646311851" duration="27420000" />
-      <workItem from="1637735347012" duration="7226000" />
+      <workItem from="1637735347012" duration="8172000" />
     </task>
     <servers />
   </component>
