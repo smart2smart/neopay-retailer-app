@@ -28,7 +28,7 @@ function BrandList(props) {
     const route = useRoute();
     const [data, setData] = useState([]);
     const [type, setType] = useState([]);
-    const [searchText, setSearchText] = useState('');
+    const [categoryData, setCategoryData] = useState([]);
 
     useEffect(() => {
         if (route.params) {
@@ -37,6 +37,9 @@ function BrandList(props) {
             }
             if (route.params.type) {
                 setType(route.params.type);
+            }
+            if (route.params.categoryData) {
+                setCategoryData(route.params.categoryData);
             }
         }
     }, []);
@@ -114,7 +117,7 @@ function BrandList(props) {
                     <View style={{paddingBottom: 20}}>
                         <RenderList selectFunction={selectCategory}
                                     title={type === "brand" ? "Brands" : "Categories"}
-                                    data={data}
+                                    data={categoryData}
                                     renderItem={RenderCompanyCard}/>
                     </View>
                 </ScrollView>
@@ -163,13 +166,13 @@ const styles = StyleSheet.create({
         borderColor: colors.red,
         borderRadius: 5
     },
-    textInput:{
-        borderWidth:1,
-        borderColor:colors.greyFaded,
-        width:'100%',
-        height:36,
-        paddingLeft:10,
-        borderRadius:5
+    textInput: {
+        borderWidth: 1,
+        borderColor: colors.greyFaded,
+        width: '100%',
+        height: 36,
+        paddingLeft: 10,
+        borderRadius: 5
     },
 });
 

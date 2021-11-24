@@ -67,14 +67,7 @@ function BuildOrder(props) {
                 .groupBy("product_group")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
-                    company_id: value[0]["company_id"],
-                    company_image: value[0]["company_image"],
-                    brand_id: value[0]["brand_id"],
                     brand_name: value[0]["brand_name"],
-                    brand_image: value[0]["brand_image"],
-                    category_1_id: value[0]["category_1_id"],
-                    category_1_name: value[0]["category_1_name"],
-                    category_1_image: value[0]["category_1_image"],
                     image: value[0]["product_group_image"],
                     product_group: key,
                     image_expanded: false,

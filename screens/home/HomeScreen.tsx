@@ -8,7 +8,7 @@ import {
     Image, TouchableOpacity, Alert, TextInput, ScrollView
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
-import {newCart, setDistributor, setIsLoggedIn} from "../../actions/actions";
+import {newCart, setDistributor} from "../../actions/actions";
 // @ts-ignore
 import {connect, useSelector} from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
@@ -152,8 +152,14 @@ function HomeScreen(props: any) {
         navigation.navigate("BuildOrder")
     }
 
+    const goToOrderDetails = (data)=>{
+        navigation.navigate("OrderListDetails", {orderDetailsData:data})
+    }
+
     const renderOrderCard = ({item}) => {
-        return (<View style={styles.orderCard}>
+        return (<TouchableOpacity onPress={()=>{
+            goToOrderDetails(item)
+        }}  style={styles.orderCard}>
             <Text style={texts.darkGreyTextBold14}>
                 {"Order Id: " + item.id}
             </Text>
@@ -171,7 +177,7 @@ function HomeScreen(props: any) {
                     {item.status.toUpperCase()}
                 </Text>
             </View>
-        </View>)
+        </TouchableOpacity>)
     }
 
     return (
@@ -209,7 +215,7 @@ function HomeScreen(props: any) {
                             renderItem={renderOrderCard}/>
                     </View>
                 </View> : null}
-                {distributor && !isLoading ? <View style={{flex: 1}}>
+                {distributor && !isLoading ? <View style={{flex:1}}>
                     <CompanyList distributor={distributor}/>
                 </View> : !isLoading ? <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
                     <Text>
@@ -225,7 +231,7 @@ function HomeScreen(props: any) {
     )
 }
 
-export default connect(mapStateToProps, {setDistributor})(HomeScreen);
+export default connect(mapStateToProps, {setDistributor, newCart})(HomeScreen);
 
 const styles = StyleSheet.create({
     card: {
