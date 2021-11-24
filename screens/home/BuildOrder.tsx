@@ -168,7 +168,7 @@ function BuildOrder(props) {
 
                         },
                     },
-                    {text: 'No', onPress: () => console.log('OK Pressed')},
+                    {text: 'No', onPress: () => {}},
                 ],
                 {cancelable: false},
             );

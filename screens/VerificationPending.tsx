@@ -28,7 +28,7 @@ export default function VerificationPending(props:any) {
                         PersistenceStore.removeRefreshToken();
                     },
                 },
-                {text: 'No', onPress: () => console.log('OK Pressed')},
+                {text: 'No', onPress: () => {}},
             ],
             {cancelable: false},
         );

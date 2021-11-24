@@ -59,8 +59,6 @@ function CompanyList(props) {
         }
         setIsLoading(true)
         AuthenticatedGetRequest(dataToSend).then((res) => {
-            console.log("gggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
-            console.log(res)
             let companies = _.chain(res.data).groupBy("company_id").map((value, key) => ({
                 name: value[0]["company_name"],
                 id: value[0]["company_id"],
@@ -122,6 +120,9 @@ function CompanyList(props) {
                     category_1_id: value[0]["category_1_id"],
                     category_1_name: value[0]["category_1_name"],
                     category_1_image: value[0]["category_1_image"],
+                    category_2_id: value[0]["category_2_id"],
+                    category_2_name: value[0]["category_2_name"],
+                    category_2_image: value[0]["category_2_image"],
                     image: value[0]["product_group_image"],
                     product_group: key,
                     image_expanded: false,

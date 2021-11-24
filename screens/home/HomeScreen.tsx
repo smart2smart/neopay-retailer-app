@@ -56,7 +56,7 @@ function HomeScreen(props: any) {
                 openPlayStoreLink()
             }
         } catch (e) {
-            console.log(e)
+
         }
     }
 
@@ -164,8 +164,6 @@ function HomeScreen(props: any) {
     }
 
     useEffect(() => {
-        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
-        console.log(distributor)
         setUp(distributor)
     }, [distributor]);
 

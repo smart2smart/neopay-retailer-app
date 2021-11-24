@@ -32,7 +32,7 @@ function Routes(props: any) {
             startAsync={() => getUserDetails()}
             onFinish={() => {
             }}
-            onError={console.warn}
+            onError={()=>{}}
         />;
     } else {
         return (
