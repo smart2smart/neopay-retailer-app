@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, Dimensions, Image, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Dimensions, Image, TouchableOpacity, Alert} from 'react-native';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import MapView from 'react-native-maps';
 import {Marker} from 'react-native-maps';
@@ -24,17 +24,22 @@ export default function MapViewScreen() {
 
     useEffect(() => {
         (async () => {
-            let {status} = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                return;
-            }
-            // let currentLocation = await Location.getCurrentPositionAsync({});
+            let locationEnabled = await Location.hasServicesEnabledAsync();
+            if (!locationEnabled) {
+                Alert.alert("Please turn on your location for this service");
+                navigation.goBack();
+            } else {
+                let {status} = await Location.requestForegroundPermissionsAsync();
+                if (status !== 'granted') {
+                    return;
+                }
                 let currentLocation = await Location.getLastKnownPositionAsync({});
-            let data = location;
-            data.latitude = currentLocation.coords.latitude;
-            data.longitude = currentLocation.coords.longitude;
-            setLocation(data);
-            setIsLoading(false);
+                let data = location;
+                data.latitude = currentLocation.coords.latitude;
+                data.longitude = currentLocation.coords.longitude;
+                setLocation(data);
+                setIsLoading(false);
+            }
         })();
     }, []);
 
@@ -45,12 +50,11 @@ export default function MapViewScreen() {
     const selectLocation = () => {
         if (route.params) {
             if (route.params.comingFrom === "profile") {
-                navigation.navigate('Account', {location: location, comingFrom:"map"})
-            }else if (route.params.comingFrom === "edit") {
+                navigation.navigate('Account', {location: location, comingFrom: "map"})
+            } else if (route.params.comingFrom === "edit") {
                 navigation.navigate('EditProfile', {location: location})
             }
-        }
-        else{
+        } else {
             navigation.navigate('AddressDetails', {location: location})
         }
     }

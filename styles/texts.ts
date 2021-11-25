@@ -43,7 +43,7 @@ const texts = StyleSheet.create({
         color: colors.darkGrey
     },
     primaryTextBold12: {
-        color: colors.primary_color,
+        color: colors.primaryThemeColor,
         fontFamily: "GothamMedium",
         fontSize: 12
     },

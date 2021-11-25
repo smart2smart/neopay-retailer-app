@@ -223,7 +223,7 @@ function CompanyList(props) {
 
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, minHeight:200}}>
             <Indicator isLoading={isLoading}/>
             {!isLoading ? <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>

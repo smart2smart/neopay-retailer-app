@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Dimensions,
     FlatList,
-    Image, TouchableOpacity, Alert, TextInput, ScrollView
+    Image, TouchableOpacity, Alert, TextInput, ScrollView, RefreshControl
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
 import {newCart, setDistributor} from "../../actions/actions";
@@ -38,6 +38,7 @@ function HomeScreen(props: any) {
     const [orderData, setOrderData] = useState([]);
     const [bannerData, setBannerData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
 
     const checkForUpdates = async () => {
@@ -163,6 +164,12 @@ function HomeScreen(props: any) {
         setIsLoading(false);
     }
 
+    const onRefresh = ()=>{
+        getOrders();
+        getBanners();
+        setUp(distributor);
+    }
+
     useEffect(() => {
         setUp(distributor)
     }, [distributor]);
@@ -202,7 +209,10 @@ function HomeScreen(props: any) {
     return (
         <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
-            <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+            <ScrollView
+                style={{flex: 1}}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                showsVerticalScrollIndicator={false}>
                 <TouchableOpacity style={[commonStyles.searchContainer, {marginVertical: 10, paddingHorizontal: 16}]}
                                   onPress={goToBuildOrder}>
                     <TextInput

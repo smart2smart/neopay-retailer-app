@@ -80,15 +80,15 @@ function OrdersCard(props: any) {
                 <View style={commonStyles.row}>
                     <TouchableOpacity onPress={() => {
                         callRetailer(props.data.supplier_no)
-                    }} style={[commonStyles.borderButtonSmallBlue, {flexDirection: 'row'}]}>
+                    }} style={[commonStyles.borderButtonSmallBlue, {flexDirection: 'row', alignItems:"center"}]}>
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
-                        <Text style={texts.primaryThemeTextBold12}> Supplier</Text>
+                        <Text style={texts.primaryTextBold12}> Supplier</Text>
                     </TouchableOpacity>
                     {props.data.salesman ? <TouchableOpacity onPress={() => {
                         callRetailer(props.data.salesman_no)
                     }} style={[commonStyles.borderButtonSmallBlue, {flexDirection: "row", marginLeft: 10}]}>
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
-                        <Text style={texts.primaryThemeTextBold12}> Salesman</Text>
+                        <Text style={texts.primaryTextBold12}> Salesman</Text>
                     </TouchableOpacity> : null}
                 </View>
                 <View>
