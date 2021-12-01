@@ -64,14 +64,9 @@ function HomeScreen(props: any) {
     const openPlayStoreLink = () => {
         VersionCheck.getLatestVersion().then(version => {
             let update_available = false;
-            let version_list = version.split(".")
-            let app_version = Constants.manifest.version.split(".");
-            for (let i = 0; i < version_list.length; i++) {
-                if (parseInt(version_list[i]) > parseInt(app_version[i])) {
-                    update_available = true
-                }
-            }
-            if (update_available) {
+            let playStoreVersion = version.split(".")
+            let appVersion = Constants.manifest.version.split(".");
+            if (parseInt(playStoreVersion[0]) > parseInt(appVersion[0])) {
                 Alert.alert(
                     "Update App",
                     "Please update the app to proceed further.",

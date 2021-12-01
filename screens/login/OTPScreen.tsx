@@ -13,11 +13,14 @@ import Indicator from "../../utils/Indicator";
 import {BorderButtonSmallRed, SolidButtonBlue} from "../../buttons/Buttons";
 import texts from "../../styles/texts";
 import SecondaryHeader from "../../headers/SecondaryHeader";
+import Constants from "expo-constants";
 
 class OTPScreen extends Component {
 
+
     state = {
-        isLoading: false
+        isLoading: false,
+        version : Constants.manifest.version
     }
 
     verifyOTP = (code: string) => {
@@ -31,7 +34,8 @@ class OTPScreen extends Component {
             url: authApi.otp.url,
             data: {
                 contact_no: this.props.route.params.mobile,
-                otp: code
+                otp: code,
+                version:this.state.version
             },
             header: authApi.refresh.header
         }

@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/OrdersCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/texts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/texts.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/OTPScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +139,19 @@
       <workItem from="1637755786946" duration="495000" />
       <workItem from="1637758793155" duration="4388000" />
       <workItem from="1637820943954" duration="1084000" />
-      <workItem from="1637834685462" duration="1143000" />
+      <workItem from="1637834685462" duration="1264000" />
+      <workItem from="1637861425291" duration="423000" />
+      <workItem from="1637870540961" duration="2488000" />
+      <workItem from="1637910704063" duration="294000" />
+      <workItem from="1637915461472" duration="142000" />
+      <workItem from="1637915661441" duration="610000" />
+      <workItem from="1637953678639" duration="4015000" />
+      <workItem from="1638012145230" duration="1358000" />
+      <workItem from="1638050088075" duration="1533000" />
+      <workItem from="1638112220093" duration="602000" />
+      <workItem from="1638121277663" duration="443000" />
+      <workItem from="1638124040513" duration="446000" />
+      <workItem from="1638124756347" duration="802000" />
     </task>
     <servers />
   </component>
@@ -151,30 +159,26 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1629374532364">
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1638048564203">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.683@0.27.1366.683" timestamp="1629374532364" />
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1637824129687">
-      <screen x="0" y="27" width="1366" height="683" />
-    </state>
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1637824129687" />
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1638048564203" />
     <state x="100" y="127" width="1166" height="483" key="dock-window-1" timestamp="1637835516418">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="100" y="127" width="1166" height="483" key="dock-window-1/0.27.1366.683@0.27.1366.683" timestamp="1637835516418" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1637762568039">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1638124118825">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1637762568039" />
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1638124118825" />
     <state x="347" y="159" width="672" height="677" key="run.anything.popup" timestamp="1637590454375">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="347" y="159" width="672" height="677" key="run.anything.popup/0.27.1366.683@0.27.1366.683" timestamp="1637590454375" />
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1637751638169">
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1637961133567">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1637751638169" />
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1637961133567" />
     <state x="408" y="273" width="540" height="197" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1632225771092">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
