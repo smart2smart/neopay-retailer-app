@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +37,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/NeopaySalesmanApp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
@@ -158,6 +157,9 @@
       <workItem from="1638819453640" duration="648000" />
       <workItem from="1638858610497" duration="599000" />
       <workItem from="1639031223970" duration="1096000" />
+      <workItem from="1639044808564" duration="1958000" />
+      <workItem from="1639058245357" duration="734000" />
+      <workItem from="1639063792083" duration="498000" />
     </task>
     <servers />
   </component>
@@ -165,10 +167,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1639034464119">
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1639055773581">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1639034464119" />
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1639055773581" />
     <state x="100" y="127" width="1166" height="483" key="dock-window-1" timestamp="1637835516418">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

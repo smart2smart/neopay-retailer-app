@@ -21,7 +21,7 @@ export default function OrderListDetails() {
     const [orderDetails, setOrderDetails] = useState(route.params.orderDetailsData);
 
 
-    const setOrderData = (data)=>{
+    const setOrderData = (data) => {
         setOrderDetails(data);
     }
 
@@ -31,16 +31,16 @@ export default function OrderListDetails() {
         }, [])
     );
 
-    const downloadInvoice = (invoiceUrl)=>{
-        if(invoiceUrl) {
+    const downloadInvoice = (invoiceUrl) => {
+        if (invoiceUrl) {
             WebBrowser.openBrowserAsync(invoiceUrl);
-        }else {
+        } else {
             Alert.alert("Invoice not available. Order not approved yet.")
         }
     }
 
     return (
-        <ScrollView style={{flex: 1}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
             <View style={{paddingHorizontal: 24}}>
                 <SecondaryHeader title={"Order Details"}/>
                 <View style={styles.container}>
@@ -119,9 +119,12 @@ export default function OrderListDetails() {
                             </Text>
                         </View>
                     </View>
-                    <View style={{flexDirection:"row", justifyContent:"flex-end", marginTop:10}}>
-                        <BorderButtonSmallBlue ctaFunction={()=>{downloadInvoice(orderDetails.invoice)}} text={"Invoice"} />
-                    </View>
+                    {orderDetails.status === "delivered" ?
+                        <View style={{flexDirection: "row", justifyContent: "flex-end", marginTop: 10}}>
+                            <BorderButtonSmallBlue ctaFunction={() => {
+                                downloadInvoice(orderDetails.invoice)
+                            }} text={"Invoice"}/>
+                        </View> : null}
                 </View>
             </View>
         </ScrollView>
@@ -140,7 +143,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: colors.grey,
         backgroundColor: '#ffffff',
-        elevation: 2
+        elevation: 2,
+        marginBottom:20
     },
     retailerDiv: {
         width: '100%',
