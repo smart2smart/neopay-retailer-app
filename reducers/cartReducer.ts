@@ -3,7 +3,8 @@ import {
     CLEAR_CART,
     UPDATE_CART_ADD,
     UPDATE_CART_SUBTRACT,
-    REMOVE_FROM_CART, CART_CHANGE_QUANTITY
+    REMOVE_FROM_CART,
+    CART_CHANGE_QUANTITY
 } from "../actions/actionTypes";
 import PersistenceStore from "../utils/PersistenceStore";
 
@@ -74,7 +75,7 @@ const cartReducer = (state = {...cart}, action: any) => {
             let item = action.payload.product;
             let change_quantity = {
                 ...state,
-                data: item.quantity ? getData(state, action.payload.product, "change") : [...state.data.filter((item) => item.id !== action.payload.product.id)],
+                data: item.quantity ? getData(state, action.payload.product, "add") : [...state.data.filter((item) => item.id !== action.payload.product.id)],
                 count: action.payload.text === "" ? parseInt(state.count) - action.payload.originalQuantity : parseInt(state.count) - action.payload.originalQuantity + parseInt(action.payload.text),
                 value: (action.payload.text === "" ? parseFloat(state.value) - parseFloat(item["rate"] * action.payload.originalQuantity) : parseFloat(state.value) + parseFloat(item["rate"] * (parseInt(action.payload.text) - action.payload.originalQuantity))).toFixed(2),
                 distributorId: action.payload["distributorId"]

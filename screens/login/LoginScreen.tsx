@@ -11,6 +11,7 @@ import Indicator from '../../utils/Indicator';
 import {BorderButtonSmallRed, SolidButtonBlue} from '../../buttons/Buttons';
 import texts from "../../styles/texts";
 import commonStyles from "../../styles/commonStyles";
+import * as Updates from 'expo-updates';
 
 
 class LoginScreen extends Component {
@@ -22,6 +23,28 @@ class LoginScreen extends Component {
 
     onchangeMobile = (text:string)=>{
         this.setState({mobileNumber:text});
+    }
+
+    checkForUpdates = async () => {
+        try {
+            const update = await Updates.checkForUpdateAsync();
+            if (update.isAvailable) {
+                await Updates.fetchUpdateAsync();
+                Alert.alert(
+                    "App Updated",
+                    "App has been updated. Will restart now.",
+                    [
+                        {text: "OK", onPress: () => Updates.reloadAsync()}
+                    ]
+                );
+            }
+        } catch (e) {
+
+        }
+    }
+
+    componentDidMount() {
+        this.checkForUpdates();
     }
 
     requestOTP = ()=>{
