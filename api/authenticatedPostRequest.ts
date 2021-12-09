@@ -4,9 +4,10 @@ import PersistenceStore from "../utils/PersistenceStore";
 import {PostRequest, UploadFile} from "./postRequest";
 
 
-export const AuthenticatedPostRequest = (payload: any) => {
+export const AuthenticatedPostRequest = async (payload: any) => {
     let state = store.getState();
-    if (checkTokenValidity(state.tokens["access"], state.tokens["refresh"], state.tokens["timestamp"])) {
+    let token = await checkTokenValidity(state.tokens["access"], state.tokens["refresh"], state.tokens["timestamp"]);
+    if (token) {
         payload.header["Authorization"] = `Bearer ${state.tokens["access"]}`
         return PostRequest(payload).then((res) => {
             return res;
@@ -14,9 +15,10 @@ export const AuthenticatedPostRequest = (payload: any) => {
     }
 }
 
-export const UploadFileRequest = (payload: any) => {
+export const UploadFileRequest = async (payload: any) => {
     let state = store.getState();
-    if (checkTokenValidity(state.tokens["access"], state.tokens["refresh"], state.tokens["timestamp"])) {
+    let token = await checkTokenValidity(state.tokens["access"], state.tokens["refresh"], state.tokens["timestamp"]);
+    if (token) {
         payload.header["Authorization"] = `Bearer ${state.tokens["access"]}`
         return UploadFile(payload).then((res) => {
             return res;

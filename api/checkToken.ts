@@ -1,4 +1,4 @@
-import Moment from 'moment';
+import moment from 'moment';
 import {authApi} from "./api";
 import {PostRequest} from "./postRequest";
 import PersistenceStore from "../utils/PersistenceStore";
@@ -13,7 +13,7 @@ export const checkTokenFromStorage = () => {
             return PersistenceStore.getAccessToken().then(async (access) => {
                 if (access) {
                     // @ts-ignore
-                    let timestamp = await (new Date("2021-06-27")).toString();
+                    let timestamp = await PersistenceStore.getTimeStamp();
                     return checkTokenValidity(access, refresh, timestamp)
                 } else {
                     return false;
@@ -25,13 +25,13 @@ export const checkTokenFromStorage = () => {
     });
 }
 
-export const checkTokenValidity = (access: string, refresh: string, timestamp: string) => {
-    let now = Moment();
-    let minDiff = now.diff(new Date(timestamp), 'minutes');
+export const checkTokenValidity = (access: string, refresh: string, timestamp: any) => {
+    let now = moment().valueOf();
+    let minDiff = (now - parseInt(timestamp)) / 60000;
     if (minDiff < 29) {
         store.dispatch({
             type: 'TOKENS',
-            payload: {access: access, refresh: refresh, timestamp: (new Date()).toString()}
+            payload: {access: access, refresh: refresh, timestamp: timestamp}
         });
         return true;
     } else {
@@ -52,18 +52,19 @@ export const getNewToken = (access: string, refresh: string, timestamp: string) 
     return PostRequest(data)
         .then((res) => {
             if (res) {
-                setData(res)
+                setData(res, refresh)
                 return true;
+            } else {
+                return false;
             }
         })
 }
 
-const setData = (res)=>{
+const setData = (res, refresh) => {
     store.dispatch({
         type: 'TOKENS',
-        payload: {access: res.data.access, refresh: res.data.refresh, timestamp: (new Date()).toString()}
+        payload: {access: res.data.access, refresh: refresh, timestamp: moment().valueOf().toString()}
     });
     PersistenceStore.setAccessToken(res && res.data.access);
-    PersistenceStore.setRefreshToken(res && res.data.refresh);
-    PersistenceStore.setTimeStamp((new Date()).toString());
+    PersistenceStore.setTimeStamp(moment().valueOf().toString());
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image, Alert, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Alert,} from 'react-native';
 import colors from "../../assets/colors/colors";
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import {authApi} from "../../api/api";
@@ -14,13 +14,14 @@ import {BorderButtonSmallRed, SolidButtonBlue} from "../../buttons/Buttons";
 import texts from "../../styles/texts";
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import Constants from "expo-constants";
+import moment from 'moment';
 
 class OTPScreen extends Component {
 
 
     state = {
         isLoading: false,
-        version : Constants.manifest.version
+        version: Constants.manifest.version
     }
 
     verifyOTP = (code: string) => {
@@ -35,15 +36,19 @@ class OTPScreen extends Component {
             data: {
                 contact_no: this.props.route.params.mobile,
                 otp: code,
-                version:this.state.version
+                version: this.state.version
             },
             header: authApi.refresh.header
         }
         PostRequest(data)
             .then((res) => {
                 if (res.status == 200) {
-                    this.props.setTokens({"access": res["data"]["access"], "refresh":res["data"]["refresh"], "timestamp":(new Date()).toString()})
-                    PersistenceStore.setTimeStamp((new Date()).toString());
+                    this.props.setTokens({
+                        "access": res["data"]["access"],
+                        "refresh": res["data"]["refresh"],
+                        "timestamp": moment().valueOf().toString()
+                    })
+                    PersistenceStore.setTimeStamp(moment().valueOf().toString());
                     PersistenceStore.setAccessToken(res["data"]["access"]);
                     PersistenceStore.setRefreshToken(res["data"]["refresh"]);
                     PersistenceStore.setLandingScreen(res.data.screen);
@@ -59,28 +64,28 @@ class OTPScreen extends Component {
         this.setState({isLoading: false});
     }
 
-    requestOTP = ()=>{
-        if(!(/^\d{10}$/.test(this.props.route.params.mobile))){
+    requestOTP = () => {
+        if (!(/^\d{10}$/.test(this.props.route.params.mobile))) {
             Alert.alert('Please enter a valid mobile number');
-        }else{
-            this.setState({isLoading:true});
+        } else {
+            this.setState({isLoading: true});
             const data = {
                 method: authApi.mobileLogin.method,
                 url: authApi.mobileLogin.url,
                 data: {
-                    contact_no:this.props.route.params.mobile
+                    contact_no: this.props.route.params.mobile
                 },
-                header:authApi.refresh.header
+                header: authApi.refresh.header
             }
             PostRequest(data)
                 .then((res) => {
-                    if(res && res.status ==200){
+                    if (res && res.status == 200) {
                         // @ts-ignore
                         Alert.alert("OTP has been sent to the your contact number");
-                    }else{
+                    } else {
                         Alert.alert(res.data.error);
                     }
-                    this.setState({isLoading:false});
+                    this.setState({isLoading: false});
                 })
         }
     }
@@ -89,10 +94,10 @@ class OTPScreen extends Component {
         return <View style={styles.container}>
             <SecondaryHeader title={"Enter Otp"}/>
             <Indicator isLoading={this.state.isLoading}/>
-            <Text style={[texts.blueHeading1, {marginTop:80}]}>
+            <Text style={[texts.blueHeading1, {marginTop: 80}]}>
                 Enter Verification code
             </Text>
-            <Text style={[texts.greyNormal14,{marginTop:18}]}>
+            <Text style={[texts.greyNormal14, {marginTop: 18}]}>
                 Enter 6-digit Verification Code send to your mobile
             </Text>
             <View style={styles.mobileInputContainer}>
@@ -107,13 +112,13 @@ class OTPScreen extends Component {
                 />
             </View>
             <View style={styles.footer}>
-                <Text style={[texts.greyNormal14, {marginRight:10}]}>
+                <Text style={[texts.greyNormal14, {marginRight: 10}]}>
                     Didn't received code ?
                 </Text>
-                <BorderButtonSmallRed  ctaFunction={this.requestOTP} text={"RESEND"} />
+                <BorderButtonSmallRed ctaFunction={this.requestOTP} text={"RESEND"}/>
             </View>
-            <View style={{marginTop:60}}>
-            <SolidButtonBlue text={"CONTINUE"} ctaFunction={this.verifyOTP} />
+            <View style={{marginTop: 60}}>
+                <SolidButtonBlue text={"CONTINUE"} ctaFunction={this.verifyOTP}/>
             </View>
         </View>
     }
