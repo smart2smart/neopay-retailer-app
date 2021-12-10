@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     Image,
     Alert,
-    FlatList, RefreshControl
+    RefreshControl
 } from 'react-native';
 // @ts-ignore
 import colors from "../../assets/colors/colors";
@@ -163,7 +163,7 @@ export default function ProfileScreen(props) {
                 </View>
                 <View style={{
                     position: "relative",
-                    height: 180,
+                    height: 210,
                     paddingHorizontal: 24,
                     justifyContent: 'flex-end',
                     paddingBottom: 20
@@ -192,21 +192,21 @@ export default function ProfileScreen(props) {
                         <View style={commonStyles.rowSpaceBetween}>
                             {retailerData.address_data && retailerData.address_data.latitude != 0 ?
                                 <View>
-                                    <View style={commonStyles.rowAlignCenter}>
+                                    <View>
                                         <Text
                                             style={texts.greyTextBold14}>{retailerData.address_data.latitude.toString().substring(0, 10)}, </Text>
                                         <Text
                                             style={texts.greyTextBold14}>{retailerData.address_data.longitude.toString().substring(0, 10)}</Text>
                                     </View>
                                     <TouchableOpacity onPress={goToMapView}>
-                                        <Text style={[texts.redTextBold14, {textDecorationLine: "underline"}]}>
+                                        <Text style={[texts.redTextBold14, {textDecorationLine: "underline", paddingTop:5}]}>
                                             Change
                                         </Text>
                                     </TouchableOpacity>
                                 </View> : <View>
                                     <BlueButtonSmall ctaFunction={goToMapView} text={"Location"}/>
                                 </View>}
-                            <View>
+                            <View style={commonStyles.row}>
                                 <BorderButtonSmallRed ctaFunction={goToEditProfile} text={"Edit Profile"}/>
                             </View>
                         </View>
@@ -246,21 +246,21 @@ const style = StyleSheet.create({
     textContainer: {
         padding: 16,
         borderRadius: 5,
-        borderColor: colors.grey,
+        borderColor: colors.lightGrey,
+        borderWidth:1,
         backgroundColor: '#ffffff',
-        elevation: 2,
         position: 'absolute',
         width: Dimensions.get("window").width - 48,
         marginHorizontal: 24,
-        top: -50
+        top: -50,
+        zIndex:5000
     },
     textContainerWrapper: {
         padding: 16,
         borderRadius: 5,
-        borderColor: colors.grey,
+        borderColor: colors.lightGrey,
         backgroundColor: '#ffffff',
-        elevation: 2,
-        position: 'relative',
+        borderWidth:1,
         marginHorizontal: 24,
         width: Dimensions.get("window").width - 48,
         marginTop: 20,
