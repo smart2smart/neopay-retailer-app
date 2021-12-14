@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "106184943564",
+    "project_id": "retailer-app-b90a4",
+    "storage_bucket": "retailer-app-b90a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106184943564:android:845303f7b6f19bd88a1f69",
+        "android_client_info": {
+          "package_name": "com.simplyfi.neopay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106184943564-p987deb586kltpopbe221fapb5ncnljq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmvcFd8KV8a0U2vSaMnOduhLZ8KBi_WRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106184943564-p987deb586kltpopbe221fapb5ncnljq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

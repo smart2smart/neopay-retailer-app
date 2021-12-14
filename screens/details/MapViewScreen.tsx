@@ -31,7 +31,7 @@ export default function MapViewScreen() {
             } else {
                 let {status} = await Location.requestForegroundPermissionsAsync();
                 if (status !== 'granted') {
-                    return;
+                    Alert.alert("Permission to access location was denied");
                 }
                 let currentLocation = await Location.getLastKnownPositionAsync({});
                 let data = location;
