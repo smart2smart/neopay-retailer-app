@@ -298,7 +298,7 @@ export default function EditProfile() {
         }
         const dataToSend = {
             method: commonApi.updateRetailerProfile.method,
-            url: commonApi.updateRetailerProfile.url,
+            url: commonApi.updateRetailerProfile.url+retailerId+"/",
             header: commonApi.updateRetailerProfile.header,
             data: data
         }

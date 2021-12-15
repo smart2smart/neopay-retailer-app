@@ -6,7 +6,7 @@ const formHeader = {
 
 }
 
-const base_url = 'http://192.168.1.3:8000';
+const base_url = 'http://192.168.1.5:8000';
 //const base_url = 'http://qa-api.neopay.club';
 //const base_url = 'https://api.neopay.club';
 
@@ -45,16 +45,6 @@ export const commonApi = {
         method: 'GET',
         header: header
     },
-    retailerAddrerss : {
-        url: `${base_url}/retailers/address/`,
-        method: 'PATCH',
-        header: header
-    },
-    getBusinessInfo : {
-        url: `${base_url}/retailers/license-data/`,
-        method: 'PATCH',
-        header: header
-    },
     getPinCodeList: {
         url: `${base_url}/localities/pincode/`,
         method: 'GET',
@@ -82,7 +72,7 @@ export const commonApi = {
     },
     updateRetailerProfile:{
         header: header,
-        url: `${base_url}/retailers/profile-new/`,
+        url: `${base_url}/retailers/`,
         method: 'PATCH',
     },
     placeOrder:{

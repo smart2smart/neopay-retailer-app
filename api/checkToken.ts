@@ -39,7 +39,7 @@ export const checkTokenValidity = (access: string, refresh: string, timestamp: a
     }
 }
 
-export const getNewToken = (access: string, refresh: string, timestamp: string) => {
+export const getNewToken = (access: string, refresh: string) => {
     PersistenceStore.removeAccessToken();
     const data = {
         method: authApi.refresh.method,

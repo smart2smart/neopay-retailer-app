@@ -63,7 +63,7 @@ function BusinessInfo(props) {
         if (available) {
             let dataToSend = {
                 method: commonApi.updateRetailerProfile.method,
-                url: commonApi.updateRetailerProfile.url,
+                url: commonApi.updateRetailerProfile.url+retailerData.id+"/",
                 header: commonApi.updateRetailerProfile.header,
                 data: data
             }

@@ -33,7 +33,7 @@ export default function MapViewScreen() {
                 if (status !== 'granted') {
                     Alert.alert("Permission to access location was denied");
                 }
-                let currentLocation = await Location.getLastKnownPositionAsync({});
+                let currentLocation = await Location.getCurrentPositionAsync({});
                 let data = location;
                 data.latitude = currentLocation.coords.latitude;
                 data.longitude = currentLocation.coords.longitude;
