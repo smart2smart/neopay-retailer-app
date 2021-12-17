@@ -317,7 +317,7 @@ export default function EditProfile() {
         if (!addressId) {
             Alert.alert("Please save retailer address first.")
         } else {
-            navigation.navigate('MapViewScreen', {addressId: addressId, comingFrom: 'edit'});
+            navigation.navigate('MapViewScreen', {addressId: addressId, comingFrom: 'edit', currentLocation:location});
         }
     }
 

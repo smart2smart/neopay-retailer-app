@@ -41,48 +41,7 @@ function HomeScreen(props: any) {
     const [refreshing, setRefreshing] = useState(false);
 
 
-    const checkForUpdates = async () => {
-        try {
-            const update = await Updates.checkForUpdateAsync();
-            if (update.isAvailable) {
-                await Updates.fetchUpdateAsync();
-                Alert.alert(
-                    "App Updated",
-                    "App has been updated. Will restart now.",
-                    [
-                        {text: "OK", onPress: () => Updates.reloadAsync()}
-                    ]
-                );
-            } else {
-                openPlayStoreLink()
-            }
-        } catch (e) {
-
-        }
-    }
-
-    const openPlayStoreLink = () => {
-        VersionCheck.getLatestVersion().then(version => {
-            let update_available = false;
-            let playStoreVersion = version.split(".")
-            let appVersion = Constants.manifest.version.split(".");
-            if (parseInt(playStoreVersion[0]) > parseInt(appVersion[0])) {
-                Alert.alert(
-                    "Update App",
-                    "Please update the app to proceed further.",
-                    [
-                        {
-                            text: "OK",
-                            onPress: () => Linking.openURL('https://play.google.com/store/apps/details?id=com.simplyfi.neopay')
-                        }
-                    ]
-                );
-            }
-        })
-    }
-
     useEffect(() => {
-        checkForUpdates();
         PersistenceStore.getCart().then((data) => {
             if (data) {
                 props.newCart(JSON.parse(data));

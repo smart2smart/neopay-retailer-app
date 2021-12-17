@@ -120,7 +120,8 @@ export default function ProfileScreen(props) {
     }
 
     const goToMapView = () => {
-        navigation.navigate('MapViewScreen', {comingFrom: "profile", addressId: retailerData.address_data.id});
+        let currentLocation = {latitude:retailerData.address_data.latitude, longitude: retailerData.address_data.longitude}
+        navigation.navigate('MapViewScreen', {comingFrom: "profile", addressId: retailerData.address_data.id,  currentLocation:currentLocation});
     }
 
     const goToEditProfile = () => {

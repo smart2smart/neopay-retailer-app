@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/google-services.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/UpdateAppScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/AuthStack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/AuthStack.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/Routes.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,22 +45,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/NeopaySalesmanApp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/screens" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
+      <recent name="$PROJECT_DIR$/screens/cart" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/screens" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/screens/home" />
-      <recent name="$PROJECT_DIR$/commons" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets" />
-      <recent name="$PROJECT_DIR$/screens/cart" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -170,6 +174,9 @@
       <workItem from="1639263756987" duration="89000" />
       <workItem from="1639335763762" duration="1992000" />
       <workItem from="1639484305620" duration="1048000" />
+      <workItem from="1639603772536" duration="785000" />
+      <workItem from="1639641894373" duration="152000" />
+      <workItem from="1639733579731" duration="1378000" />
     </task>
     <servers />
   </component>
@@ -193,10 +200,10 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="347" y="159" width="672" height="677" key="run.anything.popup/0.27.1366.683@0.27.1366.683" timestamp="1637590454375" />
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1637961133567">
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1639734582816">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1637961133567" />
+    <state x="346" y="31" width="672" height="678" key="search.everywhere.popup/0.27.1366.683@0.27.1366.683" timestamp="1639734582816" />
     <state x="408" y="273" width="540" height="197" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1639484325364">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
