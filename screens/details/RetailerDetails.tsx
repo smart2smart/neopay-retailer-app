@@ -70,11 +70,8 @@ function RetailerDetails(props) {
             data: data
         }
 
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-        console.log(dataToSend)
         // @ts-ignore
         AuthenticatedPostRequest(dataToSend).then((res) => {
-            console.log(res)
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.");
                 props.setLandingScreen("address");

@@ -4,7 +4,10 @@
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/checkToken.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/checkToken.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/OrdersCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,13 +35,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="AnalyzeApkAction.lastApkPath" value="$USER_HOME$/Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
+    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/../Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/NeopaySalesmanApp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NeopaySalesmanApp" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
@@ -169,6 +172,7 @@
       <workItem from="1639484305620" duration="1048000" />
       <workItem from="1639502378530" duration="2408000" />
       <workItem from="1639564600534" duration="422000" />
+      <workItem from="1639832576241" duration="5035000" />
     </task>
     <servers />
   </component>
@@ -176,18 +180,22 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1639565021217">
+    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1639837510643">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1639565021217" />
+    <state x="141" y="27" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1366.683@0.27.1366.683" timestamp="1639837510643" />
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl" timestamp="1639834189064">
+      <screen x="0" y="27" width="1366" height="683" />
+    </state>
+    <state x="466" y="126" width="663" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1639834189064" />
     <state x="100" y="127" width="1166" height="483" key="dock-window-1" timestamp="1637835516418">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="100" y="127" width="1166" height="483" key="dock-window-1/0.27.1366.683@0.27.1366.683" timestamp="1637835516418" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1639335771080">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1639837496594">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1639335771080" />
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1639837496594" />
     <state x="347" y="159" width="672" height="677" key="run.anything.popup" timestamp="1637590454375">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

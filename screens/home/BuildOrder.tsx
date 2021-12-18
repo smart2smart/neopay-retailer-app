@@ -87,14 +87,13 @@ function BuildOrder(props) {
 
     useEffect(() => {
         if (route.params) {
-            if(route.params.productData) {
+            if (route.params.productData) {
                 setProductsData(route.params.productData);
                 setOriginalProductsData(route.params.productData);
-                if (cart.data.length > 0) {
-                    matchQuantityWithCart(route.params.productData)
-                }
+                matchQuantityWithCart(route.params.productData)
+                matchQuantityWithCart(route.params.productData)
             }
-        }else{
+        } else {
             getProductsData();
         }
     }, []);
@@ -109,6 +108,8 @@ function BuildOrder(props) {
             item.data.forEach((itm) => {
                 if (data[itm.id]) {
                     itm["quantity"] = data[itm.id]
+                } else {
+                    itm["quantity"] = 0;
                 }
             })
         })
@@ -168,7 +169,10 @@ function BuildOrder(props) {
 
                         },
                     },
-                    {text: 'No', onPress: () => {}},
+                    {
+                        text: 'No', onPress: () => {
+                        }
+                    },
                 ],
                 {cancelable: false},
             );
@@ -412,12 +416,12 @@ const styles = StyleSheet.create({
         borderColor: colors.grey,
         borderRadius: 5
     },
-    textInput:{
-        borderWidth:1,
-        borderColor:colors.greyFaded,
-        width:'100%',
-        height:36,
-        paddingLeft:10,
-        borderRadius:5
+    textInput: {
+        borderWidth: 1,
+        borderColor: colors.greyFaded,
+        width: '100%',
+        height: 36,
+        paddingLeft: 10,
+        borderRadius: 5
     },
 })
