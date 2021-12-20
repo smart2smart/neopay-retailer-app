@@ -5,9 +5,9 @@ import MapView from 'react-native-maps';
 import {Marker} from 'react-native-maps';
 import {SolidButtonBlue} from "../../buttons/Buttons";
 import {useNavigation, useRoute} from "@react-navigation/native";
-import Indicator from "../../utils/Indicator";
 import * as Location from 'expo-location';
 import * as IntentLauncher from "expo-intent-launcher";
+import {Accuracy} from "expo-location";
 
 
 export default function MapViewScreen() {
@@ -15,7 +15,6 @@ export default function MapViewScreen() {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const [loading, setIsLoading] = useState(true);
     const [location, setLocation] = useState({
         latitude: 28.644800,
         longitude: 77.216721,
@@ -25,61 +24,90 @@ export default function MapViewScreen() {
 
     const appState = useRef(AppState.currentState);
 
-    const openSettings = ()=>{
+    const openSettings = () => {
         IntentLauncher.startActivityAsync(IntentLauncher.ACTION_LOCATION_SOURCE_SETTINGS);
+    }
+
+    const openAppSettings = () => {
+        IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS, {data: 'package:com.simplyfi.neopay'},);
     }
 
     const _handleAppStateChange = nextAppState => {
         if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-            getLocation();
+            turnLocationServicesOn();
         }
         appState.current = nextAppState;
     };
 
     useEffect(() => {
         getLocation();
-    }, []);
+    }, [])
 
-
-    const getLocation = ()=>{
-        (async () => {
-            let locationEnabled = await Location.hasServicesEnabledAsync();
-            if (!locationEnabled) {
-                Alert.alert(
-                    'Location Disabled',
-                    'Please turn on your location for this service',
-                    [
-                        {
-                            text: 'Ok',
-                            onPress: () => {
-                                openSettings()
-                            },
+    const turnLocationServicesOn = async () => {
+        let locationEnabled = await Location.hasServicesEnabledAsync();
+        if (!locationEnabled) {
+            Alert.alert(
+                'Location Disabled',
+                'Please turn on your location for this service',
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => {
+                            openSettings()
                         },
-                        {text: 'Cancel', onPress: () => {
-                                navigation.goBack();
-                            }},
-                    ],
-                    {cancelable: false},
-                );
-            } else {
-                let {status} = await Location.requestForegroundPermissionsAsync();
-                if (status !== 'granted') {
-                    Alert.alert("Permission to access location was denied");
-                    return;
-                }
-                let currentLocation = await Location.getCurrentPositionAsync({});
-                let data = location;
-                if(route.params.currentLocation){
-                    data.latitude = route.params.currentLocation.latitude;
-                    data.longitude = route.params.currentLocation.longitude;
-                }else{
-                    data.latitude = currentLocation.coords.latitude;
-                    data.longitude = currentLocation.coords.longitude;
-                }
-                setLocation(data);
-                setIsLoading(false);
-            }
-        })();
+                    },
+                    {
+                        text: 'Cancel', onPress: () => {
+                            navigation.goBack();
+                        }
+                    },
+                ],
+                {cancelable: false},
+            );
+        }
+    }
+
+    const openSettingsDialog = () => {
+        Alert.alert(
+            'Permission Needed',
+            'In order to use location feature, you must allow location permissions. You can grant permissions in settings app.',
+            [
+                {
+                    text: 'GO TO SETTINGS',
+                    onPress: () => {
+                        openAppSettings();
+                    },
+                },
+                {
+                    text: 'CANCEL', onPress: () => {
+
+                    }
+                },
+            ],
+            {cancelable: false},
+        );
+        navigation.goBack();
+    }
+
+
+    const getLocation = async () => {
+        let result = await Location.requestForegroundPermissionsAsync();
+        let {status} = result
+        console.log(result)
+        if (status !== 'granted') {
+            openSettingsDialog()
+            return;
+        }
+        let currentLocation = await Location.getCurrentPositionAsync({accuracy: Accuracy.Highest});
+        let data = location;
+        if (route.params.currentLocation) {
+            data.latitude = route.params.currentLocation.latitude;
+            data.longitude = route.params.currentLocation.longitude;
+        } else {
+            data.latitude = currentLocation.coords.latitude;
+            data.longitude = currentLocation.coords.longitude;
+        }
+        setLocation(data);
     }
 
 
@@ -111,8 +139,7 @@ export default function MapViewScreen() {
             <View style={{paddingHorizontal: 24, paddingBottom: 10}}>
                 <SecondaryHeader title={"Select Location"}/>
             </View>
-            <Indicator isLoading={loading}/>
-            {!loading ? <MapView
+            <MapView
                 style={style.map}
                 region={{
                     latitude: location.latitude,
@@ -130,7 +157,7 @@ export default function MapViewScreen() {
                     }}
                 >
                 </Marker>
-            </MapView> : null}
+            </MapView>
             <View style={style.btnContainer}>
                 <SolidButtonBlue ctaFunction={selectLocation} text={"Select Location"}/>
             </View>
