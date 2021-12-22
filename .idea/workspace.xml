@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="635c5672-a5b5-45d0-9053-a988318a3e6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/VerificationPending.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/VerificationPending.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/details/MapViewScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,13 +33,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/../Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
+    <property name="AnalyzeApkAction.lastApkPath" value="$USER_HOME$/Downloads/neopay-retailer-app-e1b89209e85b4661a224fbad7714812f-signed.apk" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/screens" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
@@ -169,6 +171,7 @@
       <workItem from="1639603772536" duration="785000" />
       <workItem from="1639641894373" duration="152000" />
       <workItem from="1639733579731" duration="1378000" />
+      <workItem from="1640200301135" duration="1220000" />
     </task>
     <servers />
   </component>
@@ -184,14 +187,14 @@
       <screen x="0" y="27" width="1366" height="683" />
     </state>
     <state x="100" y="127" width="1166" height="483" key="dock-window-1/0.27.1366.683@0.27.1366.683" timestamp="1637835516418" />
-    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1639335771080">
+    <state x="388" y="117" width="741" height="560" key="find.popup" timestamp="1640201287584">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1639335771080" />
-    <state x="347" y="159" width="672" height="677" key="run.anything.popup" timestamp="1637590454375">
+    <state x="388" y="117" width="741" height="560" key="find.popup/0.27.1366.683@0.27.1366.683" timestamp="1640201287584" />
+    <state x="347" y="159" width="672" height="677" key="run.anything.popup" timestamp="1640200870018">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="347" y="159" width="672" height="677" key="run.anything.popup/0.27.1366.683@0.27.1366.683" timestamp="1637590454375" />
+    <state x="347" y="159" width="672" height="677" key="run.anything.popup/0.27.1366.683@0.27.1366.683" timestamp="1640200870018" />
     <state x="346" y="31" width="672" height="678" key="search.everywhere.popup" timestamp="1639734582816">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

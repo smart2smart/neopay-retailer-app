@@ -1,6 +1,6 @@
 // import * as React from 'react';
 import React, {Component, useEffect, useState} from 'react';
-import {View, StyleSheet, Text, FlatList, Image, Alert} from "react-native";
+import {View, StyleSheet, Text, FlatList, Image, Alert, ScrollView, RefreshControl} from "react-native";
 import texts from "../styles/texts";
 import PrimaryHeader from "../headers/PrimaryHeader";
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
@@ -13,6 +13,9 @@ import PersistenceStore from "../utils/PersistenceStore";
 export default function VerificationPending(props:any) {
 
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const [refreshing, setRefreshing] = useState(false);
 
     const LogOut = () => {
         Alert.alert(
@@ -35,7 +38,12 @@ export default function VerificationPending(props:any) {
     };
 
     return(
-        <View style={{flex: 1}}>
+        <ScrollView refreshControl={
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={()=>{route.params.retailerDetails()}}
+            />
+        } contentContainerStyle={{flex: 1}}>
             <PrimaryHeader logout={LogOut} type={"verification"} navigation={props.navigation}/>
             <View style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:24}}>
                 <Text style={texts.blackTextBold18}>
@@ -45,7 +53,7 @@ export default function VerificationPending(props:any) {
                     Please wait for profile verification to use the app.
                 </Text>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 

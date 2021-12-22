@@ -93,7 +93,6 @@ export default function MapViewScreen() {
     const getLocation = async () => {
         let result = await Location.requestForegroundPermissionsAsync();
         let {status} = result
-        console.log(result)
         if (status !== 'granted') {
             openSettingsDialog()
             return;

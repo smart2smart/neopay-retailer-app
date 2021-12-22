@@ -80,7 +80,7 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
             linking={LinkingConfiguration}
             theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             {initialScreen === "Home" ? (verificationStatus == 2 || verificationStatus == 3) ? <RootNavigator/> :
-                <UserUnverifiedNavigator/> : <ProfileNavigator initialScreen={initialScreen}/>}
+                <UserUnverifiedNavigator retailerDetails={retailerDetails} /> : <ProfileNavigator initialScreen={initialScreen}/>}
         </NavigationContainer>
     );
 }
@@ -127,7 +127,7 @@ function ProfileNavigator(props) {
 function UserUnverifiedNavigator(props) {
     return (
         <UserUnverifiedStack.Navigator initialRouteName={props.initialScreen} screenOptions={{headerShown: false}}>
-            <UserUnverifiedStack.Screen name="VerificationPending" component={VerificationPending}/>
+            <UserUnverifiedStack.Screen initialParams={{retailerDetails:props.retailerDetails}} name="VerificationPending" component={VerificationPending}/>
         </UserUnverifiedStack.Navigator>
     );
 }
