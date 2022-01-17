@@ -22,7 +22,7 @@ function OrdersCard(props: any) {
 
     }
 
-    props.data.products.map((item) => {
+    props.data.product_list.map((item) => {
         itemString += item.name + ' x ' + item.value + ' Units' + ", ";
     })
 
@@ -79,13 +79,13 @@ function OrdersCard(props: any) {
             <View style={[commonStyles.rowSpaceBetween, {paddingTop: 10}]}>
                 <View style={commonStyles.row}>
                     <TouchableOpacity onPress={() => {
-                        callRetailer(props.data.supplier_no)
+                        callRetailer(props.data.distributor_contact)
                     }} style={[commonStyles.borderButtonSmallBlue, {flexDirection: 'row', alignItems:"center"}]}>
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
                         <Text style={texts.primaryTextBold12}> Supplier</Text>
                     </TouchableOpacity>
                     {props.data.salesman ? <TouchableOpacity onPress={() => {
-                        callRetailer(props.data.salesman_no)
+                        callRetailer(props.data.salesman_contact)
                     }} style={[commonStyles.borderButtonSmallBlue, {flexDirection: "row", marginLeft: 10}]}>
                         <Icon name="phone" size={14} color={colors.primaryThemeColor}/>
                         <Text style={texts.primaryTextBold12}> Salesman</Text>

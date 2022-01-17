@@ -130,15 +130,15 @@ function AddressDetails(props) {
 
         let dataToSend = {
             method: commonApi.updateRetailerProfile.method,
-            url: commonApi.updateRetailerProfile.url,
+            url: commonApi.updateRetailerProfile.url+retailerData.id+"/",
             header: commonApi.updateRetailerProfile.header,
             data: data
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {
             if (res.status == 200) {
                 Alert.alert("Details updated successfully.");
-                props.setLandingScreen("license");
-                PersistenceStore.setLandingScreen("license");
+                // props.setLandingScreen("license");
+                // PersistenceStore.setLandingScreen("license");
                 navigation.navigate("BusinessInfo")
             }
         })

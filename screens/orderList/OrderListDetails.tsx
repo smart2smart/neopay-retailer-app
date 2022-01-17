@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Text,
     View,
@@ -14,11 +14,14 @@ import {useFocusEffect, useRoute} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/Feather';
 import {BorderButtonSmallBlue} from "../../buttons/Buttons";
 import * as WebBrowser from 'expo-web-browser';
+import {commonApi} from "../../api/api";
+import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 
 export default function OrderListDetails() {
 
     const route = useRoute();
     const [orderDetails, setOrderDetails] = useState(route.params.orderDetailsData);
+    const [retailerDetails, setRetailerDetails] = useState({});
 
 
     const setOrderData = (data) => {
@@ -30,6 +33,24 @@ export default function OrderListDetails() {
             setOrderData(route.params.orderDetailsData);
         }, [])
     );
+
+    useEffect(()=>{
+        getRetailerDetails();
+    }, [])
+
+    const getRetailerDetails = () => {
+        const data = {
+            method: commonApi.getRetailerDetails.method,
+            url: commonApi.getRetailerDetails.url,
+            header: commonApi.getRetailerDetails.header
+        }
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res.data) {
+                setRetailerDetails(res.data)
+            }
+        })
+
+    }
 
     const downloadInvoice = (invoiceUrl) => {
         if (invoiceUrl) {
@@ -56,7 +77,7 @@ export default function OrderListDetails() {
                             </View>
                             <View>
                                 <Text style={[texts.darkGreyTextBold16, {paddingTop: 10}]}>
-                                    {orderDetails.retailer_name}
+                                    {retailerDetails.name}
                                 </Text>
                             </View>
                         </View>
@@ -65,7 +86,7 @@ export default function OrderListDetails() {
                         style={[commonStyles.rowAlignCenter, styles.borderBottom, {paddingTop: 10, paddingBottom: 20}]}>
                         <Icon name="map-pin" size={18} color={colors.primary_color}/>
                         <Text style={[texts.greyNormal14, {marginLeft: 10}]}>
-                            {orderDetails.retailer_address}
+                            {retailerDetails.address_str}
                         </Text>
                     </View>
                     <View>
@@ -77,7 +98,7 @@ export default function OrderListDetails() {
                                 Quantity
                             </Text>
                         </View>
-                        {orderDetails.products.map((item, index) => {
+                        {orderDetails.product_list.map((item, index) => {
                             return (<View key={item.name + '' + index}
                                           style={[styles.productListItem, styles.borderBottom]}>
                                 <View>
@@ -115,7 +136,7 @@ export default function OrderListDetails() {
                                 {"Order Value: "}
                             </Text>
                             <Text style={texts.primaryTextBold14}>
-                                Rs {orderDetails.order_value}
+                                Rs {parseFloat(orderDetails.order_value).toFixed(2)}
                             </Text>
                         </View>
                     </View>

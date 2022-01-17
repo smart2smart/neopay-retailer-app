@@ -52,6 +52,7 @@ function Cart(props: any) {
     const [discount, setDiscount] = useState(0);
     const [loading, setLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
+    const retailerData = useSelector((state: any) => state.retailerDetails);
 
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
@@ -108,7 +109,7 @@ function Cart(props: any) {
             data: {
                 products: JSON.stringify(products),
                 distributor: distributor.user,
-                retailer: 534
+                retailer: retailerData.id
             }
         }
         AuthenticatedPostRequest(dataToSend).then((res) => {

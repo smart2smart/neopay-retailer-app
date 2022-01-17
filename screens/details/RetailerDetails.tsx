@@ -33,7 +33,6 @@ function RetailerDetails(props) {
     const [emailId, setEmailId] = useState('');
     const [storeName, setStoreName] = useState('');
     const [contactPersonName, setContactPersonName] = useState('');
-    const [contactNumber, setContactNumber] = useState('');
     const [image, setImage] = useState('');
 
     useEffect(() => {
@@ -60,14 +59,13 @@ function RetailerDetails(props) {
         const data = {
             name: storeName,
             contact_person_name: contactPersonName,
-            contact_no: contactNumber,
             email: emailId,
         }
         let dataToSend = {}
 
         dataToSend = {
             method: commonApi.updateRetailerProfile.method,
-            url: commonApi.updateRetailerProfile.url,
+            url: commonApi.updateRetailerProfile.url+retailerData.id+"/",
             header: commonApi.updateRetailerProfile.header,
             data: data
         }
