@@ -2,7 +2,7 @@
   "expo": {
     "name": "NeoMart",
     "slug": "neopay-retailer-app",
-    "version": "3.1.1",
+    "version": "5.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "myapp",
@@ -26,7 +26,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 27,
+      "versionCode": 29,
       "permissions": [
         "CAMERA",
         "READ_INTERNAL_STORAGE",

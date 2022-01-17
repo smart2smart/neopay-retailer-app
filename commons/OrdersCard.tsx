@@ -19,6 +19,7 @@ function OrdersCard(props: any) {
         "delivered": {backgroundColor: colors.green},
         "rejected": {backgroundColor: colors.red},
         "returned": {backgroundColor: colors.red},
+        "cancelled": {backgroundColor: colors.red},
 
     }
 
