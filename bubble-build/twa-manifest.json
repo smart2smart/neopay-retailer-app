@@ -1,0 +1,41 @@
+{
+  "packageId": "club.neopay.neomart.twa",
+  "host": "neomart.neopay.club",
+  "name": "NeoMart",
+  "launcherName": "NeoMart",
+  "display": "standalone",
+  "themeColor": "#FFFFFF",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#FFFFFF",
+  "enableNotifications": true,
+  "startUrl": "/?utm_source=web_app_manifest",
+  "iconUrl": "https://neomart.neopay.club/static/media/neomart_logo.940ec25a.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "/home/aditya/neopay-retailer-app/bubble-build/android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "1",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://neomart.neopay.club/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "appVersion": "1"
+}

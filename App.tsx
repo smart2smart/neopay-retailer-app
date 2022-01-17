@@ -6,6 +6,7 @@ import Routes from "./navigation/Routes";
 import colors from "./assets/colors/colors";
 import {StatusBar} from "expo-status-bar";
 import {SafeAreaView} from "react-native";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -24,3 +25,8 @@ export default function App() {
     )
   }
 }
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://cra.link/PWA
+serviceWorkerRegistration.register();

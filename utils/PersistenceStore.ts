@@ -1,4 +1,4 @@
-import {AsyncStorage} from "react-native";
+import AsyncStorage from '@callstack/async-storage';
 
 class PersistenceStore {
     static async getAccessToken() {

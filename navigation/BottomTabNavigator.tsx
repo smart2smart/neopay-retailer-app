@@ -1,15 +1,18 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
+import {lazy} from "react";
 import Entypo from 'react-native-vector-icons/Entypo';
 import Octicons from 'react-native-vector-icons/Octicons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useColorScheme from '../hooks/useColorScheme';
 import colors from "../assets/colors/colors";
-import Cart from "../screens/cart/Cart";
-import HomeScreen from "../screens/home/HomeScreen";
-import ProfileScreen from "../screens/profile/ProfileScreen";
-import OrderList from "../screens/orderList/OrderList";
+
+
+const Cart = lazy(() => import('../screens/cart/Cart'));
+const HomeScreen = lazy(() => import('../screens/home/HomeScreen'));
+const ProfileScreen = lazy(() => import('../screens/profile/ProfileScreen'));
+const OrderList = lazy(() => import('../screens/orderList/OrderList'));
 
 const BottomTabsStack = createBottomTabNavigator();
 

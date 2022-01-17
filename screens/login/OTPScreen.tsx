@@ -15,6 +15,7 @@ import texts from "../../styles/texts";
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import Constants from "expo-constants";
 import moment from 'moment';
+import commonStyles from "../../styles/commonStyles";
 
 class OTPScreen extends Component {
 
@@ -117,7 +118,7 @@ class OTPScreen extends Component {
                 </Text>
                 <BorderButtonSmallRed ctaFunction={this.requestOTP} text={"RESEND"}/>
             </View>
-            <View style={{marginTop: 60}}>
+            <View style={[{marginTop: 60}, commonStyles.rowAlignCenter]}>
                 <SolidButtonBlue text={"CONTINUE"} ctaFunction={this.verifyOTP}/>
             </View>
         </View>

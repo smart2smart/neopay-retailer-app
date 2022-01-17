@@ -16,19 +16,13 @@ import colors from "../../assets/colors/colors";
 import {useNavigation} from "@react-navigation/native";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
-import VersionCheck from 'react-native-version-check-expo';
-import * as Linking from 'expo-linking';
-import * as Updates from 'expo-updates';
-import Constants from "expo-constants";
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BorderButtonSmallBlue} from "../../buttons/Buttons";
 import CompanyList from "./CompanyList";
-import Indicator from "../../utils/Indicator";
 import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
 import moment from "moment";
-import RenderCarousel from "./Carousel";
 
 
 function HomeScreen(props: any) {
@@ -39,6 +33,7 @@ function HomeScreen(props: any) {
     const [bannerData, setBannerData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
 
 
     useEffect(() => {
@@ -178,7 +173,6 @@ function HomeScreen(props: any) {
                         style={styles.textInput}>
                     </TextInput>
                 </TouchableOpacity>
-                {bannerData.length ? <RenderCarousel bannerData={bannerData}/> : null}
                 {orderData.length > 0 ? <View style={{backgroundColor: colors.white}}>
                     <View style={[commonStyles.rowSpaceBetween, {paddingHorizontal: 16, paddingTop: 10}]}>
                         <View>

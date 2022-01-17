@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Feather";
 import React from "react";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../store/mapStateToProps";
-import {addToCart, updateCartAdd, updateCartSubtract} from "../actions/actions";
+import {updateCartAdd, updateCartSubtract} from "../actions/actions";
 import {useNavigation} from "@react-navigation/native";
 
 
@@ -48,7 +48,7 @@ function CartButton() {
 
 export default connect(
     mapStateToProps,
-    {addToCart, updateCartAdd, updateCartSubtract}
+    {updateCartAdd, updateCartSubtract}
 )(CartButton);
 
 const styles = StyleSheet.create({

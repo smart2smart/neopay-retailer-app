@@ -1,5 +1,5 @@
-import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
+import {FontDisplay} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 
@@ -14,9 +14,9 @@ export default function useCachedResources() {
 
         // Load fonts
         await Font.loadAsync({
-          GothamBook: require('../assets/fonts/GothamBook.ttf'),
-          GothamMedium: require('../assets/fonts/GothamMedium.ttf'),
-          GothamBold: require('../assets/fonts/GothamBold.ttf'),
+          GothamBook: {uri:require('../assets/fonts/GothamBook.ttf'), display:FontDisplay.SWAP},
+          GothamMedium: {uri:require('../assets/fonts/GothamMedium.ttf'), display:FontDisplay.SWAP},
+          GothamBold: {uri:require('../assets/fonts/GothamBold.ttf'), display:FontDisplay.SWAP},
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

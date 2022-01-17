@@ -1,0 +1,14 @@
+com/simplyfi/neopay/DelegationService.java
+ com.simplyfi.neopay.DelegationService
+club/neopay/neomart/twa/BuildConfig.java
+ club.neopay.neomart.twa.BuildConfig
+club/neopay/neomart/twa/DelegationService.java
+ club.neopay.neomart.twa.DelegationService
+club/neopay/neomart/twa/Application.java
+ club.neopay.neomart.twa.Application
+com/simplyfi/neopay/Application.java
+ com.simplyfi.neopay.Application
+club/neopay/neomart/twa/LauncherActivity.java
+ club.neopay.neomart.twa.LauncherActivity
+com/simplyfi/neopay/LauncherActivity.java
+ com.simplyfi.neopay.LauncherActivity

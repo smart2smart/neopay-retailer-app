@@ -1,40 +1,34 @@
-/**
- * If you are not familiar with React Navigation, check out the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
+import {lazy, Suspense} from 'react';
 import {ColorSchemeName} from 'react-native';
-
-import NotFoundScreen from '../screens/NotFoundScreen';
 import {RootStackParamList} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import RetailerDetails from '../screens/details/RetailerDetails';
-import BusinessInfo from '../screens/details/BusinessInfo';
-import Drawer from "./Drawer";
-import UploadImage from "../screens/details/UploadImage";
-import EditProfile from "../screens/profile/EditProfile";
-import {connect, useSelector} from "react-redux";
-import AddressDetails from "../screens/details/AddressDetails";
-import MapViewScreen from "../screens/details/MapViewScreen";
-import ProductDescription from "../screens/productDetails/ProductDescription";
-import NeoCash from "../screens/neoCash/NeoCash";
-import Offer from "../screens/offer/Offer";
-import OfferDetails from "../screens/offer/OfferDetails";
-import OrderListDetails from "../screens/orderList/OrderListDetails";
 import {setLandingScreen} from "../actions/actions";
 import mapStateToProps from "../store/mapStateToProps";
 import {commonApi} from "../api/api";
 import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
 import store from "../store/store";
 import {useEffect, useState} from "react";
-import VerificationPending from "../screens/VerificationPending";
-import SelectDistributor from "../screens/home/SelectDistributor";
-import BrandList from "../screens/home/BrandList";
-import BuildOrder from "../screens/home/BuildOrder";
+import {connect, useSelector} from "react-redux";
 
+const RetailerDetails = lazy(() => import('../screens/details/RetailerDetails'));
+const BusinessInfo = lazy(() => import('../screens/details/BusinessInfo'));
+const UploadImage = lazy(() => import('../screens/details/UploadImage'));
+const EditProfile = lazy(() => import('../screens/profile/EditProfile'));
+const AddressDetails = lazy(() => import('../screens/details/AddressDetails'));
+const MapViewScreen = lazy(() => import('../screens/details/MapViewScreen'));
+const ProductDescription = lazy(() => import('../screens/productDetails/ProductDescription'));
+const NeoCash = lazy(() => import('../screens/neoCash/NeoCash'));
+const Offer = lazy(() => import('../screens/offer/Offer'));
+const OfferDetails = lazy(() => import('../screens/offer/OfferDetails'));
+const OrderListDetails = lazy(() => import('../screens/orderList/OrderListDetails'));
+const VerificationPending = lazy(() => import('../screens/VerificationPending'));
+const SelectDistributor = lazy(() => import('../screens/home/SelectDistributor'));
+const BrandList = lazy(() => import('../screens/home/BrandList'));
+const BuildOrder = lazy(() => import('../screens/home/BuildOrder'));
+const Drawer = lazy(() => import('./Drawer'));
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
     const [verificationStatus, setVerificationStatus] = useState(1);
@@ -80,7 +74,7 @@ function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
             linking={LinkingConfiguration}
             theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             {initialScreen === "Home" ? (verificationStatus == 2 || verificationStatus == 3) ? <RootNavigator/> :
-                <UserUnverifiedNavigator retailerDetails={retailerDetails} /> : <ProfileNavigator initialScreen={initialScreen}/>}
+                <UserUnverifiedNavigator/> : <ProfileNavigator initialScreen={initialScreen}/>}
         </NavigationContainer>
     );
 }
@@ -93,9 +87,9 @@ const UserUnverifiedStack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator(props) {
     return (
+        <Suspense fallback={<div>Loading... </div>}>
         <RootStack.Navigator screenOptions={{headerShown: false}}>
             <RootStack.Screen key={"HomeScreen"} options={{headerShown:false}} name={"HomeScreen"} component={Drawer}/>
-            <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{title: 'Oops!'}}/>
             <RootStack.Screen name="MapViewScreen" component={MapViewScreen}/>
             <RootStack.Screen name="EditProfile" component={EditProfile}/>
             <RootStack.Screen name="UploadImage" component={UploadImage}/>
@@ -108,11 +102,13 @@ function RootNavigator(props) {
             <RootStack.Screen name="BrandList" component={BrandList}/>
             <RootStack.Screen name="BuildOrder" component={BuildOrder}/>
         </RootStack.Navigator>
+        </Suspense>
     );
 }
 
 function ProfileNavigator(props) {
     return (
+        <Suspense fallback={<div>Loading... </div>}>
         <ProfileStack.Navigator initialRouteName={props.initialScreen} screenOptions={{headerShown: false}}>
             <ProfileStack.Screen name="RetailerDetails" component={RetailerDetails}/>
             <ProfileStack.Screen name="AddressDetails" component={AddressDetails}/>
@@ -120,17 +116,19 @@ function ProfileNavigator(props) {
             <ProfileStack.Screen name="MapViewScreen" component={MapViewScreen}/>
             <ProfileStack.Screen name="UploadImage" component={UploadImage}/>
         </ProfileStack.Navigator>
+        </Suspense>
     );
 }
 
 
 function UserUnverifiedNavigator(props) {
     return (
+        <Suspense fallback={<div>Loading... </div>}>
         <UserUnverifiedStack.Navigator initialRouteName={props.initialScreen} screenOptions={{headerShown: false}}>
-            <UserUnverifiedStack.Screen initialParams={{retailerDetails:props.retailerDetails}} name="VerificationPending" component={VerificationPending}/>
+            <UserUnverifiedStack.Screen name  ="VerificationPending" component={VerificationPending}/>
         </UserUnverifiedStack.Navigator>
+        </Suspense>
     );
 }
 
 export default connect(mapStateToProps, {setLandingScreen})(Navigation)
-

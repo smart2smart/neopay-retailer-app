@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.simplyfi.neopay",
+    "sha256_cert_fingerprints":
+    ["62:29:49:90:82:F6:14:1C:AB:57:98:B7:44:3A:D3:DC:FE:85:28:40:3F:63:BC:7B:10:62:E5:42:74:71:70:3E"]
+  }
+}]

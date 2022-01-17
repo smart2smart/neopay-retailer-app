@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image, TextInput, Alert} from 'react-native';
+import {Text, View, StyleSheet, Image, TextInput, Alert, KeyboardAvoidingView} from 'react-native';
 import colors from "../../assets/colors/colors";
 import {setIsLoggedIn, setTokens} from "../../actions/actions";
 // @ts-ignore
@@ -75,7 +75,7 @@ class LoginScreen extends Component {
 
     render(){
         return(
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior={"padding"} style={styles.container}>
                 <Indicator isLoading={this.state.isLoading}/>
                 <View>
                     <Image style={styles.logo} resizeMode={"contain"} source={require('../../assets/images/neomart_logo.png')} />
@@ -112,7 +112,7 @@ class LoginScreen extends Component {
                     </Text>
                     <BorderButtonSmallRed text={"HELP"} />
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

@@ -166,7 +166,7 @@ export default function ProfileScreen(props) {
                     position: "relative",
                     height: 210,
                     paddingHorizontal: 24,
-                    justifyContent: 'flex-end',
+                    justifyContent: 'center',
                     paddingBottom: 20
                 }}>
                     <View style={style.textContainer}>
@@ -252,7 +252,6 @@ const style = StyleSheet.create({
         backgroundColor: '#ffffff',
         position: 'absolute',
         width: Dimensions.get("window").width - 48,
-        marginHorizontal: 24,
         top: -50,
         zIndex:5000
     },

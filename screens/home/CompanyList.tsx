@@ -245,7 +245,7 @@ function CompanyList(props) {
                                                                    type={"category"} title={"Categories"}
                                                                    data={categoryData}
                                                                    renderItem={RenderCompanyCard}/> : null}
-                            <View style={{marginTop: 20}}>
+                            <View style={[{marginTop: 20}, commonStyles.row]}>
                                 <BorderButtonBigBlue ctaFunction={goToBuildOrder} text={"All Products"}/>
                             </View>
                         </View>
