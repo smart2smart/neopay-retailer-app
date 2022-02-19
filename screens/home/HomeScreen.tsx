@@ -54,13 +54,13 @@ function HomeScreen(props: any) {
     const getOrders = () => {
         const data = {
             method: commonApi.getOrderList.method,
-            url: commonApi.getOrderList.url,
+            url: commonApi.getOrderList.url+"?limit=10&offset=0",
             header: commonApi.getOrderList.header,
         }
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
             if (res.status == 200) {
-                let data = res.data.filter((item) => {
+                let data = res.data.results.filter((item) => {
                     return item.status == "ordered" || item.status == "accepted"
                 })
                 setOrderData(data)
@@ -192,6 +192,7 @@ function HomeScreen(props: any) {
                     </View>
                     <View style={{paddingVertical: 10, paddingRight: 16}}>
                         <FlatList
+                            keyExtractor={(item, index) => item.id + "" + index}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
                             data={orderData}

@@ -13,6 +13,7 @@ import mapStateToProps from "../../store/mapStateToProps";
 import {connect, useSelector} from "react-redux";
 import PrimaryHeader from "../../headers/PrimaryHeader";
 
+let timeout: any = null;
 function OrderList(props) {
     const navigation = useNavigation();
     const [searchText, setSearchText] = useState('');
@@ -20,37 +21,62 @@ function OrderList(props) {
     const [refreshing, setRefreshing] = useState(false);
     const [originalOrdersData, setOriginalOrdersData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [next, setNext] = useState(null);
+    const [count, setCount] = useState(0);
+    const distributorId = useSelector((state: any) => state.distributor.user);
 
     const searchOrders = (text: string) => {
-        if (text !== '') {
-            let data = originalOrdersData.filter((item) => {
-                return item.retailer_name.toLowerCase().includes(text.toLowerCase()) ||
-                    item.salesman_name.toLowerCase().includes(text.toLowerCase())
-            })
-            setOrdersData(data);
-            setSearchText(text);
-        } else {
-            setOrdersData(originalOrdersData);
-            setSearchText(text);
+        setSearchText(text);
+        if (timeout) {
+            clearTimeout(timeout)
         }
+        timeout = setTimeout(() => {
+            if (text != "") {
+                const data = {
+                    method: commonApi.getOrderList.method,
+                    url: commonApi.getOrderList.url + "?distributor_id=" + distributorId + "&search=" + text,
+                    header: commonApi.getOrderList.header,
+                }
+                AuthenticatedGetRequest(data).then((res) => {
+                    setOrdersData(res.data.results);
+                })
+            } else {
+                setOrdersData(originalOrdersData);
+            }
+        }, 500);
     }
 
     useEffect(() => {
-        getOrderData();
+        getOrderData(false);
     }, []);
 
-    const getOrderData = () => {
+    const getOrderData = (paginate) => {
+        let url = "";
+        if (searchText !== "") {
+            return;
+        }
+        if (paginate) {
+            if (count === ordersData.length) {
+                return;
+            }
+            url = next
+        } else {
+            url = commonApi.getOrderList.url + "?limit=10&offset=0";
+        }
+
         const data = {
             method: commonApi.getOrderList.method,
-            url: commonApi.getOrderList.url,
+            url: url,
             header: commonApi.getOrderList.header,
         }
         setIsLoading(true);
         AuthenticatedGetRequest(data).then((res) => {
             setRefreshing(false);
             setIsLoading(false);
-            setOrdersData(res.data);
-            setOriginalOrdersData(res.data);
+            setCount(res.data.count);
+            setNext(res.data.next);
+            setOrdersData(paginate ? [...ordersData, ...res.data.results] : res.data.results);
+            setOriginalOrdersData(paginate ? [...ordersData, ...res.data.results] : res.data.results);
         })
     }
 
@@ -72,7 +98,7 @@ function OrderList(props) {
         <View style={{flex: 1}}>
             <Indicator isLoading={isLoading}/>
             <PrimaryHeader navigation={props.navigation}/>
-            <View style={{paddingHorizontal: 24, flex:1}}>
+            <View style={{paddingHorizontal: 12, flex: 1}}>
                 <View style={[commonStyles.searchContainer, {marginTop: 10}]}>
                     <TextInput
                         value={searchText}
@@ -96,7 +122,7 @@ function OrderList(props) {
                         <FlatList
                             data={ordersData}
                             onRefresh={() => {
-                                getOrderData()
+                                getOrderData(false)
                             }}
                             refreshing={refreshing}
                             showsVerticalScrollIndicator={false}
@@ -104,6 +130,8 @@ function OrderList(props) {
                                                                        data={item}/>}
                             keyExtractor={(item, index) => index + ''}
                             ListFooterComponent={renderFooter}
+                            onEndReached={() => getOrderData(true)}
+                            onEndReachedThreshold={0.1}
                         />
                     </View>}
             </View>
