@@ -98,7 +98,7 @@ export const commonApi = {
         header: header
     },
     getProducts: {
-        url: `${base_url}/salesmen/products/`,
+        url: `${base_url}/products/`,
         method: 'GET',
         header: header
     },

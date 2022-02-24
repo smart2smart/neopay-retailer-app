@@ -10,7 +10,7 @@ const RenderCompanyCard = ({item, index}, props) => {
         <TouchableOpacity onPress={() => {
             props.selectFunction(item.type, item, props.modalVisible)
         }} style={[styles.companyCard, (index + 1) % 3 !== 0 ? {marginRight: padding} : {}]}>
-            <Image style={{width: "100%", height: "90%"}} resizeMode={"contain"} source={item.image?{uri:item.image}:
+            <Image style={{width: "90%", height: "90%"}} resizeMode={"contain"} source={item.image?{uri:item.image}:
             require("../../assets/images/camera.png")}/>
             <Text style={[texts.darkGreyTextBold12, {marginBottom:10}]}>
                 {item.name?item.name.slice(0,14):""}

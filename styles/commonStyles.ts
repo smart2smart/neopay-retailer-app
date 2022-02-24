@@ -66,7 +66,7 @@ const commonStyles = StyleSheet.create({
         paddingHorizontal:12,
         paddingVertical:5
     },
-    borderButtonSmallBlue:{
+    borderButtonSmallBlue1:{
         borderRadius:4,
         borderColor:colors.blue,
         borderWidth:1.5,

@@ -24,6 +24,8 @@ import PersistenceStore from "../../utils/PersistenceStore";
 import Indicator from "../../utils/Indicator";
 import {useFocusEffect, useRoute} from "@react-navigation/native";
 import FilterBox from "../../commons/FilterBox";
+import Icon from 'react-native-vector-icons/AntDesign'
+import ProductFilter from './ProductFilter';
 
 
 const sku_units = {
@@ -50,6 +52,7 @@ function BuildOrder(props) {
     const [loading, setIsLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
+    const [productFilterModal,setProductFilterModal] = useState(false);
 
     const getProductsData = () => {
         const dataToSend = {
@@ -85,6 +88,12 @@ function BuildOrder(props) {
         })
     }
 
+    const handleCollapse = (index) => {      
+        let data = [...productsData];
+        data[index].collapsed = !data[index].collapsed;
+        setProductsData(data);        
+    }
+
     useEffect(() => {
         if (route.params) {
             if (route.params.productData) {
@@ -98,6 +107,17 @@ function BuildOrder(props) {
         }
     }, []);
 
+    useEffect(()=>{
+        productsData.forEach((item,index) => {
+            item["collapsed"] = true
+        })
+    },[productsData])
+
+    const openProductsFilter = ()=>{
+        console.log("clicked on filters");
+        setProductFilterModal(true);
+    }
+    
     const matchQuantityWithCart = (items) => {
         let groupedData = [...items];
         let data = {}
@@ -225,30 +245,55 @@ function BuildOrder(props) {
                 <View style={styles.underline}>
                     {item.product_group_id ? <Text style={texts.darkGreyTextBold14}>
                         {item.company_name}
-                    </Text> : <Text style={texts.darkGreyTextBold14}>Others</Text>}
+                    </Text> : 
+                        <View style={styles.rowSpaceBetween}>
+                            <Text style={texts.darkGreyTextBold14}>Others</Text>
+                            <View>
+                            <TouchableOpacity style={styles.collapsableButton}
+                                                onPress={() => {
+                                                    handleCollapse(index)
+                                                }}>
+                                <Icon name={item.collapsed ? "down" : "up"} size={18} color={colors.red}/>
+                            </TouchableOpacity>
+                            </View>
+                        </View>}
                 </View>
-                {item.product_group_id ? <TouchableOpacity onPress={() => {
-                    expandProductGroupImage(index)
-                }} style={[commonStyles.rowAlignCenter, {paddingVertical: 10}]}>
-                    {!item.pg_image_expanded ? <View style={{marginRight: 10}}>
-                        <Image style={styles.productImage}
-                               source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
-                    </View> : null}
+                <View style={styles.rowSpaceBetween}>
                     <View>
-                        <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
-                            {item.company_name} {">"} {item.brand_name}
-                        </Text>
-                        <Text style={texts.redTextBold14}>
-                            {item.product_group}
-                        </Text>
+                        {item.product_group_id ? <TouchableOpacity onPress={() => {
+                        expandProductGroupImage(index)
+                        }} style={[commonStyles.rowAlignCenter, {paddingVertical: 10}]}>
+                        {!item.pg_image_expanded ? <View style={{marginRight: 10}}>
+                            <Image style={styles.productImage}
+                                source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                        </View> : null}
+                        <View>
+                            <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
+                                {item.company_name} {">"} {item.brand_name}
+                            </Text>
+                            <Text style={texts.redTextBold14}>
+                                {item.product_group}
+                            </Text>
+                        </View>
+                        </TouchableOpacity> : null}
+                        {item.pg_image_expanded ? <TouchableOpacity onPress={() => {
+                        expandProductGroupImage(index)
+                        }}>
+                        <Image style={{width: '100%', height: 200, borderRadius: 5}}
+                            source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                        </TouchableOpacity> : null}
                     </View>
-                </TouchableOpacity> : null}
-                {item.pg_image_expanded ? <TouchableOpacity onPress={() => {
-                    expandProductGroupImage(index)
-                }}>
-                    <Image style={{width: '100%', height: 200, borderRadius: 5}}
-                           source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
-                </TouchableOpacity> : null}
+                    {item.product_group_id?<View>
+                        <TouchableOpacity style={styles.collapsableButton}
+                                          onPress={() => {
+                                              handleCollapse(index)
+                                          }}>
+                            <Icon name={item.collapsed ? "down" : "up"} size={18} color={colors.red}/>
+                        </TouchableOpacity>
+                    </View>:null}
+                </View>
+                {!item.collapsed ?
+                <View>
                 {item.data.map((item, subIndex) => {
                     let margin = ((item.mrp - item.rate) / item.rate) * 100
                     return (<View key={item.id + subIndex + '' + item.name} style={styles.underline}>
@@ -324,6 +369,7 @@ function BuildOrder(props) {
                         </View>
                     </View>)
                 })}
+                </View>:null}
             </View>
         )
     }
@@ -346,6 +392,19 @@ function BuildOrder(props) {
                     <AntDesign name="close" size={18} color={colors.black}/>
                 </TouchableOpacity> : null}
             </View>
+                <View style={{flexDirection:'row',justifyContent:'space-between',padding:5}}>
+                    <Text style={[texts.blueBoldl14, {paddingTop: 10}]}>
+                        {productsData.length} item(s) found
+                    </Text> 
+                    <TouchableOpacity style={styles.filterBox} onPress={openProductsFilter}>
+                        <Icon name="filter" size={16} color={colors.red}/>
+                        <Text style={[texts.redTextBold14, {
+                            paddingTop: 1,
+                            paddingLeft: 5,
+                            paddingRight: 5
+                        }]}>FILTER </Text>
+                    </TouchableOpacity>
+                </View>
             <FlatList
                 data={productsData}
                 ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
@@ -424,4 +483,27 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         borderRadius: 5
     },
+    collapsableButton: {
+        borderWidth: 1.5,
+        borderRadius: 4,
+        padding:1,
+        borderColor:colors.grey,
+        backgroundColor: colors.white,
+        marginRight:6,
+        width:25
+    },
+    filterBox: {
+        flexDirection: 'row',
+        borderRadius: 5,
+        borderWidth:1,
+        borderColor : colors.red,
+        backgroundColor: colors.white,
+        padding: 8
+    },
+    rowSpaceBetween :{
+        justifyContent:'space-between',
+        flexDirection:"row",
+        alignItems:'center',
+        width:'100%'
+    }
 })

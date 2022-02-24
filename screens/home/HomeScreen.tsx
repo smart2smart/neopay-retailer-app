@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Dimensions,
     FlatList,
-    Image, TouchableOpacity, Alert, TextInput, ScrollView, RefreshControl
+    Image, TouchableOpacity, Alert, TextInput, ScrollView, RefreshControl, LogBox
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
 import {newCart, setDistributor} from "../../actions/actions";
@@ -40,6 +40,9 @@ function HomeScreen(props: any) {
     const [isLoading, setIsLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, [])
 
     useEffect(() => {
         PersistenceStore.getCart().then((data) => {
