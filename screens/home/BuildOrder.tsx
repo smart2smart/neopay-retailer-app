@@ -80,7 +80,6 @@ function BuildOrder(props) {
                     quantity: 0
                 })).value()
             setIsLoading(false);
-            console.log(groupedData)
             setProductsData(groupedData);
             setOriginalProductsData(groupedData);
             if (cart.data.length > 0) {
@@ -97,6 +96,7 @@ function BuildOrder(props) {
                 matchQuantityWithCart(route.params.productData)
                 matchQuantityWithCart(route.params.productData)
             } else if (route.params.barCodeScan) {
+                getProductsData();
                 setBarcodeScan(true);
             }
         } else {
@@ -107,7 +107,7 @@ function BuildOrder(props) {
 
     const handleBarCodeData = (data: any) => {
         if (!data.backPress)
-            console.log(data);
+            searchProduct(data.data);
         setBarcodeScan(false);
     }
 
