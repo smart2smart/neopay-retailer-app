@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -8,27 +8,28 @@ import {
     Image, TouchableOpacity, Alert, TextInput, ScrollView, RefreshControl
 } from 'react-native';
 import mapStateToProps from "../../store/mapStateToProps";
-import {newCart, setDistributor} from "../../actions/actions";
+import { newCart, setDistributor } from "../../actions/actions";
 // @ts-ignore
-import {connect, useSelector} from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import VersionCheck from 'react-native-version-check-expo';
 import * as Linking from 'expo-linking';
 import * as Updates from 'expo-updates';
 import Constants from "expo-constants";
-import {commonApi} from "../../api/api";
-import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import {BorderButtonSmallBlue} from "../../buttons/Buttons";
+import { commonApi } from "../../api/api";
+import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import { BorderButtonSmallBlue } from "../../buttons/Buttons";
 import CompanyList from "./CompanyList";
 import Indicator from "../../utils/Indicator";
 import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
 import moment from "moment";
 import RenderCarousel from "./Carousel";
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 function HomeScreen(props: any) {
@@ -54,7 +55,7 @@ function HomeScreen(props: any) {
     const getOrders = () => {
         const data = {
             method: commonApi.getOrderList.method,
-            url: commonApi.getOrderList.url+"?limit=10&offset=0",
+            url: commonApi.getOrderList.url + "?limit=10&offset=0",
             header: commonApi.getOrderList.header,
         }
         // @ts-ignore
@@ -118,7 +119,7 @@ function HomeScreen(props: any) {
         setIsLoading(false);
     }
 
-    const onRefresh = ()=>{
+    const onRefresh = () => {
         getOrders();
         getBanners();
         setUp(distributor);
@@ -133,10 +134,10 @@ function HomeScreen(props: any) {
     }
 
     const goToOrderDetails = (data) => {
-        navigation.navigate("OrderListDetails", {orderDetailsData: data})
+        navigation.navigate("OrderListDetails", { orderDetailsData: data })
     }
 
-    const renderOrderCard = ({item}) => {
+    const renderOrderCard = ({ item }) => {
         return (<TouchableOpacity onPress={() => {
             goToOrderDetails(item)
         }} style={styles.orderCard}>
@@ -149,7 +150,7 @@ function HomeScreen(props: any) {
             <Text style={texts.greyNormal12}>
                 {"Place on: " + moment(item.created_at).format("DD MMM, yyyy")}
             </Text>
-            <View style={{flexDirection: 'row', alignItems: "center"}}>
+            <View style={{ flexDirection: 'row', alignItems: "center" }}>
                 <Text style={texts.darkGreyTextBold12}>
                     {"Status : "}
                 </Text>
@@ -161,14 +162,14 @@ function HomeScreen(props: any) {
     }
 
     return (
-        <View style={{flex: 1, backgroundColor: colors.white}}>
-            <PrimaryHeader navigation={props.navigation}/>
+        <View style={{ flex: 1, backgroundColor: colors.white }}>
+            <PrimaryHeader navigation={props.navigation} />
             <ScrollView
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 showsVerticalScrollIndicator={false}>
-                <TouchableOpacity style={[commonStyles.searchContainer, {marginVertical: 10, paddingHorizontal: 16}]}
-                                  onPress={goToBuildOrder}>
+                <TouchableOpacity style={[commonStyles.searchContainer, { marginVertical: 10, paddingHorizontal: 16 }]}
+                    onPress={goToBuildOrder}>
                     <TextInput
                         value={""}
                         editable={false}
@@ -177,38 +178,45 @@ function HomeScreen(props: any) {
                         }}
                         style={styles.textInput}>
                     </TextInput>
+
+                    <TouchableOpacity onPress={() =>
+                        navigation.navigate("BuildOrder", { barCodeScan: true })
+                    } style={{ position: "absolute", right: 25 }}>
+                        <Icons name="barcode-scan" size={22} color={'grey'} />
+                    </TouchableOpacity>
+
                 </TouchableOpacity>
-                {bannerData.length ? <RenderCarousel bannerData={bannerData}/> : null}
-                {orderData.length > 0 ? <View style={{backgroundColor: colors.white}}>
-                    <View style={[commonStyles.rowSpaceBetween, {paddingHorizontal: 16, paddingTop: 10}]}>
+                {bannerData.length ? <RenderCarousel bannerData={bannerData} /> : null}
+                {orderData.length > 0 ? <View style={{ backgroundColor: colors.white }}>
+                    <View style={[commonStyles.rowSpaceBetween, { paddingHorizontal: 16, paddingTop: 10 }]}>
                         <View>
                             <Text style={texts.greyTextBold16}>
                                 Order Tracking
                             </Text>
                         </View>
                         <View>
-                            <BorderButtonSmallBlue text={"Create Order"} ctaFunction={goToBuildOrder}/>
+                            <BorderButtonSmallBlue text={"Create Order"} ctaFunction={goToBuildOrder} />
                         </View>
                     </View>
-                    <View style={{paddingVertical: 10, paddingRight: 16}}>
+                    <View style={{ paddingVertical: 10, paddingRight: 16 }}>
                         <FlatList
                             keyExtractor={(item, index) => item.id + "" + index}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
                             data={orderData}
-                            renderItem={renderOrderCard}/>
+                            renderItem={renderOrderCard} />
                     </View>
                 </View> : null}
-                <View style={{flex: 1}}>
-                    <CompanyList distributor={distributor}/>
+                <View style={{ flex: 1 }}>
+                    <CompanyList distributor={distributor} />
                 </View>
             </ScrollView>
-            {cart.data.length > 0 ? <CartButton/> : null}
+            {cart.data.length > 0 ? <CartButton /> : null}
         </View>
     )
 }
 
-export default connect(mapStateToProps, {setDistributor, newCart})(HomeScreen);
+export default connect(mapStateToProps, { setDistributor, newCart })(HomeScreen);
 
 const styles = StyleSheet.create({
     card: {

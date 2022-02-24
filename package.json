@@ -54,7 +54,8 @@
     "react-native-web": "^0.17.5",
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
-    "underscore": "^1.13.1"
+    "underscore": "^1.13.1",
+    "expo-barcode-scanner": "~10.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
