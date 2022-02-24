@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width - 48,
         position: "absolute",
         top: 124,
-        left: 24,
+        left: 12,
         paddingVertical: 10,
         paddingHorizontal: 20,
         justifyContent: "space-between"

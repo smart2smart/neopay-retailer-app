@@ -8,8 +8,8 @@ const formHeader = {
 
 
 
-const base_url = 'http://10.38.23.235:8000';
-//const base_url = 'http://qa-api.neopay.club';
+//const base_url = 'http://10.38.23.235:8000';
+const base_url = 'http://qa-api.neopay.club';
 //const base_url = 'https://api.neopay.club';
 
 

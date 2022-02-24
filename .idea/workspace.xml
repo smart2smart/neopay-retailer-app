@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/HomeScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +24,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NeopaySalesmanApp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="SvnConfiguration">
@@ -51,7 +50,8 @@
       <workItem from="1645264295462" duration="1353000" />
       <workItem from="1645268533152" duration="147000" />
       <workItem from="1645269311597" duration="86000" />
-      <workItem from="1645694805282" duration="1843000" />
+      <workItem from="1645694805282" duration="2645000" />
+      <workItem from="1645711202718" duration="65000" />
     </task>
     <servers />
   </component>
@@ -59,10 +59,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl" timestamp="1645695656657">
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl" timestamp="1645697467466">
       <screen x="0" y="27" width="1366" height="683" />
     </state>
-    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1645695656657" />
+    <state x="466" y="126" width="424" height="491" key="FileChooserDialogImpl/0.27.1366.683@0.27.1366.683" timestamp="1645697467466" />
     <state x="388" y="117" width="589" height="502" key="find.popup" timestamp="1645265336578">
       <screen x="0" y="27" width="1366" height="683" />
     </state>

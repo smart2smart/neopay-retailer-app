@@ -126,13 +126,14 @@ function Cart(props: any) {
     }
 
     useEffect(() => {
-        getDiscount();
-    }, [])
+        console.log(cart)
+        if(cart.data.length){
+            getDiscount();
+        }
+    }, [route])
 
     const getDiscount = () => {
         let products: any = {};
-        console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
-        console.log(groupedData)
         groupedData.forEach((product) => {
             product.data.forEach((item) => {
                 if (parseInt(item.quantity) > 0) {
@@ -146,6 +147,9 @@ function Cart(props: any) {
             url: commonApi.getDiscountAmount.url + "?distributor_id=" + cart.distributorId + "&amount=" + cart.value + "&products=" + JSON.stringify(products),
             header: commonApi.getDiscountAmount.header,
         }
+        console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
+        console.log(data)
+        console.log(cart)
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
             console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
