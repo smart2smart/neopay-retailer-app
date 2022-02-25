@@ -5,7 +5,7 @@ import {
     BRAND_FILTER_REMOVE,
     PRODUCT_GROUP_FILTER_ADD,
     PRODUCT_GROUP_FILTER_REMOVE,
-    RESET_FILTERS, SELECT_FILTER_TYPE
+    RESET_FILTERS, SELECT_FILTER_TYPE, MARGIN_FILTERS
 } from "../actions/actionTypes";
 
 const data = {
@@ -19,6 +19,10 @@ const data = {
         {name: "Brand", key: 'brand'},
         {name: "Product", key: 'product'},
     ],
+    margin : {
+        from:0,
+        to:0
+    }
 }
 
 const getCount = (type, entity, state)=>{
@@ -65,6 +69,8 @@ const filterReducer = (state = {...data}, action: any) => {
                 selectedFilter:"product"}
         case RESET_FILTERS:
             return {...state, ...data}
+        case MARGIN_FILTERS:
+            return {...state,margin:action.payload}
         default:
             return state
     }

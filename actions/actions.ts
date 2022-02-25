@@ -16,7 +16,7 @@ import {
     PRODUCT_GROUP_FILTER_ADD,
     PRODUCT_GROUP_FILTER_REMOVE,
     RESET_FILTERS,
-    SELECT_FILTER_TYPE, SELECT_DISTRIBUTOR
+    SELECT_FILTER_TYPE, SELECT_DISTRIBUTOR, MARGIN_FILTERS
 } from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
@@ -158,6 +158,13 @@ export const selectFilterType = (value: any) => {
 export const setDistributor = (value: any) => {
     return ({
         type: SELECT_DISTRIBUTOR,
+        payload: value
+    })
+}
+
+export const marginFiltersAdd = (value:any) =>{
+    return ({
+        type: MARGIN_FILTERS,
         payload: value
     })
 }

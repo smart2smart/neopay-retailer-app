@@ -52,7 +52,7 @@ function BuildOrder(props) {
     const [loading, setIsLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
-    const [productFilterModal,setProductFilterModal] = useState(false);
+    const [modalVisible,setModalVisible] = useState(false);
 
     const getProductsData = () => {
         const dataToSend = {
@@ -110,12 +110,13 @@ function BuildOrder(props) {
     useEffect(()=>{
         productsData.forEach((item,index) => {
             item["collapsed"] = true
-        })
+        }) 
     },[productsData])
 
-    const openProductsFilter = ()=>{
-        console.log("clicked on filters");
-        setProductFilterModal(true);
+
+
+    const closeModal = () => {
+        setModalVisible(false);
     }
     
     const matchQuantityWithCart = (items) => {
@@ -396,7 +397,7 @@ function BuildOrder(props) {
                     <Text style={[texts.blueBoldl14, {paddingTop: 10}]}>
                         {productsData.length} item(s) found
                     </Text> 
-                    <TouchableOpacity style={styles.filterBox} onPress={openProductsFilter}>
+                    <TouchableOpacity style={styles.filterBox} onPress={()=>setModalVisible(!modalVisible)}>
                         <Icon name="filter" size={16} color={colors.red}/>
                         <Text style={[texts.redTextBold14, {
                             paddingTop: 1,
@@ -404,6 +405,13 @@ function BuildOrder(props) {
                             paddingRight: 5
                         }]}>FILTER </Text>
                     </TouchableOpacity>
+                </View>
+                <View>
+                    {modalVisible?
+                        <ProductFilter 
+                        modalVisible={modalVisible} 
+                        closeModal={closeModal} 
+                        />:null}
                 </View>
             <FlatList
                 data={productsData}
