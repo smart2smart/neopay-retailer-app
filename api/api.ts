@@ -9,8 +9,8 @@ const formHeader = {
 
 
 //const base_url = 'http://192.168.1.6:8000';
-//const base_url = 'http://qa-api.neopay.club';
-const base_url = 'https://api.neopay.club';
+const base_url = 'http://qa-api.neopay.club';
+// const base_url = 'https://api.neopay.club';
 
 
 export const authApi = {
@@ -98,7 +98,7 @@ export const commonApi = {
         header: header
     },
     getProducts: {
-        url: `${base_url}/salesmen/products/`,
+        url: `${base_url}/products/`,
         method: 'GET',
         header: header
     },

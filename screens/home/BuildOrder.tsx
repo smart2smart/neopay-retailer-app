@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -12,18 +12,19 @@ import SecondaryHeader from "../../headers/SecondaryHeader";
 import colors from "../../assets/colors/colors";
 import texts from '../../styles/texts';
 import commonStyles from '../../styles/commonStyles';
-import {commonApi} from "../../api/api";
-import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
+import { commonApi } from "../../api/api";
+import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AddProductButton from "./AddProductButton";
-import {connect, useSelector} from "react-redux";
+import { connect, useSelector } from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity} from "../../actions/actions";
+import { updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity } from "../../actions/actions";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import Indicator from "../../utils/Indicator";
-import {useFocusEffect, useRoute} from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import FilterBox from "../../commons/FilterBox";
+import VoiceToText from '../../components/VoiceToText';
 
 
 const sku_units = {
@@ -40,7 +41,7 @@ const sku_units = {
 }
 
 
-function BuildOrder(props) {
+function BuildOrder(props: any) {
     let _ = require('underscore')
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
@@ -143,7 +144,7 @@ function BuildOrder(props) {
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
         let item = {
             distributorId: distributor.user,
-            product: {...data},
+            product: { ...data },
             text: text,
             originalQuantity: data.quantity == "" ? 0 : parseInt(data.quantity)
         };
@@ -174,7 +175,7 @@ function BuildOrder(props) {
                         }
                     },
                 ],
-                {cancelable: false},
+                { cancelable: false },
             );
         } else {
             selectProduct(data, type, mainIndex, subIndex);
@@ -183,7 +184,7 @@ function BuildOrder(props) {
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let item = {distributorId: distributor.user, product: {...data}};
+        let item = { distributorId: distributor.user, product: { ...data } };
         let allProducts = [...productsData];
         if (type === "new") {
             allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
@@ -219,7 +220,7 @@ function BuildOrder(props) {
         setProductsData(allProducts);
     }
 
-    const renderItem = ({item, index}) => {
+    const renderItem = ({ item, index }) => {
         return (
             <View>
                 <View style={styles.underline}>
@@ -229,13 +230,13 @@ function BuildOrder(props) {
                 </View>
                 {item.product_group_id ? <TouchableOpacity onPress={() => {
                     expandProductGroupImage(index)
-                }} style={[commonStyles.rowAlignCenter, {paddingVertical: 10}]}>
-                    {!item.pg_image_expanded ? <View style={{marginRight: 10}}>
+                }} style={[commonStyles.rowAlignCenter, { paddingVertical: 10 }]}>
+                    {!item.pg_image_expanded ? <View style={{ marginRight: 10 }}>
                         <Image style={styles.productImage}
-                               source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                            source={item.image ? { uri: item.image } : require('../../assets/images/placeholder_profile_pic.jpg')} />
                     </View> : null}
                     <View>
-                        <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
+                        <Text style={[texts.greyNormal14, { paddingBottom: 5 }]}>
                             {item.company_name} {">"} {item.brand_name}
                         </Text>
                         <Text style={texts.redTextBold14}>
@@ -246,8 +247,8 @@ function BuildOrder(props) {
                 {item.pg_image_expanded ? <TouchableOpacity onPress={() => {
                     expandProductGroupImage(index)
                 }}>
-                    <Image style={{width: '100%', height: 200, borderRadius: 5}}
-                           source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                    <Image style={{ width: '100%', height: 200, borderRadius: 5 }}
+                        source={item.image ? { uri: item.image } : require('../../assets/images/placeholder_profile_pic.jpg')} />
                 </TouchableOpacity> : null}
                 {item.data.map((item, subIndex) => {
                     let margin = ((item.mrp - item.rate) / item.rate) * 100
@@ -255,17 +256,17 @@ function BuildOrder(props) {
                         {item.image_expanded ? <TouchableOpacity onPress={() => {
                             expandImage(index, subIndex)
                         }}>
-                            <Image style={{width: '100%', height: 200, borderRadius: 5}}
-                                   source={item.sku_image ? {uri: item.sku_image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
+                            <Image style={{ width: '100%', height: 200, borderRadius: 5 }}
+                                source={item.sku_image ? { uri: item.sku_image } : require('../../assets/images/placeholder_profile_pic.jpg')} />
                         </TouchableOpacity> : null}
                         <View style={commonStyles.rowSpaceBetween}>
-                            <View style={{width: '70%'}}>
+                            <View style={{ width: '70%' }}>
                                 <View>
-                                    <Text style={[texts.greyNormal12, {paddingTop: 5}]}>
+                                    <Text style={[texts.greyNormal12, { paddingTop: 5 }]}>
                                         {item.name}
                                     </Text>
                                 </View>
-                                <View style={[commonStyles.rowAlignCenter, {paddingVertical: 4}]}>
+                                <View style={[commonStyles.rowAlignCenter, { paddingVertical: 4 }]}>
                                     <Text style={texts.darkGreyTextBold14}>
                                         {item.product_group_id ? item.variant : item.name}
                                     </Text>
@@ -302,13 +303,13 @@ function BuildOrder(props) {
                                     </View>
                                 </View>
                             </View>
-                            <View style={{width: '30%', flexDirection: "column", alignItems: "flex-end"}}>
+                            <View style={{ width: '30%', flexDirection: "column", alignItems: "flex-end" }}>
                                 {!item.image_expanded ? <TouchableOpacity onPress={() => {
                                     expandImage(index, subIndex)
                                 }}>
-                                    {item.sku_image ? <Image style={{width: 50, height: 50}}
-                                                             resizeMode={"contain"}
-                                                             source={{uri: item.sku_image}}/> : null}
+                                    {item.sku_image ? <Image style={{ width: 50, height: 50 }}
+                                        resizeMode={"contain"}
+                                        source={{ uri: item.sku_image }} /> : null}
                                 </TouchableOpacity> : null}
                                 <View>
                                     <AddProductButton
@@ -330,38 +331,41 @@ function BuildOrder(props) {
 
 
     return (
-        <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
+        <View style={{ flex: 1, paddingHorizontal: 24, backgroundColor: colors.white }}>
             <View style={commonStyles.rowSpaceBetween}>
-                <SecondaryHeader title={"Create Order"}/>
+                <SecondaryHeader title={"Create Order"} />
             </View>
-            <View style={[commonStyles.searchContainer, {marginTop: 12, marginBottom: 12}]}>
+            <View style={[commonStyles.searchContainer, { marginTop: 12, marginBottom: 12 }]}>
                 <TextInput
                     value={searchText}
                     onChangeText={(text) => searchProduct(text)}
                     placeholder={"Search for Products"}
                     style={styles.textInput}
                 />
+                <View style={{ position: "absolute", right: 10 }}>
+                <VoiceToText textFunction={searchProduct}/>
+                </View>
                 {searchText !== '' ? <TouchableOpacity onPress={() => searchProduct('')}
-                                                       style={{position: "absolute", right: 0, padding: 10}}>
-                    <AntDesign name="close" size={18} color={colors.black}/>
+                    style={{ position: "absolute", right: 30, padding: 10 }}>
+                    <AntDesign name="close" size={18} color={colors.black} />
                 </TouchableOpacity> : null}
             </View>
             <FlatList
                 data={productsData}
-                ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
+                ItemSeparatorComponent={() => <View style={{ height: 20 }}></View>}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => item.product_group_id + "" + item.product_group_name}
                 renderItem={renderItem}
-                ListFooterComponent={() => <View style={{paddingBottom: 50}}></View>}
+                ListFooterComponent={() => <View style={{ paddingBottom: 50 }}></View>}
             />
-            {cart.data.length > 0 ? <CartButton/> : null}
+            {cart.data.length > 0 ? <CartButton /> : null}
         </View>
     )
 }
 
 export default connect(
     mapStateToProps,
-    {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity}
+    { updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity }
 )(BuildOrder);
 
 
