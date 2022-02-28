@@ -16,15 +16,10 @@ import colors from "../../assets/colors/colors";
 import {useNavigation} from "@react-navigation/native";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
-import VersionCheck from 'react-native-version-check-expo';
-import * as Linking from 'expo-linking';
-import * as Updates from 'expo-updates';
-import Constants from "expo-constants";
 import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import {BorderButtonSmallBlue} from "../../buttons/Buttons";
 import CompanyList from "./CompanyList";
-import Indicator from "../../utils/Indicator";
 import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
 import moment from "moment";
@@ -226,7 +221,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width - 48,
         position: "absolute",
         top: 124,
-        left: 24,
+        left: 12,
         paddingVertical: 10,
         paddingHorizontal: 20,
         justifyContent: "space-between"

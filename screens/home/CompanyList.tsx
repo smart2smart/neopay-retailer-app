@@ -226,7 +226,7 @@ function CompanyList(props) {
         <View style={{flex: 1, minHeight:200}}>
             <Indicator isLoading={isLoading}/>
             {!isLoading ? <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+                <View showsVerticalScrollIndicator={false} style={{flex: 1}}>
                     <View>
                         <View style={{paddingBottom: 20}}>
                             {companyData.length > 0 ? <RenderList modalVisible={companyModalVisible} seeAll={() => {
@@ -250,7 +250,7 @@ function CompanyList(props) {
                             </View>
                         </View>
                     </View>
-                </ScrollView>
+                </View>
             </View> : null}
         </View>
     )

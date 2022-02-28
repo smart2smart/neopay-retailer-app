@@ -51,6 +51,10 @@ function Cart(props: any) {
     const groupedData = groupData(cart.data);
     const [discount, setDiscount] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [qpsData, setQPSData] = useState({});
+    const [qpsDiscount, setQPSDiscount] = useState(0);
+
+
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
 
@@ -122,19 +126,38 @@ function Cart(props: any) {
     }
 
     useEffect(() => {
-        getDiscount();
-    }, [])
+        console.log(cart)
+        if(cart.data.length){
+            getDiscount();
+        }
+    }, [route])
 
     const getDiscount = () => {
+        let products: any = {};
+        groupedData.forEach((product) => {
+            product.data.forEach((item) => {
+                if (parseInt(item.quantity) > 0) {
+                    products[item.id] = item.quantity;
+                }
+            })
+        })
+
         const data = {
             method: commonApi.getDiscountAmount.method,
-            url: commonApi.getDiscountAmount.url + "?distributor_id=" + cart.distributorId + "&amount=" + cart.value,
+            url: commonApi.getDiscountAmount.url + "?distributor_id=" + cart.distributorId + "&amount=" + cart.value + "&products=" + JSON.stringify(products),
             header: commonApi.getDiscountAmount.header,
         }
+        console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
+        console.log(data)
+        console.log(cart)
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
+            console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+            console.log(res)
             if (res.status == 200) {
                 setDiscount(res.data.discount_amount);
+                setQPSData(res.data.qps_data);
+                setQPSDiscount(res.data.qps_discount);
             }
         });
     }
@@ -187,7 +210,7 @@ function Cart(props: any) {
                                             Rate:
                                         </Text>
                                         <Text style={texts.greyTextBold12}>
-                                            {" " + item.rate}
+                                            {" " + qpsData[item.id] ? item.rate * (1 - qpsData[item.id] / 100) : item.rate}
                                         </Text>
                                     </View>
                                     <View style={commonStyles.rowAlignCenter}>
@@ -230,35 +253,43 @@ function Cart(props: any) {
                     ListFooterComponent={() => <View style={{paddingBottom: 100, paddingTop: 10}}>
                         <View style={styles.underline}>
                             <View style={commonStyles.rowSpaceBetween}>
-                                <Text style={texts.redTextBold14}>
+                                <Text style={texts.redTextBold12}>
                                     Total Items:
                                 </Text>
-                                <Text style={texts.darkGreyTextBold14}>
+                                <Text style={texts.darkGreyTextBold12}>
                                     {cart.count}
                                 </Text>
                             </View>
                             <View style={commonStyles.rowSpaceBetween}>
-                                <Text style={texts.redTextBold14}>
+                                <Text style={texts.redTextBold12}>
                                     Item Total:
                                 </Text>
-                                <Text style={texts.darkGreyTextBold14}>
+                                <Text style={texts.darkGreyTextBold12}>
                                     {parseFloat(cart.value).toFixed(2)}
                                 </Text>
                             </View>
                             {discount !== 0 ? <View style={commonStyles.rowSpaceBetween}>
-                                <Text style={texts.redTextBold14}>
+                                <Text style={texts.redTextBold12}>
                                     Discount:
                                 </Text>
-                                <Text style={texts.darkGreyTextBold14}>
+                                <Text style={texts.darkGreyTextBold12}>
                                     {0}
                                 </Text>
                             </View> : null}
+                            {qpsDiscount !== 0 ? <View style={[commonStyles.rowSpaceBetween, {paddingBottom:4}]}>
+                                <Text style={texts.redTextBold12}>
+                                    QPS Discount:
+                                </Text>
+                                <Text style={texts.darkGreyTextBold12}>
+                                    {parseFloat(qpsDiscount).toFixed(2)}
+                                </Text>
+                            </View> : null}
                             <View style={commonStyles.rowSpaceBetween}>
-                                <Text style={texts.redTextBold14}>
+                                <Text style={texts.redTextBold12}>
                                     Net Payable:
                                 </Text>
-                                <Text style={texts.darkGreyTextBold14}>
-                                    {parseFloat(cart.value - discount).toFixed(2)}
+                                <Text style={texts.darkGreyTextBold12}>
+                                    {parseFloat(cart.value - discount - qpsDiscount).toFixed(2)}
                                 </Text>
                             </View>
                         </View>
