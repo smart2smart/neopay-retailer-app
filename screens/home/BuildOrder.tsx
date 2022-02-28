@@ -53,6 +53,8 @@ function BuildOrder(props) {
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
     const [modalVisible,setModalVisible] = useState(false);
+    const [normalView,setNormalView] = useState(true)
+    let filters = useSelector((state: any) => state.filters);
 
     const getProductsData = () => {
         const dataToSend = {
@@ -108,15 +110,49 @@ function BuildOrder(props) {
     }, []);
 
     useEffect(()=>{
-        productsData.forEach((item,index) => {
+        productsData.forEach((item) => {
             item["collapsed"] = true
         }) 
-    },[productsData])
+    },[originalProductsData])
 
-
+    const applyFilters = ()=>{
+        let filteredData = originalProductsData.map((item: any) => {
+            return {
+                ...item, data: item.data.filter((product: any) => {
+                    let productMargin = ((product.mrp - product.rate) / product.rate) * 100;
+                    return productMargin >= parseInt(filters.margin.from) && productMargin <= parseInt(filters.margin.to)
+                })
+            }
+        })
+        let removeBoolean = filteredData.filter((item) => {
+            return item.data.length > 0
+        });
+        removeBoolean.forEach((item)=>{
+            item["collapsed"] = true;
+        })
+        setProductsData(removeBoolean);
+    }
 
     const closeModal = () => {
         setModalVisible(false);
+    }
+
+    const toggleView = () =>{
+        setNormalView(!normalView)
+        if(normalView){
+            let data = [...productsData]
+            productsData.forEach((item) => {
+                item["collapsed"] = false
+            })
+            setProductsData(data);
+        }
+        else {
+            let data = [...productsData]
+            productsData.forEach((item) => {
+                item["collapsed"] = true
+            })
+            setProductsData(data);
+        }       
     }
     
     const matchQuantityWithCart = (items) => {
@@ -406,11 +442,19 @@ function BuildOrder(props) {
                         }]}>FILTER </Text>
                     </TouchableOpacity>
                 </View>
+                <View style={{flexDirection:'row',justifyContent:'flex-end',padding:3}}>
+                    <TouchableOpacity onPress={toggleView}>
+                        <Text style={texts.redTextBold14}>
+                            {normalView?"Detailed View":"Normal View"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <View>
                     {modalVisible?
                         <ProductFilter 
                         modalVisible={modalVisible} 
                         closeModal={closeModal} 
+                        applyFilters={applyFilters}
                         />:null}
                 </View>
             <FlatList

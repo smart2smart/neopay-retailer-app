@@ -14,26 +14,28 @@ import store from "../../store/store";
 function ProductFilter(props) {
 
   let filters = useSelector((state: any) => state.filters);
-  console.log(filters)
   
   const [mR,setMR] = useState({
-    from : '0',
-    to : '100'
+    from : 0,
+    to : 100
   })
-  const [fromValue, setFromValue] = useState(filters.margin.from);
-  const [toValue, setToValue] = useState(filters.margin.to);
+  const [fromValue, setFromValue] = useState(filters.margin.from.toString());
+  const [toValue, setToValue] = useState(filters.margin.to.toString());
 
     const settoValue = (value)=>{
       setToValue(value);
       if(value>100){
           setToValue('100')
       }
+      if(value==fromValue){
+          setToValue('100')
+      }
   }
   const mrgnFilters = ()=>{
       setMR(mR=>({
           ...mR,
-          from : fromValue,
-          to : toValue
+          from : parseInt(fromValue),
+          to : parseInt(toValue)
       }))
   }
 
@@ -43,6 +45,7 @@ function ProductFilter(props) {
 
   const applyFilters = ()=>{
     store.dispatch({type: "MARGIN_FILTERS", payload: mR})
+    props.applyFilters()
     props.closeModal()
   }
 
@@ -80,11 +83,11 @@ function ProductFilter(props) {
                               <View>
                                 <View style={{marginTop:40}}> 
                                     <RangeSlider min={0} max={100}
-                                        step={1}
+                                        step={5}
                                         fromValueOnChange={value => setFromValue(value.toString())}
                                         toValueOnChange={value => setToValue(value.toString())}
-                                        initialFromValue={parseInt(mR.from)}
-                                        initialToValue={parseInt(mR.to)}
+                                        initialFromValue={mR.from}
+                                        initialToValue={mR.to}
                                         styleSize={16}
                                         valueLabelsBackgroundColor={colors.blue}
                                         inRangeBarColor={colors.red}
@@ -152,7 +155,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         borderTopWidth: 1,
         borderTopColor: colors.light_grey,
-        flex: 5,
         padding: 12,
     },
     contentDiv: {

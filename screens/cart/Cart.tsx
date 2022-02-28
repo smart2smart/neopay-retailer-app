@@ -126,7 +126,6 @@ function Cart(props: any) {
     }
 
     useEffect(() => {
-        console.log(cart)
         if(cart.data.length){
             getDiscount();
         }
@@ -147,13 +146,8 @@ function Cart(props: any) {
             url: commonApi.getDiscountAmount.url + "?distributor_id=" + cart.distributorId + "&amount=" + cart.value + "&products=" + JSON.stringify(products),
             header: commonApi.getDiscountAmount.header,
         }
-        console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
-        console.log(data)
-        console.log(cart)
         // @ts-ignore
         AuthenticatedGetRequest(data).then((res) => {
-            console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
-            console.log(res)
             if (res.status == 200) {
                 setDiscount(res.data.discount_amount);
                 setQPSData(res.data.qps_data);

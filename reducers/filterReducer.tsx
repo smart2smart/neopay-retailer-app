@@ -21,7 +21,7 @@ const data = {
     ],
     margin : {
         from:0,
-        to:0
+        to:100
     }
 }
 
