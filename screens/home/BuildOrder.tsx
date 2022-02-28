@@ -343,7 +343,8 @@ function BuildOrder(props: any) {
                     style={styles.textInput}
                 />
                 <View style={{ position: "absolute", right: 10 }}>
-                <VoiceToText textFunction={searchProduct}/>
+                    <VoiceToText textFunction={(text) => { 
+                        text && searchProduct(text) }} />
                 </View>
                 {searchText !== '' ? <TouchableOpacity onPress={() => searchProduct('')}
                     style={{ position: "absolute", right: 30, padding: 10 }}>
