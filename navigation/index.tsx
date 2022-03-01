@@ -34,6 +34,7 @@ import VerificationPending from "../screens/VerificationPending";
 import SelectDistributor from "../screens/home/SelectDistributor";
 import BrandList from "../screens/home/BrandList";
 import BuildOrder from "../screens/home/BuildOrder";
+import ProductFilterScreen from '../screens/home/ProductFilterScreen';
 
 
 function Navigation({colorScheme,}: { colorScheme: ColorSchemeName }) {
@@ -107,6 +108,7 @@ function RootNavigator(props) {
             <RootStack.Screen name="SelectDistributor" component={SelectDistributor}/>
             <RootStack.Screen name="BrandList" component={BrandList}/>
             <RootStack.Screen name="BuildOrder" component={BuildOrder}/>
+            <RootStack.Screen name="ProductFilterScreen" component={ProductFilterScreen}/>
         </RootStack.Navigator>
     );
 }

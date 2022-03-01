@@ -1,14 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
 import * as React from 'react';
-import {View, StyleSheet, Text, Dimensions, TextInput} from "react-native";
+import {View, StyleSheet, Text, Dimensions, TextInput, LogBox} from "react-native";
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from '../../assets/colors/colors';
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import texts from '../../styles/texts';
 import RangeSlider from 'react-native-range-slider-expo';
-import { connect , useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import store from "../../store/store";
-import mapStateToProps from '../../store/mapStateToProps';
 import { useEffect, useState } from 'react';
 
 let height = (Dimensions.get('window').height)
@@ -29,23 +28,26 @@ const Divider = ()=>{
     )
 }
 
-export default function ProductFilterScreen() {
+export default function ProductFilterScreen(props) {
 
     const navigation = useNavigation();
 
     let filters = useSelector((state: any) => state.filters);
-    const [fromValue, setFromValue] = useState(filters.margin.from);
-    const [toValue, setToValue] = useState(filters.margin.to);
-
-    const [mR,setMR] = useState({
-        from : '0',
-        to : '0'
+    const [fromValue, setFromValue] = useState(filters.margin.from.toString());
+    const [toValue, setToValue] = useState(filters.margin.to.toString());
+    const [margin,setMargin] = useState({
+        from : 0,
+        to : 100
     })
 
 
+    LogBox.ignoreLogs([
+        'Non-serializable values were found in the navigation state',
+      ]);
+
     const setfromValue = (value)=>{
         if(value < 0){
-            setFromValue(0)
+            setFromValue('0')
         }else{
             setFromValue(value)
         }
@@ -57,12 +59,15 @@ export default function ProductFilterScreen() {
         }else{
             setToValue(value)
         }
+        if(value==fromValue){
+            setToValue('100')
+        }
     }
     const mrgnFilters = ()=>{
-        setMR(mR=>({
-            ...mR,
-            from : fromValue,
-            to : toValue
+        setMargin(margin=>({
+            ...margin,
+            from : parseInt(fromValue),
+            to : parseInt(toValue)
         }))
     }
 
@@ -70,9 +75,26 @@ export default function ProductFilterScreen() {
         mrgnFilters();
     },[fromValue,toValue])
 
-    const applyfilters = ()=>{
-        store.dispatch({type: "PRODUCT_FILTERS", payload: mR})
-        navigation.navigate("build-order", {comingFrom:"filters"})
+    const applyfilters = (val)=>{
+       if(val==="clear"){
+        store.dispatch({type: "MARGIN_FILTERS", payload: {from:0, to: 100}});
+        navigation.navigate("BuildOrder", {comingFrom:"clearfilters"});
+       }
+       if(val==="apply"){
+           store.dispatch({type: "MARGIN_FILTERS", payload: margin});
+           navigation.navigate("BuildOrder", {comingFrom:"filters"});
+       }
+    }
+
+    const resetfilters = (val)=>{
+        setMargin(margin=>({
+            ...margin,
+            from:0,
+            to:100
+        })) 
+        if(val==="clear"){
+            applyfilters("clear")       
+        }
     }
 
     const [navigate,setNavigate]=useState({
@@ -178,8 +200,8 @@ export default function ProductFilterScreen() {
         <View>
             <View style={styles.filterHeader}>
                 <SecondaryHeader title={"Filter"}/>
-                <TouchableOpacity>
-                    <Text style={styles.filterText}>Clear Filter</Text>
+                <TouchableOpacity onPress={()=>resetfilters("reset")}>
+                    <Text style={styles.filterText}>RESET Filter</Text>
                 </TouchableOpacity>
             </View>
             <View>
@@ -239,8 +261,8 @@ export default function ProductFilterScreen() {
                                          step={1}
                                          fromValueOnChange={value => setFromValue(value.toString())}
                                          toValueOnChange={value => setToValue(value.toString())}
-                                         initialFromValue={parseInt(mR.from)}
-                                         initialToValue={parseInt(mR.to)}
+                                         initialFromValue={margin.from}
+                                         initialToValue={margin.to}
                                          styleSize={16}
                                          valueLabelsBackgroundColor={colors.blue}
                                          inRangeBarColor={colors.red}
@@ -255,7 +277,7 @@ export default function ProductFilterScreen() {
                             <TextInput
                                 style={styles.input}
                                 onChangeText={value => setfromValue(value)}
-                                value={fromValue.toString()}
+                                value={fromValue}
                                 keyboardType="numeric"
                                 maxLength={2}
                             />
@@ -263,7 +285,7 @@ export default function ProductFilterScreen() {
                             <TextInput
                                 style={styles.input}
                                 onChangeText={value => settoValue(value)}
-                                value={toValue.toString()}
+                                value={toValue}
                                 keyboardType="numeric"
                                 maxLength={3}
                             />
@@ -316,8 +338,11 @@ export default function ProductFilterScreen() {
 
             </View>
             <View style={styles.filterFooter}>
-                <Text style={[texts.blueBoldl14,{marginLeft:20}]}>245 items found</Text>
-                <TouchableOpacity style={styles.button} onPress={applyfilters}>
+                {/* <Text style={[texts.blueBoldl14,{marginLeft:20}]}>245 items found</Text> */}
+                <TouchableOpacity onPress={()=>resetfilters("clear")}>
+                    <Text style={[styles.filterText,{marginLeft:15}]}>Clear Filters</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={()=>applyfilters("apply")}>
                     <Text style={texts.whiteTextBold16}>
                         APPLY
                     </Text>

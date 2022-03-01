@@ -21,11 +21,8 @@ import mapStateToProps from "../../store/mapStateToProps";
 import {updateCartAdd, updateCartSubtract, removeFromCart, clearCart, cartChangeQuantity} from "../../actions/actions";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
-import Indicator from "../../utils/Indicator";
 import {useFocusEffect, useRoute} from "@react-navigation/native";
-import FilterBox from "../../commons/FilterBox";
 import Icon from 'react-native-vector-icons/AntDesign'
-import ProductFilter from './ProductFilter';
 
 
 const sku_units = {
@@ -52,7 +49,6 @@ function BuildOrder(props) {
     const [loading, setIsLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
-    const [modalVisible,setModalVisible] = useState(false);
     const [normalView,setNormalView] = useState(true)
     let filters = useSelector((state: any) => state.filters);
 
@@ -116,11 +112,14 @@ function BuildOrder(props) {
     },[originalProductsData])
 
     const applyFilters = ()=>{
+
+        console.log("i am called");
+        
         let filteredData = originalProductsData.map((item: any) => {
             return {
                 ...item, data: item.data.filter((product: any) => {
                     let productMargin = ((product.mrp - product.rate) / product.rate) * 100;
-                    return productMargin >= parseInt(filters.margin.from) && productMargin <= parseInt(filters.margin.to)
+                    return productMargin >= filters.margin.from && productMargin <= filters.margin.to
                 })
             }
         })
@@ -133,9 +132,32 @@ function BuildOrder(props) {
         setProductsData(removeBoolean);
     }
 
-    const closeModal = () => {
-        setModalVisible(false);
-    }
+    useEffect(() => {
+        if(route.params){
+            if(route.params.comingFrom === "filters"){
+                applyFilters();
+            }
+        }
+        if(route.params){
+            if(route.params.comingFrom === "clearfilters"){
+                setProductsData(originalProductsData);
+                productsData.forEach((item) => {
+                    item["collapsed"] = true
+                })
+            }
+        }
+    }, [filters])
+
+    useEffect(() => {     
+        if(route.params){
+            if(route.params.comingFrom === "clearfilters"){
+                setProductsData(originalProductsData);
+                productsData.forEach((item) => {
+                    item["collapsed"] = true
+                })
+            }
+        }
+    })
 
     const toggleView = () =>{
         setNormalView(!normalView)
@@ -433,7 +455,7 @@ function BuildOrder(props) {
                     <Text style={[texts.blueBoldl14, {paddingTop: 10}]}>
                         {productsData.length} item(s) found
                     </Text> 
-                    <TouchableOpacity style={styles.filterBox} onPress={()=>setModalVisible(!modalVisible)}>
+                    <TouchableOpacity style={styles.filterBox} onPress={()=>props.navigation.navigate("ProductFilterScreen")}>
                         <Icon name="filter" size={16} color={colors.red}/>
                         <Text style={[texts.redTextBold14, {
                             paddingTop: 1,
@@ -442,21 +464,13 @@ function BuildOrder(props) {
                         }]}>FILTER </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{flexDirection:'row',justifyContent:'flex-end',padding:3}}>
+                {productsData.length?<View style={{flexDirection:'row',justifyContent:'flex-end',padding:3}}>
                     <TouchableOpacity onPress={toggleView}>
                         <Text style={texts.redTextBold14}>
                             {normalView?"Detailed View":"Normal View"}
                         </Text>
                     </TouchableOpacity>
-                </View>
-                <View>
-                    {modalVisible?
-                        <ProductFilter 
-                        modalVisible={modalVisible} 
-                        closeModal={closeModal} 
-                        applyFilters={applyFilters}
-                        />:null}
-                </View>
+                </View>:null}
             <FlatList
                 data={productsData}
                 ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
