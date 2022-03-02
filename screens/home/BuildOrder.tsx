@@ -330,9 +330,15 @@ function BuildOrder(props) {
                             <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
                                 {item.company_name} {">"} {item.brand_name}
                             </Text>
-                            <Text style={texts.redTextBold14}>
-                                {item.product_group}
-                            </Text>
+                            
+                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                                <Text style={texts.redTextBold14}>
+                                    {item.product_group}
+                                </Text>
+                                <Text style={texts.blackTextBold14}>
+                                    {item.data.length+ " SKUs"}
+                                </Text>
+                            </View>
                         </View>
                         </TouchableOpacity> : null}
                         {item.pg_image_expanded ? <TouchableOpacity onPress={() => {
