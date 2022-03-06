@@ -219,7 +219,7 @@ function HomeScreen(props: any) {
                     paddingBottom: 10,
                   }}
                 >
-                  It is an exciting offer
+                  Up for Grabs! Exciting deals
                 </Text>
                 <Text
                   style={{
@@ -231,7 +231,7 @@ function HomeScreen(props: any) {
                     paddingBottom: 10,
                   }}
                 >
-                  Click to grab the offer
+                  you shouldn't miss out on.
                 </Text>
               </TouchableOpacity>
             );
