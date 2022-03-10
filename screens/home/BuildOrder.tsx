@@ -317,25 +317,24 @@ function BuildOrder(props) {
                             </View>
                         </View>}
                 </View>
-                <View style={styles.rowSpaceBetween}>
-                    <View>
+                <View style={[styles.rowSpaceBetween, {backgroundColor:"red", width:"100%"}]}>
+                    <View style={{width:"86%", backgroundColor:"green"}}>
                         {item.product_group_id ? <TouchableOpacity onPress={() => {
                         expandProductGroupImage(index)
-                        }} style={[commonStyles.rowAlignCenter, {paddingVertical: 10}]}>
-                        {!item.pg_image_expanded ? <View style={{marginRight: 10}}>
+                        }} style={[commonStyles.rowAlignCenter, {paddingTop: 0, paddingBottom:6}]}>
+                        {!item.pg_image_expanded ? <View style={{marginRight: 6}}>
                             <Image style={styles.productImage}
                                 source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
                         </View> : null}
-                        <View>
+                        <View style={{width:"86%"}}>
                             <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
                                 {item.company_name} {">"} {item.brand_name}
                             </Text>
-                            
-                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                <Text style={texts.redTextBold14}>
+                            <View style={{flexDirection:'row',justifyContent:'space-between', width:"86%"}}>
+                                <Text style={texts.redTextBold12}>
                                     {item.product_group}
                                 </Text>
-                                <Text style={texts.blackTextBold14}>
+                                <Text style={texts.blackTextBold12}>
                                     {item.data.length+ " SKUs"}
                                 </Text>
                             </View>
@@ -441,11 +440,11 @@ function BuildOrder(props) {
 
 
     return (
-        <View style={{flex: 1, paddingHorizontal: 24, backgroundColor: colors.white}}>
+        <View style={{flex: 1, paddingHorizontal: 12, backgroundColor: colors.white}}>
             <View style={commonStyles.rowSpaceBetween}>
-                <SecondaryHeader title={"Create Order"}/>
+                <SecondaryHeader headerRight={true} headerRightTitle={normalView?"Detailed View":"Normal View"} headerRightCta={toggleView}  title={"Create Order"}/>
             </View>
-            <View style={[commonStyles.searchContainer, {marginTop: 12, marginBottom: 12}]}>
+            <View style={[commonStyles.searchContainer, {marginTop: 10, marginBottom: 10}]}>
                 <TextInput
                     value={searchText}
                     onChangeText={(text) => searchProduct(text)}
@@ -457,8 +456,8 @@ function BuildOrder(props) {
                     <AntDesign name="close" size={18} color={colors.black}/>
                 </TouchableOpacity> : null}
             </View>
-                <View style={{flexDirection:'row',justifyContent:'space-between',padding:5}}>
-                    <Text style={[texts.blueBoldl14, {paddingTop: 10}]}>
+                <View style={{flexDirection:'row',justifyContent:'space-between', alignItems:"center"}}>
+                    <Text style={[texts.blueBoldl14]}>
                         {productsData.length} item(s) found
                     </Text> 
                     <TouchableOpacity style={styles.filterBox} onPress={()=>props.navigation.navigate("ProductFilterScreen")}>
@@ -470,16 +469,9 @@ function BuildOrder(props) {
                         }]}>FILTER </Text>
                     </TouchableOpacity>
                 </View>
-                {productsData.length?<View style={{flexDirection:'row',justifyContent:'flex-end',padding:3}}>
-                    <TouchableOpacity onPress={toggleView}>
-                        <Text style={texts.redTextBold14}>
-                            {normalView?"Detailed View":"Normal View"}
-                        </Text>
-                    </TouchableOpacity>
-                </View>:null}
             <FlatList
                 data={productsData}
-                ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
+                ItemSeparatorComponent={() => <View style={{height: 4}}></View>}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => item.product_group_id + "" + item.product_group_name}
                 renderItem={renderItem}
@@ -538,7 +530,7 @@ const styles = StyleSheet.create({
     underline: {
         borderBottomWidth: 1,
         borderBottomColor: colors.grey,
-        paddingBottom: 10
+        paddingBottom: 5
     },
     productImage: {
         width: 60,
