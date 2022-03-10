@@ -31,26 +31,6 @@ import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
 import moment from "moment";
 import RenderCarousel from "./Carousel";
-import store from "../../store/store";
-
-const discountData = [
-  {
-    from: 40,
-    to: 100,
-  },
-  {
-    from: 30,
-    to: 100,
-  },
-  {
-    from: 20,
-    to: 100,
-  },
-  {
-    from: 10,
-    to: 100,
-  },
-];
 
 function HomeScreen(props: any) {
   const navigation = useNavigation();
@@ -162,85 +142,6 @@ function HomeScreen(props: any) {
     navigation.navigate("OrderListDetails", { orderDetailsData: data });
   };
 
-  const addDiscountCards = () => {
-    return (
-      <View
-        style={{
-          // height: 100,
-          width: "100%",
-          // backgroundColor: "red",
-          padding: 5,
-        }}
-      >
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={discountData}
-          renderItem={(item) => {
-            console.log(item);
-            return (
-              <TouchableOpacity
-                onPress={async () => {
-                  await store.dispatch({
-                    type: "MARGIN_FILTERS",
-                    payload: { from: item.item.from, to: item.item.to },
-                  });
-
-                  navigation.navigate("BuildOrder", { productData: orderData });
-                }}
-                style={{
-                  borderColor: "orange",
-                  borderWidth: 1,
-                  padding: 10,
-                  width: Dimensions.get("window").width / 2.2,
-                  marginRight: 5,
-                  borderRadius: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 10,
-                    color: colors.orange,
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    paddingBottom: 10,
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  MIN {item.item.from}% Margin
-                </Text>
-                <Text
-                  style={{
-                    // width: "40%",
-                    textAlign: "center",
-                    color: colors.orange,
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    paddingBottom: 10,
-                  }}
-                >
-                  Up for Grabs! Exciting deals
-                </Text>
-                <Text
-                  style={{
-                    // width: "40%",
-                    textAlign: "center",
-                    color: colors.orange,
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    paddingBottom: 10,
-                  }}
-                >
-                  you shouldn't miss out on.
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-        ></FlatList>
-      </View>
-    );
-  };
-
   const renderOrderCard = ({ item }) => {
     return (
       <TouchableOpacity
@@ -290,7 +191,7 @@ function HomeScreen(props: any) {
           ></TextInput>
         </TouchableOpacity>
         {bannerData.length ? <RenderCarousel bannerData={bannerData} /> : null}
-        {addDiscountCards()}
+
         {orderData.length > 0 ? (
           <View style={{ backgroundColor: colors.white }}>
             <View
