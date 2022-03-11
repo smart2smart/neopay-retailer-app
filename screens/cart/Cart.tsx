@@ -102,7 +102,7 @@ function Cart(props: any) {
                 }
             })
         })
-        return {products, available};
+        return products;
     }
 
     const goToDistributorProducts = () => {
@@ -122,6 +122,7 @@ function Cart(props: any) {
                 retailer: retailerData.id
             }
         }
+        console.log(dataToSend)
         AuthenticatedPostRequest(dataToSend).then((res) => {
             setLoading(false);
             if (res.status == 201) {
@@ -132,7 +133,7 @@ function Cart(props: any) {
     }
 
     useEffect(() => {
-        if(cart.data.length){
+        if (cart.data.length) {
             getDiscount();
         }
     }, [route])
@@ -142,7 +143,7 @@ function Cart(props: any) {
         groupedData.forEach((product) => {
             product.data.forEach((item) => {
                 if (parseInt(item.quantity) > 0) {
-                    products[item.id] = item.quantity;
+                    products[item.id] = {quantity: item.quantity, unit_id:item.selected_unit};
                 }
             })
         })
@@ -170,80 +171,100 @@ function Cart(props: any) {
                         {item.company_name}
                     </Text>
                 </View>
-                <View style={[commonStyles.rowAlignCenter, {paddingTop: 10}]}>
+                <View style={[commonStyles.rowAlignCenter, {paddingTop: 5}]}>
                     <View>
                         <Image style={styles.productImage}
                                source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
                     </View>
                     <View style={{paddingLeft: 10}}>
-                        <Text style={[texts.greyNormal14, {paddingBottom: 8}]}>
+                        <Text style={[texts.greyTextBold12, {paddingBottom: 8}]}>
                             {item.company_name} {">"} {item.brand_name}
                         </Text>
-                        <Text style={texts.redTextBold14}>
+                        <Text style={texts.redTextBold12}>
                             {item.product_group}
                         </Text>
                     </View>
                 </View>
-                {item.data.map((item, subIndex) => {
-                    return (<View key={index + "" + subIndex} style={styles.underline}>
-                        <View style={commonStyles.rowSpaceBetween}>
-                            <View style={{width: '70%'}}>
-                                <View style={[commonStyles.rowAlignCenter, {paddingVertical: 5}]}>
-                                    <Text style={texts.darkGreyTextBold14}>
-                                        {item.product_group_id ? item.variant : item.name}
+                {item.data.map((entity, subIndex) => {
+                    let margin = parseFloat(((entity.mrp - entity.rate) / entity.rate) * 100).toFixed(2);
+                    let least_rate = entity.rate;
+                    let min_qty = 0;
+                    let current_rate = entity.rate;
+                    if (entity.qps.length > 0) {
+                        entity.qps.forEach((qps) => {
+                            if (qps.min_qty * entity.lot_quantity >= min_qty) {
+                                least_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                            }
+                            if (entity.quantity * entity.lot_quantity >= qps.min_qty) {
+                                current_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                            }
+                        })
+                    }
+                    return (<View key={index + "" + subIndex} style={[styles.underline, commonStyles.rowSpaceBetween]}>
+                        <View style={{width: "70%"}}>
+                            <View style={[commonStyles.rowAlignCenter, {paddingVertical: 5}]}>
+                                <Text style={texts.darkGreyTextBold12}>
+                                    {entity.product_group_id ? entity.variant : entity.name}
+                                </Text>
+                                <Text style={texts.redTextBold12}>
+                                    {" " + entity.sku_quantity}{sku_units[entity.sku_unit]}
+                                </Text>
+                                <Text style={texts.redTextBold12}>
+                                    {entity.selected_unit !=0 ? <View style={{width:20, height:5, backgroundColor:'green'}}></View>:null}
+                                </Text>
+                            </View>
+                            <View style={{flexDirection: 'row', alignItems: "center"}}>
+                                <View style={commonStyles.row}>
+                                    <Text style={texts.greyTextBold12}>
+                                        MRP:
                                     </Text>
-                                    <Text style={texts.redTextBold14}>
-                                        {" " + item.sku_quantity}{sku_units[item.sku_unit]}
+                                    <Text style={texts.greyTextBold12}>
+                                        {" " + entity.mrp}
                                     </Text>
                                 </View>
-                                <View style={commonStyles.rowSpaceBetween}>
-                                    <View style={commonStyles.row}>
-                                        <Text style={texts.greyTextBold12}>
-                                            MRP:
-                                        </Text>
-                                        <Text style={texts.greyTextBold12}>
-                                            {" " + item.mrp}
-                                        </Text>
-                                    </View>
-                                    <View style={commonStyles.row}>
-                                        <Text style={texts.greyTextBold12}>
-                                            Rate:
-                                        </Text>
-                                        <Text style={texts.greyTextBold12}>
-                                            {" " + qpsData[item.id] ? item.rate * (1 - qpsData[item.id] / 100) : item.rate}
-                                        </Text>
-                                    </View>
-                                    <View style={commonStyles.rowAlignCenter}>
-                                        <Text style={texts.greyTextBold12}>
-                                            Margin:
-                                        </Text>
-                                        <Text style={texts.greenBold12}>
-                                            {" " + (((item.mrp - item.rate) / item.rate) * 100).toFixed(1)}
-                                        </Text>
-                                    </View>
+                                <View style={[commonStyles.row, {marginLeft: 10}]}>
+                                    <Text style={texts.greyTextBold12}>
+                                        Rate:
+                                    </Text>
+                                    <Text style={texts.greyTextBold12}>
+                                        {" " + parseFloat(current_rate * entity.lot_quantity).toFixed(2)}
+                                    </Text>
+                                </View>
+                                <View style={[commonStyles.rowAlignCenter, {marginLeft: 10}]}>
+                                    <Text style={texts.greyTextBold12}>
+                                        Margin:
+                                    </Text>
+                                    <Text style={texts.greenBold12}>
+                                        {margin}
+                                    </Text>
                                 </View>
                             </View>
-                            <View style={{width: '30%', justifyContent: "flex-end", flexDirection: "row"}}>
-                                <AddProductButton
-                                    item={item}
-                                    mainIndex={index}
-                                    subIndex={subIndex}
-                                    setProductQuantity={setProductQuantity}
-                                    selectProduct={selectProduct}
-                                />
-                            </View>
+                        </View>
+                        <View style={{
+                            width: '30%',
+                            justifyContent: "center",
+                            flexDirection: "row",
+                            alignItems: 'flex-end'
+                        }}>
+                            <AddProductButton
+                                item={entity}
+                                mainIndex={index}
+                                subIndex={subIndex}
+                                setProductQuantity={setProductQuantity}
+                                selectProduct={selectProduct}
+                            />
                         </View>
                     </View>)
                 })}
-            </View>
-        )
+            </View>)
     }
+
 
     return (
         cart.data.length > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
             <Indicator isLoading={loading}/>
-            <View style={{paddingHorizontal: 24, paddingTop: 20, flex: 1}}>
+            <View style={{paddingHorizontal: 12, paddingTop: 20, flex: 1}}>
                 <FlatList
                     data={groupedData}
                     ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
@@ -276,7 +297,7 @@ function Cart(props: any) {
                                     {0}
                                 </Text>
                             </View> : null}
-                            {qpsDiscount !== 0 ? <View style={[commonStyles.rowSpaceBetween, {paddingBottom:4}]}>
+                            {qpsDiscount !== 0 ? <View style={[commonStyles.rowSpaceBetween, {paddingBottom: 4}]}>
                                 <Text style={texts.redTextBold12}>
                                     QPS Discount:
                                 </Text>
@@ -327,11 +348,11 @@ const styles = StyleSheet.create({
     underline: {
         borderBottomWidth: 1,
         borderBottomColor: colors.grey,
-        paddingBottom: 10
+        paddingBottom: 5
     },
     productImage: {
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         borderWidth: 1,
         borderColor: colors.grey,
         borderRadius: 5

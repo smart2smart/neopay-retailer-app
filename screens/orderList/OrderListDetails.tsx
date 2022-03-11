@@ -62,30 +62,30 @@ export default function OrderListDetails() {
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
-            <View style={{paddingHorizontal: 24}}>
+            <View style={{paddingHorizontal: 12}}>
                 <SecondaryHeader title={"Order Details"}/>
                 <View style={styles.container}>
                     <View style={commonStyles.rowSpaceBetween}>
                         <View>
-                            <View style={commonStyles.row}>
-                                <Text style={texts.darkGreyTextBold14}>
+                            <View style={commonStyles.rowAlignCenter}>
+                                <Text style={texts.darkGreyTextBold12}>
                                     Order Id:
                                 </Text>
-                                <Text style={texts.primaryTextBold14}>
+                                <Text style={texts.primaryTextBold12}>
                                     {orderDetails.id}
                                 </Text>
                             </View>
                             <View>
-                                <Text style={[texts.darkGreyTextBold16, {paddingTop: 10}]}>
+                                <Text style={[texts.darkGreyTextBold14]}>
                                     {retailerDetails.name}
                                 </Text>
                             </View>
                         </View>
                     </View>
                     <View
-                        style={[commonStyles.rowAlignCenter, styles.borderBottom, {paddingTop: 10, paddingBottom: 20}]}>
+                        style={[commonStyles.rowAlignCenter, styles.borderBottom, {paddingBottom: 10}]}>
                         <Icon name="map-pin" size={18} color={colors.primary_color}/>
-                        <Text style={[texts.greyNormal14, {marginLeft: 10}]}>
+                        <Text style={[texts.greyNormal12, {marginLeft: 10}]}>
                             {retailerDetails.address_str}
                         </Text>
                     </View>
@@ -99,43 +99,51 @@ export default function OrderListDetails() {
                             </Text>
                         </View>
                         {orderDetails.product_list.map((item, index) => {
+                            let name = item.name;
+                            if(item.unit_label !== item.level_0_label){
+                                name = item.name + " - " + item.unit_label
+                            }
                             return (<View key={item.name + '' + index}
                                           style={[styles.productListItem, styles.borderBottom]}>
                                 <View>
-                                    <Text style={texts.darkGreyTextBold14}>
-                                        {item.name}
+                                    <Text style={texts.darkGreyTextBold12}>
+                                        {name}
                                     </Text>
-                                    <View style={[commonStyles.rowAlignCenter, {marginTop: 8}]}>
+                                    <View style={[commonStyles.rowAlignCenter]}>
                                         <Text style={texts.greyNormal12}>
                                             MRR: {item.mrp}
                                         </Text>
                                         <Text style={[texts.greyNormal12, {marginLeft: 20}]}>
-                                            Rate: {item.rate}
+                                            Rate: {item.rate*item.lot_quantity}
                                         </Text>
                                     </View>
                                 </View>
-                                <View>
-                                    <Text style={texts.darkGreyTextBold14}>
+                                <View style={{alignItems:"flex-end"}}>
+                                    <Text style={texts.darkGreyTextBold12}>
                                         {item.value}
                                     </Text>
+                                    {item.unit_label !== item.level_0_label ?
+                                        <Text style={texts.greyTextBold12}>
+                                            {"(" + item.value*item.lot_quantity + " " + item.level_0_label}{item.unit_label !== item.level_0_label ||  item.value>1?"s":""}{")"}
+                                        </Text>:null}
                                 </View>
                             </View>)
                         })}
                     </View>
                     <View style={[styles.borderBottom, styles.orderSummary]}>
                         <View style={styles.flexRow}>
-                            <Text style={texts.greyTextBold14}>
+                            <Text style={texts.greyTextBold12}>
                                 Total Items:
                             </Text>
-                            <Text style={texts.greyTextBold14}>
+                            <Text style={texts.greyTextBold12}>
                                 {" " + orderDetails.revised_count}
                             </Text>
                         </View>
                         <View style={styles.flexRow}>
-                            <Text style={texts.greyTextBold14}>
+                            <Text style={texts.greyTextBold12}>
                                 {"Order Value: "}
                             </Text>
-                            <Text style={texts.primaryTextBold14}>
+                            <Text style={texts.primaryTextBold12}>
                                 Rs {parseFloat(orderDetails.order_value).toFixed(2)}
                             </Text>
                         </View>
@@ -160,7 +168,7 @@ const styles = StyleSheet.create({
     },
     container: {
         marginTop: 20,
-        padding: 16,
+        padding: 10,
         borderRadius: 5,
         borderColor: colors.grey,
         backgroundColor: '#ffffff',
@@ -196,11 +204,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        paddingVertical: 12,
+        paddingVertical: 6,
         alignItems: 'center'
     },
     borderBottom: {
-        paddingBottom: 10,
         borderBottomColor: colors.grey,
         borderBottomWidth: 1
     },
@@ -208,7 +215,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingTop: 10
+        paddingTop: 10,
+        paddingBottom:10
     },
     flexRow: {
         flexDirection: 'row',

@@ -1,8 +1,6 @@
 export const set_unit_quantities = (product)=>{
     let unit_data = [];
     let units = product["unit_conversion"]
-    console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-    console.log(units)
     if (units) {
         if (product["level_0_enabled"]) {
             unit_data.push({label: product["level_0_label"], value: 0, quantity: 1});

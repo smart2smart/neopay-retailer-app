@@ -78,7 +78,7 @@ function BuildOrder(props) {
                 .sortBy(function (item) {
                     return item.company_name;
                 })
-                .groupBy("product_group")
+                .groupBy("product_group_id")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
                     brand_name: value[0]["brand_name"],
@@ -92,11 +92,8 @@ function BuildOrder(props) {
                 }))
                 .value();
             setIsLoading(false);
-            console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
             groupedData.forEach((item) => {
-                console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
                 item.data.forEach((product) => {
-                    console.log("gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
                     set_unit_quantities(product)
                 })
             })
@@ -117,12 +114,9 @@ function BuildOrder(props) {
     useEffect(() => {
         if (route.params) {
             if (route.params.productData) {
-                console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
                 let data = route.params.productData
                 data.forEach((item) => {
-                    console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
                     item.data.forEach((product) => {
-                        console.log("gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
                         set_unit_quantities(product)
                     })
                 })
@@ -461,6 +455,19 @@ function BuildOrder(props) {
                     <View>
                         {item.data.map((entity, subIndex) => {
                             let margin = ((entity.mrp - entity.rate) / entity.rate) * 100;
+                            let least_rate = entity.rate;
+                            let min_qty = 0;
+                            let current_rate = entity.rate;
+                            if (entity.qps.length > 0) {
+                                entity.qps.forEach((qps) => {
+                                    if (qps.min_qty * entity.lot_quantity >= min_qty) {
+                                        least_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                                    }
+                                    if (entity.quantity * entity.lot_quantity >= qps.min_qty) {
+                                        current_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                                    }
+                                })
+                            }
                             return (
                                 <View
                                     key={entity.id + subIndex + "" + entity.name}
@@ -514,7 +521,7 @@ function BuildOrder(props) {
                                                 <View style={commonStyles.row}>
                                                     <Text style={texts.greyTextBold12}>Rate:</Text>
                                                     <Text style={texts.greyTextBold12}>
-                                                        {" " + entity.rate}
+                                                        {" " + parseFloat(current_rate * entity.lot_quantity).toFixed(2)}
                                                     </Text>
                                                 </View>
                                                 <View>

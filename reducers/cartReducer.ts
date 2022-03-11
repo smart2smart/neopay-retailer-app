@@ -46,7 +46,7 @@ const cartReducer = (state = {...cart}, action: any) => {
                 ...state,
                 data: getData(state, action.payload.product, "add"),
                 count: state.count + 1,
-                value: (parseFloat(state.value) + parseFloat(action.payload.product["rate"])).toFixed(2),
+                value: (parseFloat(state.value) + parseFloat(action.payload.product["rate"]*action.payload.product["lot_quantity"])).toFixed(2),
                 distributorId: action.payload["distributorId"]
             };
             setCartToStorage(state_add);
@@ -56,7 +56,7 @@ const cartReducer = (state = {...cart}, action: any) => {
                 ...state,
                 data: getData(state, action.payload.product, "subtract"),
                 count: state.count - 1,
-                value: (parseFloat(state.value) - parseFloat(action.payload.product["rate"])).toFixed(2),
+                value: (parseFloat(state.value) - parseFloat(action.payload.product["rate"]*action.payload.product["lot_quantity"])).toFixed(2),
                 distributorId: action.payload["distributorId"]
             };
             setCartToStorage(state_subtract);
@@ -66,7 +66,7 @@ const cartReducer = (state = {...cart}, action: any) => {
                 ...state,
                 data: [...state.data.filter((item) => item.id !== action.payload.product.id)],
                 count: state.count - 1,
-                value: (parseFloat(state.value) - parseFloat(action.payload.product["rate"])).toFixed(),
+                value: (parseFloat(state.value) - parseFloat(action.payload.product["rate"]*action.payload.product["lot_quantity"])).toFixed(),
                 distributorId: action.payload["distributorId"]
             };
             setCartToStorage(remove_from_cart);
@@ -77,7 +77,7 @@ const cartReducer = (state = {...cart}, action: any) => {
                 ...state,
                 data: item.quantity ? getData(state, action.payload.product, "add") : [...state.data.filter((item) => item.id !== action.payload.product.id)],
                 count: action.payload.text === "" ? parseInt(state.count) - action.payload.originalQuantity : parseInt(state.count) - action.payload.originalQuantity + parseInt(action.payload.text),
-                value: (action.payload.text === "" ? parseFloat(state.value) - parseFloat(item["rate"] * action.payload.originalQuantity) : parseFloat(state.value) + parseFloat(item["rate"] * (parseInt(action.payload.text) - action.payload.originalQuantity))).toFixed(2),
+                value: (action.payload.text === "" ? parseFloat(state.value) - parseFloat(item["rate"]*action.payload.product["lot_quantity"] * action.payload.originalQuantity) : parseFloat(state.value) + parseFloat(item["rate"] *action.payload.product["lot_quantity"]* (parseInt(action.payload.text) - action.payload.originalQuantity))).toFixed(2),
                 distributorId: action.payload["distributorId"]
             };
             setCartToStorage(change_quantity);

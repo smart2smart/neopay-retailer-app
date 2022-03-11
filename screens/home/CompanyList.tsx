@@ -292,7 +292,6 @@ function CompanyList(props) {
                     showsHorizontalScrollIndicator={false}
                     data={discountData}
                     renderItem={(item) => {
-                        // console.log(item, "ITEIEIEI");
                         return (
                             <TouchableOpacity
                                 onPress={async () => {
@@ -300,8 +299,6 @@ function CompanyList(props) {
                                         type: "MARGIN_FILTERS",
                                         payload: {from: item.item.from, to: item.item.to},
                                     });
-                                    //   console.log(originalProductsData);
-
                                     navigation.navigate("BuildOrder", {
                                         productData: originalProductsData,
                                         comingFrom: "filters-link",
