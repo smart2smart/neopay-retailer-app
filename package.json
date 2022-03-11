@@ -42,6 +42,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-element-dropdown": "^1.7.2",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-maps": "^0.28.0",
     "react-native-range-slider-expo": "^1.4.1",

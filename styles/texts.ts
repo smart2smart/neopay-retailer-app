@@ -10,7 +10,7 @@ const texts = StyleSheet.create({
         letterSpacing: 1.3
     },
     primaryTextBold16: {
-        color: colors.primary_color,
+        color: colors.primaryThemeColor,
         fontFamily: "GothamMedium",
         fontSize: 16
     },
@@ -68,13 +68,13 @@ const texts = StyleSheet.create({
         fontSize: 15
     },
     primaryTextBold14: {
-        color: colors.primary_color,
+        color: colors.primaryThemeColor,
         fontFamily: "GothamMedium",
         fontSize: 14,
         lineHeight:20
     },
     primaryTextBold15: {
-        color: colors.primary_color,
+        color: colors.primaryThemeColor,
         fontFamily: "GothamMedium",
         fontSize: 15
     },

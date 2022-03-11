@@ -90,13 +90,19 @@ function Cart(props: any) {
     }
 
     const getProducts = () => {
+        let productsToSend = [...groupedData];
         let products: any = {};
-        cart.data.forEach((itm) => {
-            if (parseInt(itm.quantity) > 0) {
-                products[itm.id] = parseInt(itm.quantity);
-            }
+        let available = false;
+
+        productsToSend.forEach((product) => {
+            product.data.forEach((item) => {
+                if (parseInt(item.quantity) > 0) {
+                    products[item.id] = {quantity: item.quantity, unit_id: item.selected_unit};
+                    available = true;
+                }
+            })
         })
-        return products;
+        return {products, available};
     }
 
     const goToDistributorProducts = () => {
