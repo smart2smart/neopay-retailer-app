@@ -32,6 +32,7 @@ import {useFocusEffect, useRoute} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/AntDesign";
 import {set_unit_quantities} from "./ProductUtils";
 import {Dropdown, MultiSelect} from 'react-native-element-dropdown';
+import QPSModal from "../../commons/QPSMOdal";
 
 const sku_units = {
     1: "kg",
@@ -58,6 +59,8 @@ function BuildOrder(props) {
     const retailerData = useSelector((state: any) => state.retailerDetails);
     const [normalView, setNormalView] = useState(true);
     let filters = useSelector((state: any) => state.filters);
+    const [qpsModalVisible, setQPSModalVisible] = useState(false);
+    const [qpsData, setQPSData] = useState({});
 
 
     const getProductsData = () => {
@@ -212,17 +215,17 @@ function BuildOrder(props) {
     });
 
     const toggleView = () => {
-        setNormalView(!normalView);
+        setNormalView(prevState => !prevState);
         if (normalView) {
             let data = [...productsData];
-            productsData.forEach((item) => {
-                item["collapsed"] = false;
+            data.forEach((item) => {
+                item.collapsed = false;
             });
             setProductsData(data);
         } else {
             let data = [...productsData];
-            productsData.forEach((item) => {
-                item["collapsed"] = true;
+            data.forEach((item) => {
+                item.collapsed = true;
             });
             setProductsData(data);
         }
@@ -511,20 +514,20 @@ function BuildOrder(props) {
                                                     </Text>
                                                 ) : null}
                                             </View>
-                                            <View style={commonStyles.rowSpaceBetween}>
+                                            <View style={commonStyles.rowAlignCenter}>
                                                 <View style={commonStyles.row}>
                                                     <Text style={texts.greyTextBold12}>MRP:</Text>
                                                     <Text style={texts.greyTextBold12}>
                                                         {" " + entity.mrp}
                                                     </Text>
                                                 </View>
-                                                <View style={commonStyles.row}>
+                                                <View style={[commonStyles.row, {marginLeft:10}]}>
                                                     <Text style={texts.greyTextBold12}>Rate:</Text>
                                                     <Text style={texts.greyTextBold12}>
                                                         {" " + parseFloat(current_rate * entity.lot_quantity).toFixed(2)}
                                                     </Text>
                                                 </View>
-                                                <View>
+                                                <View style={[commonStyles.row, {marginLeft:10}]}>
                                                     {margin > 0 ? (
                                                         <View style={commonStyles.rowAlignCenter}>
                                                             <Text style={texts.greyTextBold12}>Margin:</Text>
@@ -605,6 +608,22 @@ function BuildOrder(props) {
                                             </View>
                                         </View>
                                     </View>
+                                    {entity.qps.length > 0 ? <TouchableOpacity onPress={() => {
+                                        let data = [...item.data]
+                                        let filteredData = data.filter((product) => {
+                                            return product.id == entity.id
+                                        })
+                                        let current = {...item};
+                                        current.data = filteredData;
+                                        setQPSData(current)
+                                        setQPSModalVisible(true);
+                                    }}>
+                                        <View style={styles.qpsDiv}>
+                                            <Text style={texts.redTextBold10}>
+                                                {`Bulk offer upto Rs. ${least_rate}/pc >`}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity> : null}
                                 </View>
                             );
                         })}
@@ -656,6 +675,12 @@ function BuildOrder(props) {
                 ListFooterComponent={() => <View style={{paddingBottom: 50}}></View>}
             />
             {cart.data.length > 0 ? <CartButton/> : null}
+            {qpsModalVisible ? <QPSModal
+                modalVisible={qpsModalVisible}
+                data={qpsData}
+                closeModal={() => {
+                    setQPSModalVisible(false);
+                }}/> : null}
         </View>
     );
 }
@@ -763,6 +788,14 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
     },
     dropdownContainer: {
-        borderRadius: 4
+        borderRadius: 4,
+    },
+    qpsDiv: {
+        marginTop: 8,
+        backgroundColor: 'rgba(169, 41, 79, 0.5)',
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+        borderRadius: 5,
+        alignSelf: "flex-start"
     },
 });

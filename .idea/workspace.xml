@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e79748fa-ca20-418f-8887-a1c81644532a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/commons/QPSMOdal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/ProductUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/ProductUtils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/texts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/texts.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,13 +38,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../neopay-salesman" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/commons" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/commons" />
       <recent name="$PROJECT_DIR$/screens/home" />
     </key>
   </component>
@@ -80,7 +79,7 @@
       <workItem from="1646913945304" duration="6740000" />
       <workItem from="1646983369808" duration="562000" />
       <workItem from="1646984272982" duration="342000" />
-      <workItem from="1646987779293" duration="3423000" />
+      <workItem from="1646987779293" duration="5508000" />
     </task>
     <servers />
   </component>

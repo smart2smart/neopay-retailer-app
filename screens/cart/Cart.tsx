@@ -122,7 +122,6 @@ function Cart(props: any) {
                 retailer: retailerData.id
             }
         }
-        console.log(dataToSend)
         AuthenticatedPostRequest(dataToSend).then((res) => {
             setLoading(false);
             if (res.status == 201) {
