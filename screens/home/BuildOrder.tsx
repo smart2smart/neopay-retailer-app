@@ -8,6 +8,7 @@ import {
     FlatList,
     Image,
     Alert,
+    Dimensions,
 } from "react-native";
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import colors from "../../assets/colors/colors";
@@ -46,6 +47,9 @@ const sku_units = {
     9: "box",
     10: "bag",
 };
+
+const screenHeight = Dimensions.get('window').height
+let dropdownPadding = screenHeight*0.035;
 
 function BuildOrder(props) {
     let _ = require("underscore");
@@ -789,6 +793,7 @@ const styles = StyleSheet.create({
     },
     dropdownContainer: {
         borderRadius: 4,
+        marginTop: -dropdownPadding
     },
     qpsDiv: {
         marginTop: 8,
