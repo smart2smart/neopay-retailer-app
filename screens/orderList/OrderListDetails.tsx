@@ -34,7 +34,7 @@ export default function OrderListDetails() {
         }, [])
     );
 
-    useEffect(()=>{
+    useEffect(() => {
         getRetailerDetails();
     }, [])
 
@@ -100,12 +100,12 @@ export default function OrderListDetails() {
                         </View>
                         {orderDetails.product_list.map((item, index) => {
                             let name = item.name;
-                            if(item.unit_label !== item.level_0_label){
+                            if (item.unit_label !== item.level_0_label) {
                                 name = item.name + " - " + item.unit_label
                             }
                             return (<View key={item.name + '' + index}
                                           style={[styles.productListItem, styles.borderBottom]}>
-                                <View>
+                                <View style={{width:"75%"}}>
                                     <Text style={texts.darkGreyTextBold12}>
                                         {name}
                                     </Text>
@@ -114,18 +114,18 @@ export default function OrderListDetails() {
                                             MRR: {item.mrp}
                                         </Text>
                                         <Text style={[texts.greyNormal12, {marginLeft: 20}]}>
-                                            Rate: {item.rate*item.lot_quantity}
+                                            Rate: {parseFloat(item.rate * item.lot_quantity).toFixed(2)}
                                         </Text>
                                     </View>
                                 </View>
-                                <View style={{alignItems:"flex-end"}}>
+                                <View style={{alignItems: "flex-end"}}>
                                     <Text style={texts.darkGreyTextBold12}>
                                         {item.value}
                                     </Text>
                                     {item.unit_label !== item.level_0_label ?
                                         <Text style={texts.greyTextBold12}>
-                                            {"(" + item.value*item.lot_quantity + " " + item.level_0_label}{item.unit_label !== item.level_0_label ||  item.value>1?"s":""}{")"}
-                                        </Text>:null}
+                                            {"(" + item.value * item.lot_quantity + " " + item.level_0_label}{item.unit_label !== item.level_0_label || item.value > 1 ? "s" : ""}{")"}
+                                        </Text> : null}
                                 </View>
                             </View>)
                         })}
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         borderColor: colors.grey,
         backgroundColor: '#ffffff',
         elevation: 2,
-        marginBottom:20
+        marginBottom: 20
     },
     retailerDiv: {
         width: '100%',
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingTop: 10,
-        paddingBottom:10
+        paddingBottom: 10
     },
     flexRow: {
         flexDirection: 'row',

@@ -37,7 +37,7 @@ function CartButton() {
                 <Text style={texts.whiteNormal14}>Order Value: </Text>
             </View>
             <View>
-                <Text style={texts.whiteNormal14}>{cart.value}</Text>
+                <Text style={texts.whiteNormal14}>{parseFloat(cart.value).toFixed(2)}</Text>
             </View>
             <View style={{marginLeft: 5}}>
                 <Icon name="chevron-right" size={14} color={colors.white}/>

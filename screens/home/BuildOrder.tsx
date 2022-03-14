@@ -34,6 +34,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import {set_unit_quantities} from "./ProductUtils";
 import {Dropdown, MultiSelect} from 'react-native-element-dropdown';
 import QPSModal from "../../commons/QPSMOdal";
+import {RenderItem} from "./ProductCard";
 
 const sku_units = {
     1: "kg",
@@ -49,7 +50,7 @@ const sku_units = {
 };
 
 const screenHeight = Dimensions.get('window').height
-let dropdownPadding = screenHeight*0.035;
+let dropdownPadding = screenHeight * 0.035;
 
 function BuildOrder(props) {
     const dispatch = useDispatch()
@@ -62,7 +63,7 @@ function BuildOrder(props) {
     const [loading, setIsLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
-    const [normalView, setNormalView] = useState(false);
+    const [normalView, setNormalView] = useState(true);
     let filters = useSelector((state: any) => state.filters);
     const [qpsModalVisible, setQPSModalVisible] = useState(false);
     const [qpsData, setQPSData] = useState({});
@@ -97,6 +98,7 @@ function BuildOrder(props) {
                     data: value,
                     pg_image_expanded: false,
                     quantity: 0,
+                    collapsed: normalView,
                 }))
                 .value();
             setIsLoading(false);
@@ -107,7 +109,7 @@ function BuildOrder(props) {
             })
             setProductsData(groupedData);
             setOriginalProductsData(groupedData);
-            if (cart.count  > 0) {
+            if (cart.count > 0) {
                 matchQuantityWithCart(groupedData);
             }
         });
@@ -137,11 +139,6 @@ function BuildOrder(props) {
         }
     }, []);
 
-    useEffect(() => {
-        productsData.forEach((item) => {
-            item["collapsed"] = true;
-        });
-    }, [originalProductsData]);
 
     const applyFilters = () => {
         let filteredData = originalProductsData.map((item: any) => {
@@ -239,13 +236,22 @@ function BuildOrder(props) {
         let groupedData = [...items];
         let data = {}
         Object.values(cart.data).forEach((item) => {
-            data[item.id] = {quantity:item.quantity, "unit": item["selected_unit"]};
+            data[item.id] = {
+                quantity: item.quantity,
+                selected_unit: item["selected_unit"],
+                current_rate: item["current_rate"],
+                lot_quantity: item["lot_quantity"],
+                unit_label: item["unit_label"],
+            };
         })
         groupedData.forEach((item) => {
             item.data.forEach((itm) => {
                 if (data[itm.id]) {
                     itm["quantity"] = data[itm.id]["quantity"]
-                    itm["selected_unit"] = data[itm.id]["unit"]
+                    itm["selected_unit"] = data[itm.id]["selected_unit"]
+                    itm["current_rate"] = data[itm.id]["current_rate"]
+                    itm["lot_quantity"] = data[itm.id]["lot_quantity"]
+                    itm["unit_label"] = data[itm.id]["unit_label"]
                 } else {
                     itm["quantity"] = 0;
                 }
@@ -284,7 +290,7 @@ function BuildOrder(props) {
     };
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let payload = {retailerId:retailerData.id, distributorId: distributor.user}
+        let payload = {retailerId: retailerData.id, distributorId: distributor.user}
         let allProducts = [...productsData];
         let entity = allProducts[mainIndex]["data"][subIndex];
         entity["quantity"] = text;
@@ -294,6 +300,7 @@ function BuildOrder(props) {
         entity["current_rate"] = current_rate
         payload["product"] = entity
         setProductsData(allProducts);
+
         dispatch(cartChangeQuantity(payload))
     };
 
@@ -346,7 +353,7 @@ function BuildOrder(props) {
         let allProducts = [...productsData];
         let entity = allProducts[mainIndex]["data"][subIndex];
         let {current_rate} = get_current_rate(entity, entity.quantity, lotQuantity)
-        entity["current_rate"] = current_rate
+        entity["current_rate"] = current_rate;
         entity["selected_unit"] = lotSizeId;
         entity["lot_quantity"] = lotQuantity;
         entity["unit_label"] = unitLabel;
@@ -356,14 +363,14 @@ function BuildOrder(props) {
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let payload = {retailerId:retailerData.id, distributorId: distributor.user}
+        let payload = {retailerId: retailerData.id, distributorId: distributor.user}
         let allProducts = [...productsData];
         let entity = allProducts[mainIndex]["data"][subIndex];
         if (type === "new") {
             allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
             let {current_rate} = get_current_rate(entity, 1, entity["lot_quantity"]);
             entity["current_rate"] = current_rate
-            payload["product"] =entity;
+            payload["product"] = entity;
             dispatch(updateCartAdd(payload))
         } else if (type == "add") {
             entity["quantity"] = data.quantity ? parseInt(entity["quantity"]) + 1 : 1;
@@ -405,254 +412,19 @@ function BuildOrder(props) {
 
     const renderItem = ({item, index}) => {
         return (
-            <View>
-                <View style={styles.underline}>
-                    {item.product_group_id ? (
-                        <Text style={texts.darkGreyTextBold14}>{item.company_name}</Text>
-                    ) : (
-                        <View style={styles.rowSpaceBetween}>
-                            <Text style={texts.darkGreyTextBold14}>Others</Text>
-                            <View>
-                                <TouchableOpacity
-                                    style={styles.collapsableButton}
-                                    onPress={() => {
-                                        handleCollapse(index);
-                                    }}
-                                >
-                                    <Icon
-                                        name={item.collapsed ? "down" : "up"}
-                                        size={18}
-                                        color={colors.red}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    )}
-                </View>
-                <View style={[styles.rowSpaceBetween, {width: "100%"}]}>
-                    <View style={{width: "86%"}}>
-                        {item.product_group_id ? <TouchableOpacity onPress={() => {
-                            expandProductGroupImage(index)
-                        }} style={[commonStyles.rowAlignCenter, {paddingVertical: 6}]}>
-                            {!item.pg_image_expanded ? <View style={{marginRight: 6}}>
-                                <Image style={styles.productImage}
-                                       source={item.image ? {uri: item.image} : require('../../assets/images/placeholder_profile_pic.jpg')}/>
-                            </View> : null}
-                            <View style={{width: "86%"}}>
-                                <Text style={[texts.greyNormal14, {paddingBottom: 5}]}>
-                                    {item.company_name} {">"} {item.brand_name}
-                                </Text>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between', width: "86%"}}>
-                                    <Text style={texts.redTextBold12}>
-                                        {item.product_group}
-                                    </Text>
-                                    <Text style={texts.blackTextBold12}>
-                                        {item.data.length + " SKUs"}
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity> : null}
-                        {item.pg_image_expanded ? (
-                            <TouchableOpacity
-                                onPress={() => {
-                                    expandProductGroupImage(index);
-                                }}
-                            >
-                                <Image
-                                    style={{width: "100%", height: 200, borderRadius: 5}}
-                                    source={
-                                        item.image
-                                            ? {uri: item.image}
-                                            : require("../../assets/images/placeholder_profile_pic.jpg")
-                                    }
-                                />
-                            </TouchableOpacity>
-                        ) : null}
-                    </View>
-                    {item.product_group_id ? (
-                        <View>
-                            <TouchableOpacity
-                                style={styles.collapsableButton}
-                                onPress={() => {
-                                    handleCollapse(index);
-                                }}
-                            >
-                                <Icon
-                                    name={item.collapsed ? "down" : "up"}
-                                    size={18}
-                                    color={colors.red}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    ) : null}
-                </View>
-                {!item.collapsed ? (
-                    <View>
-                        {item.data.map((entity, subIndex) => {
-                            let {current_rate, least_rate}= get_current_rate(entity, entity.quantity, entity.lot_quantity)
-                            let margin = ((entity.mrp - current_rate) / current_rate) * 100;
-                            return (
-                                <View
-                                    key={entity.id + subIndex + "" + entity.name}
-                                    style={styles.underline}
-                                >
-                                    {entity.image_expanded ? (
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                expandImage(index, subIndex);
-                                            }}
-                                        >
-                                            <Image
-                                                style={{width: "100%", height: 200, borderRadius: 5}}
-                                                source={
-                                                    entity.sku_image
-                                                        ? {uri: entity.sku_image}
-                                                        : require("../../assets/images/placeholder_profile_pic.jpg")
-                                                }
-                                            />
-                                        </TouchableOpacity>
-                                    ) : null}
-                                    <View style={commonStyles.rowSpaceBetween}>
-                                        <View style={{width: "70%"}}>
-                                            <View>
-                                                <Text style={[texts.greyNormal12, {paddingTop: 5}]}>
-                                                    {entity.name}
-                                                </Text>
-                                            </View>
-                                            <View
-                                                style={[
-                                                    commonStyles.rowAlignCenter,
-                                                    {paddingVertical: 4},
-                                                ]}
-                                            >
-                                                <Text style={texts.darkGreyTextBold14}>
-                                                    {entity.product_group_id ? entity.variant : entity.name}
-                                                </Text>
-                                                {entity.product_group_id ? (
-                                                    <Text style={texts.redTextBold14}>
-                                                        {" > " + entity.sku}
-                                                    </Text>
-                                                ) : null}
-                                            </View>
-                                            <View style={commonStyles.rowAlignCenter}>
-                                                <View style={commonStyles.row}>
-                                                    <Text style={texts.greyTextBold12}>MRP:</Text>
-                                                    <Text style={texts.greyTextBold12}>
-                                                        {" " + entity.mrp}
-                                                    </Text>
-                                                </View>
-                                                <View style={[commonStyles.row, {marginLeft:10}]}>
-                                                    <Text style={texts.greyTextBold12}>Rate:</Text>
-                                                    <Text style={texts.greyTextBold12}>
-                                                        {" " + parseFloat(current_rate * entity.lot_quantity).toFixed(2)}
-                                                    </Text>
-                                                </View>
-                                                <View style={[commonStyles.row, {marginLeft:10}]}>
-                                                    {margin > 0 ? (
-                                                        <View style={commonStyles.rowAlignCenter}>
-                                                            <Text style={texts.greyTextBold12}>Margin:</Text>
-                                                            <Text style={texts.greenBold12}>
-                                                                {" " + margin.toFixed(1) + "%"}
-                                                            </Text>
-                                                        </View>
-                                                    ) : null}
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View
-                                            style={{
-                                                width: "30%",
-                                                flexDirection: "column",
-                                                alignItems: "flex-end",
-                                            }}
-                                        >
-                                            {!entity.image_expanded ? (
-                                                <TouchableOpacity
-                                                    onPress={() => {
-                                                        expandImage(index, subIndex);
-                                                    }}
-                                                >
-                                                    {entity.sku_image ? (
-                                                        <Image
-                                                            style={{width: 50, height: 50}}
-                                                            resizeMode={"contain"}
-                                                            source={{uri: entity.sku_image}}
-                                                        />
-                                                    ) : null}
-                                                </TouchableOpacity>
-                                            ) : null}
-                                            <View>
-                                                <AddProductButton
-                                                    item={entity}
-                                                    mainIndex={index}
-                                                    subIndex={subIndex}
-                                                    setProductQuantity={setProductQuantity}
-                                                    selectProduct={selectProductAlert}
-                                                />
-                                            </View>
-                                            <View style={{alignSelf:"flex-end"}}>
-                                                {entity.unit_conversion && (entity.unit_conversion.level_1_unit || entity.unit_conversion.level_2_unit) ?
-                                                    <View style={{width: 80}}>
-                                                        <Dropdown
-                                                            style={styles.dropdown}
-                                                            containerStyle={styles.dropdownContainer}
-                                                            maxHeight={36*entity.lot_size_data.length}
-                                                            selectedTextStyle={texts.redTextNormal10}
-                                                            renderItem={(unit) => {
-                                                                return <View style={{
-                                                                    height: 36,
-                                                                    paddingLeft: 10,
-                                                                    justifyContent: "center",
-                                                                    backgroundColor: entity.selected_unit == unit.value ? colors.light_grey : colors.white,
-                                                                    borderBottomColor: colors.light_grey,
-                                                                    borderBottomWidth: 1
-                                                                }}>
-                                                                    <Text
-                                                                        style={entity.selected_unit == unit.value ? texts.redTextBold12 : texts.greyTextBold12}>
-                                                                        {unit.label}
-                                                                    </Text>
-                                                                </View>
-                                                            }}
-                                                            showsVerticalScrollIndicator={false}
-                                                            dropdownPosition={"bottom"}
-                                                            data={entity.lot_size_data}
-                                                            labelField="label"
-                                                            valueField="value"
-                                                            value={entity.selected_unit}
-                                                            placeholder="Select item"
-                                                            onChange={unit => {
-                                                                selectUnitDropdown(index, subIndex, unit.value, unit.quantity, unit.label)
-                                                            }}
-                                                        />
-                                                    </View> : null}
-                                            </View>
-                                        </View>
-                                    </View>
-                                    {entity.qps.length > 0 ? <TouchableOpacity onPress={() => {
-                                        let data = [...item.data]
-                                        let filteredData = data.filter((product) => {
-                                            return product.id == entity.id
-                                        })
-                                        let current = {...item};
-                                        current.data = filteredData;
-                                        setQPSData(current)
-                                        setQPSModalVisible(true);
-                                    }}>
-                                        <View style={styles.qpsDiv}>
-                                            <Text style={texts.redTextBold10}>
-                                                {`Bulk offer upto Rs. ${least_rate}/pc >`}
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity> : null}
-                                </View>
-                            );
-                        })}
-                    </View>
-                ) : null}
-            </View>
-        );
-    };
-
+            <RenderItem
+                setQPSModalVisible={setQPSModalVisible}
+                setQPSData={setQPSData}
+                selectUnitDropdown={selectUnitDropdown}
+                setProductQuantity={setProductQuantity}
+                selectProductAlert={selectProductAlert}
+                expandImage={expandImage}
+                get_current_rate={get_current_rate}
+                expandProductGroupImage={expandProductGroupImage}
+                handleCollapse={handleCollapse}
+                item={item} index={index}/>
+        )
+    }
 
     return (
         <View style={{flex: 1, paddingHorizontal: 12, backgroundColor: colors.white}}>
