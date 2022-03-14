@@ -29,26 +29,16 @@ const sku_units = {
 }
 
 function Cart(props: any) {
-    const groupData = (data) => {
-        return _.chain(data)
-            .groupBy("product_group")
-            .map((value, key) => ({
-                company_name: value[0]["company_name"],
-                brand_name: value[0]["brand_name"],
-                image: value[0]["product_group_image"],
-                product_group: key,
-                image_expanded: false,
-                product_group_id: value[0]["product_group_id"],
-                data: value,
-                pg_image_expanded: false,
-                quantity: 0
-            })).value();
-    }
     let _ = require('underscore')
     const navigation = useNavigation();
     const route = useRoute();
+    const [amount, setAmount] = useState(0);
+    const [count, setCount] = useState(0);
+    const [discountAmount, setDiscountAmount] = useState(0);
+
     const cart = useSelector((state: any) => state.cart);
-    const groupedData = groupData(cart.data);
+    const [productsData, setProductsData] = useState([]);
+    const [originalProductsData, setOriginalProductsData] = useState([]);
     const [discount, setDiscount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [qpsData, setQPSData] = useState({});
@@ -90,7 +80,7 @@ function Cart(props: any) {
     }
 
     const getProducts = () => {
-        let productsToSend = [...groupedData];
+        let productsToSend = [...productsData];
         let products: any = {};
         let available = false;
 
@@ -108,6 +98,52 @@ function Cart(props: any) {
     const goToDistributorProducts = () => {
         navigation.navigate("BuildOrder")
     }
+
+    const calculateValues = (data) => {
+        let cartData: any = [];
+        let products: any = {};
+        let total = 0;
+        let items = 0
+        data.filter((product) => {
+            product.data.forEach((item) => {
+                if (parseInt(item.quantity) > 0) {
+                    products[item.id] = {quantity: item.quantity, unit_id: item.selected_unit};
+                    total += item.selected_unit != 0 ? parseInt(item.quantity) * parseFloat(item.rate) * item.lot_quantity : parseInt(item.quantity) * parseFloat(item.rate);
+                    cartData.push(item);
+                    items += parseInt(item.quantity);
+                }
+            })
+        })
+        setCount(items);
+        setAmount(total);
+        getDiscount(total, products);
+    }
+
+    useEffect(()=>{
+        let data = Object.values(cart.data);
+        console.log("gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+        console.log(data)
+        let groupedData = _.chain(data).groupBy("product_group_id")
+        groupedData = groupedData.map((value, key) => ({
+            company_name: value[0]["company_name"],
+            company_id: value[0]["company_id"],
+            brand_id: value[0]["brand_id"],
+            brand_name: value[0]["brand_name"],
+            image: value[0]["product_group_image"],
+            product_group_name: value[0]["product_group"],
+            collapsed: false,
+            image_expanded: false,
+            product_group_id: value[0]["product_group_id"],
+            data: value,
+            pg_image_expanded: false,
+        })).value()
+        groupedData = _.sortBy(groupedData, function (item) {
+            return item.company_name;
+        })
+        setProductsData(groupedData);
+        setOriginalProductsData(groupedData);
+        calculateValues(groupedData);
+    }, [route])
 
     const placeOrder = () => {
         setLoading(true);
@@ -131,25 +167,10 @@ function Cart(props: any) {
         })
     }
 
-    useEffect(() => {
-        if (cart.data.length) {
-            getDiscount();
-        }
-    }, [route])
-
-    const getDiscount = () => {
-        let products: any = {};
-        groupedData.forEach((product) => {
-            product.data.forEach((item) => {
-                if (parseInt(item.quantity) > 0) {
-                    products[item.id] = {quantity: item.quantity, unit_id:item.selected_unit};
-                }
-            })
-        })
-
+    const getDiscount = (total, products) => {
         const data = {
             method: commonApi.getDiscountAmount.method,
-            url: commonApi.getDiscountAmount.url + "?distributor_id=" + cart.distributorId + "&amount=" + cart.value + "&products=" + JSON.stringify(products),
+            url: commonApi.getDiscountAmount.url + "?distributor_id=" + cart.distributorId + "&amount=" + total + "&products=" + JSON.stringify(products),
             header: commonApi.getDiscountAmount.header,
         }
         // @ts-ignore
@@ -209,7 +230,8 @@ function Cart(props: any) {
                                     {" " + entity.sku_quantity}{sku_units[entity.sku_unit]}
                                 </Text>
                                 <Text style={texts.redTextBold12}>
-                                    {entity.selected_unit !=0 ? <View style={{width:20, height:5, backgroundColor:'green'}}></View>:null}
+                                    {entity.selected_unit != 0 ?
+                                        <View style={{width: 20, height: 5, backgroundColor: 'green'}}></View> : null}
                                 </Text>
                             </View>
                             <View style={{flexDirection: 'row', alignItems: "center"}}>
@@ -260,12 +282,12 @@ function Cart(props: any) {
 
 
     return (
-        cart.data.length > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
+        cart.count > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
             <PrimaryHeader navigation={props.navigation}/>
             <Indicator isLoading={loading}/>
             <View style={{paddingHorizontal: 12, paddingTop: 20, flex: 1}}>
                 <FlatList
-                    data={groupedData}
+                    data={productsData}
                     ItemSeparatorComponent={() => <View style={{height: 20}}></View>}
                     showsVerticalScrollIndicator={false}
                     keyExtractor={(item, index) => item.product_group_id + "" + index}

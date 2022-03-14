@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e79748fa-ca20-418f-8887-a1c81644532a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/actions/actionTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actionTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/actions/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/actions/actions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +24,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -35,7 +47,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/commons" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../neopay-salesman" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -77,6 +89,7 @@
       <workItem from="1646983369808" duration="562000" />
       <workItem from="1646984272982" duration="342000" />
       <workItem from="1646987779293" duration="5508000" />
+      <workItem from="1647280483967" duration="3798000" />
     </task>
     <servers />
   </component>

@@ -16,7 +16,7 @@ import {
     PRODUCT_GROUP_FILTER_ADD,
     PRODUCT_GROUP_FILTER_REMOVE,
     RESET_FILTERS,
-    SELECT_FILTER_TYPE, SELECT_DISTRIBUTOR, MARGIN_FILTERS
+    SELECT_FILTER_TYPE, SELECT_DISTRIBUTOR, MARGIN_FILTERS, CHANGE_LOT_SIZE
 } from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
@@ -165,6 +165,13 @@ export const setDistributor = (value: any) => {
 export const marginFiltersAdd = (value:any) =>{
     return ({
         type: MARGIN_FILTERS,
+        payload: value
+    })
+}
+
+export const changeLotSize = (value: any) => {
+    return ({
+        type: CHANGE_LOT_SIZE,
         payload: value
     })
 }

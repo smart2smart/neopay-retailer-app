@@ -4,14 +4,14 @@ import {
     UPDATE_CART_ADD,
     UPDATE_CART_SUBTRACT,
     REMOVE_FROM_CART,
-    CART_CHANGE_QUANTITY
+    CART_CHANGE_QUANTITY, CHANGE_LOT_SIZE
 } from "../actions/actionTypes";
 import PersistenceStore from "../utils/PersistenceStore";
 
 const cart = {
     distributorId: null,
     count: 0,
-    data: [],
+    data: {},
     value: 0
 }
 
@@ -19,19 +19,31 @@ function setCartToStorage(state) {
     PersistenceStore.setCart(JSON.stringify(state));
 }
 
-const getData = (state, product, type) => {
-    let data = [...state.data]
-    let available = false;
-    data.forEach((item) => {
-        if (item.id == product.id) {
-            available = true;
-            item.quantity = product.quantity
-        }
+
+const calculate_values = (state) => {
+    let count = 0;
+    let value = 0;
+    Object.values(state.data).forEach((item) => {
+        count += parseInt(item.quantity);
+        value += parseInt(item.quantity) * parseFloat(item["current_rate"]) * item["lot_quantity"]
     })
-    if (!available && type == "add") {
-        data.push(product)
+    return {count, value};
+}
+
+
+const updateCart = (state, action, type) => {
+    let current_state = JSON.parse(JSON.stringify(state));
+    let product = action.payload.product;
+    let product_id = product.id;
+    if (type === "remove") {
+        delete current_state.data[product_id];
     }
-    return data;
+    current_state.data[product_id] = product;
+    let {count, value} = calculate_values(current_state);
+    current_state["count"] = count;
+    current_state["value"] = value;
+    setCartToStorage(current_state);
+    return current_state;
 }
 
 const cartReducer = (state = {...cart}, action: any) => {
@@ -42,46 +54,15 @@ const cartReducer = (state = {...cart}, action: any) => {
             PersistenceStore.removeCart();
             return {...cart}
         case UPDATE_CART_ADD:
-            let state_add = {
-                ...state,
-                data: getData(state, action.payload.product, "add"),
-                count: state.count + 1,
-                value: (parseFloat(state.value) + parseFloat(action.payload.product["rate"]*action.payload.product["lot_quantity"])).toFixed(2),
-                distributorId: action.payload["distributorId"]
-            };
-            setCartToStorage(state_add);
-            return state_add;
+            return updateCart(state, action, "add");
         case UPDATE_CART_SUBTRACT:
-            let state_subtract = {
-                ...state,
-                data: getData(state, action.payload.product, "subtract"),
-                count: state.count - 1,
-                value: (parseFloat(state.value) - parseFloat(action.payload.product["rate"]*action.payload.product["lot_quantity"])).toFixed(2),
-                distributorId: action.payload["distributorId"]
-            };
-            setCartToStorage(state_subtract);
-            return state_subtract
+            return updateCart(state, action, "subtract");
         case REMOVE_FROM_CART:
-            let remove_from_cart = {
-                ...state,
-                data: [...state.data.filter((item) => item.id !== action.payload.product.id)],
-                count: state.count - 1,
-                value: (parseFloat(state.value) - parseFloat(action.payload.product["rate"]*action.payload.product["lot_quantity"])).toFixed(),
-                distributorId: action.payload["distributorId"]
-            };
-            setCartToStorage(remove_from_cart);
-            return remove_from_cart
+            return updateCart(state, action, "remove");
         case CART_CHANGE_QUANTITY:
-            let item = action.payload.product;
-            let change_quantity = {
-                ...state,
-                data: item.quantity ? getData(state, action.payload.product, "add") : [...state.data.filter((item) => item.id !== action.payload.product.id)],
-                count: action.payload.text === "" ? parseInt(state.count) - action.payload.originalQuantity : parseInt(state.count) - action.payload.originalQuantity + parseInt(action.payload.text),
-                value: (action.payload.text === "" ? parseFloat(state.value) - parseFloat(item["rate"]*action.payload.product["lot_quantity"] * action.payload.originalQuantity) : parseFloat(state.value) + parseFloat(item["rate"] *action.payload.product["lot_quantity"]* (parseInt(action.payload.text) - action.payload.originalQuantity))).toFixed(2),
-                distributorId: action.payload["distributorId"]
-            };
-            setCartToStorage(change_quantity);
-            return change_quantity
+            return updateCart(state, action, "change");
+        case CHANGE_LOT_SIZE:
+            return updateCart(state, action, "change_unit");
         default:
             return state
     }

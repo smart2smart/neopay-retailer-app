@@ -364,7 +364,7 @@ function CompanyList(props) {
                 <View style={styles.container}>
                     <View showsVerticalScrollIndicator={false} style={{flex: 1}}>
                         <View>
-                            {originalProductsData.length > 0 ? addDiscountCards() : null}
+                            {/*{originalProductsData.length > 0 ? addDiscountCards() : null}*/}
                             <View style={{paddingBottom: 20}}>
                                 {companyData.length > 0 ? (
                                     <RenderList

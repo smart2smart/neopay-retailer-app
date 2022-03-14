@@ -18,14 +18,14 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AddProductButton from "./AddProductButton";
-import {connect, useSelector} from "react-redux";
+import {connect, useSelector, useDispatch} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
 import {
     updateCartAdd,
     updateCartSubtract,
     removeFromCart,
     clearCart,
-    cartChangeQuantity,
+    cartChangeQuantity, changeLotSize,
 } from "../../actions/actions";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
@@ -52,6 +52,7 @@ const screenHeight = Dimensions.get('window').height
 let dropdownPadding = screenHeight*0.035;
 
 function BuildOrder(props) {
+    const dispatch = useDispatch()
     let _ = require("underscore");
     const route = useRoute();
     const cart = useSelector((state: any) => state.cart);
@@ -61,7 +62,7 @@ function BuildOrder(props) {
     const [loading, setIsLoading] = useState(false);
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
-    const [normalView, setNormalView] = useState(true);
+    const [normalView, setNormalView] = useState(false);
     let filters = useSelector((state: any) => state.filters);
     const [qpsModalVisible, setQPSModalVisible] = useState(false);
     const [qpsData, setQPSData] = useState({});
@@ -106,7 +107,7 @@ function BuildOrder(props) {
             })
             setProductsData(groupedData);
             setOriginalProductsData(groupedData);
-            if (cart.data.length > 0) {
+            if (cart.count  > 0) {
                 matchQuantityWithCart(groupedData);
             }
         });
@@ -129,7 +130,6 @@ function BuildOrder(props) {
                 })
                 setProductsData(data);
                 setOriginalProductsData(data);
-                matchQuantityWithCart(data);
                 matchQuantityWithCart(data);
             }
         } else {
@@ -237,21 +237,20 @@ function BuildOrder(props) {
 
     const matchQuantityWithCart = (items) => {
         let groupedData = [...items];
-        let data = {};
-        cart.data.forEach((item) => {
-            data[item.id] = item.quantity;
-        });
+        let data = {}
+        Object.values(cart.data).forEach((item) => {
+            data[item.id] = {quantity:item.quantity, "unit": item["selected_unit"]};
+        })
         groupedData.forEach((item) => {
             item.data.forEach((itm) => {
                 if (data[itm.id]) {
-                    itm["quantity"] = data[itm.id];
+                    itm["quantity"] = data[itm.id]["quantity"]
+                    itm["selected_unit"] = data[itm.id]["unit"]
                 } else {
                     itm["quantity"] = 0;
                 }
-            });
-        });
-        setProductsData(groupedData);
-        setOriginalProductsData(groupedData);
+            })
+        })
     };
 
     const searchProduct = (text) => {
@@ -285,17 +284,17 @@ function BuildOrder(props) {
     };
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let item = {
-            distributorId: distributor.user,
-            product: {...data},
-            text: text,
-            originalQuantity: data.quantity == "" ? 0 : parseInt(data.quantity),
-        };
+        let payload = {retailerId:retailerData.id, distributorId: distributor.user}
         let allProducts = [...productsData];
-        item.product["quantity"] = text;
-        allProducts[mainIndex]["data"][subIndex]["quantity"] = text;
+        let entity = allProducts[mainIndex]["data"][subIndex];
+        entity["quantity"] = text;
+        entity["open"] = false;
+        entity["selectedDropDownValue"] = text;
+        let {current_rate} = get_current_rate(entity, parseInt(text), entity.lot_quantity)
+        entity["current_rate"] = current_rate
+        payload["product"] = entity
         setProductsData(allProducts);
-        props.cartChangeQuantity(item);
+        dispatch(cartChangeQuantity(payload))
     };
 
     const selectProductAlert = (data, type, mainIndex, subIndex) => {
@@ -325,37 +324,66 @@ function BuildOrder(props) {
         }
     };
 
+    const get_current_rate = (entity, quantity, lot_quantity) => {
+        let min_qty = 0;
+        let current_rate = entity.rate;
+        let least_rate = entity.rate;
+        if (entity.qps.length > 0) {
+            entity.qps.forEach((qps) => {
+                if (qps.min_qty * lot_quantity >= min_qty) {
+                    least_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                }
+                if (quantity * lot_quantity >= qps.min_qty) {
+                    current_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                }
+            })
+        }
+        return {current_rate, least_rate}
+    }
+
     const selectUnitDropdown = (mainIndex, subIndex, lotSizeId, lotQuantity, unitLabel) => {
+        let payload = {distributorId: distributor.user};
         let allProducts = [...productsData];
-        allProducts[mainIndex]["data"][subIndex]["selected_unit"] = lotSizeId;
-        allProducts[mainIndex]["data"][subIndex]["lot_quantity"] = lotQuantity;
-        allProducts[mainIndex]["data"][subIndex]["unit_label"] = unitLabel;
+        let entity = allProducts[mainIndex]["data"][subIndex];
+        let {current_rate} = get_current_rate(entity, entity.quantity, lotQuantity)
+        entity["current_rate"] = current_rate
+        entity["selected_unit"] = lotSizeId;
+        entity["lot_quantity"] = lotQuantity;
+        entity["unit_label"] = unitLabel;
+        payload["product"] = entity;
         setProductsData(allProducts);
+        dispatch(changeLotSize(payload))
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let item = {distributorId: distributor.user, product: {...data}};
+        let payload = {retailerId:retailerData.id, distributorId: distributor.user}
         let allProducts = [...productsData];
+        let entity = allProducts[mainIndex]["data"][subIndex];
         if (type === "new") {
             allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
-            item.product.quantity = 1;
-            props.updateCartAdd(item);
+            let {current_rate} = get_current_rate(entity, 1, entity["lot_quantity"]);
+            entity["current_rate"] = current_rate
+            payload["product"] =entity;
+            dispatch(updateCartAdd(payload))
         } else if (type == "add") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = data.quantity
-                ? parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) + 1
-                : 1;
-            item.product.quantity += 1;
-            props.updateCartAdd(item);
+            entity["quantity"] = data.quantity ? parseInt(entity["quantity"]) + 1 : 1;
+            let {current_rate} = get_current_rate(entity, entity.quantity, entity["lot_quantity"]);
+            entity["current_rate"] = current_rate
+            payload["product"] = entity;
+            dispatch(updateCartAdd(payload))
         } else if (type == "subtract") {
-            if (allProducts[mainIndex]["data"][subIndex]["quantity"] > 1) {
-                allProducts[mainIndex]["data"][subIndex]["quantity"] =
-                    parseInt(allProducts[mainIndex]["data"][subIndex]["quantity"]) - 1;
-                item.product.quantity -= 1;
-                props.updateCartSubtract(item);
+            if (entity["quantity"] > 1) {
+                entity["quantity"] = parseInt(entity["quantity"]) - 1;
+                let {current_rate} = get_current_rate(entity, entity.quantity, entity["lot_quantity"]);
+                entity["current_rate"] = current_rate
+                payload["product"] = entity;
+                dispatch(updateCartSubtract(payload))
             } else {
-                item.product.quantity = 0;
-                allProducts[mainIndex]["data"][subIndex]["quantity"] = 0;
-                props.removeFromCart(item);
+                entity["quantity"] = 0;
+                let {current_rate} = get_current_rate(entity, 1, entity["lot_quantity"]);
+                entity["current_rate"] = current_rate
+                payload["product"] = entity;
+                dispatch(removeFromCart(payload))
             }
         }
         setProductsData(allProducts);
@@ -461,20 +489,8 @@ function BuildOrder(props) {
                 {!item.collapsed ? (
                     <View>
                         {item.data.map((entity, subIndex) => {
-                            let margin = ((entity.mrp - entity.rate) / entity.rate) * 100;
-                            let least_rate = entity.rate;
-                            let min_qty = 0;
-                            let current_rate = entity.rate;
-                            if (entity.qps.length > 0) {
-                                entity.qps.forEach((qps) => {
-                                    if (qps.min_qty * entity.lot_quantity >= min_qty) {
-                                        least_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
-                                    }
-                                    if (entity.quantity * entity.lot_quantity >= qps.min_qty) {
-                                        current_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
-                                    }
-                                })
-                            }
+                            let {current_rate, least_rate}= get_current_rate(entity, entity.quantity, entity.lot_quantity)
+                            let margin = ((entity.mrp - current_rate) / current_rate) * 100;
                             return (
                                 <View
                                     key={entity.id + subIndex + "" + entity.name}
@@ -678,7 +694,7 @@ function BuildOrder(props) {
                 renderItem={renderItem}
                 ListFooterComponent={() => <View style={{paddingBottom: 50}}></View>}
             />
-            {cart.data.length > 0 ? <CartButton/> : null}
+            {cart.count > 0 ? <CartButton/> : null}
             {qpsModalVisible ? <QPSModal
                 modalVisible={qpsModalVisible}
                 data={qpsData}
@@ -689,13 +705,7 @@ function BuildOrder(props) {
     );
 }
 
-export default connect(mapStateToProps, {
-    updateCartAdd,
-    updateCartSubtract,
-    removeFromCart,
-    clearCart,
-    cartChangeQuantity,
-})(BuildOrder);
+export default connect(mapStateToProps, {})(BuildOrder);
 
 const styles = StyleSheet.create({
     cardImage: {
