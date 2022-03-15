@@ -27,6 +27,7 @@ import RenderCompanyCard from "./CompanyCard";
 import {BorderButtonBigBlue} from "../../buttons/Buttons";
 import SeeAllCompaniesModal from "./SeeAllCompaniesModal";
 import store from "../../store/store";
+import {set_unit_quantities} from "./ProductUtils";
 
 const discountData = [
     {
@@ -149,10 +150,7 @@ function CompanyList(props) {
             setOriginalCategory2Data(category2);
 
             let groupedData = _.chain(res.data)
-                .sortBy(function (item) {
-                    return item.company_name;
-                })
-                .groupBy("product_group")
+                .groupBy("product_group_id")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
                     company_id: value[0]["company_id"],
@@ -175,6 +173,14 @@ function CompanyList(props) {
                     quantity: 0,
                 }))
                 .value();
+            groupedData = _.sortBy(groupedData, function (item) {
+                return item.company_name;
+            })
+            groupedData.forEach((item) => {
+                item.data.forEach((product) => {
+                    set_unit_quantities(product)
+                })
+            })
             setIsLoading(false);
             setProductsData(groupedData);
             setOriginalProductsData(groupedData);

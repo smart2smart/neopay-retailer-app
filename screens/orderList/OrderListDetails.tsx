@@ -144,7 +144,7 @@ export default function OrderListDetails() {
                                 {"Order Value: "}
                             </Text>
                             <Text style={texts.primaryTextBold12}>
-                                Rs {parseFloat(orderDetails.order_value).toFixed(2)}
+                                Rs {parseFloat(orderDetails.revised_value).toFixed(2)}
                             </Text>
                         </View>
                     </View>

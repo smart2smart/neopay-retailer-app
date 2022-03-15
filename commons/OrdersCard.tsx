@@ -51,7 +51,7 @@ function OrdersCard(props: any) {
             <View style={commonStyles.rowSpaceBetween}>
                 <View style={[commonStyles.rowAlignCenter, {paddingVertical: 6}]}>
                     <Text style={texts.darkGreyTextBold12}>Order value: </Text>
-                    <Text style={texts.primaryTextBold12}>{props.data.order_value}</Text>
+                    <Text style={texts.primaryTextBold12}>{parseFloat(props.data.revised_value).toFixed(2)}</Text>
                 </View>
                 <View style={[commonStyles.rowAlignCenter, commonStyles.statusButton, buttonStyle[props.data.status]]}>
                     <Text style={[texts.whiteTextBold12, {textTransform: "capitalize"}]}>

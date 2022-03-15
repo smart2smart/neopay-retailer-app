@@ -68,7 +68,6 @@ function BuildOrder(props) {
     const [qpsModalVisible, setQPSModalVisible] = useState(false);
     const [qpsData, setQPSData] = useState({});
 
-
     const getProductsData = () => {
         const dataToSend = {
             method: commonApi.getProducts.method,
@@ -84,13 +83,20 @@ function BuildOrder(props) {
         // @ts-ignore
         AuthenticatedGetRequest(dataToSend).then((res) => {
             let groupedData = _.chain(res.data)
-                .sortBy(function (item) {
-                    return item.company_name;
-                })
                 .groupBy("product_group_id")
                 .map((value, key) => ({
                     company_name: value[0]["company_name"],
+                    company_id: value[0]["company_id"],
+                    company_image: value[0]["company_image"],
+                    brand_id: value[0]["brand_id"],
                     brand_name: value[0]["brand_name"],
+                    brand_image: value[0]["brand_image"],
+                    category_1_id: value[0]["category_1_id"],
+                    category_1_name: value[0]["category_1_name"],
+                    category_1_image: value[0]["category_1_image"],
+                    category_2_id: value[0]["category_2_id"],
+                    category_2_name: value[0]["category_2_name"],
+                    category_2_image: value[0]["category_2_image"],
                     image: value[0]["product_group_image"],
                     product_group: key,
                     image_expanded: false,
@@ -101,6 +107,9 @@ function BuildOrder(props) {
                     collapsed: normalView,
                 }))
                 .value();
+            groupedData = _.sortBy(groupedData, function (item) {
+                return item.company_name;
+            })
             setIsLoading(false);
             groupedData.forEach((item) => {
                 item.data.forEach((product) => {
@@ -121,15 +130,11 @@ function BuildOrder(props) {
         setProductsData(data);
     };
 
+
     useEffect(() => {
         if (route.params) {
             if (route.params.productData) {
                 let data = route.params.productData
-                data.forEach((item) => {
-                    item.data.forEach((product) => {
-                        set_unit_quantities(product)
-                    })
-                })
                 setProductsData(data);
                 setOriginalProductsData(data);
                 matchQuantityWithCart(data);

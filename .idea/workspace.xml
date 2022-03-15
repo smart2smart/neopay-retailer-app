@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e79748fa-ca20-418f-8887-a1c81644532a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/screens/home/ProductCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/CartButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/CartButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/OrdersCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/ProductCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/ProductCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/ProductUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/ProductUtils.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,7 +90,11 @@
       <workItem from="1646983369808" duration="562000" />
       <workItem from="1646984272982" duration="342000" />
       <workItem from="1646987779293" duration="5508000" />
-      <workItem from="1647280483967" duration="10560000" />
+      <workItem from="1647280483967" duration="10751000" />
+      <workItem from="1647295336027" duration="224000" />
+      <workItem from="1647298714703" duration="234000" />
+      <workItem from="1647328453137" duration="1633000" />
+      <workItem from="1647335244252" duration="4468000" />
     </task>
     <servers />
   </component>

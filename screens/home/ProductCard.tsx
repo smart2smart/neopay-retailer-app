@@ -125,21 +125,16 @@ export const RenderItem = (props) => {
                                                 {entity.name}
                                             </Text>
                                         </View>
-                                        <View
-                                            style={[
-                                                commonStyles.rowAlignCenter,
-                                                {paddingVertical: 4},
-                                            ]}
-                                        >
-                                            <Text style={texts.darkGreyTextBold14}>
-                                                {entity.product_group_id ? entity.variant : entity.name}
-                                            </Text>
-                                            {entity.product_group_id ? (
-                                                <Text style={texts.redTextBold14}>
-                                                    {" > " + entity.sku}
+                                        <Text style={{paddingVertical: 4, flexDirection:"row", alignItems:"center"}}>
+                                                <Text style={texts.darkGreyTextBold12}>
+                                                    {entity.product_group_id ? entity.variant : entity.name}
                                                 </Text>
-                                            ) : null}
-                                        </View>
+                                                {entity.product_group_id ?
+                                                    <Text style={texts.redTextBold12}>
+                                                        {" > " + entity.sku}
+                                                    </Text>
+                                                    : null}
+                                        </Text>
                                         <View style={commonStyles.rowAlignCenter}>
                                             <View style={commonStyles.row}>
                                                 <Text style={texts.greyTextBold12}>MRP:</Text>
@@ -150,7 +145,7 @@ export const RenderItem = (props) => {
                                             <View style={[commonStyles.row, {marginLeft:10}]}>
                                                 <Text style={texts.greyTextBold12}>Rate:</Text>
                                                 <Text style={texts.greyTextBold12}>
-                                                    {" " + parseFloat(current_rate * entity.lot_quantity).toFixed(2)}
+                                                    {" " + parseFloat(parseFloat(current_rate )* (entity.lot_quantity)).toFixed(2)}
                                                 </Text>
                                             </View>
                                             <View style={[commonStyles.row, {marginLeft:10}]}>
@@ -197,7 +192,7 @@ export const RenderItem = (props) => {
                                             />
                                         </View>
                                         <View style={{alignSelf:"flex-end"}}>
-                                            {entity.unit_conversion && (entity.unit_conversion.level_1_unit || entity.unit_conversion.level_2_unit) ?
+                                            {entity.unit_conversion && (entity.level_1_enabled || entity.level_2_enabled) ?
                                                 <View style={{width: 80}}>
                                                     <Dropdown
                                                         style={styles.dropdown}
