@@ -84,6 +84,7 @@ function HomeScreen(props: any) {
     };
     // @ts-ignore
     AuthenticatedGetRequest(data).then((res) => {
+
       if (res.status == 200) {
         setBannerData(res.data.results);
       } else {

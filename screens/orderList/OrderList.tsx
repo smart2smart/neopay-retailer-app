@@ -23,7 +23,7 @@ function OrderList(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [next, setNext] = useState(null);
     const [count, setCount] = useState(0);
-    const distributorId = useSelector((state: any) => state.distributor.user);
+    const distributorId = useSelector((state: any) => state.distributor.id);
 
     const searchOrders = (text: string) => {
         setSearchText(text);
