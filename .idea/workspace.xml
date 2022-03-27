@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e79748fa-ca20-418f-8887-a1c81644532a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commons/OrdersCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/commons/OrdersCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/ProductCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/ProductCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/ProductUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/ProductUtils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/orderList/OrderListDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/Carousel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/Carousel.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +90,8 @@
       <workItem from="1647298714703" duration="234000" />
       <workItem from="1647328453137" duration="1633000" />
       <workItem from="1647335244252" duration="4468000" />
+      <workItem from="1647955431137" duration="3379000" />
+      <workItem from="1648198129188" duration="648000" />
     </task>
     <servers />
   </component>

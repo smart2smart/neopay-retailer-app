@@ -12,11 +12,9 @@ const RenderCarousel = (props) => {
         return (
             <View style={{
                 width: Dimensions.get("window").width,
-                paddingVertical:2,
                 height: 200,
-             
             }}>
-                <Image resizeMode={"stretch"} style={{width: "100%", height: "100%"}} source={{uri: item.image}}/>
+                <Image resizeMode={item.id==6?"stretch":"cover"} style={{width: "100%", height: "100%"}} source={{uri: item.image}}/>
             </View>
         );
     }
