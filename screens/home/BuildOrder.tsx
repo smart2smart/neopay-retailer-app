@@ -76,7 +76,7 @@ function BuildOrder(props) {
                 "?retailer_id=" +
                 retailerData.id +
                 "&distributor_id=" +
-                distributor.user,
+                distributor.id,
             header: commonApi.getProducts.header,
         };
         setIsLoading(true);
@@ -295,7 +295,7 @@ function BuildOrder(props) {
     };
 
     const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let payload = {retailerId: retailerData.id, distributorId: distributor.user}
+        let payload = {retailerId: retailerData.id, distributorId: distributor.id}
         let allProducts = [...productsData];
         let entity = allProducts[mainIndex]["data"][subIndex];
         entity["quantity"] = text;
@@ -310,7 +310,7 @@ function BuildOrder(props) {
     };
 
     const selectProductAlert = (data, type, mainIndex, subIndex) => {
-        if (cart.distributorId && cart.distributorId !== distributor.user) {
+        if (cart.distributorId && cart.distributorId !== distributor.id) {
             Alert.alert(
                 "Change Distributor",
                 `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
@@ -354,7 +354,7 @@ function BuildOrder(props) {
     }
 
     const selectUnitDropdown = (mainIndex, subIndex, lotSizeId, lotQuantity, unitLabel) => {
-        let payload = {distributorId: distributor.user};
+        let payload = {distributorId: distributor.id};
         let allProducts = [...productsData];
         let entity = allProducts[mainIndex]["data"][subIndex];
         let {current_rate} = get_current_rate(entity, entity.quantity, lotQuantity)
@@ -368,7 +368,7 @@ function BuildOrder(props) {
     }
 
     const selectProduct = (data, type, mainIndex, subIndex) => {
-        let payload = {retailerId: retailerData.id, distributorId: distributor.user}
+        let payload = {retailerId: retailerData.id, distributorId: distributor.id}
         let allProducts = [...productsData];
         let entity = allProducts[mainIndex]["data"][subIndex];
         if (type === "new") {

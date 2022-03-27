@@ -83,7 +83,7 @@ function CompanyList(props) {
                 "?retailer_id=" +
                 retailerData.id +
                 "&distributor_id=" +
-                distributor.user,
+                distributor.id,
             header: commonApi.getProducts.header,
         };
         setIsLoading(true);
