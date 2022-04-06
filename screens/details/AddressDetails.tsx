@@ -47,7 +47,7 @@ function AddressDetails(props) {
     const [cityData, setCityData] = useState([]);
 
     const selectPinCode = (item) => {
-        if(item.city){
+        if (item.city) {
             setCity(item.city);
         }
         setState(item.state);
@@ -70,21 +70,25 @@ function AddressDetails(props) {
         }
     }, [])
 
-    const searchLocalities = (text:string) => {
+    const searchLocalities = (text: string) => {
         if (timeout) {
             clearTimeout(timeout)
         }
         timeout = setTimeout(() => {
-            if(text !== ""){
+            if (text !== "") {
                 getLocalities(text)
             }
         }, 500)
     }
 
-    const getLocalities = (text:string) => {
+    const getLocalities = (text: string) => {
+        let url = commonApi.getLocalities.url + "?search=" + text;
+        if (city) {
+            url += "&city=" + city.id
+        }
         const data = {
             method: commonApi.getLocalities.method,
-            url: commonApi.getLocalities.url + "?search=" + text,
+            url: url,
             header: commonApi.getLocalities.header,
         }
         // @ts-ignore
@@ -93,6 +97,11 @@ function AddressDetails(props) {
                 setLocalityData(res.data);
             }
         })
+    }
+
+    const setSelectedLocality = (locality) => {
+        setLocality(locality);
+        setLocalityData([]);
     }
 
     const businessInfo = () => {
@@ -104,7 +113,7 @@ function AddressDetails(props) {
             alertMsg("Please enter your locality");
             return;
         }
-        if(!city){
+        if (!city) {
             alertMsg("Please select city");
             return
         }
@@ -130,7 +139,7 @@ function AddressDetails(props) {
 
         let dataToSend = {
             method: commonApi.updateRetailerProfile.method,
-            url: commonApi.updateRetailerProfile.url+retailerData.id+"/",
+            url: commonApi.updateRetailerProfile.url + retailerData.id + "/",
             header: commonApi.updateRetailerProfile.header,
             data: data
         }
@@ -182,7 +191,7 @@ function AddressDetails(props) {
         })
     }
 
-    const getCities = (text)=>{
+    const getCities = (text) => {
         const data = {
             method: commonApi.getCities.method,
             url: commonApi.getCities.url + "?search=" + text,
@@ -196,12 +205,12 @@ function AddressDetails(props) {
         })
     }
 
-    const selectCity = (city)=>{
+    const selectCity = (city) => {
         setCity(city);
         setCityData([]);
     }
 
-    const searchCities = (text)=>{
+    const searchCities = (text) => {
         if (timeout) {
             clearTimeout(timeout)
         }
@@ -217,7 +226,7 @@ function AddressDetails(props) {
             clearTimeout(timeout)
         }
         timeout = setTimeout(() => {
-            if(text !== ""){
+            if (text !== "") {
                 getPinCodes(text)
             }
         }, 500)
@@ -245,7 +254,7 @@ function AddressDetails(props) {
             title: "Locality",
             modalVisible: localityModalVisible,
             data: localityData,
-            selectItem: setLocality,
+            selectItem: setSelectedLocality,
             searchItem: searchLocalities,
             searchType: "api"
         },
