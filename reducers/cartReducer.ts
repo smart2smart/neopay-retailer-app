@@ -24,9 +24,12 @@ const calculate_values = (state) => {
     let count = 0;
     let value = 0;
     Object.values(state.data).forEach((item) => {
-        count += parseInt(item.quantity);
-        value += parseInt(item.quantity) * parseFloat(item["current_rate"]) * item["lot_quantity"]
+        let quantity = item.quantity !== "" ? item.quantity : 0
+        count += parseInt(quantity);
+        value += parseInt(quantity) * parseFloat(item["current_rate"]) * item["lot_quantity"]
     })
+    count = parseFloat(count).toFixed(2)
+    value = parseFloat(value).toFixed(2)
     return {count, value};
 }
 

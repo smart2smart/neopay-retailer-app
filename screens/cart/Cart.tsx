@@ -1,60 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, Image, StyleSheet, Text, View} from "react-native";
+import {FlatList, StyleSheet, Text, View} from "react-native";
 import texts from "../../styles/texts";
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import commonStyles from '../../styles/commonStyles';
 import {BorderButtonSmallBlue, SolidButtonBlue} from '../../buttons/Buttons';
 import colors from "../../assets/colors/colors";
-import {connect, useDispatch, useSelector} from "react-redux";
-import mapStateToProps from "../../store/mapStateToProps";
-import {
-    clearCart,
-    removeFromCart,
-    updateCartAdd,
-    updateCartSubtract,
-    cartChangeQuantity,
-    changeLotSize
-} from "../../actions/actions";
-import AddProductButton from "../home/AddProductButton";
+import {useSelector} from "react-redux";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import Indicator from "../../utils/Indicator";
 import {RenderItem} from "../home/ProductCard";
 import QPSModal from "../../commons/QPSMOdal";
-import PersistenceStore from "../../utils/PersistenceStore";
+import useProductsHook from "../custom-hooks/useProductsHook";
 
-const sku_units = {
-    1: 'kg',
-    2: 'g',
-    3: 'ml',
-    4: 'ltr',
-    5: 'pcs',
-    6: 'strip',
-    7: 'pack',
-    8: 'tablet',
-    9: 'box',
-    10: 'bag'
-}
 
 function Cart(props: any) {
     let _ = require('underscore')
     const navigation = useNavigation();
     const route = useRoute();
-    const dispatch = useDispatch();
-    const [amount, setAmount] = useState(0);
-    const [count, setCount] = useState(0);
-    const [discountAmount, setDiscountAmount] = useState(0);
-
     const cart = useSelector((state: any) => state.cart);
-    const [productsData, setProductsData] = useState([]);
-    const [originalProductsData, setOriginalProductsData] = useState([]);
     const [discount, setDiscount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [qpsData, setQPSData] = useState({});
     const [qpsDiscount, setQPSDiscount] = useState(0);
-
 
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
@@ -65,6 +35,20 @@ function Cart(props: any) {
         navigation.navigate("BuildOrder")
     }
 
+
+    const {productsData,
+        setProductsData,
+        originalProductsData,
+        setOriginalProductsData,
+        expandImage,
+        expandProductGroupImage,
+        toggleView,
+        selectUnitDropdown,
+        selectProduct,
+        setProductQuantity,
+        normalView,
+        selectProductAlert
+    } = useProductsHook("buildOrder", [])
 
     const calculateValues = (data) => {
         let cartData: any = [];
@@ -81,8 +65,6 @@ function Cart(props: any) {
                 }
             })
         })
-        setCount(items);
-        setAmount(total);
         getDiscount(total, products);
     }
 
@@ -164,125 +146,6 @@ function Cart(props: any) {
             }
         });
     }
-    const selectUnitDropdown = (mainIndex, subIndex, lotSizeId, lotQuantity, unitLabel) => {
-        let payload = {distributorId: distributor.id};
-        let allProducts = [...productsData];
-        let entity = allProducts[mainIndex]["data"][subIndex];
-        let {current_rate} = get_current_rate(entity, entity.quantity, lotQuantity)
-        entity["current_rate"] = current_rate
-        entity["selected_unit"] = lotSizeId;
-        entity["lot_quantity"] = lotQuantity;
-        entity["unit_label"] = unitLabel;
-        payload["product"] = entity;
-        setProductsData(allProducts);
-        dispatch(changeLotSize(payload))
-    }
-
-    const setProductQuantity = (data, text, mainIndex, subIndex) => {
-        let payload = {retailerId: retailerData.id, distributorId: distributor.id}
-        let allProducts = [...productsData];
-        let entity = allProducts[mainIndex]["data"][subIndex];
-        entity["quantity"] = text;
-        entity["open"] = false;
-        entity["selectedDropDownValue"] = text;
-        let {current_rate} = get_current_rate(entity, parseInt(text), entity.lot_quantity)
-        entity["current_rate"] = current_rate
-        payload["product"] = entity
-        setProductsData(allProducts);
-        dispatch(cartChangeQuantity(payload))
-    };
-
-    const get_current_rate = (entity, quantity, lot_quantity) => {
-        let min_qty = 0;
-        let current_rate = entity.rate;
-        let least_rate = entity.rate;
-        if (entity.qps.length > 0) {
-            entity.qps.forEach((qps) => {
-                if (qps.min_qty * lot_quantity >= min_qty) {
-                    least_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
-                }
-                if (quantity * lot_quantity >= qps.min_qty) {
-                    current_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
-                }
-            })
-        }
-        return {current_rate, least_rate}
-    }
-
-    const selectProduct = (data, type, mainIndex, subIndex) => {
-        let payload = {retailerId: retailerData.id, distributorId: distributor.id}
-        let allProducts = [...productsData];
-        let entity = allProducts[mainIndex]["data"][subIndex];
-        if (type === "new") {
-            allProducts[mainIndex]["data"][subIndex]["quantity"] = 1;
-            let {current_rate} = get_current_rate(entity, 1, entity["lot_quantity"]);
-            entity["current_rate"] = current_rate
-            payload["product"] = entity;
-            dispatch(updateCartAdd(payload))
-        } else if (type == "add") {
-            entity["quantity"] = data.quantity ? parseInt(entity["quantity"]) + 1 : 1;
-            let {current_rate} = get_current_rate(entity, entity.quantity, entity["lot_quantity"]);
-            entity["current_rate"] = current_rate
-            payload["product"] = entity;
-            dispatch(updateCartAdd(payload))
-        } else if (type == "subtract") {
-            if (entity["quantity"] > 1) {
-                entity["quantity"] = parseInt(entity["quantity"]) - 1;
-                let {current_rate} = get_current_rate(entity, entity.quantity, entity["lot_quantity"]);
-                entity["current_rate"] = current_rate
-                payload["product"] = entity;
-                dispatch(updateCartSubtract(payload))
-            } else {
-                entity["quantity"] = 0;
-                let {current_rate} = get_current_rate(entity, 1, entity["lot_quantity"]);
-                entity["current_rate"] = current_rate
-                payload["product"] = entity;
-                dispatch(removeFromCart(payload))
-            }
-        }
-        setProductsData(allProducts);
-    };
-
-    const selectProductAlert = (data, type, mainIndex, subIndex) => {
-        if (cart.distributorId && cart.distributorId !== distributor.id) {
-            Alert.alert(
-                "Change Distributor",
-                `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
-                [
-                    {
-                        text: "Yes",
-                        onPress: () => {
-                            props.clearCart();
-                            PersistenceStore.removeCart();
-                            selectProduct(data, type, mainIndex, subIndex);
-                        },
-                    },
-                    {
-                        text: "No",
-                        onPress: () => {
-                        },
-                    },
-                ],
-                {cancelable: false}
-            );
-        } else {
-            selectProduct(data, type, mainIndex, subIndex);
-        }
-    };
-
-    const expandImage = (mainIndex, subIndex) => {
-        let allProducts = [...productsData];
-        allProducts[mainIndex]["data"][subIndex]["image_expanded"] =
-            !allProducts[mainIndex]["data"][subIndex]["image_expanded"];
-        setProductsData(allProducts);
-    };
-
-    const expandProductGroupImage = (mainIndex) => {
-        let allProducts = [...productsData];
-        allProducts[mainIndex]["pg_image_expanded"] =
-            !allProducts[mainIndex]["pg_image_expanded"];
-        setProductsData(allProducts);
-    };
 
     const handleCollapse = (index) => {
         let data = [...productsData];
@@ -299,7 +162,6 @@ function Cart(props: any) {
                 setProductQuantity={setProductQuantity}
                 selectProductAlert={selectProductAlert}
                 expandImage={expandImage}
-                get_current_rate={get_current_rate}
                 expandProductGroupImage={expandProductGroupImage}
                 handleCollapse={handleCollapse}
                 item={item} index={index}/>
@@ -387,10 +249,7 @@ function Cart(props: any) {
     );
 }
 
-export default connect(
-    mapStateToProps,
-    {removeFromCart, updateCartAdd, updateCartSubtract, clearCart, cartChangeQuantity}
-)(Cart);
+export default Cart;
 
 const styles = StyleSheet.create({
     cardImage: {

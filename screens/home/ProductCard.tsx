@@ -10,6 +10,24 @@ import React from "react";
 const screenHeight = Dimensions.get('window').height
 let dropdownPadding = screenHeight*0.035;
 export const RenderItem = (props) => {
+
+    const get_current_rate = (entity, quantity, lot_quantity) => {
+        let min_qty = 0;
+        let current_rate = entity.rate;
+        let least_rate = entity.rate;
+        if (entity.qps.length > 0) {
+            entity.qps.forEach((qps) => {
+                if (qps.min_qty * lot_quantity >= min_qty) {
+                    least_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                }
+                if (quantity * lot_quantity >= qps.min_qty) {
+                    current_rate = parseFloat(parseFloat(entity.rate) * (1 - qps.discount_rate / 100)).toFixed(2)
+                }
+            })
+        }
+        return {current_rate, least_rate}
+    }
+
     return (
         <View>
             <View style={styles.underline}>
@@ -95,7 +113,7 @@ export const RenderItem = (props) => {
             {!props.item.collapsed ? (
                 <View>
                     {props.item.data.map((entity, subIndex) => {
-                        let {current_rate, least_rate}= props.get_current_rate(entity, entity.quantity, entity.lot_quantity)
+                        let {current_rate, least_rate}= get_current_rate(entity, entity.quantity, entity.lot_quantity)
                         let margin = ((entity.mrp - current_rate) / current_rate) * 100;
                         return (
                             <View
