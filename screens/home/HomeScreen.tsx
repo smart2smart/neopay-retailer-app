@@ -153,7 +153,7 @@ function HomeScreen(props: any) {
       >
         <Text style={texts.darkGreyTextBold14}>{"Order Id: " + item.id}</Text>
         <Text style={texts.greyNormal12}>
-          {item.products.length + " items"}
+          {item.revised_count + " items"}
         </Text>
         <Text style={texts.greyNormal12}>
           {"Place on: " + moment(item.created_at).format("DD MMM, yyyy")}
