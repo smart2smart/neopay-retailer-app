@@ -6,7 +6,7 @@ import {useNavigation, useRoute} from "@react-navigation/native";
 import commonStyles from '../../styles/commonStyles';
 import {BorderButtonSmallBlue, SolidButtonBlue} from '../../buttons/Buttons';
 import colors from "../../assets/colors/colors";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
@@ -14,6 +14,7 @@ import Indicator from "../../utils/Indicator";
 import {RenderItem} from "../home/ProductCard";
 import QPSModal from "../../commons/QPSMOdal";
 import useProductsHook from "../custom-hooks/useProductsHook";
+import { clearCart } from '../../actions/actions';
 
 
 function Cart(props: any) {
@@ -29,7 +30,7 @@ function Cart(props: any) {
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
     const [qpsModalVisible, setQPSModalVisible] = useState(false);
-
+const dispatch = useDispatch()
 
     const goToDistributorProducts = () => {
         navigation.navigate("BuildOrder")
@@ -124,7 +125,7 @@ function Cart(props: any) {
         AuthenticatedPostRequest(dataToSend).then((res) => {
             setLoading(false);
             if (res.status == 201) {
-                props.clearCart();
+                dispatch(clearCart());
                 navigation.goBack()
             }
         })

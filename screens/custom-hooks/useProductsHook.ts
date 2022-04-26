@@ -144,7 +144,7 @@ const useProductsHook = (screenType, data) => {
                     {
                         text: "Yes",
                         onPress: () => {
-                            clearCart();
+                            dispatch(clearCart());
                             PersistenceStore.removeCart();
                             selectProduct(data, type, mainIndex, subIndex);
                         },
