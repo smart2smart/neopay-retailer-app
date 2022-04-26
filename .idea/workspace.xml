@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="57b40d6f-ba9d-40a6-ae19-b1c5e4d8fddb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/screens/custom-hooks/useProductsHook.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/cartReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/cartReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/home/ProductCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/ProductCard.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="57b40d6f-ba9d-40a6-ae19-b1c5e4d8fddb" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +32,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../neopay-salesman" />
+    <property name="last_opened_file_path" value="/var/www/html" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -52,7 +46,7 @@
       <updated>1649238804199</updated>
       <workItem from="1649238805277" duration="1601000" />
       <workItem from="1650534540279" duration="1412000" />
-      <workItem from="1650870280059" duration="3596000" />
+      <workItem from="1650870280059" duration="3951000" />
     </task>
     <servers />
   </component>
