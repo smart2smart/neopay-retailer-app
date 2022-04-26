@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from "react-native";
+import {Alert, FlatList, StyleSheet, Text, View} from "react-native";
 import texts from "../../styles/texts";
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import {useNavigation, useRoute} from "@react-navigation/native";
@@ -126,7 +126,8 @@ const dispatch = useDispatch()
             setLoading(false);
             if (res.status == 201) {
                 dispatch(clearCart());
-                navigation.goBack()
+                navigation.goBack();
+                Alert.alert("Order placed successfully!!")
             }
         })
     }
