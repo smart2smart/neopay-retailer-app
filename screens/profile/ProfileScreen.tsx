@@ -125,7 +125,7 @@ export default function ProfileScreen(props) {
     }
 
     const goToEditProfile = () => {
-        navigation.navigate('EditProfile', {data: retailerData, comingFrom: "edit"})
+        navigation.navigate('EditProfile', {data: retailerData, comingFrom: "edit", image:retailerData.attachment})
     }
 
     const goToUploadImage = () => {

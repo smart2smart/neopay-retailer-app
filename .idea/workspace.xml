@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="57b40d6f-ba9d-40a6-ae19-b1c5e4d8fddb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/AddStroeDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/AddStroeDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/EditProfile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/RetailerAdress.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/RetailerAdress.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/RetailerDataModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/profile/RetailerDataModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/profile/StoreCategory.tsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +25,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

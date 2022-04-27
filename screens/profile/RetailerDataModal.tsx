@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React from 'react';
 import {
     View,
     StyleSheet,
@@ -10,7 +10,6 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import AddStoreDetails from "./AddStroeDetails";
 import RetailerAddress from "./RetailerAdress";
 import BusinessDetails from "./BusinessDetails";
-import StoreCategory from "./StoreCategory";
 import colors from '../../assets/colors/colors';
 
 
@@ -41,8 +40,6 @@ export default function RetailerDataModal(props) {
                         <RetailerAddress data={props.data} saveData={props.saveData}/> : null}
                     {props.selectedTab === "businessDetails" ?
                         <BusinessDetails data={props.data} saveData={props.saveData}/> : null}
-                    {props.selectedTab === "storeCategory" ?
-                        <StoreCategory data={props.data} saveData={props.saveData}/> : null}
                 </View>
             </View>
         </Modal>

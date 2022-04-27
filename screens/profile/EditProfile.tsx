@@ -1,15 +1,12 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import {
     Text,
     View,
     StyleSheet,
     ScrollView,
-    TextInput,
-    Dimensions,
     TouchableOpacity,
     Image,
     Alert,
-    TouchableWithoutFeedback, Keyboard
 } from 'react-native';
 // @ts-ignore
 import SecondaryHeader from "../../headers/SecondaryHeader";
@@ -19,20 +16,13 @@ import { SolidButtonBlue } from "../../buttons/Buttons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from '@react-navigation/native';
 import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
 import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
 import Indicator from "../../utils/Indicator";
-import SelectModal from "../../commons/SelectModal";
-import SelectLocalityModal from "../../commons/SelectLocality";
-import TextInputUnderline from "../../commons/TextInputUnderline";
-import TextInputModal from "../../commons/TextInputModal";
 import commonStyles from "../../styles/commonStyles";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import RetailerDataModal from './RetailerDataModal';
-
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {connect, useSelector} from 'react-redux';
-// import InternetConnectionModal from "../../commons/InternetConnectionModal";
 
 
 
@@ -43,8 +33,7 @@ export default function EditProfile() {
     const tabOptions = [
         { key: "storeDetails", value: "Store Details" },
         { key: "address", value: "Address" },
-        { key: "businessDetails", value: "Business Details" },
-        { key: "storeCategory", value: "Store Category" },
+        { key: "businessDetails", value: "Business Details" }
     ]
 
     const navigation = useNavigation();
@@ -58,10 +47,6 @@ export default function EditProfile() {
     const [comingFrom, setComingFrom] = useState('');
     const distributor = useSelector((state: any) => state.distributor);
 
-    // const isInternetConnected = useSelector((state: any) => {
-    //     return state.isInternetConnected
-    // });
-
     useEffect(() => {
         setRetailerId(route.params.data.id);
         setData(route.params.data);
@@ -73,7 +58,7 @@ export default function EditProfile() {
     }
 
     const goToUploadImage = () => {
-        navigation.navigate('upload-image', { retailerId: retailerId, image: image, comingFrom: 'retailer-profile' });
+        navigation.navigate('UploadImage', { retailerId: retailerId, image: image, comingFrom: 'editProfile' });
     }
 
     const openPopUp = (key) => {
@@ -97,7 +82,7 @@ export default function EditProfile() {
                     setModalVisible(false);
                     setData(res.data.data)
                 } else {
-                    Alert.alert("Error", "Profile updating failed!");
+                    Alert.alert("Error", res.data.error);
                 }
             }
         })
@@ -108,7 +93,7 @@ export default function EditProfile() {
         <View style={style.container}>
             <Indicator isLoading={isLoading} />
             <View style={{ paddingHorizontal: 24, paddingBottom: 10 }}>
-                <SecondaryHeader title={comingFrom == "edit" ? "Edit Retailer Profile" : "Add Retailer Profile"} />
+                <SecondaryHeader title={"Edit Profile"} />
             </View>
             <ScrollView nestedScrollEnabled={true} style={{ flex: 1 }}
                 showsVerticalScrollIndicator={false}>
@@ -134,7 +119,7 @@ export default function EditProfile() {
                 <View style={{ paddingHorizontal: 24 }}>
                     <View style={{ paddingTop: 20 }}>
                         <Text style={texts.redTextBold14}>
-                            {comingFrom == "edit" ? "Edit Retailer Details" : "Add Retailer Details"}
+                            {"Edit Details"}
                         </Text>
                     </View>
                     <View style={{ paddingTop: 10 }}>
@@ -169,7 +154,6 @@ export default function EditProfile() {
                     navigation.goBack()
                 }} />
             </View>
-            {/* {!isInternetConnected ? <InternetConnectionModal ctaFunction={saveData} modalVisible={!isInternetConnected}/> : null} */}
         </View>)
 }
 

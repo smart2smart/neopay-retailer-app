@@ -71,7 +71,7 @@ export default function RetailerAddress(props) {
 
     useEffect(() => {
         if (props.data) {
-            let data = JSON.parse(props.data?.address);
+            let data = props.data?.address_data;
             setLine1(data.line_1);
             setLine2(data.line_2);
             setSelectedCity(data.city);
