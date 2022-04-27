@@ -7,8 +7,8 @@ const formHeader = {
 }
 
 //const base_url = 'http://192.168.1.6:8000';
-//const base_url = 'http://qa-api.neopay.club';
-const base_url = 'https://api.neopay.club';
+const base_url = 'http://qa-api.neopay.club';
+// const base_url = 'https://api.neopay.club';
 
 
 export const authApi = {
@@ -104,6 +104,36 @@ export const commonApi = {
         url: `${base_url}/banners/`,
         method: 'GET',
         header: header
+    },
+    getBeatPlanList: {
+        url: `${base_url}/distributors/beat-plan/`,
+        method: 'GET',
+        header: header
+    },
+    getStateList: {
+        header: header,
+        url: `${base_url}/localities/state/`,
+        method: 'GET',
+    },
+    getDistrictList: {
+        header: header,
+        url: `${base_url}/localities/district/`,
+        method: 'GET',
+    },
+    getCityList: {
+        header: header,
+        url: `${base_url}/localities/city/`,
+        method: 'GET',
+    },
+    getRetailerMetaData: {
+        url: `${base_url}/retailers/meta-data/`,
+        method: 'GET',
+        header: header
+    },
+    updateRetailer: {
+        header: header,
+        url: `${base_url}/retailers/`,
+        method: 'PATCH',
     },
 }
 
