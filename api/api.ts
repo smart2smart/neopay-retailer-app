@@ -6,9 +6,9 @@ const formHeader = {
 
 }
 
-// const base_url = 'http://10.38.26.111:8000';
+const base_url = 'http://192.168.1.11:8000';
 // const base_url = 'http://qa-api.neopay.club';
-const base_url = 'https://api.neopay.club';
+//const base_url = 'https://api.neopay.club';
 
 
 export const authApi = {
