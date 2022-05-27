@@ -166,6 +166,7 @@ function CompanyList(props) {
                     category_2_image: value[0]["category_2_image"],
                     image: value[0]["product_group_image"],
                     product_group: key,
+                    product_group_name:value[0]["product_group"],
                     image_expanded: false,
                     product_group_id: value[0]["product_group_id"],
                     data: value,

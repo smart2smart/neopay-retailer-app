@@ -68,7 +68,7 @@ export const RenderItem = (props) => {
                             </Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', width: "86%"}}>
                                 <Text style={texts.redTextBold12}>
-                                    {props.item.product_group}
+                                    {props.item.product_group_name}
                                 </Text>
                                 <Text style={texts.blackTextBold12}>
                                     {props.item.data.length + " SKUs"}

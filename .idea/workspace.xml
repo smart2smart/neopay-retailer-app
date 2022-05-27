@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57b40d6f-ba9d-40a6-ae19-b1c5e4d8fddb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/Routes.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/cart/Cart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/cart/Cart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/BuildOrder.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/CompanyList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/CompanyList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/home/ProductCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/home/ProductCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/PersistenceStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/PersistenceStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +49,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../neopay-salesman" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -69,7 +71,7 @@
       <workItem from="1651498828119" duration="1207000" />
       <workItem from="1652086696281" duration="3197000" />
       <workItem from="1652179468034" duration="616000" />
-      <workItem from="1653645918654" duration="424000" />
+      <workItem from="1653645918654" duration="3068000" />
     </task>
     <servers />
   </component>

@@ -10,7 +10,15 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "apk": {
+      "android": {
+        "buildType": "apk"
+      },
+      "node": "14.19.1"
+    },
+    "production": {
+      "channel": "default"
+    }
   },
   "submit": {
     "production": {}
