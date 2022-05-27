@@ -14,7 +14,7 @@ import Indicator from "../../utils/Indicator";
 import {RenderItem} from "../home/ProductCard";
 import QPSModal from "../../commons/QPSMOdal";
 import useProductsHook from "../custom-hooks/useProductsHook";
-import { clearCart } from '../../actions/actions';
+import {clearCart} from '../../actions/actions';
 
 
 function Cart(props: any) {
@@ -30,14 +30,15 @@ function Cart(props: any) {
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
     const [qpsModalVisible, setQPSModalVisible] = useState(false);
-const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     const goToDistributorProducts = () => {
         navigation.navigate("BuildOrder")
     }
 
 
-    const {productsData,
+    const {
+        productsData,
         setProductsData,
         originalProductsData,
         setOriginalProductsData,
@@ -101,7 +102,7 @@ const dispatch = useDispatch()
         productsToSend.forEach((product) => {
             product.data.forEach((item) => {
                 if (parseInt(item.quantity) > 0) {
-                    products[item.id] = {quantity: item.quantity, unit_id: item.selected_unit};
+                    products[item.id] = {quantity: parseInt(item.quantity), unit_id: parseInt(item.selected_unit)};
                     available = true;
                 }
             })
