@@ -13,11 +13,11 @@ export default function PrimaryHeader(props: any) {
                 <TouchableOpacity onPress={() => {
                     props.navigation.dispatch(DrawerActions.openDrawer());
                 }}>
-                    <Entypo name="menu" size={34} color="white"/>
+                    <Entypo name="menu" size={33} color="white"/>
                 </TouchableOpacity>
-                <View style={{marginLeft: 15, marginTop: 8}}>
+                <View style={{marginLeft: 15}}>
                     <Image resizeMode={"contain"} style={styles.logo}
-                           source={require('../assets/images/neomart_white.png')}/>
+                           source={require('../assets/images/neomart-white.png')}/>
                 </View>
             </View>
             {props.type == "verification" ? <TouchableOpacity onPress={props.logout}>

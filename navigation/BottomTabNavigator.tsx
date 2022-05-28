@@ -19,6 +19,7 @@ export default function BottomTabNavigator() {
     return (
         <BottomTabsStack.Navigator
             screenOptions={({route}) => ({
+                headerShown:false,
                 tabBarIcon: ({focused, color, size}) => {
                     let icon = null;
                     switch (route.name) {
