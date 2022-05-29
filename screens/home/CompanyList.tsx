@@ -69,21 +69,38 @@ function CompanyList(props) {
     const distributor = useSelector((state: any) => state.distributor);
     const retailerData = useSelector((state: any) => state.retailerDetails);
 
+    const getBeatPlanList = () => {
+        const data = {
+            method: commonApi.getBeatPlanList.method,
+            url: commonApi.getBeatPlanList.url,
+            header: commonApi.getBeatPlanList.header,
+        };
+        // @ts-ignore
+        AuthenticatedGetRequest(data).then((res) => {
+            if (res && res.status == 200) {
+                let beatIds = []
+                res.data.forEach((item) => {
+                    beatIds.push(item.id)
+                })
+                getProductsData(beatIds);
+            }
+        });
+    };
+
+
     useEffect(() => {
         if (distributor) {
-            getProductsData();
+            getBeatPlanList();
         }
     }, [distributor]);
 
-    const getProductsData = () => {
+    const getProductsData = (beat_ids) => {
         const dataToSend = {
             method: commonApi.getProducts.method,
             url:
                 commonApi.getProducts.url +
-                "?retailer_id=" +
-                retailerData.id +
-                "&distributor_id=" +
-                distributor.id,
+                "?beat_ids=" +
+                JSON.stringify(beat_ids),
             header: commonApi.getProducts.header,
         };
         setIsLoading(true);
@@ -166,7 +183,7 @@ function CompanyList(props) {
                     category_2_image: value[0]["category_2_image"],
                     image: value[0]["product_group_image"],
                     product_group: key,
-                    product_group_name:value[0]["product_group"],
+                    product_group_name: value[0]["product_group"],
                     image_expanded: false,
                     product_group_id: value[0]["product_group_id"],
                     data: value,
