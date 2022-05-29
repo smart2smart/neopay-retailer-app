@@ -89,10 +89,9 @@ function CompanyList(props) {
 
 
     useEffect(() => {
-        if (distributor) {
             getBeatPlanList();
-        }
-    }, [distributor]);
+    }, []);
+
 
     const getProductsData = (beat_ids) => {
         const dataToSend = {
@@ -105,6 +104,8 @@ function CompanyList(props) {
         };
         setIsLoading(true);
         AuthenticatedGetRequest(dataToSend).then((res) => {
+            console.log("fggggggggggggggggggggggggggggggggggggggggggggggggg")
+            console.log(res)
             let companies = _.chain(res.data)
                 .groupBy("company_id")
                 .map((value, key) => ({
