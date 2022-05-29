@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57b40d6f-ba9d-40a6-ae19-b1c5e4d8fddb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/images/neomart-white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/vitran_logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/images/neomart_white.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/headers/PrimaryHeader.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/BottomTabNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/neomart_logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/login/LoginScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +54,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -77,6 +77,9 @@
       <workItem from="1652086696281" duration="3197000" />
       <workItem from="1652179468034" duration="616000" />
       <workItem from="1653645918654" duration="6218000" />
+      <workItem from="1653722182237" duration="2496000" />
+      <workItem from="1653807617635" duration="548000" />
+      <workItem from="1653809013432" duration="222000" />
     </task>
     <servers />
   </component>

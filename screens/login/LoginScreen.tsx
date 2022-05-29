@@ -78,14 +78,14 @@ class LoginScreen extends Component {
             <View style={styles.container}>
                 <Indicator isLoading={this.state.isLoading}/>
                 <View>
-                    <Image style={styles.logo} resizeMode={"contain"} source={require('../../assets/images/neomart_logo.png')} />
+                    <Image style={styles.logo} resizeMode={"contain"} source={require('../../assets/images/vitran_logo.png')} />
                     <Text style={[texts.blueHeading1, {marginTop:30}]}>
                         Enter Mobile Number
                     </Text>
                     <Text style={[texts.greyNormal14,{marginTop:18}]}>
                         Enter your mobile number for account verification
                     </Text>
-                    <View style={[styles.mobileInputContainer, {marginBottom:60}]}>
+                    <View style={[styles.mobileInputContainer, {marginBottom:30}]}>
                         <View style={[styles.countryCodeDiv, commonStyles.rowCenter]}>
                             <Text style={texts.greyNormal14}>
                                 +91
@@ -127,17 +127,17 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         paddingHorizontal:24,
-        paddingTop:100,
+        paddingTop:50,
         backgroundColor:'#ffffff',
         justifyContent:"space-between"
     },
     logo:{
-        width:100,
-        height:100
+        width:120,
+        height:120
     },
     mobileInputContainer:{
         height:48,
-        marginTop:48,
+        marginTop:30,
         borderRadius:5,
         borderColor:colors.lightGrey,
         borderWidth:1,
