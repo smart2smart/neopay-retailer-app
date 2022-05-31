@@ -46,7 +46,7 @@ const CityDropDown = (props) => {
             } else {
                 setCityData(originalCityData);
             }
-        },500)
+        },800)
     }
 
     const getCityFromSearch = (text)=>{

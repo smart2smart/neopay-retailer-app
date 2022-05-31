@@ -61,7 +61,7 @@ const LocalityDropDown = (props) => {
             } else {
                 setLocalityData(originalLocalityData);
             }
-        }, 500)
+        }, 800)
     }
 
     const selectLocality = (item) => {

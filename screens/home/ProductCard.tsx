@@ -22,7 +22,7 @@ const RenderItem = (props) => {
     let min_qty = 0;
     let current_rate = entity.rate;
     let least_rate = entity.rate;
-    if (entity.qps.length > 0) {
+    if (entity?.qps?.length > 0) {
       entity.qps.forEach((qps) => {
         if (qps.min_qty * lot_quantity >= min_qty) {
           least_rate = parseFloat(

@@ -78,7 +78,7 @@ function AddressDetails(props) {
             if (text !== "") {
                 getLocalities(text)
             }
-        }, 500)
+        }, 800)
     }
 
     const getLocalities = (text: string) => {
@@ -218,7 +218,7 @@ function AddressDetails(props) {
             if (text !== "") {
                 getCities(text)
             }
-        }, 500)
+        }, 800)
     }
 
     const searchPinCode = (text) => {
@@ -229,7 +229,7 @@ function AddressDetails(props) {
             if (text !== "") {
                 getPinCodes(text)
             }
-        }, 500)
+        }, 800)
     }
 
 

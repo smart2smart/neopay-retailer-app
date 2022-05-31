@@ -45,7 +45,7 @@ const DistrictDropDown = (props) => {
             } else {
                 setDistrictData(originalDistrictData);
             }
-        }, 500)
+        }, 800)
     }
 
     const fetchDistrictFromSearch = (text) => {

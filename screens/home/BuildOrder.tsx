@@ -121,7 +121,6 @@ function BuildOrder(props) {
           matchQuantityWithCart(groupedData);
         }
       } else {
-        console.log(res);
         Alert.alert("Error", "Products not available!");
       }
     });
