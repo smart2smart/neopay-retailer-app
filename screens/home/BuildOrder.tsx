@@ -70,59 +70,59 @@ function BuildOrder(props) {
     selectProductAlert,
   } = useProductsHook("buildOrder", []);
 
-  const getProductsData = () => {
+  const getProductsData = (beat_ids) => {
     const dataToSend = {
       method: commonApi.getProducts.method,
-      url:
-        commonApi.getProducts.url +
-        "?retailer_id=" +
-        retailerData.id +
-        "&distributor_id=" +
-        distributor.id,
+      url: commonApi.getProducts.url + "?beat_ids=" + JSON.stringify(beat_ids),
       header: commonApi.getProducts.header,
     };
     setIsLoading(true);
     // @ts-ignore
     AuthenticatedGetRequest(dataToSend).then((res) => {
-      let groupedData = _.chain(res.data)
-        .groupBy("product_group_id")
-        .map((value, key) => ({
-          company_name: value[0]["company_name"],
-          company_id: value[0]["company_id"],
-          company_image: value[0]["company_image"],
-          brand_id: value[0]["brand_id"],
-          brand_name: value[0]["brand_name"],
-          brand_image: value[0]["brand_image"],
-          category_1_id: value[0]["category_1_id"],
-          category_1_name: value[0]["category_1_name"],
-          category_1_image: value[0]["category_1_image"],
-          category_2_id: value[0]["category_2_id"],
-          category_2_name: value[0]["category_2_name"],
-          category_2_image: value[0]["category_2_image"],
-          image: value[0]["product_group_image"],
-          product_group: key,
-          product_group_name: value[0]["product_group"],
-          image_expanded: false,
-          product_group_id: value[0]["product_group_id"],
-          data: value,
-          pg_image_expanded: false,
-          quantity: 0,
-          collapsed: normalView,
-        }))
-        .value();
-      groupedData = _.sortBy(groupedData, function (item) {
-        return item.company_name;
-      });
-      setIsLoading(false);
-      groupedData.forEach((item) => {
-        item.data.forEach((product) => {
-          set_unit_quantities(product);
+      if (res.status === 200) {
+        let groupedData = _.chain(res.data)
+          .groupBy("product_group_id")
+          .map((value, key) => ({
+            company_name: value[0]["company_name"],
+            company_id: value[0]["company_id"],
+            company_image: value[0]["company_image"],
+            brand_id: value[0]["brand_id"],
+            brand_name: value[0]["brand_name"],
+            brand_image: value[0]["brand_image"],
+            category_1_id: value[0]["category_1_id"],
+            category_1_name: value[0]["category_1_name"],
+            category_1_image: value[0]["category_1_image"],
+            category_2_id: value[0]["category_2_id"],
+            category_2_name: value[0]["category_2_name"],
+            category_2_image: value[0]["category_2_image"],
+            image: value[0]["product_group_image"],
+            product_group: key,
+            product_group_name: value[0]["product_group"],
+            image_expanded: false,
+            product_group_id: value[0]["product_group_id"],
+            data: value,
+            pg_image_expanded: false,
+            quantity: 0,
+            collapsed: normalView,
+          }))
+          .value();
+        groupedData = _.sortBy(groupedData, function (item) {
+          return item.company_name;
         });
-      });
-      setProductsData(groupedData);
-      setOriginalProductsData(groupedData);
-      if (cart.count > 0) {
-        matchQuantityWithCart(groupedData);
+        setIsLoading(false);
+        groupedData.forEach((item) => {
+          item.data.forEach((product) => {
+            set_unit_quantities(product);
+          });
+        });
+        setProductsData(groupedData);
+        setOriginalProductsData(groupedData);
+        if (cart.count > 0) {
+          matchQuantityWithCart(groupedData);
+        }
+      } else {
+        console.log(res);
+        Alert.alert("Error", "Products not available!");
       }
     });
   };
@@ -136,6 +136,24 @@ function BuildOrder(props) {
     [productsData]
   );
 
+  const getBeatPlanList = () => {
+    const data = {
+      method: commonApi.getBeatPlanList.method,
+      url: commonApi.getBeatPlanList.url,
+      header: commonApi.getBeatPlanList.header,
+    };
+    // @ts-ignore
+    AuthenticatedGetRequest(data).then((res) => {
+      if (res && res.status == 200) {
+        let beatIds = [];
+        res.data.forEach((item) => {
+          beatIds.push(item.id);
+        });
+        getProductsData(beatIds);
+      }
+    });
+  };
+
   useEffect(() => {
     if (route.params) {
       if (route.params.productData) {
@@ -145,7 +163,7 @@ function BuildOrder(props) {
         matchQuantityWithCart(data);
       }
     } else {
-      getProductsData();
+      getBeatPlanList();
     }
   }, []);
 
@@ -262,15 +280,17 @@ function BuildOrder(props) {
           ...item,
           data: item.data.filter((itm) => {
             return (
-              itm.name.toLowerCase().includes() ||
-              (itm.brand_name &&
-                itm.brand_name.toLowerCase().includes(text.toLowerCase())) ||
-              (itm.company_name &&
-                itm.company_name.toLowerCase().includes(text.toLowerCase())) ||
-              (itm.product_group &&
-                itm.product_group.toLowerCase().includes(text.toLowerCase())) ||
-              (itm.variant &&
-                itm.variant.toLowerCase().includes(text.toLowerCase()))
+              itm?.name?.toLowerCase().includes() ||
+              (itm?.brand_name &&
+                itm?.brand_name.toLowerCase().includes(text.toLowerCase())) ||
+              (itm?.company_name &&
+                itm?.company_name.toLowerCase().includes(text.toLowerCase())) ||
+              (itm?.product_group &&
+                itm?.product_group
+                  .toLowerCase()
+                  .includes(text.toLowerCase())) ||
+              (itm?.variant &&
+                itm?.variant.toLowerCase().includes(text.toLowerCase()))
             );
           }),
         };

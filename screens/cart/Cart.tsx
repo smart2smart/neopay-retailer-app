@@ -11,7 +11,7 @@ import {commonApi} from "../../api/api";
 import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
 import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
 import Indicator from "../../utils/Indicator";
-import {RenderItem} from "../home/ProductCard";
+import RenderItem from "../home/ProductCard";
 import QPSModal from "../../commons/QPSMOdal";
 import useProductsHook from "../custom-hooks/useProductsHook";
 import {clearCart} from '../../actions/actions';
@@ -35,7 +35,6 @@ function Cart(props: any) {
     const goToDistributorProducts = () => {
         navigation.navigate("BuildOrder")
     }
-
 
     const {
         productsData,
@@ -168,10 +167,11 @@ function Cart(props: any) {
                 expandImage={expandImage}
                 expandProductGroupImage={expandProductGroupImage}
                 handleCollapse={handleCollapse}
-                item={item} index={index}/>
+                item={item} 
+                index={index}
+                />
         )
     }
-
 
     return (
         cart.count > 0 ? <View style={{flex: 1, backgroundColor: colors.white}}>
