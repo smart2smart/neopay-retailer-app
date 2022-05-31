@@ -101,7 +101,6 @@ function OrderList(props) {
                 <View style={[commonStyles.searchContainer, {marginTop: 10}]}>
                     <TextInput
                         value={searchText}
-                        maxLength={10}
                         placeholder={"Search Orders"}
                         onChangeText={(text) => searchOrders(text)}
                         style={commonStyles.textInput}>
