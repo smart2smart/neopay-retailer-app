@@ -20,7 +20,7 @@ import { newCart, setDistributor } from "../../actions/actions";
 import { connect, useSelector } from "react-redux";
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import { commonApi } from "../../api/api";
@@ -53,9 +53,14 @@ function HomeScreen(props: any) {
         props.newCart(JSON.parse(data));
       }
     });
-    getOrders();
     getBanners();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getOrders();
+    }, [])
+  );
 
   const getOrders = () => {
     const data = {
@@ -84,7 +89,6 @@ function HomeScreen(props: any) {
     };
     // @ts-ignore
     AuthenticatedGetRequest(data).then((res) => {
-
       if (res.status == 200) {
         setBannerData(res.data.results);
       } else {
@@ -152,9 +156,7 @@ function HomeScreen(props: any) {
         style={styles.orderCard}
       >
         <Text style={texts.darkGreyTextBold14}>{"Order Id: " + item.id}</Text>
-        <Text style={texts.greyNormal12}>
-          {item.revised_count + " items"}
-        </Text>
+        <Text style={texts.greyNormal12}>{item.revised_count + " items"}</Text>
         <Text style={texts.greyNormal12}>
           {"Place on: " + moment(item.created_at).format("DD MMM, yyyy")}
         </Text>

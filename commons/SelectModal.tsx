@@ -44,6 +44,7 @@ export default function SelectModal(props) {
             }}
         >
             <View style={commonStyles.modalContainer}>
+                <View style={commonStyles.modalDiv}>
                 <View style={commonStyles.modalCloseIconDiv}>
                     <TouchableOpacity onPress={() => {
                         setSearchText('');
@@ -79,6 +80,7 @@ export default function SelectModal(props) {
                         })}
                     </View>
                 </ScrollView>
+            </View>
             </View>
         </Modal>
     )

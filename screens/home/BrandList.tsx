@@ -93,10 +93,11 @@ function BrandList(props) {
         <View style={{flex: 1}}>
             <View style={styles.container}>
                 <View style={[commonStyles.rowSpaceBetween]}>
-                    <SecondaryHeader title={"Browse Menu"}/>
-                    <TouchableOpacity onPress={goToBuildOrder} style={styles.listDiv}>
+                    <SecondaryHeader title={"Browse Menu"} headerRightItem={
+                        <TouchableOpacity onPress={goToBuildOrder} style={styles.listDiv}>
                         <MaterialCommunityIcons name="table" size={22} color={colors.red}/>
                     </TouchableOpacity>
+                    }/>
                 </View>
                 <TouchableOpacity style={{marginTop: 16}} onPress={goToBuildOrder}>
                     <TextInput

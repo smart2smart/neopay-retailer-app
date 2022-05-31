@@ -54,8 +54,12 @@ const cartReducer = (state = {...cart}, action: any) => {
         case NEW_CART:
             return action.payload
         case CLEAR_CART:
-            PersistenceStore.removeCart();
-            return {...cart}
+            return {
+                distributorId: null,
+                count: 0,
+                data: {},
+                value: 0
+            }
         case UPDATE_CART_ADD:
             return updateCart(state, action, "add");
         case UPDATE_CART_SUBTRACT:
