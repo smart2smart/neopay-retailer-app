@@ -2,7 +2,7 @@
   "expo": {
     "name": "Vitran",
     "slug": "neopay-retailer-app",
-    "version": "13.1.1",
+    "version": "14.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "myapp",
@@ -26,7 +26,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 37,
+      "versionCode": 38,
       "permissions": [
         "CAMERA",
         "READ_INTERNAL_STORAGE",
