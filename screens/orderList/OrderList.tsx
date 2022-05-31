@@ -33,7 +33,7 @@ function OrderList(props) {
             if (text != "") {
                 const data = {
                     method: commonApi.getOrderList.method,
-                    url: commonApi.getOrderList.url + "&search=" + text,
+                    url: commonApi.getOrderList.url + "?search=" + text,
                     header: commonApi.getOrderList.header,
                 }
                 AuthenticatedGetRequest(data).then((res) => {
