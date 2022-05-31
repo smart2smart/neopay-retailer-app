@@ -42,7 +42,7 @@ function OrderList(props) {
             } else {
                 setOrdersData(originalOrdersData);
             }
-        }, 500);
+        }, 800);
     }
 
     useEffect(() => {
