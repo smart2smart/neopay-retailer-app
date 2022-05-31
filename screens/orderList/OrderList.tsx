@@ -23,7 +23,6 @@ function OrderList(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [next, setNext] = useState(null);
     const [count, setCount] = useState(0);
-    const distributorId = useSelector((state: any) => state.distributor.id);
 
     const searchOrders = (text: string) => {
         setSearchText(text);
@@ -34,7 +33,7 @@ function OrderList(props) {
             if (text != "") {
                 const data = {
                     method: commonApi.getOrderList.method,
-                    url: commonApi.getOrderList.url + "?distributor_id=" + distributorId + "&search=" + text,
+                    url: commonApi.getOrderList.url + "&search=" + text,
                     header: commonApi.getOrderList.header,
                 }
                 AuthenticatedGetRequest(data).then((res) => {

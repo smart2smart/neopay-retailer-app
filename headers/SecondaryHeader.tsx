@@ -25,6 +25,7 @@ export default function SecondaryHeader(props: any) {
                 </Text>
             </View>
             <View>
+                {props.headerRightItem ? props.headerRightItem : null}
                 {props.headerRight ? <View>
                     <TouchableOpacity onPress={props.headerRightCta}>
                         <Text style={texts.redTextBold14}>

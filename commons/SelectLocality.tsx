@@ -43,6 +43,7 @@ export default function SelectLocalityModal(props) {
             }}
         >
             <View style={commonStyles.modalContainer}>
+                <View style={commonStyles.modalDiv}>
                 <View style={commonStyles.modalCloseIconDiv}>
                     <TouchableOpacity onPress={() => {
                         close()
@@ -110,6 +111,7 @@ export default function SelectLocalityModal(props) {
                 {/*        </View>*/}
                 {/*    </View>*/}
                 {/*</View> : null}*/}
+                </View>
             </View>
         </Modal>
     )
