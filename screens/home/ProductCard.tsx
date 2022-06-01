@@ -222,7 +222,7 @@ const RenderItem = (props) => {
                         ) : null}
                       </View>
                     </View>
-                    <Text style={texts.greyNormal12}>{entity.distributor_name}</Text>
+                    <Text style={texts.greyBold12}>Seller: {entity.distributor_name}</Text>
                   </View>
                   <View
                     style={{
