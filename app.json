@@ -2,7 +2,7 @@
   "expo": {
     "name": "Vitran",
     "slug": "neopay-retailer-app",
-    "version": "14.1.1",
+    "version": "15.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "myapp",
@@ -13,8 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 60000,
-      "checkAutomatically": "ON_ERROR_RECOVERY"
+      "fallbackToCacheTimeout": 60000
     },
     "assetBundlePatterns": [
       "**/*"
@@ -26,7 +25,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "versionCode": 38,
+      "versionCode": 39,
       "permissions": [
         "CAMERA",
         "READ_INTERNAL_STORAGE",

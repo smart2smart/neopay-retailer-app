@@ -15,7 +15,7 @@ import {
   Button,
 } from "react-native";
 import mapStateToProps from "../../store/mapStateToProps";
-import { newCart, setDistributor } from "../../actions/actions";
+import { newCart } from "../../actions/actions";
 // @ts-ignore
 import { connect, useSelector } from "react-redux";
 import PrimaryHeader from "../../headers/PrimaryHeader";
@@ -35,12 +35,8 @@ import RenderCarousel from "./Carousel";
 function HomeScreen(props: any) {
   const navigation = useNavigation();
   const cart = useSelector((state: any) => state.cart);
-  const [distributor, setDistributor] = useState(
-    useSelector((state: any) => state.distributor)
-  );
   const [orderData, setOrderData] = useState([]);
   const [bannerData, setBannerData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
@@ -97,47 +93,11 @@ function HomeScreen(props: any) {
     });
   };
 
-  const getDistributorDetails = () => {
-    const data = {
-      method: commonApi.getDistributorDetails.method,
-      url: commonApi.getDistributorDetails.url,
-      header: commonApi.getDistributorDetails.header,
-    };
-    // @ts-ignore
-    AuthenticatedGetRequest(data).then((res) => {
-      if (res.status == 200) {
-        if (res.data.length > 0) {
-          setDistributor(res.data[0]);
-          props.setDistributor(res.data[0]);
-        }
-      } else {
-        Alert.alert(res.data.error);
-      }
-    });
-  };
-
-  const setUp = async (distributor) => {
-    if (!distributor) {
-      let data = await PersistenceStore.getDistributor();
-      if (data) {
-        setDistributor(JSON.parse(data));
-        props.setDistributor(JSON.parse(data));
-      } else {
-        getDistributorDetails();
-      }
-    }
-    setIsLoading(false);
-  };
 
   const onRefresh = () => {
     getOrders();
     getBanners();
-    setUp(distributor);
   };
-
-  useEffect(() => {
-    setUp(distributor);
-  }, [distributor]);
 
   const goToBuildOrder = () => {
     navigation.navigate("BuildOrder");
@@ -226,7 +186,7 @@ function HomeScreen(props: any) {
           </View>
         ) : null}
         <View style={{ flex: 1 }}>
-          <CompanyList distributor={distributor} />
+          <CompanyList />
         </View>
       </ScrollView>
       {cart.data.length > 0 ? <CartButton /> : null}
@@ -234,7 +194,7 @@ function HomeScreen(props: any) {
   );
 }
 
-export default connect(mapStateToProps, { setDistributor, newCart })(
+export default connect(mapStateToProps, {newCart })(
   HomeScreen
 );
 

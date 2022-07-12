@@ -8,9 +8,6 @@ import {
   clearCart,
 } from "../../actions/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert } from "react-native";
-import PersistenceStore from "../../utils/PersistenceStore";
-
 const useProductsHook = (screenType, data) => {
   const dispatch = useDispatch();
   const retailerData = useSelector((state: any) => state.retailerDetails);
@@ -171,30 +168,7 @@ const useProductsHook = (screenType, data) => {
   };
 
   const selectProductAlert = (data, type, mainIndex, subIndex) => {
-    // if (cart.distributorId && cart.distributorId !== distributor.id) {
-    //     Alert.alert(
-    //         "Change Distributor",
-    //         `You have items in your cart from another distributor. Adding new distributor will clear your cart. Are you sure you want to continue?`,
-    //         [
-    //             {
-    //                 text: "Yes",
-    //                 onPress: () => {
-    //                     dispatch(clearCart());
-    //                     PersistenceStore.removeCart();
-    //                     selectProduct(data, type, mainIndex, subIndex);
-    //                 },
-    //             },
-    //             {
-    //                 text: "No",
-    //                 onPress: () => {
-    //                 },
-    //             },
-    //         ],
-    //         {cancelable: false}
-    //     );
-    // } else {
     selectProduct(data, type, mainIndex, subIndex);
-    // }
   };
 
   return {

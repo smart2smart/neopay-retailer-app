@@ -16,7 +16,7 @@ import {
     PRODUCT_GROUP_FILTER_ADD,
     PRODUCT_GROUP_FILTER_REMOVE,
     RESET_FILTERS,
-    SELECT_FILTER_TYPE, SELECT_DISTRIBUTOR, MARGIN_FILTERS, CHANGE_LOT_SIZE
+    SELECT_FILTER_TYPE, MARGIN_FILTERS, CHANGE_LOT_SIZE
 } from "./actionTypes";
 
 export const setIsLoggedIn = (value: any) => {
@@ -151,13 +151,6 @@ export const resetFilters = (value: any) => {
 export const selectFilterType = (value: any) => {
     return ({
         type: SELECT_FILTER_TYPE,
-        payload: value
-    })
-}
-
-export const setDistributor = (value: any) => {
-    return ({
-        type: SELECT_DISTRIBUTOR,
         payload: value
     })
 }
