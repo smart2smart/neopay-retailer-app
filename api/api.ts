@@ -56,7 +56,7 @@ export const commonApi = {
         method: 'GET',
     },
     updateRetailerImage: {
-        url: `${base_url}/retailers/image/`,
+        url: `${base_url}/retailers/`,
         method: 'PATCH',
         header: formHeader
     },
