@@ -42,7 +42,6 @@ export default function EditProfile() {
   const [retailerId, setRetailerId] = useState("");
   const [data, setData] = useState("");
   const [comingFrom, setComingFrom] = useState("");
-  const distributor = useSelector((state: any) => state.distributor);
 
   useEffect(() => {
     setRetailerId(route.params.data.id);
@@ -70,11 +69,7 @@ export default function EditProfile() {
   const saveData = (data) => {
     const dataToSend = {
       method: commonApi.updateRetailer.method,
-      url:
-        commonApi.updateRetailer.url +
-        retailerId +
-        "/?distributor_id=" +
-        distributor.id,
+      url: commonApi.updateRetailer.url + retailerId + "/",
       header: commonApi.updateRetailer.header,
       data: data,
     };
