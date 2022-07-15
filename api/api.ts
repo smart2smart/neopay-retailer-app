@@ -6,7 +6,7 @@ const formHeader = {
 
 }
 
-// const base_url = 'http://10.38.18.239:8000';
+// const base_url = 'http://10.38.21.231:8000';
 // const base_url = 'http://qa-api.neopay.club';
 const base_url = 'https://api.neopay.club';
 
@@ -26,7 +26,12 @@ export const authApi = {
         url: `${base_url}/retailers/otp/`,
         method: 'POST',
         header: header
-    }
+    },
+    emailLogin: {
+        header: header,
+        url: `${base_url}/api/token/`,
+        method: "POST",
+      },
 }
 
 export const commonApi = {
