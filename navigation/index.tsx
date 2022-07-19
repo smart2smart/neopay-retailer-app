@@ -45,7 +45,8 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const [verificationStatus, setVerificationStatus] = useState(1);
   const [fetchingData, setFetchingData] = useState(true);
   const landingScreen = useSelector((state: any) => state.landingScreen);
-  const userEmail = useSelector((state: any) => state.userEmail);
+  const userType = useSelector((state: any) => state.userType);
+
   let initialScreen = "";
   if (landingScreen === "profile") {
     initialScreen = "RetailerDetails";
@@ -57,30 +58,18 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     initialScreen = "Home";
   }
   useEffect(() => {
-    if (userEmail) getDetails(userEmail);
-    else if (PersistenceStore.getUserEmail())
-      getDetails(PersistenceStore.getUserEmail());
-  }, []);
-
-  const getDetails = (userEmail) => {
-    const data = {
-      method: authApi.getUserType.method,
-      url: authApi.getUserType.url + "?email=" + userEmail,
-      header: authApi.getUserType.header,
-    };
-    AuthenticatedGetRequest(data).then((res) => {
-      //   setFetchingData(false);
-      if (res.status == 200) {
-        if (res.data.user_type === 2) {
+    (async () => {
+      let user_type = await PersistenceStore.getUserType();
+      if (user_type)
+        if (userType == 2 || user_type == 2) {
           distributorDetails();
-        } else if (res.data.user_type === 2) {
+        } else if (userType == 3 || user_type == 3) {
           retailerDetails();
         } else {
           Alert.alert("Not Access for this User.");
         }
-      }
-    });
-  };
+    })();
+  }, []);
 
   const retailerDetails = () => {
     const data = {

@@ -1,8 +1,8 @@
 import { IS_LOGGED_IN } from "../actions/actionTypes";
 
-const emailReducer = (state = "", action: any) => {
+const userTypeReducer = (state = "", action: any) => {
   switch (action.type) {
-    case "USER_EMAIL": {
+    case "USER_TYPE": {
       console.log(action);
       return action.payload;
     }
@@ -10,4 +10,4 @@ const emailReducer = (state = "", action: any) => {
       return state;
   }
 };
-export default emailReducer;
+export default userTypeReducer;

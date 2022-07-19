@@ -6,9 +6,9 @@ const formHeader = {
 
 }
 
-// const base_url = 'http://10.38.21.231:8000';
+const base_url = 'http://10.38.21.231:8000';
 // const base_url = 'http://qa-api.neopay.club';
-const base_url = 'https://api.neopay.club';
+// const base_url = 'https://api.neopay.club';
 
 
 export const authApi = {
@@ -31,11 +31,6 @@ export const authApi = {
         header: header,
         url: `${base_url}/api/token/`,
         method: "POST",
-      },
-    getUserType: {
-        header: header,
-        url: `${base_url}/users/me/`,
-        method: "GET",
       },
 }
 

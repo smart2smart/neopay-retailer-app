@@ -34,10 +34,10 @@ export const setTokens = (value: any) => {
     });
 }
 
-export const setUserEmail = (value: any) => {
+export const setUserType = (value: any) => {
     console.log({value})
     return ({
-        type: "USER_EMAIL",
+        type: "USER_TYPE",
         payload: value
     });
 }

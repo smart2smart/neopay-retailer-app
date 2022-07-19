@@ -10,7 +10,7 @@ import emailReducer from "./emailReducer";
 
 export default combineReducers({
     isLoggedIn: loginReducer,
-    userEmail: emailReducer,
+    userType: emailReducer,
     tokens: tokenReducer,
     retailerDetails: retailerDetailsReducer,
     cart: cartReducer,
