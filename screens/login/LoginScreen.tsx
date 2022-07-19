@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, Image, TextInput, Alert, TouchableOpacity } from "react-native";
 import colors from "../../assets/colors/colors";
-import { setIsLoggedIn, setTokens } from "../../actions/actions";
+import { setIsLoggedIn, setTokens,setUserEmail } from "../../actions/actions";
 // @ts-ignore
 import { connect } from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
@@ -64,11 +64,13 @@ class LoginScreen extends Component {
     this.setState({ isLoading: false });
       if (res && res.status == 200) {
         // @ts-ignore
+        this.props.setUserEmail(this.state.email);
         this.props.setTokens({
           access: res["data"]["access"],
           refresh: res["data"]["refresh"],
           timestamp: new Date().toString(),
         });
+        PersistenceStore.setUserEmail(this.state.email);
         PersistenceStore.setTimeStamp(new Date().toString());
         PersistenceStore.setAccessToken(res["data"]["access"]);
         PersistenceStore.setRefreshToken(res["data"]["refresh"]);
@@ -273,7 +275,7 @@ class LoginScreen extends Component {
   }
 }
 
-export default connect(mapStateToProps, { setIsLoggedIn, setTokens })(
+export default connect(mapStateToProps, { setIsLoggedIn, setTokens ,setUserEmail})(
   LoginScreen
 );
 

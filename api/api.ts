@@ -32,9 +32,19 @@ export const authApi = {
         url: `${base_url}/api/token/`,
         method: "POST",
       },
+    getUserType: {
+        header: header,
+        url: `${base_url}/users/me/`,
+        method: "GET",
+      },
 }
 
 export const commonApi = {
+    getDistributorDetails:{
+        url:`${base_url}/distributor/details/`,
+        method: 'GET',
+        header: header
+    },
     getRetailerDetails:{
         url:`${base_url}/retailers/details/`,
         method: 'GET',

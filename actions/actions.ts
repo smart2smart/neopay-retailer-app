@@ -34,6 +34,14 @@ export const setTokens = (value: any) => {
     });
 }
 
+export const setUserEmail = (value: any) => {
+    console.log({value})
+    return ({
+        type: "USER_EMAIL",
+        payload: value
+    });
+}
+
 export const setRetailerDetails = (value: any) => {
     return ({
         type: RETAILER_DETAILS,

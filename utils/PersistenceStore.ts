@@ -45,6 +45,18 @@ class PersistenceStore {
         await AsyncStorage.removeItem('@timeStamp');
     }
 
+    static async getUserEmail() {
+        return await AsyncStorage.getItem('@userEmail');
+    }
+
+    static async setUserEmail(userEmail: string) {
+        await AsyncStorage.setItem('@userEmail', userEmail)
+    }
+
+    static async removeUserEmail() {
+        await AsyncStorage.removeItem('@userEmail');
+    }
+
     static async setCart(cart: string) {
         await AsyncStorage.setItem('@cart', cart);
     }
