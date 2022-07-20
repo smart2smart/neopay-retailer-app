@@ -13,7 +13,7 @@ export const AuthenticatedGetRequest = async (payload: any) => {
                 store.dispatch({type: 'IS_LOGGED_IN', payload: false});
                 PersistenceStore.removeAccessToken();
                 PersistenceStore.removeRefreshToken();
-                PersistenceStore.removeUserEmail();
+                PersistenceStore.removeUserType();
                 PersistenceStore.removeTimeStamp();
             } else {
                 return res;

@@ -41,7 +41,7 @@ export default function VerificationPending(props: any) {
             PersistenceStore.removeTimeStamp();
             PersistenceStore.removeAccessToken();
             PersistenceStore.removeRefreshToken();
-            PersistenceStore.removeUserEmail();
+            PersistenceStore.removeUserType();
           },
         },
         { text: "No", onPress: () => {} },

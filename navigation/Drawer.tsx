@@ -50,7 +50,7 @@ const LogOut = () => {
         onPress: () => {
           store.dispatch({ type: "IS_LOGGED_IN", payload: false });
           PersistenceStore.removeTimeStamp();
-          PersistenceStore.removeUserEmail();
+          PersistenceStore.removeUserType();
           PersistenceStore.removeAccessToken();
           PersistenceStore.removeRefreshToken();
         },
