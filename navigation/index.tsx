@@ -60,7 +60,7 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   useEffect(() => {
     (async () => {
       let user_type = await PersistenceStore.getUserType();
-      if (user_type)
+      if (user_type) {
         if (userType == 2 || user_type == 2) {
           distributorDetails();
         } else if (userType == 3 || user_type == 3) {
@@ -68,6 +68,7 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
         } else {
           Alert.alert("Not Access for this User.");
         }
+      }
     })();
   }, []);
 
