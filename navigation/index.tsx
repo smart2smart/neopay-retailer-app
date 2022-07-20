@@ -40,12 +40,18 @@ import BrandList from "../screens/home/BrandList";
 import BuildOrder from "../screens/home/BuildOrder";
 import ProductFilterScreen from "../screens/home/ProductFilterScreen";
 import PersistenceStore from "../utils/PersistenceStore";
+import * as Analytics from "expo-firebase-analytics";
+import * as Application from "expo-application";
+import Constants from "expo-constants";
 
 function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const [verificationStatus, setVerificationStatus] = useState(1);
   const [fetchingData, setFetchingData] = useState(true);
   const landingScreen = useSelector((state: any) => state.landingScreen);
   const userType = useSelector((state: any) => state.userType);
+  const routeNameRef = React.createRef();
+  const navigationRef = React.createRef();
+  const [userData, setUserData] = useState({});
 
   let initialScreen = "";
   if (landingScreen === "profile") {
@@ -81,6 +87,7 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     AuthenticatedGetRequest(data).then((res) => {
       setFetchingData(false);
       if (res.status == 200) {
+        setUserData(res.data);
         store.dispatch({
           type: "RETAILER_DETAILS",
           payload: res.data,
@@ -99,6 +106,7 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     AuthenticatedGetRequest(data).then((res) => {
       setFetchingData(false);
       if (res.status == 200) {
+        setUserData(res.data);
         store.dispatch({
           type: "RETAILER_DETAILS",
           payload: res.data,
@@ -114,6 +122,28 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
 
   return (
     <NavigationContainer
+      ref={navigationRef}
+      onReady={() =>
+        (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
+      }
+      onStateChange={() => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+        if (previousRouteName !== currentRouteName) {
+          Analytics.logEvent("view_screen", {
+            screenName: currentRouteName,
+            userId: userData.id,
+            userName: userData.name,
+            androidId: Application.androidId,
+            appVersion: Constants.manifest?.version,
+            appVersionCode: Constants.manifest?.android?.versionCode,
+            androidVersion: Constants.systemVersion,
+          });
+        }
+
+        routeNameRef.current = currentRouteName;
+      }}
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >

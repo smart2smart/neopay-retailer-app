@@ -15,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 60000
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -45,10 +43,23 @@
           "apiKey": "AIzaSyCYc4Wdn7dgUtvaZiAkmA2vJPSaoDomGUE"
         }
       },
-      "package": "com.simplyfi.neopay"
+      "package": "com.simplyfi.neopay",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyBFfxS21P7iKpPFxy5FWL6y9t3H3ttp-XM",
+          "authDomain": "vitran-retailer.firebaseapp.com",
+          "projectId": "vitran-retailer",
+          "storageBucket": "vitran-retailer.appspot.com",
+          "messagingSenderId": "292849640295",
+          "appId": "1:292849640295:web:7f630faf19ea9c7e5d85c2",
+          "measurementId": "G-06SVK0VJ48"
+        }
+      }
     }
-  }
+  },
+  "plugins": ["@react-native-firebase/app"]
 }
