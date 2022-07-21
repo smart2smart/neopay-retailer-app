@@ -95,7 +95,17 @@ function OrdersCard(props: any) {
           {itemString}
         </Text>
       </View>
-      <View style={[commonStyles.rowSpaceBetween, { paddingTop: 10 }]}>
+      <View
+        style={{
+          paddingTop: 10,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          borderTopWidth: 1,
+          borderTopColor: "#ddd",
+          marginTop: 10,
+        }}
+      >
         <View style={commonStyles.row}>
           <TouchableOpacity
             onPress={() => {
