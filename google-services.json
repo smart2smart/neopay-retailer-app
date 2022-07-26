@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "106184943564",
-    "project_id": "retailer-app-b90a4",
-    "storage_bucket": "retailer-app-b90a4.appspot.com"
+    "project_number": "292849640295",
+    "project_id": "vitran-retailer",
+    "storage_bucket": "vitran-retailer.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:106184943564:android:845303f7b6f19bd88a1f69",
+        "mobilesdk_app_id": "1:292849640295:android:31188d48ec9844d95d85c2",
         "android_client_info": {
           "package_name": "com.simplyfi.neopay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "106184943564-p987deb586kltpopbe221fapb5ncnljq.apps.googleusercontent.com",
+          "client_id": "292849640295-njali1loosvj83lgih1lelgl0e6la1bj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCmvcFd8KV8a0U2vSaMnOduhLZ8KBi_WRM"
+          "current_key": "AIzaSyAv2PhsmQ6sC6IeVujp-Lt_ASIaEn8Jvtw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "106184943564-p987deb586kltpopbe221fapb5ncnljq.apps.googleusercontent.com",
+              "client_id": "292849640295-njali1loosvj83lgih1lelgl0e6la1bj.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
