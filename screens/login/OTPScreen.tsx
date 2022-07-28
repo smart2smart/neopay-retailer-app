@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
 import colors from "../../assets/colors/colors";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
-import { authApi } from "../../api/api";
+import { authApi, commonApi } from "../../api/api";
 import { PostRequest } from "../../api/postRequest";
 import mapStateToProps from "../../store/mapStateToProps";
 import {
-  setIsLoggedIn,
   setLandingScreen,
   setTokens,
   setVerificationStatus,
-  setUserType
+  setUserType,
 } from "../../actions/actions";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -21,6 +20,9 @@ import texts from "../../styles/texts";
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import Constants from "expo-constants";
 import moment from "moment";
+import { checkTokenFromStorage } from "../../api/checkToken";
+import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import store from "../../store/store";
 
 class OTPScreen extends Component {
   state = {
@@ -61,8 +63,7 @@ class OTPScreen extends Component {
         PersistenceStore.setVerificationStatus(
           res.data.verification_status.toString()
         );
-        // @ts-ignore
-        this.props.setIsLoggedIn(true);
+        this.retailerDetails();
         this.props.setLandingScreen(res.data.screen);
         this.props.setVerificationStatus(res.data.verification_status);
       } else {
@@ -70,6 +71,22 @@ class OTPScreen extends Component {
       }
     });
     this.setState({ isLoading: false });
+  };
+
+  retailerDetails = () => {
+    const data = {
+      method: commonApi.getRetailerDetails.method,
+      url: commonApi.getRetailerDetails.url,
+      header: commonApi.getRetailerDetails.header,
+    };
+    AuthenticatedGetRequest(data).then((res) => {
+      if (res.status == 200) {
+        store.dispatch({
+          type: "RETAILER_DETAILS",
+          payload: res.data,
+        });
+      }
+    });
   };
 
   requestOTP = () => {
@@ -134,7 +151,6 @@ class OTPScreen extends Component {
 }
 
 export default connect(mapStateToProps, {
-  setIsLoggedIn,
   setTokens,
   setLandingScreen,
   setVerificationStatus,

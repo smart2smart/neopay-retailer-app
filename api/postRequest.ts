@@ -53,7 +53,7 @@ export const UploadFile = async (payload: any) => {
 };
 
 const reset = () => {
-  store.dispatch({ type: "IS_LOGGED_IN", payload: false });
+  store.dispatch({type: 'RESET_RETAILER'});
   PersistenceStore.removeAccessToken();
   PersistenceStore.removeRefreshToken();
   PersistenceStore.removeUserType();

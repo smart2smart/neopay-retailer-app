@@ -45,13 +45,11 @@ import * as Application from "expo-application";
 import Constants from "expo-constants";
 
 function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  const [verificationStatus, setVerificationStatus] = useState(1);
-  const [fetchingData, setFetchingData] = useState(true);
   const landingScreen = useSelector((state: any) => state.landingScreen);
+  const retailerDetails = useSelector((state: any) => state.retailerDetails);
   const userType = useSelector((state: any) => state.userType);
   const routeNameRef = React.createRef();
   const navigationRef = React.createRef();
-  const [userData, setUserData] = useState({});
 
   let initialScreen = "";
   if (landingScreen === "profile") {
@@ -62,62 +60,6 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
     initialScreen = "Home";
   } else if (landingScreen === "home") {
     initialScreen = "Home";
-  }
-  useEffect(() => {
-    (async () => {
-      let user_type = await PersistenceStore.getUserType();
-      if (user_type) {
-        if (userType == 2 || user_type == 2) {
-          distributorDetails();
-        } else if (userType == 3 || user_type == 3) {
-          retailerDetails();
-        } else {
-          Alert.alert("Not Access for this User.");
-        }
-      }
-    })();
-  }, []);
-
-  const retailerDetails = () => {
-    const data = {
-      method: commonApi.getRetailerDetails.method,
-      url: commonApi.getRetailerDetails.url,
-      header: commonApi.getRetailerDetails.header,
-    };
-    AuthenticatedGetRequest(data).then((res) => {
-      setFetchingData(false);
-      if (res.status == 200) {
-        setUserData(res.data);
-        store.dispatch({
-          type: "RETAILER_DETAILS",
-          payload: res.data,
-        });
-        setVerificationStatus(res.data.verification_status);
-      }
-    });
-  };
-
-  const distributorDetails = () => {
-    const data = {
-      method: commonApi.getDistributorDetails.method,
-      url: commonApi.getDistributorDetails.url,
-      header: commonApi.getDistributorDetails.header,
-    };
-    AuthenticatedGetRequest(data).then((res) => {
-      setFetchingData(false);
-      if (res.status == 200) {
-        setUserData(res.data);
-        store.dispatch({
-          type: "RETAILER_DETAILS",
-          payload: res.data,
-        });
-        setVerificationStatus(res.data.verification_status);
-      }
-    });
-  };
-
-  if (fetchingData) {
-    return null;
   }
 
   return (
@@ -133,8 +75,8 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
         if (previousRouteName !== currentRouteName) {
           Analytics.logEvent("view_screen", {
             screenName: currentRouteName,
-            userId: userData.id,
-            userName: userData.name,
+            userId: retailerDetails?.user,
+            userName: retailerDetails?.name,
             androidId: Application.androidId,
             appVersion: Constants.manifest?.version,
             appVersionCode: Constants.manifest?.android?.versionCode,
@@ -148,7 +90,8 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       {initialScreen === "Home" ? (
-        verificationStatus == 2 || verificationStatus == 3 ? (
+        retailerDetails?.verification_status == 2 ||
+        retailerDetails?.verification_status == 3 ? (
           <RootNavigator />
         ) : (
           <UserUnverifiedNavigator retailerDetails={retailerDetails} />

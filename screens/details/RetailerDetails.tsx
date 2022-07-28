@@ -13,7 +13,6 @@ import {
 import SecondaryHeader from "../../headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
 import {
-  setIsLoggedIn,
   setLandingScreen,
   setTokens,
 } from "../../actions/actions";

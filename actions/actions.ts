@@ -1,5 +1,4 @@
 import {
-    IS_LOGGED_IN,
     TOKENS,
     RETAILER_DETAILS,
     SCREEN,
@@ -19,13 +18,7 @@ import {
     SELECT_FILTER_TYPE, MARGIN_FILTERS, CHANGE_LOT_SIZE
 } from "./actionTypes";
 
-export const setIsLoggedIn = (value: any) => {
-    return ({
-        type: IS_LOGGED_IN,
-        payload: value
-    });
-}
-
+  
 
 export const setTokens = (value: any) => {
     return ({
@@ -34,8 +27,20 @@ export const setTokens = (value: any) => {
     });
 }
 
+export const resetSalesman = () => {
+    return {
+      type: "RESET_RETAILER",
+  };
+};
+
+export const setExpoTokens = (value: any) => {
+  return {
+    type: "EXPO_TOKENS",
+    payload: value,
+  };
+};
+
 export const setUserType = (value: any) => {
-    console.log({value})
     return ({
         type: "USER_TYPE",
         payload: value

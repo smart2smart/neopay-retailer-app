@@ -114,7 +114,7 @@ const useProductsHook = (screenType, data) => {
   };
 
   const selectProduct = (data, type, mainIndex, subIndex) => {
-    let payload = { retailerId: retailerData.id };
+    let payload = { retailerId: retailerData?.id };
     let allProducts = [...productsData];
     let entity = allProducts[mainIndex]["data"][subIndex];
     if (type === "new") {

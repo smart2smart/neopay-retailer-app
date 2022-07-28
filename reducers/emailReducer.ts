@@ -1,9 +1,6 @@
-import { IS_LOGGED_IN } from "../actions/actionTypes";
-
 const userTypeReducer = (state = "", action: any) => {
   switch (action.type) {
     case "USER_TYPE": {
-      console.log(action);
       return action.payload;
     }
     default:
@@ -11,3 +8,4 @@ const userTypeReducer = (state = "", action: any) => {
   }
 };
 export default userTypeReducer;
+

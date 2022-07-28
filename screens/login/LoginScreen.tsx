@@ -1,12 +1,20 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, Image, TextInput, Alert, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import colors from "../../assets/colors/colors";
-import { setIsLoggedIn, setTokens,setUserType } from "../../actions/actions";
+import { setTokens, setUserType } from "../../actions/actions";
 // @ts-ignore
 import { connect } from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
 import { PostRequest } from "../../api/postRequest";
-import { authApi } from "../../api/api";
+import { authApi, commonApi } from "../../api/api";
 import Indicator from "../../utils/Indicator";
 import {
   BorderButtonBigBlue,
@@ -16,9 +24,11 @@ import {
 import texts from "../../styles/texts";
 import commonStyles from "../../styles/commonStyles";
 import * as Updates from "expo-updates";
-import Entypo from 'react-native-vector-icons/Entypo';
+import Entypo from "react-native-vector-icons/Entypo";
 import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
 import PersistenceStore from "../../utils/PersistenceStore";
+import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import store from "../../store/store";
 
 class LoginScreen extends Component {
   state = {
@@ -61,7 +71,7 @@ class LoginScreen extends Component {
       header: authApi.refresh.header,
     };
     PostRequest(data).then((res) => {
-    this.setState({ isLoading: false });
+      this.setState({ isLoading: false });
       if (res && res.status == 200) {
         // @ts-ignore
         this.props.setUserType(res.data.user_type);
@@ -75,11 +85,49 @@ class LoginScreen extends Component {
         PersistenceStore.setAccessToken(res["data"]["access"]);
         PersistenceStore.setRefreshToken(res["data"]["refresh"]);
         // @ts-ignore
-        this.props.setIsLoggedIn(true);
+
+        // todo
+        if (res.data.user_type == 3) {
+          this.retailerDetails();
+        } else {
+          this.distributorDetails();
+        }
       } else {
         Alert.alert(res.data.detail);
       }
       this.setState({ isLoading: false });
+    });
+  };
+
+  distributorDetails = () => {
+    const data = {
+      method: commonApi.getDistributorDetails.method,
+      url: commonApi.getDistributorDetails.url,
+      header: commonApi.getDistributorDetails.header,
+    };
+    AuthenticatedGetRequest(data).then((res) => {
+      if (res.status == 200) {
+        store.dispatch({
+          type: "RETAILER_DETAILS",
+          payload: res.data,
+        });
+      }
+    });
+  };
+
+  retailerDetails = () => {
+    const data = {
+      method: commonApi.getRetailerDetails.method,
+      url: commonApi.getRetailerDetails.url,
+      header: commonApi.getRetailerDetails.header,
+    };
+    AuthenticatedGetRequest(data).then((res) => {
+      if (res.status == 200) {
+        store.dispatch({
+          type: "RETAILER_DETAILS",
+          payload: res.data,
+        });
+      }
     });
   };
 
@@ -275,9 +323,10 @@ class LoginScreen extends Component {
   }
 }
 
-export default connect(mapStateToProps, { setIsLoggedIn, setTokens ,setUserType})(
-  LoginScreen
-);
+export default connect(mapStateToProps, {
+  setTokens,
+  setUserType,
+})(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {

@@ -37,7 +37,7 @@ export default function VerificationPending(props: any) {
         {
           text: "Yes",
           onPress: () => {
-            store.dispatch({ type: "IS_LOGGED_IN", payload: false });
+            store.dispatch({type: 'RESET_RETAILER'});
             PersistenceStore.removeTimeStamp();
             PersistenceStore.removeAccessToken();
             PersistenceStore.removeRefreshToken();

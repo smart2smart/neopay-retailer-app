@@ -31,10 +31,12 @@ import commonStyles from "../../styles/commonStyles";
 import texts from "../../styles/texts";
 import moment from "moment";
 import RenderCarousel from "./Carousel";
+import { PostRequest } from "../../api/postRequest";
 
 function HomeScreen(props: any) {
   const navigation = useNavigation();
   const cart = useSelector((state: any) => state.cart);
+  const expoToken = useSelector((state: any) => state.expoToken);
   const [orderData, setOrderData] = useState([]);
   const [bannerData, setBannerData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -57,6 +59,23 @@ function HomeScreen(props: any) {
       getOrders();
     }, [])
   );
+
+  // async function schedulePushNotification() {
+  //   let payload = {
+  //     ...commonApi.sendNotifications,
+  //     data: {
+  //       token: expoToken,
+  //     },
+  //   };
+
+  //   console.log(payload);
+
+  //   PostRequest(payload).then((res) => {
+  //     if (res.status === 200) {
+  //       console.log("send>", res.data);
+  //     }
+  //   });
+  // }
 
   const getOrders = () => {
     const data = {
@@ -92,7 +111,6 @@ function HomeScreen(props: any) {
       }
     });
   };
-
 
   const onRefresh = () => {
     getOrders();
@@ -194,9 +212,7 @@ function HomeScreen(props: any) {
   );
 }
 
-export default connect(mapStateToProps, {newCart })(
-  HomeScreen
-);
+export default connect(mapStateToProps, { newCart })(HomeScreen);
 
 const styles = StyleSheet.create({
   card: {

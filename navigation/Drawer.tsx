@@ -17,7 +17,6 @@ import store from "../store/store";
 import PersistenceStore from "../utils/PersistenceStore";
 import BottomTabNavigator from "./BottomTabNavigator";
 import colors from "../assets/colors/colors";
-import { setRetailerDetails } from "../actions/actions";
 import mapStateToProps from "../store/mapStateToProps";
 import { connect } from "react-redux";
 import Constants from "expo-constants";
@@ -38,7 +37,7 @@ function Drawer() {
   );
 }
 
-export default connect(mapStateToProps, { setRetailerDetails })(Drawer);
+export default connect(mapStateToProps, {})(Drawer);
 
 const LogOut = () => {
   Alert.alert(
@@ -48,7 +47,7 @@ const LogOut = () => {
       {
         text: "Yes",
         onPress: () => {
-          store.dispatch({ type: "IS_LOGGED_IN", payload: false });
+          store.dispatch({ type: "RESET_RETAILER" });
           PersistenceStore.removeTimeStamp();
           PersistenceStore.removeUserType();
           PersistenceStore.removeAccessToken();

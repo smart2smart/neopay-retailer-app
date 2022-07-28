@@ -35,7 +35,6 @@ export default function UploadImage() {
 
   useEffect(() => {
     // setImage(route.params.image);
-    console.log(route.params)
     setRetailerId(route.params.retailerId);
     (async () => {
       if (Platform.OS !== "web") {
@@ -101,9 +100,7 @@ export default function UploadImage() {
       header: commonApi.updateRetailerImage.header,
       data: formData,
     };
-    console.log(data);
     UploadFileRequest(data).then((res) => {
-      console.log(res);
       setIsLoading(false);
       if (res && res.status == 200) {
         if (route.params) {

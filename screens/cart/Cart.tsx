@@ -149,7 +149,7 @@ function Cart(props: any) {
       header: commonApi.placeOrder.header,
       data: {
         products: JSON.stringify(products),
-        retailer: retailerData.id,
+        retailer: retailerData?.id,
       },
     };
     AuthenticatedPostRequest(dataToSend).then((res) => {
