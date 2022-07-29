@@ -61,5 +61,17 @@
       }
     }
   },
+  "hooks": {
+    "postPublish": [
+      {
+        "file": "sentry-expo/upload-sourcemaps",
+        "config": {
+          "organization": "neopay-rp",
+          "project": "vitran-retailer",
+          "authToken": "fc764d0ad64045f992560447f5ba1be00bd29927e1ad448da675cd06008303a1"
+        }
+      }
+    ]
+  },
   "plugins": ["@react-native-firebase/app"]
 }
