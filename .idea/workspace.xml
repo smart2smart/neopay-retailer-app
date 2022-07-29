@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="57b40d6f-ba9d-40a6-ae19-b1c5e4d8fddb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/api/api.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eas.json" beforeDir="false" afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +44,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/neopay-distributor" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../neopay-salesman" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -85,6 +85,11 @@
       <workItem from="1654974126741" duration="49000" />
       <workItem from="1657627301865" duration="142000" />
       <workItem from="1657627516334" duration="614000" />
+      <workItem from="1657784594281" duration="702000" />
+      <workItem from="1657805639955" duration="656000" />
+      <workItem from="1657891901708" duration="1238000" />
+      <workItem from="1658226557477" duration="3585000" />
+      <workItem from="1658931403888" duration="832000" />
     </task>
     <servers />
   </component>
