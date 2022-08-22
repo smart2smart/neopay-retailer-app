@@ -127,13 +127,11 @@ function Routes(props: any) {
         };
         PostRequest(payload).then((res) => {
           if (res.status === 200) {
-            console.log("open app>", res.data);
           }
         });
       } else {
         PostRequest(payload).then((res) => {
           if (res.status === 200) {
-            console.log("open app>", res.data);
           }
         });
       }

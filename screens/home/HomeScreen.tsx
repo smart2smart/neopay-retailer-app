@@ -21,7 +21,6 @@ import { connect, useSelector } from "react-redux";
 import PrimaryHeader from "../../headers/PrimaryHeader";
 import colors from "../../assets/colors/colors";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import CartButton from "../../commons/CartButton";
 import PersistenceStore from "../../utils/PersistenceStore";
 import { commonApi } from "../../api/api";
 import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
@@ -32,66 +31,50 @@ import texts from "../../styles/texts";
 import moment from "moment";
 import RenderCarousel from "./Carousel";
 import { PostRequest } from "../../api/postRequest";
+import Icon from "react-native-vector-icons/Feather";
+import CartButton from "../build-order/CartButton";
+import AddToCartButton from "../build-order/AddToCartButton";
 
 function HomeScreen(props: any) {
   const navigation = useNavigation();
-  const cart = useSelector((state: any) => state.cart);
   const expoToken = useSelector((state: any) => state.expoToken);
+  const { all_products } = useSelector((state: any) => state.product || {});
+
+  const cart = useSelector((state: any) => state.cart);
+
   const [orderData, setOrderData] = useState([]);
   const [bannerData, setBannerData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
-
-  useEffect(() => {
-    PersistenceStore.getCart().then((data) => {
-      if (data) {
-        props.newCart(JSON.parse(data));
-      }
-    });
     getBanners();
   }, []);
 
   useFocusEffect(
     React.useCallback(() => {
-      getOrders();
+      getOrders(true);
     }, [])
   );
 
-  // async function schedulePushNotification() {
-  //   let payload = {
-  //     ...commonApi.sendNotifications,
-  //     data: {
-  //       token: expoToken,
-  //     },
-  //   };
-
-  //   console.log(payload);
-
-  //   PostRequest(payload).then((res) => {
-  //     if (res.status === 200) {
-  //       console.log("send>", res.data);
-  //     }
-  //   });
-  // }
-
-  const getOrders = () => {
+  const getOrders = (refreshing: boolean) => {
     const data = {
       method: commonApi.getOrderList.method,
       url: commonApi.getOrderList.url + "?limit=10&offset=0",
       header: commonApi.getOrderList.header,
     };
+    refreshing ? setRefreshing(true) : setIsLoading(true);
     // @ts-ignore
     AuthenticatedGetRequest(data).then((res) => {
+      setIsLoading(false);
+      setRefreshing(false);
       if (res.status == 200) {
         let data = res.data.results.filter((item) => {
           return item.status == "ordered" || item.status == "accepted";
         });
         setOrderData(data);
       } else {
-        Alert.alert(res.data.error);
+        res?.data?.error && Alert.alert(res.data.error);
       }
     });
   };
@@ -113,8 +96,8 @@ function HomeScreen(props: any) {
   };
 
   const onRefresh = () => {
-    getOrders();
-    getBanners();
+    getOrders(true);
+    getBanners(true);
   };
 
   const goToBuildOrder = () => {
@@ -126,6 +109,13 @@ function HomeScreen(props: any) {
   };
 
   const renderOrderCard = ({ item }) => {
+    let totalMrp = 0;
+    let buyRate = 0;
+    item.product_list.forEach((skuItem) => {
+      totalMrp += skuItem.mrp;
+      buyRate += skuItem.rate;
+    });
+    let profit = (((totalMrp - buyRate) / totalMrp) * 100).toFixed(2);
     return (
       <TouchableOpacity
         onPress={() => {
@@ -133,86 +123,222 @@ function HomeScreen(props: any) {
         }}
         style={styles.orderCard}
       >
-        <Text style={texts.darkGreyTextBold14}>{"Order Id: " + item.id}</Text>
-        <Text style={texts.greyNormal12}>{item.revised_count + " items"}</Text>
-        <Text style={texts.greyNormal12}>
-          {"Place on: " + moment(item.created_at).format("DD MMM, yyyy")}
-        </Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={texts.darkGreyTextBold12}>{"Status : "}</Text>
-          <Text style={texts.greenBold12}>{item.status.toUpperCase()}</Text>
+        <View style={{ flexDirection: "row", padding: 5 }}>
+          <View>
+            <View
+              style={{
+                backgroundColor: "#ddd",
+                padding: 8,
+                margin: 5,
+                borderRadius: 8,
+              }}
+            >
+              <Text style={texts.greyTextBold12}>{"Avg. Profit"}</Text>
+              <Text style={[texts.blackTextBold18, { fontSize: 24 }]}>
+                {profit + "%"}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                backgroundColor: "#ddd",
+                padding: 8,
+                margin: 5,
+                borderRadius: 8,
+              }}
+            >
+              <Text style={texts.greyTextBold14}>
+                {moment(item.created_at).format("DD - MMM")}
+              </Text>
+            </View>
+          </View>
+          <View>
+            <View
+              style={{
+                padding: 8,
+              }}
+            >
+              <Text style={[texts.greyTextBold12, { fontSize: 10 }]}>
+                {"Status : "}
+              </Text>
+              <Text style={texts.greenBold12}>
+                {item.status[0].toUpperCase() + item.status.slice(1)}
+              </Text>
+              <Text style={[texts.blackTextBold16, { marginTop: "auto" }]}>
+                {"Rs. " + item.order_value}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                padding: 8,
+                margin: 5,
+                borderRadius: 8,
+                marginTop: "auto",
+                flexDirection: "row",
+              }}
+            >
+              <Text style={texts.blackTextBold14}>
+                {item.product_list.length + " SKUs"}
+              </Text>
+              <View
+                style={{
+                  marginLeft: 10,
+                }}
+              >
+                <Icon name="shopping-cart" size={14} />
+              </View>
+            </View>
+          </View>
         </View>
       </TouchableOpacity>
     );
   };
 
+  const renderProductCard = ({ item }) => {
+    return all_products && all_products[item.id] ? (
+      <View
+        style={[styles.orderCard, { width: 150 }]}
+        key={all_products[item.id].id}
+      >
+        <View
+          style={{
+            borderWidth: 2,
+            borderColor: "#ddd",
+            borderRadius: 10,
+            padding: 10,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 10,
+          }}
+        >
+          <Image
+            style={{
+              width: 100,
+              height: 100,
+              borderRadius: 5,
+              backgroundColor: colors.white,
+            }}
+            resizeMode={"contain"}
+            source={{ uri: all_products[item.id].product_group_image }}
+          />
+        </View>
+        <Text style={[texts.blackTextBold14, { marginBottom: 5 }]}>
+          {all_products[item.id].product_group}
+        </Text>
+        <AddToCartButton
+          showMrp={true}
+          skuItem={all_products[item.id]}
+          hideCategorySection={true}
+          skuItemId={all_products[item.id].id}
+        />
+      </View>
+    ) : null;
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
       <PrimaryHeader navigation={props.navigation} />
-      <ScrollView
-        style={{ flex: 1 }}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        showsVerticalScrollIndicator={false}
-      >
-        <TouchableOpacity
-          style={[
-            commonStyles.searchContainer,
-            { marginVertical: 10, paddingHorizontal: 16 },
-          ]}
-          onPress={goToBuildOrder}
+      {!isLoading ? (
+        <ScrollView
+          style={{ flex: 1 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          showsVerticalScrollIndicator={false}
         >
-          <TextInput
-            value={""}
-            editable={false}
-            placeholder={"Search products, companies, brands..."}
-            onChangeText={(text) => {}}
-            style={styles.textInput}
-          ></TextInput>
-        </TouchableOpacity>
-        {bannerData.length ? <RenderCarousel bannerData={bannerData} /> : null}
+          {/* search bar */}
+          <TouchableOpacity
+            style={[
+              commonStyles.searchContainer,
+              { marginVertical: 10, paddingHorizontal: 16 },
+            ]}
+            onPress={goToBuildOrder}
+          >
+            <TextInput
+              value={""}
+              editable={false}
+              placeholder={"Search products, companies, brands..."}
+              onChangeText={(text) => {}}
+              style={styles.textInput}
+            ></TextInput>
+          </TouchableOpacity>
 
-        {orderData.length > 0 ? (
-          <View style={{ backgroundColor: colors.white }}>
-            <View
-              style={[
-                commonStyles.rowSpaceBetween,
-                { paddingHorizontal: 16, paddingTop: 10 },
-              ]}
-            >
-              <View>
-                <Text style={texts.greyTextBold16}>Order Tracking</Text>
+          {/* banner */}
+          {bannerData.length ? (
+            <RenderCarousel bannerData={bannerData} />
+          ) : null}
+
+          {orderData.length ? (
+            <>
+              <SectionHeader title={"Your Most Ordered"} />
+              <View style={{ paddingVertical: 10, paddingRight: 16 }}>
+                <FlatList
+                  keyExtractor={(item, index) => item.id + "" + index}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  data={orderData[0]?.product_list}
+                  renderItem={renderProductCard}
+                />
               </View>
-              <View>
-                <BorderButtonSmallBlue
-                  text={"Create Order"}
-                  ctaFunction={goToBuildOrder}
+            </>
+          ) : null}
+
+          {/* your last order */}
+          {orderData.length > 0 ? (
+            <View style={{ backgroundColor: colors.white }}>
+              <SectionHeader title={"Your Previous Order"} />
+              <View style={{ paddingVertical: 10, paddingRight: 16 }}>
+                <FlatList
+                  keyExtractor={(item, index) => item.id + "" + index}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  data={orderData}
+                  renderItem={renderOrderCard}
                 />
               </View>
             </View>
+          ) : null}
 
-            <View style={{ paddingVertical: 10, paddingRight: 16 }}>
-              <FlatList
-                keyExtractor={(item, index) => item.id + "" + index}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                data={orderData}
-                renderItem={renderOrderCard}
-              />
-            </View>
+          <View style={{ flex: 1 }}>
+            <CompanyList />
           </View>
-        ) : null}
-        <View style={{ flex: 1 }}>
-          <CompanyList />
+        </ScrollView>
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text>Please Wait,</Text>
+          <Text> Company, Brand and Category is loading!</Text>
         </View>
-      </ScrollView>
-      {cart.data.length > 0 ? <CartButton /> : null}
+      )}
+
+      <CartButton />
     </View>
   );
 }
 
 export default connect(mapStateToProps, { newCart })(HomeScreen);
+
+const SectionHeader = ({ title }) => {
+  return (
+    <View
+      style={[
+        commonStyles.rowCenter,
+        { padding: 10 },
+        {
+          backgroundColor: "#ddd",
+        },
+      ]}
+    >
+      <View>
+        <Text style={[texts.darkGreyTextBold16, { fontSize: 18 }]}>
+          {title}
+        </Text>
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
@@ -255,11 +381,10 @@ const styles = StyleSheet.create({
   },
   orderCard: {
     width: 240,
-    height: 120,
     borderWidth: 1,
     borderColor: colors.light_grey,
     borderRadius: 5,
-    marginLeft: 16,
+    marginLeft: 10,
     padding: 8,
     justifyContent: "space-between",
   },

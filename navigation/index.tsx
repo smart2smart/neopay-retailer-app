@@ -37,12 +37,14 @@ import { useEffect, useState } from "react";
 import VerificationPending from "../screens/VerificationPending";
 import SelectDistributor from "../screens/home/SelectDistributor";
 import BrandList from "../screens/home/BrandList";
-import BuildOrder from "../screens/home/BuildOrder";
 import ProductFilterScreen from "../screens/home/ProductFilterScreen";
 import PersistenceStore from "../utils/PersistenceStore";
 import * as Analytics from "expo-firebase-analytics";
 import * as Application from "expo-application";
 import Constants from "expo-constants";
+import BuildOrder from "../screens/build-order/BuildOrder";
+import Cart from "../screens/cart/Cart";
+import SearchScreen from "../screens/build-order/SearchScreen";
 
 function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const landingScreen = useSelector((state: any) => state.landingScreen);
@@ -139,6 +141,8 @@ function RootNavigator(props) {
         component={SelectDistributor}
       />
       <RootStack.Screen name="BrandList" component={BrandList} />
+      <RootStack.Screen name="Cart" component={Cart} />
+      <RootStack.Screen name="search-sku" component={SearchScreen} />
       <RootStack.Screen name="BuildOrder" component={BuildOrder} />
       <RootStack.Screen
         name="ProductFilterScreen"

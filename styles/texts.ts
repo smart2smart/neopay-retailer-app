@@ -9,6 +9,11 @@ const texts = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 1.3,
   },
+  blueHeading2: {
+    color: colors.primaryThemeColor,
+    fontSize: 18,
+    fontFamily: "GothamMedium",
+  },
   primaryTextBold16: {
     color: colors.primaryThemeColor,
     fontFamily: "GothamMedium",

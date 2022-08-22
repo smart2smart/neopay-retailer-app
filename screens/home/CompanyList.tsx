@@ -13,61 +13,31 @@ import {
 import { commonApi } from "../../api/api";
 import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
 import Indicator from "../../utils/Indicator";
-import { connect, useSelector } from "react-redux";
-import mapStateToProps from "../../store/mapStateToProps";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {
-  useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
+
 import commonStyles from "../../styles/commonStyles";
 import colors from "../../assets/colors/colors";
 import texts from "../../styles/texts";
-import RenderCompanyCard from "./CompanyCard";
-import { BorderButtonBigBlue } from "../../buttons/Buttons";
-import SeeAllCompaniesModal from "./SeeAllCompaniesModal";
-import store from "../../store/store";
-import { set_unit_quantities } from "./ProductUtils";
 
-const discountData = [
-  {
-    from: 40,
-    to: 100,
-  },
-  {
-    from: 30,
-    to: 100,
-  },
-  {
-    from: 20,
-    to: 100,
-  },
-  {
-    from: 10,
-    to: 100,
-  },
-];
+import { setRetailerProducts } from "../../actions/actions";
+import { BorderButtonBigBlue } from "../../buttons/Buttons";
+import ProfilePicture from "../../commons/ProfilePicture";
+import HomeSection from "./HomeSection";
 
 function CompanyList(props) {
-  let _ = require("underscore");
   const route = useRoute();
   const navigation = useNavigation();
-  const [productsData, setProductsData] = useState([]);
-  const [originalProductsData, setOriginalProductsData] = useState([]);
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
-  const [companyData, setCompanyData] = useState([]);
+
   const [brandData, setBrandData] = useState([]);
-  const [originalBrandData, setOriginalBrandData] = useState([]);
-  const [categoryData, setCategoryData] = useState([]);
-  const [category2Data, setCategory2Data] = useState([]);
-  const [originalCategory2Data, setOriginalCategory2Data] = useState([]);
-  const [originalCategoryData, setOriginalCategoryData] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [companyModalVisible, setCompanyModalVisible] = useState(false);
-  const [brandModalVisible, setBrandModalVisible] = useState(false);
-  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
-  const distributor = useSelector((state: any) => state.distributor);
-  const retailerData = useSelector((state: any) => state.retailerDetails);
+  const [companyData, setCompanyData] = useState([]);
+  const [category1, setCategory1] = useState([]);
 
   const getBeatPlanList = () => {
     const data = {
@@ -91,287 +61,133 @@ function CompanyList(props) {
     getBeatPlanList();
   }, []);
 
-  const getProductsData = (beat_ids) => {
-    const dataToSend = {
-      method: commonApi.getProducts.method,
-      url: commonApi.getProducts.url + "?beat_ids=" + JSON.stringify(beat_ids),
-      header: commonApi.getProducts.header,
-    };
-    setIsLoading(true);
-    AuthenticatedGetRequest(dataToSend).then((res) => {
-      let companies = _.chain(res.data)
-        .groupBy("company_id")
-        .map((value, key) => ({
-          name: value[0]["company_name"],
-          id: value[0]["company_id"],
-          image: value[0]["company_image"],
-          type: "company",
-        }))
-        .value()
-        .filter((item) => {
-          return item.id;
+  const getProductsData = (beatIds) => {
+    try {
+      const dataToSend = {
+        method: commonApi.getProducts.method,
+        url: commonApi.getProducts.url + "?beat_ids=" + JSON.stringify(beatIds),
+        header: commonApi.getProducts.header,
+      };
+      // @ts-ignore
+      AuthenticatedGetRequest(dataToSend).then((res) => {
+        let data = res?.data || [];
+        let productsData = { others: { data: [] } };
+        let brands = {};
+        let companies = {};
+        let distributor = {};
+
+        let category_1 = {};
+        let category_2 = {};
+        let all_products = {};
+
+        data.forEach((item) => {
+          if (!companies[item.company_id]) {
+            companies[item.company_id] = {
+              name: item["company_name"],
+              id: item["company_id"],
+              image: item["company_image"],
+            };
+          }
+
+          if (!brands[item.brand_id]) {
+            brands[item.brand_id] = {
+              name: item["brand_name"],
+              id: item["brand_id"],
+              image: item["brand_image"],
+              company_id: item["company_id"],
+            };
+          }
+
+          if (!category_1[item.category_1_id] && item.category_1_id) {
+            category_1[item.category_1_id] = {
+              id: item.category_1_id,
+              name: item.category_1_name,
+              image: item.category_1_image,
+              first_category_2: {
+                id: item.category_2_id,
+                name: item.category_2_name,
+                image: item.category_2_image,
+              },
+              category_2: {
+                [item.category_2_id]: {
+                  id: item.category_2_id,
+                  name: item.category_2_name,
+                  image: item.category_2_image,
+                },
+              },
+            };
+          } else if (item.category_1_id) {
+            if (
+              category_1[item.category_1_id].first_category_2.id >
+              item.category_2_id
+            ) {
+              category_1[item.category_1_id].first_category_2 = {
+                id: item.category_2_id,
+                name: item.category_2_name,
+                image: item.category_2_image,
+              };
+            }
+          }
+
+          if (
+            !category_2[item.category_2_id] &&
+            item.category_1_id &&
+            item.category_2_id
+          ) {
+            category_2[item.category_2_id] = {
+              id: item.category_2_id,
+              name: item.category_2_name,
+              image: item.category_2_image,
+              category_1_id: item.category_1_id,
+              count: 0,
+            };
+          }
+
+          //   distributor[item.distributor_id] = {
+          //     distributor_id: item.distributor_id,
+          //     distributor_name: item.distributor_name,
+          //   };
+
+          if (item?.product_group_id) {
+            if (productsData[item.product_group_id]) {
+              productsData[item.product_group_id]?.data?.push({
+                ...item,
+              });
+            } else {
+              productsData[item.product_group_id] = {
+                company_name: item["company_name"],
+                company_id: item["company_id"],
+                brand_id: item["brand_id"],
+                brand_name: item["brand_name"],
+                image: item["product_group_image"],
+                product_group_name: item["product_group"],
+                product_group_id: item["product_group_id"],
+                data: [item],
+              };
+            }
+          }
+          all_products[item.id] = item;
         });
-      setCompanyData(companies);
-
-      let brands = _.chain(res.data)
-        .groupBy("brand_id")
-        .map((value, key) => ({
-          name: value[0]["brand_name"],
-          id: value[0]["brand_id"],
-          image: value[0]["brand_image"],
-          company_id: value[0]["company_id"],
-          type: "brand",
-        }))
-        .value()
-        .filter((item) => {
-          return item.id;
-        });
-      setBrandData(brands);
-      setOriginalBrandData(brands);
-
-      let categories = _.chain(res.data)
-        .groupBy("category_1_id")
-        .map((value, key) => ({
-          name: value[0]["category_1_name"],
-          id: value[0]["category_1_id"],
-          image: value[0]["category_1_image"],
-          type: "category",
-        }))
-        .value()
-        .filter((item) => {
-          return item.id;
-        });
-      setCategoryData(categories);
-      setOriginalCategoryData(categories);
-
-      let category2 = _.chain(res.data)
-        .groupBy("category_2_id")
-        .map((value, key) => ({
-          name: value[0]["category_2_name"],
-          id: value[0]["category_2_id"],
-          image: value[0]["category_2_image"],
-          category_1_id: value[0]["category_1_id"],
-          type: "category",
-        }))
-        .value()
-        .filter((item) => {
-          return item.id;
-        });
-      setCategory2Data(category2);
-      setOriginalCategory2Data(category2);
-
-      let groupedData = _.chain(res.data)
-        .groupBy("product_group_id")
-        .map((value, key) => ({
-          company_name: value[0]["company_name"],
-          company_id: value[0]["company_id"],
-          company_image: value[0]["company_image"],
-          brand_id: value[0]["brand_id"],
-          brand_name: value[0]["brand_name"],
-          brand_image: value[0]["brand_image"],
-          category_1_id: value[0]["category_1_id"],
-          category_1_name: value[0]["category_1_name"],
-          category_1_image: value[0]["category_1_image"],
-          category_2_id: value[0]["category_2_id"],
-          category_2_name: value[0]["category_2_name"],
-          category_2_image: value[0]["category_2_image"],
-          image: value[0]["product_group_image"],
-          product_group: key,
-          product_group_name: value[0]["product_group"],
-          image_expanded: false,
-          product_group_id: value[0]["product_group_id"],
-          data: value,
-          pg_image_expanded: false,
-          quantity: 0,
-        }))
-        .value();
-      groupedData = _.sortBy(groupedData, function (item) {
-        return item.company_name;
+        setCompanyData(Object.values(companies));
+        setBrandData(Object.values(brands));
+        setCategory1(Object.values(category_1));
+        setIsLoading(false);
+        dispatch(
+          setRetailerProducts({
+            products: Object.values(productsData),
+            category_1: Object.values(category_1),
+            category_2: Object.values(category_2),
+            companies: companies,
+            brands: brands,
+            all_products: all_products,
+          })
+        );
       });
-      groupedData.forEach((item) => {
-        item.data.forEach((product) => {
-          set_unit_quantities(product);
-        });
-      });
-      setIsLoading(false);
-      setProductsData(groupedData);
-      setOriginalProductsData(groupedData);
-    });
-  };
-
-  const selectCategory = (category, itm, modal) => {
-    if (modal) {
-      setModalVisible(category);
-    }
-    setSelectedCategory(itm);
-    if (category == "company") {
-      let data = brandData.filter((item) => {
-        return itm.id === item.company_id;
-      });
-      let productData = productsData.filter((item) => {
-        return itm.id == item.company_id;
-      });
-      navigation.navigate("BrandList", {
-        type: "brand",
-        categoryData: data,
-        productData: productData,
-      });
-    }
-    if (category == "category") {
-      let data = category2Data.filter((item) => {
-        return itm.id === item.category_1_id;
-      });
-      let productData = productsData.filter((item) => {
-        return itm.id == item.category_1_id;
-      });
-      navigation.navigate("BrandList", {
-        type: "category",
-        categoryData: data,
-        productData: productData,
-      });
-    }
-    if (category == "brand") {
-      let data = productsData.filter((item) => {
-        return itm.id == item.brand_id;
-      });
-      let productData = productsData.filter((item) => {
-        return itm.id == item.brand_id;
-      });
-      navigation.navigate("BuildOrder", {
-        type: "brand",
-        categoryData: data,
-        productData: productData,
-      });
-    }
-  };
-
-  const RenderList = (props) => {
-    return (
-      <View>
-        <View style={[commonStyles.rowSpaceBetween, styles.companyHeader]}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={[texts.greyTextBold16]}>{props.title}</Text>
-          </View>
-          <TouchableOpacity onPress={props.seeAll}>
-            <Text style={texts.redTextBold14}>See All</Text>
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          data={props.data.slice(0, 6)}
-          showsVerticalScrollIndicator={false}
-          numColumns={3}
-          ItemSeparatorComponent={() => <View style={{ height: 16 }}></View>}
-          keyExtractor={(item, index) => item.id + index + ""}
-          renderItem={(item) => props.renderItem(item, props)}
-        />
-        {props.modalVisible ? (
-          <SeeAllCompaniesModal
-            modalVisible={props.modalVisible}
-            selectFunction={selectCategory}
-            closeModal={setModalVisible}
-            renderItem={RenderCompanyCard}
-            data={props.data}
-            type={props.type}
-          />
-        ) : null}
-      </View>
-    );
+    } catch (err) {}
   };
 
   const goToBuildOrder = () => {
-    navigation.navigate("BuildOrder", { productData: originalProductsData });
-  };
-
-  const setModalVisible = (type) => {
-    if (type == "company") {
-      setCompanyModalVisible((prevState) => !prevState);
-    }
-    if (type == "brand") {
-      setBrandModalVisible((prevState) => !prevState);
-    }
-    if (type == "category") {
-      setCategoryModalVisible((prevState) => !prevState);
-    }
-  };
-
-  const addDiscountCards = () => {
-    return (
-      <View
-        style={{
-          // height: 100,
-          width: "100%",
-          // backgroundColor: "red",
-          padding: 5,
-        }}
-      >
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={discountData}
-          renderItem={(item) => {
-            return (
-              <TouchableOpacity
-                onPress={async () => {
-                  await store.dispatch({
-                    type: "MARGIN_FILTERS",
-                    payload: { from: item.item.from, to: item.item.to },
-                  });
-                  navigation.navigate("BuildOrder", {
-                    productData: originalProductsData,
-                    comingFrom: "filters-link",
-                  });
-                }}
-                style={{
-                  borderColor: "orange",
-                  borderWidth: 1,
-                  padding: 10,
-                  width: Dimensions.get("window").width / 2.2,
-                  marginRight: 5,
-                  borderRadius: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 10,
-                    color: colors.orange,
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    paddingBottom: 10,
-                    textDecorationLine: "underline",
-                  }}
-                >
-                  MIN {item.item.from}% Margin
-                </Text>
-                <Text
-                  style={{
-                    // width: "40%",
-                    textAlign: "center",
-                    color: colors.orange,
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    paddingBottom: 10,
-                  }}
-                >
-                  Up for Grabs! Exciting deals
-                </Text>
-                <Text
-                  style={{
-                    // width: "40%",
-                    textAlign: "center",
-                    color: colors.orange,
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    paddingBottom: 10,
-                  }}
-                >
-                  you shouldn't miss out on.
-                </Text>
-              </TouchableOpacity>
-            );
-          }}
-        ></FlatList>
-      </View>
-    );
+    navigation.navigate("BuildOrder");
   };
 
   return (
@@ -379,57 +195,34 @@ function CompanyList(props) {
       <Indicator isLoading={isLoading} />
       {!isLoading ? (
         <View style={styles.container}>
-          <View showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-            <View>
-              {/*{originalProductsData.length > 0 ? addDiscountCards() : null}*/}
-              <View style={{ paddingBottom: 20 }}>
-                {companyData.length > 0 ? (
-                  <RenderList
-                    modalVisible={companyModalVisible}
-                    seeAll={() => {
-                      setModalVisible("company");
-                    }}
-                    selectFunction={selectCategory}
-                    type={"company"}
-                    title={"Companies"}
-                    data={companyData}
-                    renderItem={RenderCompanyCard}
-                  />
-                ) : null}
-                {brandData.length > 0 ? (
-                  <RenderList
-                    modalVisible={brandModalVisible}
-                    seeAll={() => {
-                      setModalVisible("brand");
-                    }}
-                    selectFunction={selectCategory}
-                    type={"brand"}
-                    title={"Brands"}
-                    data={brandData}
-                    renderItem={RenderCompanyCard}
-                  />
-                ) : null}
-                {categoryData.length > 0 ? (
-                  <RenderList
-                    modalVisible={categoryModalVisible}
-                    seeAll={() => {
-                      setModalVisible("category");
-                    }}
-                    selectFunction={selectCategory}
-                    type={"category"}
-                    title={"Categories"}
-                    data={categoryData}
-                    renderItem={RenderCompanyCard}
-                  />
-                ) : null}
-                <View style={{ marginTop: 20, marginBottom: 100 }}>
-                  <BorderButtonBigBlue
-                    ctaFunction={goToBuildOrder}
-                    text={"All Products"}
-                  />
-                </View>
-              </View>
-            </View>
+          <HomeSection
+            title={"Categories"}
+            data={category1}
+            onClick={(item) => {
+              navigation.navigate("BuildOrder", {
+                category1: item,
+              });
+            }}
+          />
+          <HomeSection
+            title={"Companies"}
+            data={companyData}
+            onClick={(item) => {
+              navigation.navigate("search-sku", { searchText: item.name });
+            }}
+          />
+          <HomeSection
+            title={"Brands"}
+            data={brandData}
+            onClick={(item) => {
+              navigation.navigate("search-sku", { searchText: item.name });
+            }}
+          />
+          <View style={{ marginTop: 20, marginBottom: 100 }}>
+            <BorderButtonBigBlue
+              ctaFunction={goToBuildOrder}
+              text={"All Products"}
+            />
           </View>
         </View>
       ) : null}
@@ -442,6 +235,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     position: "relative",
     flex: 1,
+    paddingBottom: 20,
     backgroundColor: colors.white,
   },
   companyCard: {
@@ -464,12 +258,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   companyHeader: {
-    paddingTop: 12,
-    paddingBottom: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.light_grey,
+    paddingTop: 7,
+    paddingBottom: 7,
     marginBottom: 12,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: "#aaa",
+    borderBottomColor: "#aaa",
   },
 });
 
-export default connect(mapStateToProps, {})(CompanyList);
+export default CompanyList;
