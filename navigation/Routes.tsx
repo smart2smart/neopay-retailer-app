@@ -114,6 +114,7 @@ function Routes(props: any) {
         ...commonApi.setNotificationsToken,
         data: {
           device_id: Application.androidId,
+          app_name: "retailer",
           token,
         },
       };
