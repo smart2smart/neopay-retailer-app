@@ -126,18 +126,15 @@ function Routes(props: any) {
             user: retailer_data?.user,
           },
         };
-        PostRequest(payload).then((res) => {
-          if (res.status === 200) {
-          }
-        });
-      } else {
-        PostRequest(payload).then((res) => {
-          if (res.status === 200) {
-          }
-        });
       }
+      PostRequest(payload).then((res) => {
+        if (res.status === 200) {
+        }
+      });
+
       Analytics.logEvent("token_fcm", {
         token,
+        ...(retailer_data?.user && { user_id: retailer_data?.user }),
         androidId: Application.androidId,
         appVersion: Constants.manifest?.version,
         appVersionCode: Constants.manifest?.android?.versionCode,
