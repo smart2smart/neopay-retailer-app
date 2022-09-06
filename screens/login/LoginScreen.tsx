@@ -8,26 +8,26 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import colors from "../../assets/colors/colors";
-import { setTokens, setUserType } from "../../actions/actions";
+import colors from "@colors";
+import { setTokens, setUserType } from "@actions";
 // @ts-ignore
 import { connect } from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import { PostRequest } from "../../api/postRequest";
-import { authApi, commonApi } from "../../api/api";
-import Indicator from "../../utils/Indicator";
+import { PostRequest } from "@postRequest";
+import { authApi, commonApi } from "@api";
+import Indicator from "@utils/Indicator";
 import {
   BorderButtonBigBlue,
   BorderButtonSmallRed,
   SolidButtonBlue,
-} from "../../buttons/Buttons";
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
+} from "@Buttons";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
 import * as Updates from "expo-updates";
 import Entypo from "react-native-vector-icons/Entypo";
-import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
-import PersistenceStore from "../../utils/PersistenceStore";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import { AuthenticatedPostRequest } from "@authenticatedPostRequest";
+import PersistenceStore from "@utils/PersistenceStore";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import store from "../../store/store";
 
 class LoginScreen extends Component {

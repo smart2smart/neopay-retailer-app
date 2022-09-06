@@ -1,8 +1,8 @@
 import {StyleSheet, Text, View} from "react-native";
 import React from "react";
-import commonStyles from "../styles/commonStyles";
-import colors from "../assets/colors/colors";
-import {BorderButtonSmallRed, BorderButtonSmallWhite, SolidButtonSmallRed} from "../buttons/Buttons";
+import commonStyles from "@commonStyles";
+import colors from "@colors";
+import {BorderButtonSmallRed, BorderButtonSmallWhite, SolidButtonSmallRed} from "@Buttons";
 
 export const TabButtons = (props: any) => {
 

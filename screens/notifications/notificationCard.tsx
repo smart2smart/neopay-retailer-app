@@ -2,10 +2,10 @@ import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import moment from "moment";
 
-import texts from "../../styles/texts";
-import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
-import { commonApi } from "../../api/api";
-import { BlueButtonSmall, BorderButtonSmallBlue, SolidButtonBlue, SolidButtonSmallRed } from "../../buttons/Buttons";
+import texts from "@texts";
+import { AuthenticatedPostRequest } from "@authenticatedPostRequest";
+import { commonApi } from "@api";
+import { BlueButtonSmall, BorderButtonSmallBlue, SolidButtonBlue, SolidButtonSmallRed } from "@Buttons";
 
 type NotificationCardProps = {
   title: string;

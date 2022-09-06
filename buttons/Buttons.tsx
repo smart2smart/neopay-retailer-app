@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import commonStyles from "../styles/commonStyles";
-import texts from "../styles/texts";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 
 export const SolidButtonBlue = (props: any) => {
   return (

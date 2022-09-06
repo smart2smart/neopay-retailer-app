@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {Text, View, StyleSheet, Dimensions, Image, AppState, Alert} from 'react-native';
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import MapView from 'react-native-maps';
 import {Marker} from 'react-native-maps';
-import {SolidButtonBlue} from "../../buttons/Buttons";
+import {SolidButtonBlue} from "@Buttons";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import * as Location from 'expo-location';
 import * as IntentLauncher from "expo-intent-launcher";

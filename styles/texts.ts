@@ -1,5 +1,5 @@
 import { StyleSheet, Platform, StatusBar, Dimensions } from "react-native";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 
 const texts = StyleSheet.create({
   blueHeading1: {

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import {authApi} from "./api";
 import {PostRequest} from "./postRequest";
-import PersistenceStore from "../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 import store from "../store/store";
 
 //This function is called when the app launches. Since operations from async storage are time taking,

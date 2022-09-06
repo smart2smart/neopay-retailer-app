@@ -11,9 +11,9 @@ import {
     Image,
     TouchableWithoutFeedback
 } from 'react-native';
-import commonStyles from "../styles/commonStyles";
-import colors from "../assets/colors/colors";
-import texts from "../styles/texts";
+import commonStyles from "@commonStyles";
+import colors from "@colors";
+import texts from "@texts";
 
 export default function QPSModal(props) {
 

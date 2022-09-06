@@ -1,12 +1,12 @@
 import React, {Component, useEffect, useState} from 'react';
 import {View, StyleSheet, Text,FlatList, Image, ScrollView, TouchableOpacity} from "react-native";
-import texts from "../../styles/texts";
-import PrimaryHeader from "../../headers/PrimaryHeader";
+import texts from "@texts";
+import PrimaryHeader from "@headers/PrimaryHeader";
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
-import commonStyles from '../../styles/commonStyles';
-import { BorderButtonBigRed, SolidButtonBlue } from '../../buttons/Buttons';
-import colors from "../../assets/colors/colors";
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import commonStyles from '@commonStyles';
+import { BorderButtonBigRed, SolidButtonBlue } from '@Buttons';
+import colors from "@colors";
+import SecondaryHeader from "@headers/SecondaryHeader";
 
 export default function OfferDetails(props:any) {
 

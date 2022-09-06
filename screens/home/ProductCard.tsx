@@ -7,10 +7,10 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import texts from "../../styles/texts";
+import texts from "@texts";
 import Icon from "react-native-vector-icons/AntDesign";
-import colors from "../../assets/colors/colors";
-import commonStyles from "../../styles/commonStyles";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
 import AddProductButton from "./AddProductButton";
 import { Dropdown } from "react-native-element-dropdown";
 

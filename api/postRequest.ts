@@ -1,6 +1,6 @@
 import { checkTokenValidity } from "./checkToken";
 import store from "../store/store";
-import PersistenceStore from "../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 
 let state = store.getState();
 

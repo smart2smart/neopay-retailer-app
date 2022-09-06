@@ -1,11 +1,11 @@
 import {Alert, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import texts from "../styles/texts";
-import commonStyles from "../styles/commonStyles";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
 import React, {useState} from "react";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 import * as Location from "expo-location";
 import * as IntentLauncher from "expo-intent-launcher";
-import MapViewModal from "../screens/profile/MapViewModal";
+import MapViewModal from "@screens/profile/MapViewModal";
 
 const LocationBox = (props) => {
 

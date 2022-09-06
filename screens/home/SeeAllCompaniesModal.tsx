@@ -10,7 +10,7 @@ import {
     ScrollView,
     FlatList
 } from 'react-native';
-import colors from "../../assets/colors/colors";
+import colors from "@colors";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 

@@ -7,22 +7,22 @@ import {
     TextInput,
     Alert
 } from 'react-native';
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import colors from "../../assets/colors/colors";
-import texts from '../../styles/texts';
-import commonStyles from '../../styles/commonStyles';
-import {BorderButtonBigBlue, BorderButtonSmallBlue, SolidButtonBlue} from '../../buttons/Buttons';
+import SecondaryHeader from "@headers/SecondaryHeader";
+import colors from "@colors";
+import texts from '@texts';
+import commonStyles from '@commonStyles';
+import {BorderButtonBigBlue, BorderButtonSmallBlue, SolidButtonBlue} from '@Buttons';
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
-import SelectModal from "../../commons/SelectModal";
-import TextInputModal from "../../commons/TextInputModal";
-import SelectLocalityModal from "../../commons/SelectLocality";
-import {commonApi} from "../../api/api";
-import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
-import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import PersistenceStore from "../../utils/PersistenceStore";
+import SelectModal from "@commons/SelectModal";
+import TextInputModal from "@commons/TextInputModal";
+import SelectLocalityModal from "@commons/SelectLocality";
+import {commonApi} from "@api";
+import {AuthenticatedPostRequest} from "@authenticatedPostRequest";
+import {AuthenticatedGetRequest} from "@authenticatedGetRequest";
+import PersistenceStore from "@utils/PersistenceStore";
 import {connect, useSelector} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setLandingScreen} from "../../actions/actions";
+import {setLandingScreen} from "@actions";
 
 let timeout: any = null;
 

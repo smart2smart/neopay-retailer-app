@@ -12,17 +12,17 @@ import {
   FlatList,
 } from "react-native";
 // @ts-ignore
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import colors from "../../assets/colors/colors";
-import commonStyles from "../../styles/commonStyles";
-import texts from "../../styles/texts";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
-import InvoiceCard from "../../commons/InvoiceCard";
-import DateRangeModal from "../../commons/DateRangeModal";
-import { BlueButtonSmall, BorderButtonSmallRed } from "../../buttons/Buttons";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
+import InvoiceCard from "@commons/InvoiceCard";
+import DateRangeModal from "@commons/DateRangeModal";
+import { BlueButtonSmall, BorderButtonSmallRed } from "@Buttons";
 import * as Linking from "expo-linking";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import moment from "moment";

@@ -1,15 +1,15 @@
 import React, { useEffect, useState, } from 'react';
 import { Text, View, ScrollView, Alert, KeyboardAvoidingView } from 'react-native';
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
-import { SolidButtonBlue } from "../../buttons/Buttons";
-import StateDropDown from "../../modals/StateDropDown";
-import DistrictDropDown from "../../modals/DistrictDropDown";
-import LocationBox from "../../modals/LocationBox";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
+import { SolidButtonBlue } from "@Buttons";
+import StateDropDown from "@modals/StateDropDown";
+import DistrictDropDown from "@modals/DistrictDropDown";
+import LocationBox from "@modals/LocationBox";
 import InputBox from "./InputBox";
-import CityDropDown from "../../modals/CityDropDown";
-import LocalityDropDown from "../../modals/LocalityDropDown";
-import PincodeDropDown from "../../modals/PincodeDropDown";
+import CityDropDown from "@modals/CityDropDown";
+import LocalityDropDown from "@modals/LocalityDropDown";
+import PincodeDropDown from "@modals/PincodeDropDown";
 
 
 export default function RetailerAddress(props) {

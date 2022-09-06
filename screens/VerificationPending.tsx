@@ -10,18 +10,18 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import texts from "../styles/texts";
-import PrimaryHeader from "../headers/PrimaryHeader";
+import texts from "@texts";
+import PrimaryHeader from "@headers/PrimaryHeader";
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import commonStyles from "../styles/commonStyles";
-import { BorderButtonBigRed } from "../buttons/Buttons";
-import colors from "../assets/colors/colors";
+import commonStyles from "@commonStyles";
+import { BorderButtonBigRed } from "@Buttons";
+import colors from "@colors";
 import store from "../store/store";
-import PersistenceStore from "../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 
 export default function VerificationPending(props: any) {
   const navigation = useNavigation();

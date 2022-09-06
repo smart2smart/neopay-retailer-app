@@ -15,22 +15,22 @@ import {
   Button,
 } from "react-native";
 import mapStateToProps from "../../store/mapStateToProps";
-import { newCart } from "../../actions/actions";
+import { newCart } from "@actions";
 // @ts-ignore
 import { connect, useSelector } from "react-redux";
-import PrimaryHeader from "../../headers/PrimaryHeader";
-import colors from "../../assets/colors/colors";
+import PrimaryHeader from "@headers/PrimaryHeader";
+import colors from "@colors";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import PersistenceStore from "../../utils/PersistenceStore";
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
-import { BorderButtonSmallBlue } from "../../buttons/Buttons";
+import PersistenceStore from "@utils/PersistenceStore";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
+import { BorderButtonSmallBlue } from "@Buttons";
 import CompanyList from "./CompanyList";
-import commonStyles from "../../styles/commonStyles";
-import texts from "../../styles/texts";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 import moment from "moment";
 import RenderCarousel from "./Carousel";
-import { PostRequest } from "../../api/postRequest";
+import { PostRequest } from "@postRequest";
 import Icon from "react-native-vector-icons/Feather";
 import CartButton from "../build-order/CartButton";
 import AddToCartButton from "../build-order/AddToCartButton";

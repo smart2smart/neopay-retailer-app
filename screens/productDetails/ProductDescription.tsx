@@ -10,18 +10,18 @@ import {
     ScrollView,
     Image,
 } from 'react-native';
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setIsLoggedIn} from "../../actions/actions";
+import {setIsLoggedIn} from "@actions";
 // @ts-ignore
 import {connect, useSelector} from 'react-redux';
-import PrimaryHeader from "../../headers/PrimaryHeader";
-import colors from "../../assets/colors/colors";
-import texts from '../../styles/texts';
-import commonStyles from '../../styles/commonStyles';
-import { BorderButtonSmallBlue, SolidButtonBlue, BorderButtonSmallRed, GreyBorderButtonBig } from '../../buttons/Buttons';
-import {commonApi} from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import PrimaryHeader from "@headers/PrimaryHeader";
+import colors from "@colors";
+import texts from '@texts';
+import commonStyles from '@commonStyles';
+import { BorderButtonSmallBlue, SolidButtonBlue, BorderButtonSmallRed, GreyBorderButtonBig } from '@Buttons';
+import {commonApi} from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import {useFocusEffect, useNavigation, useRoute} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import ProductVarient from "../productDetails/ProductVarient";

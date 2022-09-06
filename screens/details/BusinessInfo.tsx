@@ -6,17 +6,17 @@ import {
     TextInput,
     Alert,
 } from 'react-native';
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setLandingScreen} from "../../actions/actions";
+import {setLandingScreen} from "@actions";
 import {connect, useSelector} from 'react-redux';
-import colors from "../../assets/colors/colors";
-import commonStyles from '../../styles/commonStyles';
-import {SolidButtonBlue, BorderButtonBigBlue} from '../../buttons/Buttons';
+import colors from "@colors";
+import commonStyles from '@commonStyles';
+import {SolidButtonBlue, BorderButtonBigBlue} from '@Buttons';
 import {useNavigation} from "@react-navigation/native";
-import {commonApi} from "../../api/api";
-import {AuthenticatedPostRequest} from "../../api/authenticatedPostRequest";
-import PersistenceStore from "../../utils/PersistenceStore";
+import {commonApi} from "@api";
+import {AuthenticatedPostRequest} from "@authenticatedPostRequest";
+import PersistenceStore from "@utils/PersistenceStore";
 import {StackActions} from '@react-navigation/native';
 
 function BusinessInfo(props) {

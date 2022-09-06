@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import AddStoreDetails from "./AddStroeDetails";
 import RetailerAddress from "./RetailerAdress";
 import BusinessDetails from "./BusinessDetails";
-import colors from '../../assets/colors/colors';
+import colors from '@colors';
 
 
 export default function RetailerDataModal(props) {

@@ -1,10 +1,10 @@
-import commonStyles from "../styles/commonStyles";
+import commonStyles from "@commonStyles";
 import {Alert, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 import React, {useEffect, useState} from "react";
 import Icon from 'react-native-vector-icons/AntDesign';
-import texts from "../styles/texts";
-import {BorderButtonSmallRed, BorderButtonSmallBlue} from "../buttons/Buttons";
+import texts from "@texts";
+import {BorderButtonSmallRed, BorderButtonSmallBlue} from "@Buttons";
 import moment from "moment";
 import DateTimePicker from "@react-native-community/datetimepicker";
 

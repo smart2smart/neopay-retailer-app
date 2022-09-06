@@ -1,9 +1,9 @@
 import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
-import {BorderButtonSmallRed} from "../../buttons/Buttons";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
+import {BorderButtonSmallRed} from "@Buttons";
 import React, {PureComponent} from "react";
-import colors from "../../assets/colors/colors";
+import colors from "@colors";
 
 class AddProductButton extends PureComponent {
     render() {

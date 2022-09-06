@@ -9,12 +9,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown } from "react-native-element-dropdown";
 
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
-import { BorderButtonSmallRed } from "../../buttons/Buttons";
-import { setCartDraft } from "../../actions/actions";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
+import { BorderButtonSmallRed } from "@Buttons";
+import { setCartDraft } from "@actions";
 import { useIsFocused } from "@react-navigation/native";
-import colors from "../../assets/colors/colors";
+import colors from "@colors";
 
 type AddToCartButtonProps = {
   skuItemId: any;

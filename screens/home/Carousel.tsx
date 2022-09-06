@@ -1,7 +1,7 @@
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import Carousel, { Pagination } from "react-native-snap-carousel";
-import colors from "../../assets/colors/colors";
+import colors from "@colors";
 
 const RenderCarousel = (props) => {
   const [activeSlide, setActiveSlide] = useState(0);

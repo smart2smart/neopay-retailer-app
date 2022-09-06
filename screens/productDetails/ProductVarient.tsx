@@ -7,9 +7,9 @@ import {
   ScrollView,
   FlatList
 } from "react-native";
-import commonStyles from "../../styles/commonStyles";
-import texts from "../../styles/texts";
-import colors from "../../assets/colors/colors";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
+import colors from "@colors";
 import Icon from "react-native-vector-icons/AntDesign";
 
 export default function ProductVarient(props) {

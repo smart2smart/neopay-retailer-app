@@ -12,11 +12,11 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import texts from "../styles/texts";
+import texts from "@texts";
 import store from "../store/store";
-import PersistenceStore from "../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 import BottomTabNavigator from "./BottomTabNavigator";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 import mapStateToProps from "../store/mapStateToProps";
 import { connect } from "react-redux";
 import Constants from "expo-constants";

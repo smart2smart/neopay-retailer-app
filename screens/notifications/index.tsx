@@ -11,11 +11,11 @@ import { useRoute } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import Indicator from "../../utils/Indicator";
-import colors from "../../assets/colors/colors";
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import Indicator from "@utils/Indicator";
+import colors from "@colors";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import NotificationCard from "./notificationCard";
 
 const NotificationScreen = () => {

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Alert } from "react-native";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import colors from "@colors";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
-import { BorderButtonSmallBlue } from "../../buttons/Buttons";
+import { BorderButtonSmallBlue } from "@Buttons";
 import * as WebBrowser from "expo-web-browser";
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 
 export default function OrderListDetails() {
   const route = useRoute();

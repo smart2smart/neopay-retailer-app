@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, ScrollView, TextInput, Dimensions, TouchableOpacity, Image, Alert} from 'react-native';
-import texts from "../styles/texts";
-import colors from "../assets/colors/colors";
+import texts from "@texts";
+import colors from "@colors";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 

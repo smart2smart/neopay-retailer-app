@@ -11,18 +11,18 @@ import {
   RefreshControl,
 } from "react-native";
 // @ts-ignore
-import colors from "../../assets/colors/colors";
-import commonStyles from "../../styles/commonStyles";
-import texts from "../../styles/texts";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
-import { BlueButtonSmall, BorderButtonSmallRed } from "../../buttons/Buttons";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
+import { BlueButtonSmall, BorderButtonSmallRed } from "@Buttons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Indicator from "../../utils/Indicator";
-import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
-import PrimaryHeader from "../../headers/PrimaryHeader";
+import Indicator from "@utils/Indicator";
+import { AuthenticatedPostRequest } from "@authenticatedPostRequest";
+import PrimaryHeader from "@headers/PrimaryHeader";
 
 export default function ProfileScreen(props) {
   const navigation = useNavigation();

@@ -17,11 +17,11 @@ import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import commonStyles from "../../styles/commonStyles";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import commonStyles from "@commonStyles";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
+import colors from "@colors";
+import texts from "@texts";
 import RenderCompanyCard from "./CompanyCard";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 

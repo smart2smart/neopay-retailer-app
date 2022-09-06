@@ -3,13 +3,13 @@ import {Text, View, StyleSheet, Dimensions, Image, TouchableOpacity, Modal, Aler
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 import {Marker} from 'react-native-maps';
-import {SolidButtonBlue} from "../../buttons/Buttons";
-import Indicator from "../../utils/Indicator";
+import {SolidButtonBlue} from "@Buttons";
+import Indicator from "@utils/Indicator";
 import {AntDesign} from "@expo/vector-icons";
-import texts from "../../styles/texts";
+import texts from "@texts";
 import {useNavigation} from "@react-navigation/native";
 import * as IntentLauncher from "expo-intent-launcher";
-import colors from '../../assets/colors/colors';
+import colors from '@colors';
 
 
 export default function MapViewModal(props) {

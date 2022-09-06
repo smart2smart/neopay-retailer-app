@@ -1,6 +1,6 @@
 import store from "../store/store";
 import { checkTokenValidity } from "./checkToken";
-import PersistenceStore from "../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 import { PostRequest, UploadFile } from "./postRequest";
 
 export const AuthenticatedPostRequest = async (payload: any) => {

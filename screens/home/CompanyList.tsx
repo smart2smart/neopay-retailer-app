@@ -10,22 +10,22 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
-import Indicator from "../../utils/Indicator";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
+import Indicator from "@utils/Indicator";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
 
-import commonStyles from "../../styles/commonStyles";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
+import commonStyles from "@commonStyles";
+import colors from "@colors";
+import texts from "@texts";
 
-import { setRetailerProducts } from "../../actions/actions";
-import { BorderButtonBigBlue } from "../../buttons/Buttons";
-import ProfilePicture from "../../commons/ProfilePicture";
+import { setRetailerProducts } from "@actions";
+import { BorderButtonBigBlue } from "@Buttons";
+import ProfilePicture from "@commons/ProfilePicture";
 import HomeSection from "./HomeSection";
 
 function CompanyList(props) {

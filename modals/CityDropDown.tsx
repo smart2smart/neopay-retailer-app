@@ -1,11 +1,11 @@
 import {Dimensions, StyleSheet, Text, View} from "react-native";
-import texts from "../styles/texts";
+import texts from "@texts";
 import React, {useEffect, useState} from "react";
 import {DropDownLayout} from "./DropDownLayout";
 import SelectModal from "./SelectModal";
-import {commonApi} from "../api/api";
-import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
-import colors from "../assets/colors/colors";
+import {commonApi} from "@api";
+import {AuthenticatedGetRequest} from "@authenticatedGetRequest";
+import colors from "@colors";
 
 let timeout: any = null;
 

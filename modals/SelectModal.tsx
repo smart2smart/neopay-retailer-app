@@ -1,10 +1,10 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Text, View, TouchableOpacity, Modal, TextInput, ScrollView } from 'react-native';
-import colors from "../assets/colors/colors";
-import commonStyles from "../styles/commonStyles";
-import texts from "../styles/texts";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 import Icon from 'react-native-vector-icons/AntDesign';
-import Indicator from "../utils/Indicator";
+import Indicator from "@utils/Indicator";
 
 
 export default function SelectModal(props) {

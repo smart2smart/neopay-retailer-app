@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import commonStyles from "../styles/commonStyles";
-import texts from "../styles/texts";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 
 export default function PrimaryHeader(props: any) {
   const navigation = useNavigation();

@@ -1,8 +1,8 @@
 import {Dimensions, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import texts from "../../styles/texts";
+import texts from "@texts";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import React from "react";
-import colors from "../../assets/colors/colors";
+import colors from "@colors";
 
 
 const DropDown = (props) => {

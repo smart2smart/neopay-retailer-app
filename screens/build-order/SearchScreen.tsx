@@ -12,14 +12,14 @@ import { useRoute } from "@react-navigation/native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import colors from "../../assets/colors/colors";
-import commonStyles from "../../styles/commonStyles";
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import Indicator from "../../utils/Indicator";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import Indicator from "@utils/Indicator";
 import AddToCartButton from "./AddToCartButton";
-import texts from "../../styles/texts";
+import texts from "@texts";
 import CartButton from "./CartButton";
-// import BarCodeScan from "../../commons/BarCode";
+// import BarCodeScan from "@commons/BarCode";
 
 var time = null;
 const SearchScreen = (props) => {

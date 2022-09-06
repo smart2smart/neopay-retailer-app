@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {ActivityIndicator, StyleSheet} from 'react-native'
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 
 export default class Indicator extends Component{
     render(){

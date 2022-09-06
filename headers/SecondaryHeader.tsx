@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 import { useNavigation } from "@react-navigation/native";
 
-import texts from "../styles/texts";
+import texts from "@texts";
 
 export default function SecondaryHeader(props: any) {
   const navigation = useNavigation();

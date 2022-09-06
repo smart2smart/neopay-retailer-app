@@ -8,10 +8,10 @@ import {
     StyleSheet
 } from 'react-native';
 // @ts-ignore
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import colors from "@colors";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
 
 export default function NeoCash(props) {
 

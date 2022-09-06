@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from "react-native";
-import colors from "../assets/colors/colors";
-import commonStyles from "../styles/commonStyles";
-import {BorderButtonSmallRed} from "../buttons/Buttons";
-import texts from "../styles/texts";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import {BorderButtonSmallRed} from "@Buttons";
+import texts from "@texts";
 import moment from "moment";
 
 

@@ -1,4 +1,4 @@
-import PersistenceStore from "../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 
 const cart = {};
 

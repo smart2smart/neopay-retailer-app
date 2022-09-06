@@ -5,9 +5,9 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
 import mapStateToProps from "../../store/mapStateToProps";
 
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
-import colors from "../../assets/colors/colors";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
+import colors from "@colors";
 
 const CartButton = (props) => {
   const navigation = useNavigation();

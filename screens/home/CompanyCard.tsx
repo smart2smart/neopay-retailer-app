@@ -7,9 +7,9 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
-import ProfilePicture from "../../commons/ProfilePicture";
+import colors from "@colors";
+import texts from "@texts";
+import ProfilePicture from "@commons/ProfilePicture";
 
 const RenderCompanyCard = ({ item, index }, props) => {
   let padding = ((Dimensions.get("window").width - 24) * 0.04) / 2;

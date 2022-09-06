@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import colors from "../../assets/colors/colors";
-import ProfilePicture from "../../commons/ProfilePicture";
-import commonStyles from "../../styles/commonStyles";
-import texts from "../../styles/texts";
+import colors from "@colors";
+import ProfilePicture from "@commons/ProfilePicture";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 
 const HomeSection = (props) => {
   const [showAll, setShowAll] = useState(false);

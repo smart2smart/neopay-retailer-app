@@ -1,9 +1,9 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Modal, Dimensions, TextInput, ScrollView} from 'react-native';
-import commonStyles from "../styles/commonStyles";
-import texts from "../styles/texts";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 import Icon from 'react-native-vector-icons/AntDesign';
-import colors from '../assets/colors/colors';
+import colors from '@colors';
 
 
 export default function MetaDataModal(props) {

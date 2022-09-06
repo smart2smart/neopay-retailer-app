@@ -3,17 +3,17 @@ import {
     Alert, FlatList, Image, StyleSheet, Text, TouchableOpacity,
     View,
 } from 'react-native';
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import {useNavigation} from "@react-navigation/native";
 import {useRoute} from '@react-navigation/native';
-import {commonApi} from "../../api/api";
-import {AuthenticatedGetRequest} from "../../api/authenticatedGetRequest";
-import texts from "../../styles/texts";
-import colors from "../../assets/colors/colors";
+import {commonApi} from "@api";
+import {AuthenticatedGetRequest} from "@authenticatedGetRequest";
+import texts from "@texts";
+import colors from "@colors";
 import {connect} from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import {setDistributor, clearCart} from "../../actions/actions";
-import PersistenceStore from "../../utils/PersistenceStore";
+import {setDistributor, clearCart} from "@actions";
+import PersistenceStore from "@utils/PersistenceStore";
 
 
 function SelectDistributor(props) {

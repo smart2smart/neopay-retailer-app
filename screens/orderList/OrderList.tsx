@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TextInput, FlatList } from "react-native";
-import commonStyles from "../../styles/commonStyles";
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
-import OrdersCard from "../../commons/OrdersCard";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
+import commonStyles from "@commonStyles";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
+import OrdersCard from "@commons/OrdersCard";
+import colors from "@colors";
+import texts from "@texts";
 import { useNavigation } from "@react-navigation/native";
-import Indicator from "../../utils/Indicator";
+import Indicator from "@utils/Indicator";
 import mapStateToProps from "../../store/mapStateToProps";
 import { connect, useSelector } from "react-redux";
-import PrimaryHeader from "../../headers/PrimaryHeader";
+import PrimaryHeader from "@headers/PrimaryHeader";
 
 let timeout: any = null;
 function OrderList(props) {

@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import colors from "../../assets/colors/colors";
-import commonStyles from "../../styles/commonStyles";
-import texts from "../../styles/texts";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
 import AddToCartButton from "./AddToCartButton";
 
 function ProductListNew({

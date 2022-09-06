@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
+import colors from "@colors";
+import texts from "@texts";
 
 type Category1Props = {
   categoryList: any[];

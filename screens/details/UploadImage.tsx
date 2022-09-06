@@ -9,20 +9,20 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import colors from "../../assets/colors/colors";
-import commonStyles from "../../styles/commonStyles";
-import texts from "../../styles/texts";
-import { BorderButtonSmallRed, SolidButtonBlue } from "../../buttons/Buttons";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import texts from "@texts";
+import { BorderButtonSmallRed, SolidButtonBlue } from "@Buttons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   AuthenticatedPostRequest,
   UploadFileRequest,
-} from "../../api/authenticatedPostRequest";
-import { commonApi } from "../../api/api";
-import Indicator from "../../utils/Indicator";
+} from "@authenticatedPostRequest";
+import { commonApi } from "@api";
+import Indicator from "@utils/Indicator";
 
 export default function UploadImage() {
   const navigation = useNavigation();

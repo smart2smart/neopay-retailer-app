@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import useColorScheme from "../hooks/useColorScheme";
-import { checkTokenFromStorage } from "../api/checkToken";
+import { checkTokenFromStorage } from "@checkToken";
 import Navigation from "./index";
 import AuthStack, { VersionStack } from "./AuthStack";
 import mapStateToProps from "../store/mapStateToProps";
 import { setExpoTokens, setLandingScreen, setTokens } from "../actions/actions";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { SafeAreaView, Alert } from "react-native";
-import PersistenceStore from "../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 import * as Updates from "expo-updates";
 import * as SplashScreen from "expo-splash-screen";
-import { commonApi } from "../api/api";
-import { AuthenticatedGetRequest } from "../api/authenticatedGetRequest";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import {
   AndroidImportance,
   getExpoPushTokenAsync,
@@ -23,7 +23,7 @@ import {
 import * as Analytics from "expo-firebase-analytics";
 import * as Application from "expo-application";
 import Constants from "expo-constants";
-import { PostRequest } from "../api/postRequest";
+import { PostRequest } from "@postRequest";
 import store from "../store/store";
 
 setNotificationHandler({

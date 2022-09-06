@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, ScrollView, TextInput, Dimensions, TouchableOpacity, Image, Alert} from 'react-native';
-import texts from "../styles/texts";
+import texts from "@texts";
 
 
 export default function TextInputUnderline(props:any) {

@@ -1,7 +1,7 @@
 import {Dimensions, StyleSheet, Text, TextInput, View} from "react-native";
-import texts from "../../styles/texts";
+import texts from "@texts";
 import React from "react";
-import colors from "../../assets/colors/colors";
+import colors from "@colors";
 
 export default function InputBox(props) {
     return (

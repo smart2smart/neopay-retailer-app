@@ -9,8 +9,8 @@ import {
   View,
 } from "react-native";
 import * as Linking from "expo-linking";
-import Indicator from "../../utils/Indicator";
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import Indicator from "@utils/Indicator";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
@@ -19,12 +19,12 @@ import {
   useRoute,
 } from "@react-navigation/native";
 
-import { commonApi } from "../../api/api";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
-import { setProductsNew, updateProductsNew } from "../../actions/actions";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
+import { commonApi } from "@api";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
+import { setProductsNew, updateProductsNew } from "@actions";
+import colors from "@colors";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
 
 import AddToCartButton from "./AddToCartButton";
 import CartButton from "./CartButton";

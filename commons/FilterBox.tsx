@@ -1,8 +1,8 @@
-import commonStyles from "../styles/commonStyles";
+import commonStyles from "@commonStyles";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {AntDesign, Ionicons, MaterialIcons} from "@expo/vector-icons";
-import colors from "../assets/colors/colors";
-import texts from "../styles/texts";
+import colors from "@colors";
+import texts from "@texts";
 import React, {useEffect, useState} from "react";
 import FilterModal from "./FilterModal";
 import moment from "moment";

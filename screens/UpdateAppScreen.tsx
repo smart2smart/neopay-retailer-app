@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {View, StyleSheet, Text} from "react-native";
-import texts from "../styles/texts";
-import SecondaryHeader from "../headers/SecondaryHeader";
-import {BorderButtonBigBlue} from "../buttons/Buttons";
-import commonStyles from "../styles/commonStyles";
+import texts from "@texts";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import {BorderButtonBigBlue} from "@Buttons";
+import commonStyles from "@commonStyles";
 import * as Linking from "expo-linking";
 
 export default function UpdateAppScreen(props: any) {

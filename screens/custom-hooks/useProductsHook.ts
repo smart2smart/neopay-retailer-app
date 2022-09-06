@@ -6,7 +6,7 @@ import {
   updateCartAdd,
   updateCartSubtract,
   clearCart,
-} from "../../actions/actions";
+} from "@actions";
 import { useDispatch, useSelector } from "react-redux";
 const useProductsHook = (screenType, data) => {
   const dispatch = useDispatch();

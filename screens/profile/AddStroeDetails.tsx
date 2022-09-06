@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, ScrollView} from 'react-native';
-import texts from "../../styles/texts";
+import texts from "@texts";
 import InputBox from "./InputBox";
-import commonStyles from "../../styles/commonStyles";
-import {SolidButtonBlue} from "../../buttons/Buttons";
+import commonStyles from "@commonStyles";
+import {SolidButtonBlue} from "@Buttons";
 
 export default function AddStoreDetails(props) {
     const [shopName, setShopName] = useState("");

@@ -9,16 +9,16 @@ import {
   Alert,
 } from "react-native";
 // @ts-ignore
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
-import { SolidButtonBlue } from "../../buttons/Buttons";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import colors from "@colors";
+import texts from "@texts";
+import { SolidButtonBlue } from "@Buttons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import { commonApi } from "../../api/api";
-import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
-import Indicator from "../../utils/Indicator";
-import commonStyles from "../../styles/commonStyles";
+import { commonApi } from "@api";
+import { AuthenticatedPostRequest } from "@authenticatedPostRequest";
+import Indicator from "@utils/Indicator";
+import commonStyles from "@commonStyles";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import RetailerDataModal from "./RetailerDataModal";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";

@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import texts from "../../styles/texts";
-import PrimaryHeader from "../../headers/PrimaryHeader";
+import texts from "@texts";
+import PrimaryHeader from "@headers/PrimaryHeader";
 import {
   StackActions,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import commonStyles from "../../styles/commonStyles";
+import commonStyles from "@commonStyles";
 import {
   BlueButtonMedium,
   BorderButtonSmallRed,
   SolidButtonBlue,
   SolidButtonSmallRed,
-} from "../../buttons/Buttons";
+} from "@Buttons";
 import { connect, useSelector, useDispatch } from "react-redux";
 import mapStateToProps from "../../store/mapStateToProps";
-import { removeRetailerCart, clearCartCount } from "../../actions/actions";
-import Indicator from "../../utils/Indicator";
-import { commonApi } from "../../api/api";
-import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import { removeRetailerCart, clearCartCount } from "@actions";
+import Indicator from "@utils/Indicator";
+import { commonApi } from "@api";
+import { AuthenticatedPostRequest } from "@authenticatedPostRequest";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import ProductList from "../build-order/ProductList";
-import SecondaryHeader from "../../headers/SecondaryHeader";
-import colors from "../../assets/colors/colors";
+import SecondaryHeader from "@headers/SecondaryHeader";
+import colors from "@colors";
 
 function Cart(props: any) {
   const dispatch = useDispatch();

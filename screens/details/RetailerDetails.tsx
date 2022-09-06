@@ -10,27 +10,27 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import mapStateToProps from "../../store/mapStateToProps";
 import {
   setLandingScreen,
   setTokens,
-} from "../../actions/actions";
+} from "@actions";
 // @ts-ignore
 import { connect, useSelector } from "react-redux";
-import colors from "../../assets/colors/colors";
-import texts from "../../styles/texts";
-import commonStyles from "../../styles/commonStyles";
-import { BorderButtonSmallBlue, SolidButtonBlue } from "../../buttons/Buttons";
+import colors from "@colors";
+import texts from "@texts";
+import commonStyles from "@commonStyles";
+import { BorderButtonSmallBlue, SolidButtonBlue } from "@Buttons";
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { commonApi } from "../../api/api";
-import { AuthenticatedPostRequest } from "../../api/authenticatedPostRequest";
+import { commonApi } from "@api";
+import { AuthenticatedPostRequest } from "@authenticatedPostRequest";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import PersistenceStore from "../../utils/PersistenceStore";
+import PersistenceStore from "@utils/PersistenceStore";
 
 function RetailerDetails(props) {
   const route = useRoute();

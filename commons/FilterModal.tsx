@@ -1,11 +1,11 @@
-import commonStyles from "../styles/commonStyles";
+import commonStyles from "@commonStyles";
 import {Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 import React, {useEffect, useState} from "react";
 import Icon from 'react-native-vector-icons/AntDesign';
-import texts from "../styles/texts";
+import texts from "@texts";
 import {connect, useSelector} from "react-redux";
-import {BorderButtonSmallRed, BorderButtonSmallBlue} from "../buttons/Buttons";
+import {BorderButtonSmallRed, BorderButtonSmallBlue} from "@Buttons";
 import mapStateToProps from "../store/mapStateToProps";
 
 

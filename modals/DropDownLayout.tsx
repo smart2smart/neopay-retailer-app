@@ -1,6 +1,6 @@
 import {Text, TouchableOpacity, View, StyleSheet} from "react-native";
-import texts from "../styles/texts";
-import colors from "../assets/colors/colors";
+import texts from "@texts";
+import colors from "@colors";
 import React from "react";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 

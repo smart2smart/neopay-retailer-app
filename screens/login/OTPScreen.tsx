@@ -1,27 +1,27 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, Alert } from "react-native";
-import colors from "../../assets/colors/colors";
+import colors from "@colors";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
-import { authApi, commonApi } from "../../api/api";
-import { PostRequest } from "../../api/postRequest";
+import { authApi, commonApi } from "@api";
+import { PostRequest } from "@postRequest";
 import mapStateToProps from "../../store/mapStateToProps";
 import {
   setLandingScreen,
   setTokens,
   setVerificationStatus,
   setUserType,
-} from "../../actions/actions";
+} from "@actions";
 // @ts-ignore
 import { connect } from "react-redux";
-import PersistenceStore from "../../utils/PersistenceStore";
-import Indicator from "../../utils/Indicator";
-import { BorderButtonSmallRed, SolidButtonBlue } from "../../buttons/Buttons";
-import texts from "../../styles/texts";
-import SecondaryHeader from "../../headers/SecondaryHeader";
+import PersistenceStore from "@utils/PersistenceStore";
+import Indicator from "@utils/Indicator";
+import { BorderButtonSmallRed, SolidButtonBlue } from "@Buttons";
+import texts from "@texts";
+import SecondaryHeader from "@headers/SecondaryHeader";
 import Constants from "expo-constants";
 import moment from "moment";
-import { checkTokenFromStorage } from "../../api/checkToken";
-import { AuthenticatedGetRequest } from "../../api/authenticatedGetRequest";
+import { checkTokenFromStorage } from "@checkToken";
+import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import store from "../../store/store";
 
 class OTPScreen extends Component {

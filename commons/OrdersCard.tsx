@@ -1,9 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import colors from "../assets/colors/colors";
-import commonStyles from "../styles/commonStyles";
-import { BorderButtonSmallBlue } from "../buttons/Buttons";
-import texts from "../styles/texts";
+import colors from "@colors";
+import commonStyles from "@commonStyles";
+import { BorderButtonSmallBlue } from "@Buttons";
+import texts from "@texts";
 import moment from "moment";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as Linking from "expo-linking";

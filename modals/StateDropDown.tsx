@@ -1,13 +1,13 @@
 import {Dimensions, StyleSheet, Text, View} from "react-native";
-import texts from "../styles/texts";
+import texts from "@texts";
 import React, {useEffect, useState} from "react";
 import {DropDownLayout} from "./DropDownLayout";
 import SelectModal from "./SelectModal";
-import {commonApi} from "../api/api";
-import {AuthenticatedGetRequest} from "../api/authenticatedGetRequest";
-import {GetRequest} from "../api/getRequest";
+import {commonApi} from "@api";
+import {AuthenticatedGetRequest} from "@authenticatedGetRequest";
+import {GetRequest} from "@getRequest";
 import {useRoute} from "@react-navigation/native";
-import colors from "../assets/colors/colors";
+import colors from "@colors";
 
 
 const StateDropDown = (props) => {
