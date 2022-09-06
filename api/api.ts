@@ -4,7 +4,7 @@ const header = {
 
 const formHeader = {};
 
-// const base_url = 'http://10.38.21.231:8000';
+// const base_url = 'http://10.5.62.138:8000';
 // const base_url = 'http://qa-api.neopay.club';
 const base_url = "https://api.neopay.club";
 
@@ -32,13 +32,18 @@ export const authApi = {
 };
 
 export const commonApi = {
-  setNotificationsToken: {
-    url: `${base_url}/notifications/tokens/`,
-    method: "POST",
+  getNotificationList: {
+    url: `${base_url}/notifications/token-logs/`,
+    method: "GET",
     header: { ...header },
   },
-  sendNotifications: {
-    url: `${base_url}/notifications/send-notification/`,
+  updateNotifications: {
+    url: `${base_url}/notifications/token-log-update/`,
+    method: "PATCH",
+    header: { ...header },
+  },
+  setNotificationsToken: {
+    url: `${base_url}/notifications/tokens/`,
     method: "POST",
     header: { ...header },
   },

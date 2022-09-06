@@ -31,7 +31,7 @@ export const BorderButtonSmallBlue = (props: any) => {
   return (
     <TouchableOpacity
       onPress={props.ctaFunction}
-      style={commonStyles.borderButtonSmallBlue}
+      style={[commonStyles.borderButtonSmallBlue,props.style]}
     >
       <Text style={[texts.primaryTextBold12, { textAlign: "center" }]}>
         {props.text}

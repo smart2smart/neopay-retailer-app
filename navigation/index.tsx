@@ -45,6 +45,7 @@ import Constants from "expo-constants";
 import BuildOrder from "../screens/build-order/BuildOrder";
 import Cart from "../screens/cart/Cart";
 import SearchScreen from "../screens/build-order/SearchScreen";
+import NotificationScreen from "../screens/notifications";
 
 function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const landingScreen = useSelector((state: any) => state.landingScreen);
@@ -89,7 +90,8 @@ function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
         routeNameRef.current = currentRouteName;
       }}
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      // theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      theme={DefaultTheme}
     >
       {initialScreen === "Home" ? (
         retailerDetails?.verification_status == 2 ||
@@ -142,6 +144,7 @@ function RootNavigator(props) {
       />
       <RootStack.Screen name="BrandList" component={BrandList} />
       <RootStack.Screen name="Cart" component={Cart} />
+      <RootStack.Screen name="notifications" component={NotificationScreen} />
       <RootStack.Screen name="search-sku" component={SearchScreen} />
       <RootStack.Screen name="BuildOrder" component={BuildOrder} />
       <RootStack.Screen
