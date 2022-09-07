@@ -22,13 +22,33 @@ function ProductListNew({
   setCategory2,
   hideCategorySection = false,
 }) {
+  let timeOut = null;
+  const flatListRef = React.useRef();
+  const [flatListIndex, setFlatListIndex] = React.useState(1);
+
+  React.useEffect(() => {
+    try {
+      if (
+        flatListIndex >= 0 &&
+        products?.length &&
+        flatListRef.current?._wrapperListRef?._listRef?._averageCellLength > 0
+      ) {
+        flatListRef?.current?.scrollToLocation({
+          itemIndex: flatListIndex === 0 ? 1 : flatListIndex,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [flatListIndex]);
+
   return (
     <View style={{ flex: 1, flexDirection: "row" }}>
       {!hideCategorySection && (
         <ScrollView
           style={{
             width: "25%",
-            backgroundColor: colors.light_pink,
+            backgroundColor: "#58397410",
           }}
         >
           {category2.map((item) => {
@@ -36,53 +56,47 @@ function ProductListNew({
               <TouchableOpacity
                 key={item.id}
                 style={[
-                  item.id == selectedCategory2?.id
-                    ? { backgroundColor: colors.red }
-                    : null,
                   {
                     paddingHorizontal: 10,
                     paddingVertical: 10,
                     borderRadius: 5,
                     justifyContent: "center",
                     alignItems: "center",
-                    borderTopLeftRadius: 5,
-                    borderTopRightRadius: 5,
                   },
                 ]}
                 onPress={() => {
                   setSelectedCategory2(item);
+
+                  let ind = products.findIndex(
+                    (sku) => sku.category_2_id === item.id
+                  );
+
+                  let skuItem = products
+                    .slice(0, ind)
+                    .reduce((acc, cur) => (acc += cur.data.length + 2), 0);
+                  setFlatListIndex(skuItem);
                 }}
               >
                 <Image
-                  style={{
-                    width: 60,
-                    height: 60,
-                    borderRadius: 5,
-                    backgroundColor: colors.white,
-                  }}
+                  style={[
+                    {
+                      width: item.id == selectedCategory2?.id ? 60 : 55,
+                      height: item.id == selectedCategory2?.id ? 60 : 55,
+                      borderRadius: 5,
+                      backgroundColor: colors.white,
+                    },
+                    item.id == selectedCategory2?.id
+                      ? { borderWidth: 2, borderColor: colors.red }
+                      : null,
+                  ]}
                   resizeMode={"contain"}
                   source={{ uri: item.image }}
                 />
-                {/* <View
-                  style={{
-                    backgroundColor: "#9747FF",
-                    width: 20,
-                    height: 20,
-                    borderRadius: 11,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    position: "absolute",
-                    top: 5,
-                    right: 9,
-                  }}
-                >
-                  <Text style={texts.whiteTextBold12}>{item.count}</Text>
-                </View> */}
                 <Text
                   style={[
                     item.id == selectedCategory2?.id
-                      ? texts.whiteTextBold12
-                      : texts.blackTextBold12,
+                      ? texts.redTextBold12
+                      : texts.darkGreyTextBold12,
                     {
                       textAlign: "center",
                       marginTop: 4,

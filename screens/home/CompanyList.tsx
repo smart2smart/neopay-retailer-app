@@ -162,6 +162,12 @@ function CompanyList(props) {
                 image: item["product_group_image"],
                 product_group_name: item["product_group"],
                 product_group_id: item["product_group_id"],
+                category_1_id: item.category_1_id,
+                category_2_id: item.category_2_id,
+                category_1_name: item.category_1_name,
+                category_2_name: item.category_2_name,
+                category_1_image: item.category_1_image,
+                category_2_image: item.category_2_image,
                 data: [item],
               };
             }

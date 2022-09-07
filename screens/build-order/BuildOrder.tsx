@@ -174,11 +174,11 @@ function BuildOrder(props) {
             ) : (
               <ProductList
                 name="build"
-                products={products?.filter((item) =>
-                  item.data.some(
-                    (skuItem) => skuItem.category_2_id === selectedCategory2?.id
+                products={products
+                  ?.filter(
+                    (item) => item.category_1_id === selectedCategory1?.id
                   )
-                )}
+                  .sort((a, b) => a.category_2_id - b.category_2_id)}
                 category2={category_2}
                 selectedCategory1={selectedCategory1}
                 setSelectedCategory2={setSelectedCategory2}

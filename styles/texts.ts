@@ -110,10 +110,15 @@ const texts = StyleSheet.create({
     color: colors.grey,
     fontFamily: "GothamMedium",
     fontSize: 12,
-    lineHeight: 20,
+    lineHeight: 14,
   },
   redTextBold14: {
     color: colors.red,
+    fontFamily: "GothamMedium",
+    fontSize: 14,
+  },
+  greenBold14: {
+    color: colors.green,
     fontFamily: "GothamMedium",
     fontSize: 14,
   },
@@ -131,6 +136,7 @@ const texts = StyleSheet.create({
     color: colors.orange,
     fontFamily: "GothamMedium",
     fontSize: 12,
+    lineHeight: 14,
   },
   orangeTextBold14: {
     color: colors.orange,
@@ -146,6 +152,7 @@ const texts = StyleSheet.create({
     color: colors.black,
     fontFamily: "GothamMedium",
     fontSize: 12,
+    lineHeight: 14,
   },
   blackTextBold18: {
     color: colors.black,
@@ -156,13 +163,13 @@ const texts = StyleSheet.create({
     color: colors.darkGrey,
     fontFamily: "GothamMedium",
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 16,
   },
   darkGreyTextBold12: {
     color: colors.darkGrey,
     fontFamily: "GothamMedium",
     fontSize: 12,
-    lineHeight: 20,
+    lineHeight: 14,
   },
   darkGreyTextBold16: {
     color: colors.darkGrey,
