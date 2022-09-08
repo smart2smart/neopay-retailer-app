@@ -46,6 +46,8 @@ import BuildOrder from "@screens/build-order/BuildOrder";
 import Cart from "@screens/cart/Cart";
 import SearchScreen from "@screens/build-order/SearchScreen";
 import NotificationScreen from "@screens/notifications";
+import SurveyForm from "@screens/survey/SurveyForm";
+import ViewSurvey from "@screens/survey/ViewSurvey";
 
 function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const landingScreen = useSelector((state: any) => state.landingScreen);
@@ -151,6 +153,8 @@ function RootNavigator(props) {
         name="ProductFilterScreen"
         component={ProductFilterScreen}
       />
+      <ProfileStack.Screen name="survey" component={SurveyForm} />
+      <ProfileStack.Screen name="view-survey" component={ViewSurvey} />
     </RootStack.Navigator>
   );
 }

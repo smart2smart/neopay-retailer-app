@@ -7,7 +7,11 @@ export const SolidButtonBlue = (props: any) => {
   return (
     <TouchableOpacity
       onPress={props.ctaFunction}
-      style={[commonStyles.solidButtonBlue, { paddingHorizontal: 8 }]}
+      style={[
+        commonStyles.solidButtonBlue,
+        { paddingHorizontal: 8 },
+        props.style,
+      ]}
     >
       <Text style={texts.whiteTextBold14}>{props.text}</Text>
     </TouchableOpacity>
@@ -31,9 +35,15 @@ export const BorderButtonSmallBlue = (props: any) => {
   return (
     <TouchableOpacity
       onPress={props.ctaFunction}
-      style={[commonStyles.borderButtonSmallBlue,props.style]}
+      style={[commonStyles.borderButtonSmallBlue, props.style]}
     >
-      <Text style={[texts.primaryTextBold12, { textAlign: "center" }]}>
+      <Text
+        style={[
+          texts.primaryTextBold12,
+          { textAlign: "center" },
+          props.textStyle,
+        ]}
+      >
         {props.text}
       </Text>
     </TouchableOpacity>

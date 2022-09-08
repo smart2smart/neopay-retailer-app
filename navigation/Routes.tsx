@@ -182,7 +182,7 @@ function Routes(props: any) {
 
   useEffect(() => {
     registerForPushNotificationsAsync(retailerData);
-  }, [retailerData]);
+  }, [retailerData?.user]);
 
   useEffect(() => {
     async function prepare() {

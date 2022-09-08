@@ -5,8 +5,8 @@ const header = {
 const formHeader = {};
 
 // const base_url = 'http://10.5.62.138:8000';
-const base_url = 'http://qa-api.neopay.club';
-// const base_url = "https://api.neopay.club";
+// const base_url = 'http://qa-api.neopay.club';
+const base_url = "https://api.neopay.club";
 
 export const authApi = {
   mobileLogin: {
@@ -32,6 +32,31 @@ export const authApi = {
 };
 
 export const commonApi = {
+  getSurveysList: {
+    url: `${base_url}/surveys/`,
+    method: "GET",
+    header: { ...header },
+  },
+  submitSurveys: {
+    url: `${base_url}/surveys/submit-survey/`,
+    method: "POST",
+    header: { ...header },
+  },
+  getSurveysResponse: {
+    url: `${base_url}/surveys/survey-response/`,
+    method: "GET",
+    header: { ...header },
+  },
+  sendSurveysResponse: {
+    url: `${base_url}/surveys/survey-response/`,
+    method: "POST",
+    header: { ...header },
+  },
+  getSurveysQuestionList: {
+    url: `${base_url}/surveys/survey-question/`,
+    method: "GET",
+    header: { ...header },
+  },
   getNotificationList: {
     url: `${base_url}/notifications/token-logs/`,
     method: "GET",

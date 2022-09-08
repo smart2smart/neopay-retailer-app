@@ -25,6 +25,7 @@ export default function AuthStack({
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
+      theme={DefaultTheme}
       // theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
     >
       <RootNavigator />
@@ -53,7 +54,8 @@ export function VersionStack({
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      // theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      theme={DefaultTheme}
     >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="UpdateAppScreen" component={UpdateAppScreen} />

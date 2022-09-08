@@ -20,6 +20,9 @@ import colors from "@colors";
 import mapStateToProps from "../store/mapStateToProps";
 import { connect } from "react-redux";
 import Constants from "expo-constants";
+import { useNavigation } from "@react-navigation/native";
+import HomeScreen from "@screens/home/HomeScreen";
+import SurveyList from "@screens/survey";
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -29,9 +32,14 @@ function Drawer() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <DrawerNavigator.Screen
-        key={"HomeScreen"}
-        name={"HomeScreen"}
+        key={"Home"}
+        name={"Home"}
         component={BottomTabNavigator}
+      />
+      <DrawerNavigator.Screen
+        key={"SurveyList"}
+        name={"SurveyList"}
+        component={SurveyList}
       />
     </DrawerNavigator.Navigator>
   );
@@ -63,9 +71,7 @@ const LogOut = () => {
 const RenderItem = (props) => (
   <TouchableOpacity
     style={styles.renderItem}
-    onPress={() => {
-      props.onPress();
-    }}
+    onPress={props.onPress}
   >
     <Text style={texts.darkGreyTextBold14}>{props.title}</Text>
     <View>
@@ -75,8 +81,9 @@ const RenderItem = (props) => (
 );
 
 function CustomDrawerContent(props) {
+  const navigation = useNavigation();
   const navigate = (screen: String) => {
-    props.navigation.navigate(screen);
+    navigation.navigate(screen);
     props.navigation.closeDrawer();
   };
 
@@ -109,6 +116,14 @@ function CustomDrawerContent(props) {
               title={"Orders"}
               onPress={() => {
                 navigate("Orders");
+              }}
+            />
+          </View>
+          <View>
+            <RenderItem
+              title={"Survey"}
+              onPress={() => {
+                navigate("SurveyList");
               }}
             />
           </View>

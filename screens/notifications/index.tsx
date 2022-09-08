@@ -53,7 +53,6 @@ const NotificationScreen = () => {
     AuthenticatedGetRequest(data).then((res) => {
       setLoading(false);
       setPageLoading(false);
-      console.log(res.data)
       if (res.status === 200) {
         setCount(res.data.count);
         setNext(res.data.next);
