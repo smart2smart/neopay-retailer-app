@@ -85,7 +85,7 @@ const NotificationCard = (props) => {
                 });
             }}
           />
-          <BlueButtonSmall
+          {/* <BlueButtonSmall
             text="Track Order"
             ctaFunction={() => {
               if (props.status !== "clicked")
@@ -96,7 +96,7 @@ const NotificationCard = (props) => {
                     app_name: "partner",
                   });
             }}
-          />
+          /> */}
         </View>
       </View>
     </View>
