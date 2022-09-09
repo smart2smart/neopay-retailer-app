@@ -177,4 +177,14 @@ export const commonApi = {
     url: `${base_url}/retailers/`,
     method: "PATCH",
   },
+  retailerOtp: {
+    url: `${base_url}/retailers/generate-otp/`,
+    method: "POST",
+    header: { ...header },
+  },
+  registerRetailerVerifyOtp: {
+    url: `${base_url}/retailers/otp/`,
+    method: "POST",
+    header: { ...header },
+  },
 };

@@ -21,7 +21,7 @@ import SecondaryHeader from "@headers/SecondaryHeader";
 import { commonApi } from "@api";
 import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import { AuthenticatedPostRequest } from "@authenticatedPostRequest";
-import { BorderButtonSmallBlue, SolidButtonBlue } from "@Buttons";
+import { BorderButtonSmallBlue, BlueButtonMedium } from "@Buttons";
 
 import InputBox from "../survey/InputBox";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
@@ -36,9 +36,14 @@ type VerifyMobileNumberProps = {
 const VerifyMobileNumber = (props: VerifyMobileNumberProps) => {
   const { retailerDetails } = props;
   const [isLoading, setLoading] = useState(false);
-  const [mobileNumber, setMobileNumber] = useState(retailerDetails.contact_no);
+  const [mobileNumber, setMobileNumber] = useState();
   const salesman = useSelector((state: any) => state.salesman);
   const [viewOption, setViewOption] = useState("requestOTP");
+
+  useEffect(() => {
+    setLoading(false)
+    setMobileNumber(retailerDetails.contact_no);
+  }, [props.visible]);
 
   const selectEntity = (data) => {
     const dataToSend = {
@@ -101,11 +106,11 @@ const VerifyMobileNumber = (props: VerifyMobileNumberProps) => {
         if (res.status == 200) {
           Alert.alert(
             "Success!",
-            "The Profile is now complete and is ready to place orders.",
+            "Your mobile number is changed.",
             [
               {
-                text: "Place Order",
-                onPress: () => props.onSubmit(),
+                text: "Done",
+                onPress: () => props.onSubmit(mobileNumber),
               },
             ]
           );
@@ -150,20 +155,18 @@ const VerifyMobileNumber = (props: VerifyMobileNumberProps) => {
               borderBottomColor: "#eee",
             }}
           >
-            <Text style={[texts.greyTextBold16]}>{"Final Step!"}</Text>
+            <Text style={[texts.blackTextBold18]}>
+              {"Verify Mobile Number"}
+            </Text>
             <TouchableOpacity onPress={props.onClose}>
               <Entypo name="cross" size={24} color={colors.grey} />
             </TouchableOpacity>
           </View>
 
-          <View style={{ marginVertical: 10 }}>
-            <Text style={texts.blackTextBold18}>Verify Mobile Number</Text>
-          </View>
           {viewOption !== "verifyOTP" ? (
             <>
               <Text style={[texts.greyTextBold14, { lineHeight: 16 }]}>
-                This retailer has an unverified mobile number. Verify their
-                mobile number to place orders.
+                To change mobile number need to verify
               </Text>
 
               <InputBox
@@ -176,7 +179,7 @@ const VerifyMobileNumber = (props: VerifyMobileNumberProps) => {
               />
 
               <View style={{ marginTop: 20 }}>
-                <SolidButtonBlue text="Request OTP" ctaFunction={requestOTP} />
+                <BlueButtonMedium text="Request OTP" ctaFunction={requestOTP} />
               </View>
             </>
           ) : (
@@ -205,7 +208,7 @@ const VerifyMobileNumber = (props: VerifyMobileNumberProps) => {
                 />
               </View>
               <View style={{ marginTop: 20 }}>
-                <SolidButtonBlue
+                <BlueButtonMedium
                   text="Submit"
                   ctaFunction={() => verifyOTP()}
                 />
