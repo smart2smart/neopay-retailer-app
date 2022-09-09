@@ -295,24 +295,13 @@ function Cart(props: any) {
         >
           <BlueButtonMedium
             ctaFunction={() => {
-              if (
-                !retailerData.store_type ||
-                !retailerData.format_type ||
-                !retailerData.store_area ||
-                !retailerData.turn_over
-              ) {
-                setShowPendingInfoModal(true);
-              } else if (!retailerData.mobile_verified) {
-                setShowVerifyMobileNumber(true);
-              } else {
-                placeOrder();
-              }
+              placeOrder();
             }}
             text={"Place Order"}
           />
         </View>
       </View>
-      {ShowPendingInfoModal ? (
+      {/* {ShowPendingInfoModal ? (
         <PendingInfoPopup
           visible={ShowPendingInfoModal}
           onClose={() => {
@@ -338,7 +327,7 @@ function Cart(props: any) {
           }}
           retailerDetails={retailerData}
         />
-      ) : null}
+      ) : null} */}
     </View>
   );
 }
