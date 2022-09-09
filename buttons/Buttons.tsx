@@ -111,7 +111,7 @@ export const BlueButtonMedium = (props: any) => {
   return (
     <TouchableOpacity
       onPress={props.ctaFunction}
-      style={commonStyles.blueButtonMedium}
+      style={[commonStyles.blueButtonMedium,props.style]}
     >
       <Text style={[texts.whiteTextBold12, { textAlign: "center" }]}>
         {props.text}

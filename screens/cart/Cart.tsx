@@ -24,6 +24,8 @@ import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import ProductList from "../build-order/ProductList";
 import SecondaryHeader from "@headers/SecondaryHeader";
 import colors from "@colors";
+import PendingInfoPopup from "./PendingInfoPopup";
+import VerifyMobileNumber from "./VerifyMobileNumber";
 
 function Cart(props: any) {
   const dispatch = useDispatch();
@@ -33,6 +35,8 @@ function Cart(props: any) {
   const [discountAmount, setDiscountAmount] = useState(0);
   const [qpsDiscount, setQPSDiscount] = useState(0);
   const retailerData = useSelector((state: any) => state.retailerDetails);
+  const [ShowPendingInfoModal, setShowPendingInfoModal] = useState(false);
+  const [ShowVerifyMobileNumber, setShowVerifyMobileNumber] = useState(false);
 
   const cart = useSelector(
     (state: any) =>
@@ -187,7 +191,7 @@ function Cart(props: any) {
         if (res) {
           if (res.status == 200 || res.status == 201) {
             clearCart();
-            props.navigation.replace("OrderListDetails", {
+            navigation.navigate("OrderListDetails", {
               orderDetailsData: res.data[0],
             });
           }
@@ -289,9 +293,52 @@ function Cart(props: any) {
             })
           }
         >
-          <BlueButtonMedium ctaFunction={placeOrder} text={"Place Order"} />
+          <BlueButtonMedium
+            ctaFunction={() => {
+              if (
+                !retailerData.store_type ||
+                !retailerData.format_type ||
+                !retailerData.store_area ||
+                !retailerData.turn_over
+              ) {
+                setShowPendingInfoModal(true);
+              } else if (!retailerData.mobile_verified) {
+                setShowVerifyMobileNumber(true);
+              } else {
+                placeOrder();
+              }
+            }}
+            text={"Place Order"}
+          />
         </View>
       </View>
+      {ShowPendingInfoModal ? (
+        <PendingInfoPopup
+          visible={ShowPendingInfoModal}
+          onClose={() => {
+            setShowPendingInfoModal(false);
+          }}
+          onSubmit={() => {
+            setShowPendingInfoModal(false);
+            placeOrder();
+          }}
+          retailerDetails={retailerData}
+        />
+      ) : null}
+
+      {ShowVerifyMobileNumber ? (
+        <VerifyMobileNumber
+          visible={ShowVerifyMobileNumber}
+          onClose={() => {
+            setShowVerifyMobileNumber(false);
+          }}
+          onSubmit={() => {
+            setShowVerifyMobileNumber(false);
+            placeOrder();
+          }}
+          retailerDetails={retailerData}
+        />
+      ) : null}
     </View>
   );
 }

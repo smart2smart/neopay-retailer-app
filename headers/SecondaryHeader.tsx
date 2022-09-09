@@ -16,7 +16,9 @@ export default function SecondaryHeader(props: any) {
             if (props.manualNavigate) {
               navigation.navigate(props.manualNavigate);
             } else {
-              navigation.goBack();
+              navigation.canGoBack()
+                ? navigation.goBack()
+                : navigation.navigate("HomeScreen");
             }
           }}
         >
