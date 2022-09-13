@@ -25,6 +25,8 @@ import * as Application from "expo-application";
 import Constants from "expo-constants";
 import { PostRequest } from "@postRequest";
 import store from "../store/store";
+import * as Location from "expo-location";
+import * as IntentLauncher from "expo-intent-launcher";
 
 setNotificationHandler({
   handleNotification: async () => ({
@@ -43,6 +45,50 @@ function Routes(props: any) {
   const [forceUpdateFromPlayStore, setForceUpdateFromPlayStore] =
     useState(false);
 
+  const openSettings = () => {
+    IntentLauncher.startActivityAsync(
+      IntentLauncher.ActivityAction.LOCATION_SOURCE_SETTINGS
+    );
+  };
+
+  const selectCurrentLocation = async () => {
+    let data = { latitude: 0, longitude: 0 };
+    let locationEnabled = await Location.hasServicesEnabledAsync();
+    if (!locationEnabled) {
+      Alert.alert(
+        "Location Disabled",
+        "Please turn on your location for this service",
+        [
+          {
+            text: "Ok",
+            onPress: () => {
+              openSettings();
+            },
+          },
+          {
+            text: "Cancel",
+            onPress: () => {},
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission to access location was denied");
+        return;
+      }
+      let currentLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        maximumAge: 10000,
+      });
+
+      data.latitude = currentLocation.coords.latitude;
+      data.longitude = currentLocation.coords.longitude;
+    }
+    return data;
+  };
+
   const getUserDetails = async () => {
     let tokens = await checkTokenFromStorage();
     if (tokens) {
@@ -59,6 +105,8 @@ function Routes(props: any) {
           Alert.alert("Not Access for this User.");
         }
       }
+    } else {
+      registerForPushNotificationsAsync();
     }
     checkForUpdates();
     setLoading(false);
@@ -76,6 +124,9 @@ function Routes(props: any) {
           type: "RETAILER_DETAILS",
           payload: res.data,
         });
+        registerForPushNotificationsAsync(res.data);
+      } else {
+        registerForPushNotificationsAsync();
       }
     });
   };
@@ -92,6 +143,9 @@ function Routes(props: any) {
           type: "RETAILER_DETAILS",
           payload: res.data,
         });
+        registerForPushNotificationsAsync(res.data);
+      } else {
+        registerForPushNotificationsAsync();
       }
     });
   };
@@ -110,12 +164,14 @@ function Routes(props: any) {
       }
       const token = (await getExpoPushTokenAsync()).data;
       dispatch(setExpoTokens(token));
+      const location = await selectCurrentLocation();
       let payload = {
         ...commonApi.setNotificationsToken,
         data: {
           device_id: Application.androidId,
           app_name: "retailer",
           token,
+          ...location,
         },
       };
       if (retailer_data?.user) {
@@ -128,13 +184,14 @@ function Routes(props: any) {
         };
       }
       PostRequest(payload).then((res) => {
-        if (res.status === 200) {
+      if (res.status === 200) {
         }
       });
 
+      if(retailer_data?.user)
       Analytics.logEvent("token_fcm", {
         token,
-        ...(retailer_data?.user && { user_id: retailer_data?.user }),
+        user_id: retailer_data?.user,
         androidId: Application.androidId,
         appVersion: Constants.manifest?.version,
         appVersionCode: Constants.manifest?.android?.versionCode,
@@ -179,10 +236,6 @@ function Routes(props: any) {
       return <AuthStack colorScheme={colorScheme} />;
     }
   };
-
-  useEffect(() => {
-    registerForPushNotificationsAsync(retailerData);
-  }, [retailerData?.user]);
 
   useEffect(() => {
     async function prepare() {

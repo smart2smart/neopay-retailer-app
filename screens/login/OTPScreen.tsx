@@ -18,16 +18,72 @@ import Indicator from "@utils/Indicator";
 import { BorderButtonSmallRed, SolidButtonBlue } from "@Buttons";
 import texts from "@texts";
 import SecondaryHeader from "@headers/SecondaryHeader";
-import Constants from "expo-constants";
 import moment from "moment";
 import { checkTokenFromStorage } from "@checkToken";
 import { AuthenticatedGetRequest } from "@authenticatedGetRequest";
 import store from "../../store/store";
+import {
+  AndroidImportance,
+  getExpoPushTokenAsync,
+  getPermissionsAsync,
+  requestPermissionsAsync,
+  setNotificationChannelAsync,
+  setNotificationHandler,
+} from "expo-notifications";
+import * as Analytics from "expo-firebase-analytics";
+import * as Application from "expo-application";
+import Constants from "expo-constants";
+import * as Location from "expo-location";
+import * as IntentLauncher from "expo-intent-launcher";
 
 class OTPScreen extends Component {
   state = {
     isLoading: false,
     version: Constants.manifest.version,
+  };
+
+  openSettings = () => {
+    IntentLauncher.startActivityAsync(
+      IntentLauncher.ActivityAction.LOCATION_SOURCE_SETTINGS
+    );
+  };
+
+  selectCurrentLocation = async () => {
+    let data = { latitude: 0, longitude: 0 };
+    let locationEnabled = await Location.hasServicesEnabledAsync();
+    if (!locationEnabled) {
+      Alert.alert(
+        "Location Disabled",
+        "Please turn on your location for this service",
+        [
+          {
+            text: "Ok",
+            onPress: () => {
+              this.openSettings();
+            },
+          },
+          {
+            text: "Cancel",
+            onPress: () => {},
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission to access location was denied");
+        return;
+      }
+      let currentLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        maximumAge: 10000,
+      });
+
+      data.latitude = currentLocation.coords.latitude;
+      data.longitude = currentLocation.coords.longitude;
+    }
+    return data;
   };
 
   verifyOTP = (code: string) => {
@@ -46,6 +102,7 @@ class OTPScreen extends Component {
       },
       header: authApi.refresh.header,
     };
+
     PostRequest(data).then((res) => {
       if (res.status == 200) {
         this.props.setUserType("3");
@@ -73,6 +130,66 @@ class OTPScreen extends Component {
     this.setState({ isLoading: false });
   };
 
+  registerForPushNotificationsAsync = async (retailer_data) => {
+    try {
+      const { status: existingStatus } = await getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      const token = (await getExpoPushTokenAsync()).data;
+      const location = await this.selectCurrentLocation();
+      let payload = {
+        ...commonApi.setNotificationsToken,
+        data: {
+          device_id: Application.androidId,
+          app_name: "retailer",
+          token,
+          ...location,
+        },
+      };
+      if (retailer_data?.user) {
+        payload = {
+          ...payload,
+          data: {
+            ...payload.data,
+            user: retailer_data?.user,
+          },
+        };
+      }
+      PostRequest(payload).then((res) => {
+        if (res.status === 200) {
+        }
+      });
+
+      if (retailer_data?.user)
+        Analytics.logEvent("token_fcm", {
+          token,
+          user_id: retailer_data?.user,
+          androidId: Application.androidId,
+          appVersion: Constants.manifest?.version,
+          appVersionCode: Constants.manifest?.android?.versionCode,
+          androidVersion: Constants.systemVersion,
+        });
+
+      if (Platform.OS === "android") {
+        setNotificationChannelAsync("default", {
+          name: "default",
+          importance: AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   retailerDetails = () => {
     const data = {
       method: commonApi.getRetailerDetails.method,
@@ -85,6 +202,7 @@ class OTPScreen extends Component {
           type: "RETAILER_DETAILS",
           payload: res.data,
         });
+        this.registerForPushNotificationsAsync(res.data);
       }
     });
   };
