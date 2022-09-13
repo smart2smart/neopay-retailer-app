@@ -26,6 +26,8 @@ import SecondaryHeader from "@headers/SecondaryHeader";
 import colors from "@colors";
 import PendingInfoPopup from "./PendingInfoPopup";
 import VerifyMobileNumber from "./VerifyMobileNumber";
+import * as Location from "expo-location";
+import * as Application from "expo-application";
 
 function Cart(props: any) {
   const dispatch = useDispatch();
@@ -37,6 +39,7 @@ function Cart(props: any) {
   const retailerData = useSelector((state: any) => state.retailerDetails);
   const [ShowPendingInfoModal, setShowPendingInfoModal] = useState(false);
   const [ShowVerifyMobileNumber, setShowVerifyMobileNumber] = useState(false);
+  const expoToken = useSelector((state: any) => state.expoToken);
 
   const cart = useSelector(
     (state: any) =>
@@ -54,6 +57,25 @@ function Cart(props: any) {
         category_2: [],
       }
   );
+  selectCurrentLocation = async () => {
+    let data = { latitude: 0, longitude: 0 };
+    let locationEnabled = await Location.hasServicesEnabledAsync();
+    if (locationEnabled) {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission to access location was denied");
+        return;
+      }
+      let currentLocation = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        maximumAge: 10000,
+      });
+
+      data.latitude = currentLocation.coords.latitude;
+      data.longitude = currentLocation.coords.longitude;
+    }
+    return data;
+  };
 
   const getDiscount = () => {
     const cartItems = Object.values(cart.data);
@@ -151,7 +173,7 @@ function Cart(props: any) {
   //     return products;
   // };
 
-  const placeOrder = () => {
+  const placeOrder = async () => {
     // const type = route.params.comingFrom;
     // const method =
     //   type === "edit"
@@ -175,9 +197,13 @@ function Cart(props: any) {
       });
 
       setIsLoading(true);
+      let location = await selectCurrentLocation();
       let current = {
         retailer: retailerData.id,
         products: JSON.stringify(productsData),
+        device_id: Application.androidId,
+        token: expoToken,
+        ...location,
       };
       // if (type == "edit") {
       //   (current["edit_type"] = "salesman_edit"), (current["status"] = "ordered");

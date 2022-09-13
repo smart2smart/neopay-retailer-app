@@ -37,7 +37,6 @@ import AddToCartButton from "../build-order/AddToCartButton";
 
 function HomeScreen(props: any) {
   const navigation = useNavigation();
-  const expoToken = useSelector((state: any) => state.expoToken);
   const { all_products } = useSelector((state: any) => state.product || {});
 
   const cart = useSelector((state: any) => state.cart);

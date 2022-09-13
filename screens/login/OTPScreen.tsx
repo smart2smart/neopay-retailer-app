@@ -10,6 +10,7 @@ import {
   setTokens,
   setVerificationStatus,
   setUserType,
+  setExpoTokens
 } from "@actions";
 // @ts-ignore
 import { connect } from "react-redux";
@@ -143,6 +144,7 @@ class OTPScreen extends Component {
         return;
       }
       const token = (await getExpoPushTokenAsync()).data;
+      this.props.setExpoTokens(token)
       const location = await this.selectCurrentLocation();
       let payload = {
         ...commonApi.setNotificationsToken,
@@ -273,6 +275,7 @@ export default connect(mapStateToProps, {
   setLandingScreen,
   setVerificationStatus,
   setUserType,
+  setExpoTokens,
 })(OTPScreen);
 
 const styles = StyleSheet.create({

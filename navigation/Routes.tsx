@@ -104,12 +104,13 @@ function Routes(props: any) {
         } else {
           Alert.alert("Not Access for this User.");
         }
+        setLoading(false);
       }
     } else {
       registerForPushNotificationsAsync();
+      setLoading(false);
     }
     checkForUpdates();
-    setLoading(false);
   };
 
   const retailerDetails = () => {
@@ -184,19 +185,19 @@ function Routes(props: any) {
         };
       }
       PostRequest(payload).then((res) => {
-      if (res.status === 200) {
+        if (res.status === 200) {
         }
       });
 
-      if(retailer_data?.user)
-      Analytics.logEvent("token_fcm", {
-        token,
-        user_id: retailer_data?.user,
-        androidId: Application.androidId,
-        appVersion: Constants.manifest?.version,
-        appVersionCode: Constants.manifest?.android?.versionCode,
-        androidVersion: Constants.systemVersion,
-      });
+      if (retailer_data?.user)
+        Analytics.logEvent("token_fcm", {
+          token,
+          user_id: retailer_data?.user,
+          androidId: Application.androidId,
+          appVersion: Constants.manifest?.version,
+          appVersionCode: Constants.manifest?.android?.versionCode,
+          androidVersion: Constants.systemVersion,
+        });
 
       if (Platform.OS === "android") {
         setNotificationChannelAsync("default", {
